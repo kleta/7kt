@@ -21,6 +21,11 @@ public class Device {
 
 	private String serialNum;
 
+	@ManyToMany
+	@JoinTable(
+      name="DevicesGroups",
+      joinColumns={@JoinColumn(name="idDevice", referencedColumnName="id")},
+      inverseJoinColumns={@JoinColumn(name="idGroup", referencedColumnName="id")})
 	private List<Group> groups;
 
 }

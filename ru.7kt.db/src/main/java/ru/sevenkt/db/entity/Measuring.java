@@ -3,11 +3,20 @@ package ru.sevenkt.db.entity;
 import java.time.LocalDateTime;
 
 public class Measuring {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name="idDevice")
 	private Device device;
 	
+	@ManyToOne
+	@JoinColumn(name="idParameter")
 	private Parameter parametr;
 	
+	@ManyToOne
+	@JoinColumn(name="idArchiveType")
 	private ArchiveType archiveType;
 	
 	private LocalDateTime dateTime;
