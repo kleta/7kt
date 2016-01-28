@@ -1,6 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="7">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="29">
 <locations>
-<location path="${eclipse_home}" type="Directory"/>
+<location path="${project_loc}\gemini-blueprint" type="Directory"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.cft.server.core.feature.feature.group" version="1.0.0.v201511252324"/>
+<unit id="org.springframework.ide.eclipse.webflow.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.eclipse.ajdt.feature.group" version="2.2.4.e45x-20150925-0800"/>
+<unit id="org.springframework.ide.eclipse.autowire.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springsource.ide.eclipse.commons.feature.group" version="3.7.2.201511260840-RELEASE"/>
+<unit id="org.eclipse.m2e.logback.feature.feature.group" version="1.6.2.20150902-0002"/>
+<unit id="org.sonatype.m2e.egit.feature.feature.group" version="0.14.0.201504071521"/>
+<unit id="org.springsource.sts.package.feature.group" version="3.7.2.201511261048-RELEASE-e45"/>
+<unit id="com.vmware.vfabric.ide.eclipse.tcserver.insight.feature.group" version="3.7.2.201511261036-RELEASE"/>
+<unit id="org.eclipse.m2e.feature.feature.group" version="1.6.2.20150902-0002"/>
+<unit id="org.springframework.ide.eclipse.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.eclipse.contribution.xref.feature.group" version="2.2.4.e45x-20150925-0800"/>
+<unit id="org.eclipse.m2e.wtp.jsf.feature.feature.group" version="1.2.1.20150819-2220"/>
+<unit id="org.springframework.ide.eclipse.boot.dash.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.roo.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.eclipse.jgit.feature.group" version="4.1.1.201511131810-r"/>
+<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="2.1.0.201508240501"/>
+<unit id="org.springframework.ide.eclipse.data.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springsource.ide.eclipse.gradle.feature.feature.group" version="3.7.2.201511260851-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.jboss.tools.m2e.wro4j.feature.feature.group" version="1.1.0.201406251020"/>
+<unit id="org.springframework.ide.eclipse.webflow.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.maven.ide.eclipse.ajdt.feature.feature.group" version="0.14.0.201506231302"/>
+<unit id="org.springframework.ide.eclipse.aop.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.eclipse.egit.feature.group" version="4.1.1.201511131810-r"/>
+<unit id="org.eclipse.cft.server.ui.feature.feature.group" version="1.0.0.v201511252324"/>
+<unit id="org.springframework.ide.eclipse.maven.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.eclipse.m2e.wtp.feature.feature.group" version="1.2.1.20150819-2220"/>
+<unit id="org.sonatype.m2e.mavenarchiver.feature.feature.group" version="0.17.0.201502101659-signed-20150525172209"/>
+<unit id="org.springframework.ide.eclipse.mylyn.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.eclipse.contribution.weaving.feature.group" version="2.2.4.e45x-20150925-0800"/>
+<unit id="com.ianbrandt.tools.m2e.mdp.feature.feature.group" version="0.0.4.201409291703"/>
+<unit id="org.eclipse.equinox.weaving.sdk.feature.group" version="1.1.0.weaving-hook-20140821"/>
+<unit id="org.eclipse.m2e.wtp.jpa.feature.feature.group" version="1.2.1.20150819-2224"/>
+<unit id="org.springframework.ide.eclipse.batch.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.boot.dash.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.aspectj.feature.group" version="1.8.7.20150910082200"/>
+<unit id="org.springframework.ide.eclipse.autowire.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springsource.sts.ide" version="3.7.2.201511261048-RELEASE-e45"/>
+<unit id="org.eclipse.egit.mylyn.feature.group" version="4.1.1.201511131810-r"/>
+<unit id="org.springframework.ide.eclipse.security.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.sonatype.m2e.buildhelper.feature.feature.group" version="0.15.0.201207090124"/>
+<unit id="org.springframework.ide.eclipse.security.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springsource.ide.eclipse.dashboard.feature.group" version="3.7.2.201511260840-RELEASE"/>
+<unit id="org.eclipse.m2e.wtp.jaxrs.feature.feature.group" version="1.2.1.20150819-2220"/>
+<unit id="org.springframework.ide.eclipse.integration.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.aop.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.mylyn.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="io.github.philwebb.eclipse.theme.cupertino.feature.feature.group" version="1.0.0"/>
+<unit id="org.springframework.ide.eclipse.ajdt.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springsource.ide.eclipse.commons.quicksearch.feature.feature.group" version="3.7.2.201511260840-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.integration.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.osgi.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="com.vmware.vfabric.ide.eclipse.tcserver.feature.group" version="3.7.2.201511261036-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.maven.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.ajdt.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.roo.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springsource.sts.feature.group" version="3.7.2.201511261048-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.batch.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.data.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<unit id="org.springframework.ide.eclipse.osgi.feature.source.feature.group" version="3.7.2.201511260958-RELEASE"/>
+<repository location="http://dist.springsource.com/release/TOOLS/update/e4.5/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.ecf.remoteservice.sdk.source.feature.feature.group" version="3.10.1.v20150810-1719"/>
+<unit id="org.eclipse.ecf.core.feature.group" version="3.10.1.v20150810-1719"/>
+<unit id="org.eclipse.objectteams.otequinox.feature.group" version="2.4.1.201509081206"/>
+<unit id="org.eclipse.riena.build.feature.sdk.e4.feature.group" version="6.1.0.v20150520_6_1_0_RC1"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.1.v20150806-0404"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.1.v20150831-1342"/>
+<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="3.0.1.20150908-1020"/>
+<unit id="org.eclipse.rap.sdk.feature.feature.group" version="3.0.1.20150908-1130"/>
+<unit id="org.eclipse.scout.rt.source.feature.group" version="5.0.100.20150916-1224"/>
+<unit id="org.eclipse.ecf.core.source.feature.group" version="3.10.1.v20150810-1719"/>
+<unit id="org.eclipse.birt.osgi.runtime.sdk.feature.group" version="4.5.0.v201506092134"/>
+<unit id="org.eclipse.scout.rt.rap.basic.target.feature.group" version="5.0.100.20150916-1224"/>
+<unit id="org.eclipse.scout.rt.rap.testing.source.feature.group" version="5.0.100.20150916-1224"/>
+<unit id="org.eclipse.rap.feature.feature.group" version="3.0.1.20150908-1130"/>
+<unit id="org.eclipse.rap.examples.feature.feature.group" version="3.0.1.20150709-1405"/>
+<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.11.1.v20150806-0404"/>
+<unit id="org.eclipse.scout.rt.rap.source.feature.group" version="5.0.100.20150916-1224"/>
+<unit id="org.eclipse.ecf.remoteservice.sdk.feature.feature.group" version="3.10.1.v20150810-1719"/>
+<unit id="org.eclipse.riena.build.feature.rap.sdk.feature.group" version="6.1.0.v20150520_6_1_0_RC1"/>
+<unit id="org.eclipse.scout.rt.testing.source.feature.group" version="5.0.100.20150916-1224"/>
+<unit id="org.eclipse.gyrex.features.sdk.withoutdeps.feature.group" version="1.5.0.v20150604-1242"/>
+<repository location="http://download.eclipse.org/releases/mars/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.persistence.jpa.source.feature.group" version="2.6.1.v20150916-55dc7c3"/>
+<unit id="org.eclipse.persistence.jpa.feature.group" version="2.6.1.v20150916-55dc7c3"/>
+<unit id="org.eclipse.persistence.sdk.feature.group" version="2.6.1.v20150916-55dc7c3"/>
+<repository location="http://download.eclipse.org/rt/eclipselink/updates/"/>
+</location>
 </locations>
+<environment>
+<nl>ru_RU</nl>
+</environment>
 </target>
