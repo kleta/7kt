@@ -2,7 +2,6 @@ package ru.sevenkt.db;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Activator implements BundleActivator {
 
@@ -12,7 +11,6 @@ public class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext context) throws Exception {
 		System.out.println("Hello World!!");
-		new ClassPathXmlApplicationContext("classpath*:META-INF/database-context.xml");
 	}
 	
 	/*

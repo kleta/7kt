@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-
-    <import resource="infrastructure.xml" />
-<!--     <context:annotation-config /> -->
-<!--     <jpa:repositories base-package="ru.sevenkt.db.repositories" entity-manager-factory-ref="7ktEntityManagerFactory" transaction-manager-ref="7ktTransactionManager"/> -->
-<!-- 	<bean id="dbService" class="ru.sevenkt.db.services.DBService"/> -->
+	<context:annotation-config />
+	<bean id="config" class="ru.sevenkt.db.Config"/>
 </beans>

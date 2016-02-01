@@ -1,4 +1,4 @@
-package ru.sevenkt.db.entity;
+package ru.sevenkt.db.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

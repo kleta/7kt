@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0"
-	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-
-	<persistence-unit name="7kt-unit">
-		<class>ru.sevenkt.db.entity.ArchiveType</class>
-		<class>ru.sevenkt.db.entity.Device</class>
-		<class>ru.sevenkt.db.entity.Group</class>
-		<class>ru.sevenkt.db.entity.Measuring</class>
-		<class>ru.sevenkt.db.entity.Parameter</class>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ru.7kt.db">
+		<class>ru.sevenkt.db.entities.ArchiveType</class>
+		<class>ru.sevenkt.db.entities.Device</class>
+		<class>ru.sevenkt.db.entities.Group</class>
+		<class>ru.sevenkt.db.entities.Measuring</class>
+		<class>ru.sevenkt.db.entities.Parameter</class>
+		<properties>
+			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+		</properties>
 	</persistence-unit>
 </persistence>
