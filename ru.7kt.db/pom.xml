@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>db</artifactId>
 	<properties>
-		<spring-data-jpa.version>1.9.2.RELEASE</spring-data-jpa.version>
+		<spring-data-jpa.version>1.7.1.RELEASE</spring-data-jpa.version>
 		<hibernate.version>4.2.6.Final</hibernate.version>
 	</properties>
 	<build>

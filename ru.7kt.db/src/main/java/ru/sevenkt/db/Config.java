@@ -3,6 +3,7 @@ package ru.sevenkt.db;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -10,25 +11,29 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import ru.sevenkt.db.repositories.ArchiveTypeRepo;
+import ru.sevenkt.db.repositories.DeviceRepo;
+import ru.sevenkt.db.repositories.MeasuringRepo;
+import ru.sevenkt.db.repositories.NodeRepo;
+import ru.sevenkt.db.repositories.ParameterRepo;
+import ru.sevenkt.db.services.IDBService;
+import ru.sevenkt.db.services.impl.DBService;
 
 @Configuration
-@ComponentScan(basePackages = { "ru.sevenkt.db.services" })
-//@EnableJpaRepositories(basePackages = "ru.sevenkt.db.repositories")
+//@EnableTransactionManagement
 @PropertySource(value = "META-INF/application.properties")
 public class Config {
 
@@ -45,18 +50,13 @@ public class Config {
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager()
-
-	{
-
-		EntityManagerFactory factory = entityManagerFactory().getObject();
-
-		return new JpaTransactionManager(factory);
-
+	JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManagerFactory);
+		return transactionManager;
 	}
 
 	@Bean
-
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory()
 
 	{
@@ -73,12 +73,13 @@ public class Config {
 
 		factory.setJpaVendorAdapter(vendorAdapter);
 
-		factory.setPersistenceUnitName("ru.7kt.db");;
+		factory.setPersistenceUnitName("ru.7kt.db");
 
 		Properties jpaProperties = new Properties();
 
 		jpaProperties.put("eclipselink.ddl-generation", env.getProperty("eclipselink.ddl-generation"));
-		jpaProperties.put("eclipselink.ddl-generation.output-mode", env.getProperty("eclipselink.ddl-generation.output-mode"));
+		jpaProperties.put("eclipselink.ddl-generation.output-mode",
+				env.getProperty("eclipselink.ddl-generation.output-mode"));
 		jpaProperties.put("eclipselink.target-database", env.getProperty("eclipselink.target-database"));
 		jpaProperties.put("eclipselink.weaving", env.getProperty("eclipselink.weaving"));
 		jpaProperties.put("eclipselink.logging.level", env.getProperty("eclipselink.logging.level"));
@@ -94,15 +95,7 @@ public class Config {
 
 	}
 
-	@Bean
-
-	public HibernateExceptionTranslator hibernateExceptionTranslator()
-
-	{
-
-		return new HibernateExceptionTranslator();
-
-	}
+	
 
 	@Bean
 	public DataSource dataSource() {
@@ -141,5 +134,52 @@ public class Config {
 		return dataSourceInitializer;
 
 	}
-
+	
+	@Bean
+	public  ParameterRepo parameterRepo(EntityManager em){
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(ParameterRepo.class);
+	}
+	@Bean
+	public  ArchiveTypeRepo archiveTypeRepo(EntityManagerFactory emf){
+		EntityManager em = emf.createEntityManager();
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(ArchiveTypeRepo.class);
+	}
+	@Bean
+	public  DeviceRepo deviceRepo(EntityManagerFactory emf){
+		EntityManager em = emf.createEntityManager();
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(DeviceRepo.class);
+	}
+	@Bean
+	public  MeasuringRepo measuringRepo(EntityManagerFactory emf){
+		EntityManager em = emf.createEntityManager();
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(MeasuringRepo.class);
+	}
+	@Bean
+	public  NodeRepo nodeRepo(EntityManagerFactory emf){
+		EntityManager em = emf.createEntityManager();
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(NodeRepo.class);
+	}
+	
+	@Bean
+	public IDBService dbService(){
+		return new DBService();
+	}
+	
+	@Bean
+	public EntityManager entityManager(EntityManagerFactory emf){
+		EntityManager em = emf.createEntityManager();
+		return em;
+	}
+//	@Bean
+//	public TransactionProxyFactoryBean transactionProxyFactoryBean(IDBService target){
+//		TransactionProxyFactoryBean tpfb = new TransactionProxyFactoryBean();
+//		tpfb.setTarget(target);
+//		return tpfb;
+//	}
+	
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry exported="true" kind="lib" path="lib/spring-data-jpa-1.9.2.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spring-data-jpa-1.7.1.RELEASE.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/lombok-1.16.6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-dbcp-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-pool-1.5.4.jar"/>

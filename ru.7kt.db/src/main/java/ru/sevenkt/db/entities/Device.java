@@ -25,11 +25,10 @@ public class Device {
 
 	private String serialNum;
 
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(
-      name="DevicesGroups",
-      joinColumns={@JoinColumn(name="idDevice", referencedColumnName="id")},
-      inverseJoinColumns={@JoinColumn(name="idGroup", referencedColumnName="id")})
-	private List<Group> groups;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "NodeToDevice", joinColumns = {
+			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "idNode", referencedColumnName = "id") })
+	private List<Node> nodes;
 
 }

@@ -13,14 +13,14 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Group {
+public class Node {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String name;
 
-	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "groups")
+	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "nodes")
 	private List<Device> devices;
 
 }

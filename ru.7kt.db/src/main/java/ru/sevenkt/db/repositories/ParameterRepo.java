@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ru.sevenkt.db.entities.Parameter;
 
-public interface ParametersRepo extends CrudRepository<Parameter, Long> {
+public interface ParameterRepo extends CrudRepository<Parameter, Long> {
 
 }

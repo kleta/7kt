@@ -7,8 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>META-INF/spring/database-context.xml</config>
-		<config>META-INF/spring/infrastructure.xml</config>
+		<config>META-INF/spring/osgi-context.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
