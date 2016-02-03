@@ -22,7 +22,6 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import ru.sevenkt.db.repositories.ArchiveTypeRepo;
 import ru.sevenkt.db.repositories.DeviceRepo;
@@ -44,17 +43,9 @@ public class Config {
 	@Value("${init-db:false}")
 	private String initDatabase;
 
-	@PostConstruct
-	public void init() {
-		System.out.println("config!");
-	}
+	
 
-	@Bean
-	JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactory);
-		return transactionManager;
-	}
+	
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory()
@@ -141,26 +132,22 @@ public class Config {
 		return jpaRepositoryFactory.getRepository(ParameterRepo.class);
 	}
 	@Bean
-	public  ArchiveTypeRepo archiveTypeRepo(EntityManagerFactory emf){
-		EntityManager em = emf.createEntityManager();
+	public  ArchiveTypeRepo archiveTypeRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(ArchiveTypeRepo.class);
 	}
 	@Bean
-	public  DeviceRepo deviceRepo(EntityManagerFactory emf){
-		EntityManager em = emf.createEntityManager();
+	public  DeviceRepo deviceRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(DeviceRepo.class);
 	}
 	@Bean
-	public  MeasuringRepo measuringRepo(EntityManagerFactory emf){
-		EntityManager em = emf.createEntityManager();
+	public  MeasuringRepo measuringRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(MeasuringRepo.class);
 	}
 	@Bean
-	public  NodeRepo nodeRepo(EntityManagerFactory emf){
-		EntityManager em = emf.createEntityManager();
+	public  NodeRepo nodeRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(NodeRepo.class);
 	}
@@ -175,11 +162,6 @@ public class Config {
 		EntityManager em = emf.createEntityManager();
 		return em;
 	}
-//	@Bean
-//	public TransactionProxyFactoryBean transactionProxyFactoryBean(IDBService target){
-//		TransactionProxyFactoryBean tpfb = new TransactionProxyFactoryBean();
-//		tpfb.setTarget(target);
-//		return tpfb;
-//	}
+
 	
 }

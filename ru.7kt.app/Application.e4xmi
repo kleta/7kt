@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_OrIYoL9PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ide.application" bindingContexts="_OrI_sL9PEeW9RpHAlpKUfA">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_OrIYob9PEeW9RpHAlpKUfA" label="ru.7kt.app" width="500" height="400"/>
-  <rootContext xmi:id="_OrI_sL9PEeW9RpHAlpKUfA" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
-    <children xmi:id="_OrI_sb9PEeW9RpHAlpKUfA" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
-    <children xmi:id="_OrI_sr9PEeW9RpHAlpKUfA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_DrjJADGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ide.application" bindingContexts="_DrjJCTGFEeSeO8huCdGv8Q">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_DrjJATGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.main.menu" accessibilityPhrase="" label="7 Координат" iconURI="" width="500" height="400">
+    <tags>shellMaximized</tags>
+    <children xsi:type="basic:PartSashContainer" xmi:id="_3H8IYDGNEeSuG80xnFR2ZQ" elementId="7kt.partsashcontainer.devices" horizontal="true">
+      <children xsi:type="basic:PartStack" xmi:id="_3xTOcDGNEeSuG80xnFR2ZQ" elementId="7kt.partstack.right" containerData="17">
+        <children xsi:type="basic:Part" xmi:id="_CeXAcMopEeWgFZI886Y61g" elementId="ru.7kt.app.part.devices" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.DevicesView" label="Устройства"/>
+      </children>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_-mtAADGNEeSuG80xnFR2ZQ" elementId="power-quality-ui.partsashcontainer.1" containerData="83">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_xN4OgE35EeSRPKdhyBjzXA" elementId="powerquality-ui.partsashcontainer.0" containerData="80" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_AysWcDGOEeSuG80xnFR2ZQ" elementId="7kt.partstack.centr" containerData="70">
+            <tags>NoAutoCollapse</tags>
+          </children>
+          <children xsi:type="basic:PartStack" xmi:id="_C0ICsDGOEeSuG80xnFR2ZQ" elementId="7kt.partstack.left" containerData="30">
+            <children xsi:type="basic:Part" xmi:id="_t4CAMMopEeWgFZI886Y61g" elementId="ru.7kt.app.part.properties" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.Properties" label="Свойства"/>
+          </children>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_98ufsE35EeSRPKdhyBjzXA" elementId="7kt.partstack.bottom" containerData="20">
+          <tags>NoAutoCollapse</tags>
+          <children xsi:type="basic:Part" xmi:id="_2j15wMopEeWgFZI886Y61g" elementId="ru.7kt.app.part.output" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.OutputView" label="Вывод"/>
+        </children>
+      </children>
+    </children>
+    <mainMenu xmi:id="_6NS9gDGSEeSVeK7-4q31bA" elementId="power-quality-ui.menu.0">
+      <children xsi:type="menu:Menu" xmi:id="_tm0bwMomEeWgFZI886Y61g" elementId="ru.7kt.app.menu." label="Файл">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Pl9lUMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.importfile" label="Импорт данных из файла" command="_x-oFUMotEeWgFZI886Y61g"/>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_kCes0MooEeWgFZI886Y61g" elementId="ru.7kt.app.menuseparator.0"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_mWNqAMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.exit" label="Выход"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_UbjwYMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.connection" label="Связь">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_8ruBgMoqEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.requestdevice" label="Опросить устройство"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_FgPyMMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.reader" label="Загрузить из считывателя"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_ZJiicMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.service" label="Сервис">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_MVLCoMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.preferences" label="Настройки"/>
+      </children>
+      <children xsi:type="menu:Menu" xmi:id="_c0slkMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.help" label="Помощь">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_SjSxwMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.about" label="О программе"/>
+      </children>
+    </mainMenu>
+    <trimBars xmi:id="_6IS80D2HEeSI97fZJ_qSMA" elementId="powerquality-ui.trimbar.top">
+      <children xsi:type="menu:ToolBar" xmi:id="_AoiWsD2IEeSI97fZJ_qSMA" elementId="powerquality-ui.toolbar.1"/>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_5c3_kMotEeWgFZI886Y61g" elementId="ru.7kt.app.handler.importfromfile" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ImportFromFileHandler" command="_x-oFUMotEeWgFZI886Y61g"/>
+  <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
-  <addons xmi:id="_OrIYor9PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
-  <addons xmi:id="_OrIYo79PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
-  <addons xmi:id="_OrIYpL9PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
-  <addons xmi:id="_OrIYpb9PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
-  <addons xmi:id="_OrIYpr9PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
-  <addons xmi:id="_OrIYp79PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
-  <addons xmi:id="_OrIYqL9PEeW9RpHAlpKUfA" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+  <commands xmi:id="_x-oFUMotEeWgFZI886Y61g" elementId="ru.7kt.app.command.importfromfile" commandName="Импорт данных из файла"/>
+  <addons xmi:id="_DrjJAjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_DrjJAzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_DrjJBDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_DrjJBTGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_DrjJBjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_DrjJBzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_DrjJCDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
 </application:Application>

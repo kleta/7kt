@@ -3,18 +3,12 @@ package ru.sevenkt.db.services.impl;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import ru.sevenkt.db.entities.ArchiveType;
 import ru.sevenkt.db.entities.Device;
@@ -46,8 +40,7 @@ public class DBService implements IDBService {
 	@Autowired
 	private NodeRepo nr;
 
-	@Autowired
-	private JpaTransactionManager jtm;
+	
 
 	
 	// EntityManagerFactory emf;

@@ -13,7 +13,8 @@ Bundle-ClassPath: .,
  src/main/java/,
  config/,
  lib/spring-data-jpa-1.7.1.RELEASE.jar
-Export-Package: ru.sevenkt.db.services
+Export-Package: ru.sevenkt.db.entities,
+ ru.sevenkt.db.services
 Require-Bundle: org.springframework.data.core;bundle-version="1.9.1",
  org.springframework.orm;bundle-version="4.2.3",
  org.springframework.context;bundle-version="4.2.3",
