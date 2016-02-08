@@ -1,23 +1,53 @@
 package ru.sevenkt.archive.domain;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+
+import lombok.Data;
+
+@Data
+@Length(58060)
 public class Archive {
-	public static int ADDR_SETTINGS=0;
-	
-	public static int ADDR_CURRENT_DATA=0x40;
+	private byte[] data;
 
-	public static int ADDR_MONTH_DATA=0x90;
-
-	public static int ADDR_DAY_DATA=0x200;
-
-	public static int ADDR_HOUR_DATA=0xB00;
-	
+	@Address(value = 0)
 	private Settings settings;
-	
+
+	@Address(value = 80)
 	private CurrentData currentData;
-	
+
+	@Address(value = 300)
 	private MonthArchive monthArchive;
-	
+
+	@Address(value = 3000)
 	private DayArchive dayArchive;
-	
+
+	@Address(value = 13500)
 	private HourArchive hourArchive;
+
+	@Address(value = 55500)
+	private JournalSettings journalSettings;
+
+	public Archive(byte[] data) throws Exception {
+		this.data = data;
+		init();
+	}
+
+	private void init() throws Exception {
+		Field[] fields = getClass().getDeclaredFields();
+		for (Field field : fields) {
+			if (field.isAnnotationPresent(Address.class)) {
+				Class<?> fieldType = field.getType();
+				int dataSize = fieldType.getAnnotation(Length.class).value();
+				byte[] fieldData = new byte[dataSize];
+				for (int i = 0; i < dataSize; i++) {
+					fieldData[i] = data[(int) (field.getAnnotation(Address.class).value() + i)];
+				}
+				Constructor<?> cons = fieldType.getConstructor(byte[].class);
+				Object obj = cons.newInstance(fieldData);
+				field.set(this, obj);
+			}
+		}
+	}
 }
