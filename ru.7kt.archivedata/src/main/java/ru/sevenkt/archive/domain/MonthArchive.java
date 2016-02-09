@@ -1,19 +1,16 @@
 package ru.sevenkt.archive.domain;
 
-import java.util.HashMap;
-
-@Length(value = 2664)
+@Length(value = 2964)
 public class MonthArchive {
-	private byte[] data= new byte[2964];
+	private byte[] data;
 	
 	
 	public MonthArchive(byte[] data) {
-		super();
 		this.data = data;
 	}
 
 
-	public MonthRecord getMonthRecord(int year, int month){
+	public MonthRecord getMonthRecord(int year, int month) throws Exception{
 		Length annotationLength = MonthRecord.class.getAnnotation(Length.class);
 		int size=annotationLength.value();
 		int yt = year-15;
@@ -26,7 +23,6 @@ public class MonthArchive {
 		for (int i = 0; i < size; i++) {
 			monthRecordData[i]=data[address+i];
 		}
-		return new MonthRecord(monthRecordData);
-		
+		return new MonthRecord(monthRecordData);		
 	}
 }

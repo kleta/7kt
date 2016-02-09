@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
+import ru.sevenkt.archive.utils.DataUtils;
+
 @Length(80)
 public class Settings {
 
@@ -85,45 +87,19 @@ public class Settings {
 				byte[] bytes = Arrays.copyOfRange(data, adr, adr + len);
 				Class<?> type = field.getType();
 				if(type.equals(int.class)){
-					int value=getIntValue(bytes);
-					System.out.println(field+"="+value);
+					int value=DataUtils.getIntValue(bytes);
+					field.set(this, value);
 				}
 				else 
 					if(type.equals(float.class)){
-						float value=getFloatValue(bytes);
-						System.out.println(field+"="+value+"");
-						System.out.println(Integer.toBinaryString(Float.floatToRawIntBits(value)));
+						float value=DataUtils.getFloat24Value(bytes);
+						field.set(this, value);
 					}
 			}
 		}
 
 	}
 
-	private float getFloatValue(byte[] bytes) {		
-		byte[] b =new byte[4];	
-		for(int i=0; i<bytes.length; i++){//мантиса 110000000000000
-			b[3-i]=bytes[i];
-		}
-		//b[4]=0;
-		ByteBuffer buf = ByteBuffer.wrap(b);
-		float value = buf.getFloat();
-		System.out.println(Integer.toBinaryString(Float.floatToRawIntBits(value)));
-		
-		int plus = buf.get(1)&0x80>>7;
-		
-		int exponent = buf.get(1)<<1 | buf.get(2)&0x80>>7;
-		float mantissa = 0;
-		Object retVal = plus*(-1)*(2^(exponent-127))*(1+mantissa);
-		return value;
-	}
-
-	private int getIntValue(byte[] bytes) {
-		int result = 0;
-	    int l = bytes.length - 1;
-	    for(int i = 0; i < bytes.length; i++) 
-	      if(i == l) result += (bytes[i]& 0xFF) << i * 8;
-	      else result += (bytes[i] & 0xFF) << i * 8;
-	    return result;
-	}
+	
 
 }

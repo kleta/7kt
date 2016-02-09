@@ -1,5 +1,12 @@
 package ru.sevenkt.archive.domain;
 
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
+import ru.sevenkt.archive.utils.DataUtils;
+
 @Length(28)
 public class HourRecord {
 	
@@ -70,9 +77,41 @@ public class HourRecord {
 	@Length(value=1)
 	private int errorChannel2;
 
-	public HourRecord(byte[] hourRecordData) {
-		data=hourRecordData;
-	}
+	private int hour;
 
+	public HourRecord(byte[] hourRecordData, int hour) throws Exception {
+		data=hourRecordData;
+		this.hour=hour;
+		init();
+	}
+	private void init() throws Exception {
+		Field[] fields = getClass().getDeclaredFields();
+		for (Field field : fields) {
+			if (field.isAnnotationPresent(Length.class) && field.isAnnotationPresent(Address.class)) {
+				int adr = (int) field.getAnnotation(Address.class).value();
+				int len = (int) field.getAnnotation(Length.class).value();
+				byte[] bytes = Arrays.copyOfRange(data, adr, adr + len);
+				Class<?> type = field.getType();
+				if(type.equals(int.class)){
+					int value=DataUtils.getIntValue(bytes);
+					field.set(this, value);
+				}
+				else 
+					if(type.equals(float.class)){
+						float value=DataUtils.getFloat24Value(bytes);
+						field.set(this, value);
+					}
+			}
+		}
+		
+	}
+	public LocalDateTime getDateTime() {
+		HourRecord c = this;
+		int year = monthYear >> 4;
+		year = year == 15 ? 15 : year + 16;
+		int month = monthYear & 0xF;
+		LocalDateTime date = LocalDateTime.of(year + 2000, month, day, hour, 0);
+		return date;
+	}
 	
 }
