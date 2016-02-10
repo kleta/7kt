@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import lombok.Data;
 import ru.sevenkt.archive.utils.DataUtils;
 
 @Length(28)
+@Data
 public class HourRecord {
 	
 	private byte[] data;
@@ -46,19 +48,19 @@ public class HourRecord {
 	
 	@Address(value=12)
 	@Length(value=2)
-	private float volume1;
+	private int volume1;
 
 	@Address(value=14)
 	@Length(value=2)
-	private float volume2;
+	private int volume2;
 	
 	@Address(value=16)
 	@Length(value=2)
-	private float volume3;
+	private int volume3;
 	
 	@Address(value=18)
 	@Length(value=2)
-	private float volume4;
+	private int volume4;
 	
 	@Address(value=20)
 	@Length(value=3)
@@ -106,11 +108,10 @@ public class HourRecord {
 		
 	}
 	public LocalDateTime getDateTime() {
-		HourRecord c = this;
-		int year = monthYear >> 4;
-		year = year == 15 ? 15 : year + 16;
+		int year = (monthYear & 0xF0)/16 + 2000;	
+		year=year<2015 ?year+16:year;	
 		int month = monthYear & 0xF;
-		LocalDateTime date = LocalDateTime.of(year + 2000, month, day, hour, 0);
+		LocalDateTime date = LocalDateTime.of(year, month, day, hour, 0);
 		return date;
 	}
 	

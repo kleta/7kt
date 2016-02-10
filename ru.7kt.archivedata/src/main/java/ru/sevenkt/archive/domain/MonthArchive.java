@@ -2,6 +2,9 @@ package ru.sevenkt.archive.domain;
 
 @Length(value = 2964)
 public class MonthArchive {
+	
+	public static int MAX_YEAR_COUNT=3;
+	
 	private byte[] data;
 	
 	

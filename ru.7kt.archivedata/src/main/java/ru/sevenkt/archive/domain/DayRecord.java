@@ -2,11 +2,14 @@ package ru.sevenkt.archive.domain;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import lombok.Data;
 import ru.sevenkt.archive.utils.DataUtils;
 
 @Length(value = 56)
+@Data
 public class DayRecord {
 
 	private byte[] data;
@@ -103,6 +106,8 @@ public class DayRecord {
 		data = dayRecordData;
 		init();
 	}
+	public DayRecord() {		
+	}
 
 	private void init() throws Exception {
 		Field[] fields = getClass().getDeclaredFields();
@@ -127,15 +132,11 @@ public class DayRecord {
 		}
 
 	}
-
 	public LocalDate getDate() {
-		DayRecord s = this;
-		int year = monthYear >> 4;
-		year = year == 15 ? 15 : year + 16;
+		int year = (monthYear & 0xF0)/16 + 2000;	
+		year=year<2015 ?year+16:year;	
 		int month = monthYear & 0xF;
-
-		LocalDate date = LocalDate.of(year + 2000, month, day);
-
+		LocalDate date = LocalDate.of(year, month, day);
 		return date;
 	}
 

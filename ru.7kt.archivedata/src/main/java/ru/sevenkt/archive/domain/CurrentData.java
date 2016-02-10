@@ -1,6 +1,7 @@
 package ru.sevenkt.archive.domain;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import lombok.Data;
@@ -97,6 +98,10 @@ public class CurrentData {
 				}
 			}
 		}
+	}
+	
+	public LocalDateTime getCurrentDateTime(){
+		return LocalDateTime.of(year+2000, month, day, hour, 0);
 	}
 
 }

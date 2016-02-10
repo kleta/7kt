@@ -1,3 +1,4 @@
+package ru.sevenkt.archive.services
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime
@@ -13,24 +14,27 @@ import ru.sevenkt.archive.domain.MonthArchive;
 import ru.sevenkt.archive.domain.MonthRecord
 import ru.sevenkt.archive.domain.Settings;
 import ru.sevenkt.archive.services.impl.ArchiveServiceImpl
-import ru.sevenkt.archive.utils.DataUtils;
+import ru.sevenkt.archive.utils.DataUtils
+import spock.lang.Shared;
 import spock.lang.Specification
 
 
 class ArchiveServiceTest extends  Specification{
+	@Shared
+	Archive archive
 
-
-	def "тестируем правильность чтения настроек прибора"(){
-
-		given:
+	def setupSpec(){
 		def service=new ArchiveServiceImpl();
 		def file=new File("7kt/02016_2016-02-04_13-00.bin")
-		when:
-		Archive archive=service.readArchiveFromFile(file);
+		archive=service.readArchiveFromFile(file);
+	}
 
-		then:
+	def "тестируем правильность чтения настроек прибора"(){
+		given:
+		when:
 		def size=Settings.class.getAnnotation(Length.class).value()
 		Settings s=archive.settings;
+		then:
 		s.data.length==size
 		s.archiveLength==8
 		s.archiveVersion==3
@@ -38,11 +42,12 @@ class ArchiveServiceTest extends  Specification{
 		s.formulaNum==12
 		s.serialNumber==2016
 		s.tempColdWaterSetting==7
-		s.volumeByImpulsSetting1==0.009938955f
-		s.volumeByImpulsSetting2==0.009938955f
-		s.volumeByImpulsSetting3==0.009938955f
-		s.volumeByImpulsSetting4==0.009938955f
+		s.volumeByImpulsSetting1==0.00999999f
+		s.volumeByImpulsSetting2==0.00999999f
+		s.volumeByImpulsSetting3==0.00999999f
+		s.volumeByImpulsSetting4==0.00999999f
 	}
+
 
 	def "тестируем преобразование float24"(){
 		given:
@@ -76,15 +81,14 @@ class ArchiveServiceTest extends  Specification{
 	def "тестируем правильность чтения текущих данных"(){
 
 		given:
-		def service=new ArchiveServiceImpl();
-		def file=new File("7kt/02016_2016-02-04_13-00.bin")
-		when:
-		Archive archive=service.readArchiveFromFile(file);
 
-		then:
+		when:
 		def size=CurrentData.class.getAnnotation(Length.class).value()
 
 		CurrentData cd=archive.currentData;
+
+		then:
+
 
 		cd.data.length==size
 
@@ -101,10 +105,7 @@ class ArchiveServiceTest extends  Specification{
 
 	def "читаем месячный архив"(){
 		given:
-		def service=new ArchiveServiceImpl();
-		def file=new File("7kt/02016_2016-02-04_13-00.bin")
 		when:
-		Archive archive=service.readArchiveFromFile(file);
 		MonthArchive ma=archive.monthArchive
 		then:
 		ma.data.length==2964
@@ -124,10 +125,7 @@ class ArchiveServiceTest extends  Specification{
 
 	def "читаем суточный архив"(){
 		given:
-		def service=new ArchiveServiceImpl();
-		def file=new File("7kt/02016_2016-02-04_13-00.bin")
 		when:
-		Archive archive=service.readArchiveFromFile(file);
 		DayArchive da=archive.getDayArchive();
 		then:
 		da.data.length==13416
@@ -135,7 +133,7 @@ class ArchiveServiceTest extends  Specification{
 		LocalDate startDay=LocalDate.parse("2015-12-23")
 		while (startDay.isBefore(endDate)){
 			println startDay
-			DayRecord record=da.getDayRecord(startDay.month.value, startDay.dayOfMonth);
+			DayRecord record=da.getDayRecord(startDay,archive.currentData.currentDateTime);
 			record.data.length==56
 			println "${record.getDate()} объём ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
 
@@ -145,18 +143,15 @@ class ArchiveServiceTest extends  Specification{
 
 	def "читаем часовой архив"(){
 		given:
-		def service=new ArchiveServiceImpl();
-		def file=new File("7kt/02016_2016-02-04_13-00.bin")
 		when:
-		Archive archive=service.readArchiveFromFile(file);
 		HourArchive ha=archive.getHourArchive();
 		then:
 		ha.data.length==41664
 		LocalDateTime endDate=LocalDateTime.parse("2016-02-05T00:00:00")
-		LocalDateTime startDay=LocalDateTime.parse("2015-12-23T00:00:00")
+		LocalDateTime startDay=LocalDateTime.parse("2015-12-10T00:00:00")
 		while (startDay.isBefore(endDate)){
 			println startDay
-			HourRecord record=ha.getHourRecord(startDay.month.value, startDay.dayOfMonth, startDay.hour);
+			HourRecord record=ha.getHourRecord(startDay, archive.currentData.currentDateTime);
 			record.data.length==28
 			def roundVol1=new BigDecimal(record.volume1*10).setScale(2, RoundingMode.UP).floatValue();
 			println "${record.getDateTime()} объём ${roundVol1} er1 ${record.errorChannel1} er2 ${record.errorChannel2}"
@@ -165,28 +160,31 @@ class ArchiveServiceTest extends  Specification{
 	}
 
 	def "проверяем значения в часовом архиве на дату 2016-01-28T14:00:00"(){
-		given:
-		def service=new ArchiveServiceImpl();
-		def file=new File("7kt/02016_2016-02-04_13-00.bin")
-		
+		given:		
+
 		when:
-		Archive archive=service.readArchiveFromFile(file);
 		HourArchive ha=archive.getHourArchive();
 		def day=LocalDateTime.parse("2016-01-28T14:00:00")
-		HourRecord record=ha.getHourRecord(day.month.value, day.dayOfMonth, day.hour);
-		
+		HourRecord record=ha.getHourRecord(day, archive.currentData.currentDateTime);
+
 		then:
-		record.avgPressure1==1.9
-		record.avgPressure2==7.5
-		record.avgTemp1==65.5
-		record.avgTemp2==16.56
-		record.avgTemp3==50.71
-		record.avgTemp4==16.41
-		record.energy1==6.388
-		record.energy2==6.743
-		record.volume1==133.41
-		record.volume2==86.19
-		record.volume3==185.00
-		record.volume4==131.34
+		record.avgPressure1/10==1.9
+		record.avgPressure2/10==7.5
+		record.avgTemp1/100==65.5
+		record.avgTemp2/100==16.56
+		record.avgTemp3/100==50.71
+		record.avgTemp4/100==16.41
+		record.energy1==6.388794f
+		record.energy2==6.7424316f
+		def roundVol1=new BigDecimal(record.volume1*0.00999999f).setScale(3, RoundingMode.UP).doubleValue();
+		roundVol1==133.4
+		def roundVol2=new BigDecimal(record.volume2*0.00999999f).setScale(3, RoundingMode.UP).doubleValue();
+		roundVol2==86.19
+		def roundVol3=new BigDecimal(record.volume3*0.00999999f).setScale(3, RoundingMode.UP).doubleValue();
+		roundVol3==185.11
+		def roundVol4=new BigDecimal(record.volume4*0.00999999f).setScale(3, RoundingMode.UP).doubleValue();
+		roundVol4==131.44
 	}
+	
+	
 }
