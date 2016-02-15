@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
 
 import ru.sevenkt.db.entities.ArchiveType;
@@ -276,6 +275,12 @@ public class DBService implements IDBService {
 	public List<Measuring> findHourArchive(Device device, LocalDate start, LocalDate end) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public Device findDeviceBySerialNum(int serialNumber) {
+		return dr.findBySerialNum(serialNumber+"");
 	}
 
 }

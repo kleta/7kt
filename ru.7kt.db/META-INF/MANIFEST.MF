@@ -25,7 +25,8 @@ Require-Bundle: org.springframework.data.core;bundle-version="1.9.1",
  org.springframework.expression;bundle-version="4.2.3",
  org.springframework.jdbc;bundle-version="4.2.3",
  org.aspectj.runtime;bundle-version="1.8.7",
- org.springframework.transaction;bundle-version="4.2.3"
+ org.springframework.transaction;bundle-version="4.2.3",
+ org.slf4j.api;bundle-version="1.7.2"
 Import-Package: javax.persistence;version="2.1.0",
  javax.persistence.criteria;version="2.1.0",
  javax.persistence.metamodel;version="2.1.0",
@@ -267,6 +268,6 @@ Import-Package: javax.persistence;version="2.1.0",
  org.eclipse.persistence.transaction.was;version="2.5.2",
  org.eclipse.persistence.transaction.wls;version="2.5.2",
  org.osgi.framework;version="1.8.0"
-Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;
- timeout:=10
+Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false
+
 

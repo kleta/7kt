@@ -6,10 +6,14 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
+import lombok.Data;
+import ru.sevenkt.archive.services.VersionNotSupportedException;
 import ru.sevenkt.archive.utils.DataUtils;
 
 @Length(80)
+@Data
 public class Settings {
+	public static Integer[] SUPPORTED_ARCHIVE_VERSION = { 3 };
 
 	private byte[] data;
 
@@ -86,20 +90,19 @@ public class Settings {
 				int len = (int) field.getAnnotation(Length.class).value();
 				byte[] bytes = Arrays.copyOfRange(data, adr, adr + len);
 				Class<?> type = field.getType();
-				if(type.equals(int.class)){
-					int value=DataUtils.getIntValue(bytes);
+				if (type.equals(int.class)) {
+					int value = DataUtils.getIntValue(bytes);
+					field.set(this, value);
+				} else if (type.equals(float.class)) {
+					float value = DataUtils.getFloat24Value(bytes);
 					field.set(this, value);
 				}
-				else 
-					if(type.equals(float.class)){
-						float value=DataUtils.getFloat24Value(bytes);
-						field.set(this, value);
-					}
 			}
 		}
-
 	}
 
-	
+	public boolean isVersionSupport() {
+		return Arrays.asList(SUPPORTED_ARCHIVE_VERSION).contains(archiveVersion);
+	}
 
 }

@@ -186,5 +186,17 @@ class ArchiveServiceTest extends  Specification{
 		roundVol4==131.44
 	}
 	
+	def "читаем журнал установок"(){
+		given:
+		def j=archive.journalSettings
+		
+		when:
+		def records=j.records;
+		
+		then:
+			records.size()==6
+		
+	}
+	
 	
 }

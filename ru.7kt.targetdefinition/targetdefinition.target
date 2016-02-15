@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="39">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="41">
 <locations>
 <location path="${project_loc}\gemini-blueprint" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -17,6 +17,34 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.persistence.jpa.feature.group" version="2.5.2.v20140319-9ad6abd"/>
 <repository location="http://download.eclipse.org/rt/eclipselink/updates/2.5.2.v20140319-9ad6abd"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.slf4j.feature.feature.group" version="1.6.6"/>
+<unit id="ch.qos.logback.feature.feature.group" version="1.0.7"/>
+<unit id="ch.qos.logback.beagle.feature.feature.group" version="1.1.4.201209042005"/>
+<repository location="http://logback.qos.ch/p2/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.pgroup.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.tablecombo.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.paperclips.feature.feature.group" version="2.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.pshelf.css.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.oscilloscope.feature.feature.group" version="1.2.0.201602111357"/>
+<unit id="org.eclipse.nebula.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.pshelf.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.richtext.feature.feature.group" version="0.1.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.xviewer.feature.feature.group" version="0.9.9.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.nattable.extension.nebula.feature.feature.group" version="0.1.0.201602111357"/>
+<unit id="org.eclipse.nebula.effects.stw.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.calendarcombo.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.cwt.feature.feature.group" version="0.9.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.compositetable.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.gallery.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.grid.feature.feature.group" version="1.0.0.201602111357"/>
+<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="0.14.0.201602111357"/>
+<unit id="org.eclipse.nebula.widgets.ganttchart.feature.feature.group" version="1.0.0.201602111357"/>
+<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
 </location>
 </locations>
 <environment>

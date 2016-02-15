@@ -3,8 +3,10 @@ package ru.sevenkt.archive.domain;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import lombok.Data;
+import ru.sevenkt.archive.services.VersionNotSupportedException;
 
 @Data
 @Length(58060)
@@ -47,6 +49,10 @@ public class Archive {
 				Constructor<?> cons = fieldType.getConstructor(byte[].class);
 				Object obj = cons.newInstance(fieldData);
 				field.set(this, obj);
+				if(field.getName().equals("settings")){
+					if(!settings.isVersionSupport())
+							throw new VersionNotSupportedException("Версия архива "+settings.getArchiveVersion()+" не поддерживается");
+				}
 			}
 		}
 	}

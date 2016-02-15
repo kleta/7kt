@@ -40,6 +40,8 @@ public interface IDBService {
 	List<Measuring> findDayArchive(Device device, LocalDate start, LocalDate end);
 
 	List<Measuring> findHourArchive(Device device, LocalDate start, LocalDate end);
+
+	Device findDeviceBySerialNum(int serialNumber);
 	
 	
 	

@@ -7,9 +7,9 @@ import java.io.IOException;
 
 import ru.sevenkt.archive.domain.Archive;
 import ru.sevenkt.archive.domain.Length;
-import ru.sevenkt.archive.services.ArchiveService;
+import ru.sevenkt.archive.services.IArchiveService;
 
-public class ArchiveServiceImpl implements ArchiveService {
+public class ArchiveServiceImpl implements IArchiveService {
 
 	public Archive readArchiveFromFile(File file) throws Exception {
 		DataInputStream dis = new DataInputStream(new FileInputStream(file));

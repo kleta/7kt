@@ -2,6 +2,8 @@ package ru.sevenkt.archive.utils;
 
 import java.nio.ByteBuffer;
 
+import ru.sevenkt.archive.domain.JournalEvents;
+
 public class DataUtils {
 
 	public static float getFloat24Value(byte[] bytes) {		
@@ -58,5 +60,14 @@ public class DataUtils {
 		}
 		ByteBuffer buf = ByteBuffer.wrap(b);
 		return buf.getInt();
+	}
+
+	public static JournalEvents getJournalEvents(byte[] bytes) {
+		for(JournalEvents je: JournalEvents.values()){
+			int t=bytes[0] &je.getMask();
+			if(t!=0)
+				return je;
+		}
+		return null;
 	}
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import ru.sevenkt.archive.domain.Archive;
 
-public interface ArchiveService {
+public interface IArchiveService {
 	
 	Archive readArchiveFromFile(File file) throws Exception;
 }

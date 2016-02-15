@@ -6,4 +6,6 @@ import ru.sevenkt.db.entities.Device;
 
 public interface DeviceRepo extends CrudRepository<Device, Long> {
 
+	Device findBySerialNum(String string);
+
 }
