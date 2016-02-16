@@ -4,10 +4,8 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
 						http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="ru.7kt.db" transaction-type="RESOURCE_LOCAL">
-		<class>ru.sevenkt.db.entities.ArchiveType</class>
 		<class>ru.sevenkt.db.entities.Device</class>
 		<class>ru.sevenkt.db.entities.Node</class>
 		<class>ru.sevenkt.db.entities.Measuring</class>
-		<class>ru.sevenkt.db.entities.Parameter</class>
 	</persistence-unit>
 </persistence>

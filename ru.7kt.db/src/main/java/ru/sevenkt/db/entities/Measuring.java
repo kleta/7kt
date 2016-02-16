@@ -22,12 +22,10 @@ public class Measuring {
 	@JoinColumn(name="idDevice")
 	private Device device;
 	
-	@ManyToOne
-	@JoinColumn(name="idParameter")
+	
 	private Parameter parametr;
 	
-	@ManyToOne
-	@JoinColumn(name="idArchiveType")
+	
 	private ArchiveType archiveType;
 	
 	private LocalDateTime dateTime;

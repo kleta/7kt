@@ -30,9 +30,6 @@ public class Device {
 	private int deviceVersion;
 	
 	
-	private int workHour;
-	
-	
 	private int wMin0;
 
 	

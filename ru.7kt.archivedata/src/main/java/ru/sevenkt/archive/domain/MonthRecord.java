@@ -111,15 +111,21 @@ public class MonthRecord {
 	@Length(value=4)
 	private int timeError2;
 	
-	
+	private boolean valid;
 	
 	public MonthRecord(byte[] monthRecordData) throws Exception {
 		data=monthRecordData;
 		init();
 	}
 
-
-
+	public boolean isValid(){
+		return valid;
+	}
+	
+	public void setValid(boolean val){
+		valid=val;
+	}
+	
 	private void init() throws Exception {
 		Field[] fields = getClass().getDeclaredFields();
 		for (Field field : fields) {

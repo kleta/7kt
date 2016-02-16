@@ -111,7 +111,26 @@ class ArchiveServiceTest extends  Specification{
 		ma.data.length==2964
 		int year=15
 		int month=1
-		for(Integer i : 0..11){
+		for(Integer i : 0..15){
+			MonthRecord record=ma.getMonthRecord(year, month)
+			record.data.length==74
+			println "${record.getDate()} объём ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
+			if(month%12==0){
+				year++
+				month=0
+			}
+			month++
+		}
+	}
+	def "читаем месячный архив за 13 год "(){
+		given:
+		when:
+		MonthArchive ma=archive.monthArchive
+		then:
+		ma.data.length==2964
+		int year=15
+		int month=1
+		for(Integer i : 0..15){
 			MonthRecord record=ma.getMonthRecord(year, month)
 			record.data.length==74
 			println "${record.getDate()} объём ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"

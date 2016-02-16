@@ -3,6 +3,7 @@ package ru.sevenkt.db.services.impl;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
@@ -39,12 +40,13 @@ public class DBService implements IDBService {
 	@Autowired
 	private NodeRepo nr;
 
-	
-
-	
-	// EntityManagerFactory emf;
 	@Autowired
 	private EntityManager em;
+	
+	@PostConstruct
+	private void init(){
+		
+	}
 
 
 

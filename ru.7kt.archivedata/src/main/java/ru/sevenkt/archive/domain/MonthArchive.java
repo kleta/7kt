@@ -1,5 +1,7 @@
 package ru.sevenkt.archive.domain;
 
+import java.time.LocalDate;
+
 @Length(value = 2964)
 public class MonthArchive {
 	
@@ -26,6 +28,16 @@ public class MonthArchive {
 		for (int i = 0; i < size; i++) {
 			monthRecordData[i]=data[address+i];
 		}
-		return new MonthRecord(monthRecordData);		
+		MonthRecord mr = new MonthRecord(monthRecordData);
+		LocalDate reqDate=LocalDate.of(year+2000, month, 1);
+//		if(year==16)
+//			System.out.println();
+		if(mr.getDate().equals(reqDate)){
+			mr.setValid(true);
+		}
+		else{
+			mr.setValid(false);
+		}
+		return mr;		
 	}
 }
