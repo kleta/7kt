@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Archivedata
-Bundle-SymbolicName: ru.7kt.archivedata
-Bundle-Version: 1.0.0.qualifier
-Export-Package: ru.sevenkt.archive.domain,
- ru.sevenkt.archive.services
-Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false 

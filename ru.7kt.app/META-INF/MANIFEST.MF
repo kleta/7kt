@@ -13,7 +13,6 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.e4.core.di;bundle-version="1.5.0",
  org.eclipse.e4.ui.di;bundle-version="1.1.0",
  org.eclipse.e4.core.contexts;bundle-version="1.4.0",
- db;bundle-version="1.0.0",
  ru.7kt.archivedata;bundle-version="1.0.0",
  org.eclipse.osgi,
  org.eclipse.core.databinding,
@@ -21,7 +20,9 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.core.databinding.observable,
  org.eclipse.core.databinding.property,
  org.eclipse.jface.databinding,
- com.ibm.icu
+ com.ibm.icu,
+ ru.7kt.core;bundle-version="1.0.0",
+ ru.7kt.database;bundle-version="1.0.0"
 Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
  org.slf4j;version="1.7.2"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

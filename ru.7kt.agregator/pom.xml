@@ -11,8 +11,12 @@
   <modules>
   	<module>../ru.7kt.app</module>
   	<module>../ru.7kt.product</module>
-  	<module>../ru.7kt.db</module>
-  	<module>../ru.7kt.targetdefinition</module>
   	
+  	<module>../ru.7kt.targetdefinition</module>
+
+  	
+  	<module>../ru.7kt.core</module>
+  	<module>../archivedata</module>
+  	<module>../database</module>
   </modules>
 </project>

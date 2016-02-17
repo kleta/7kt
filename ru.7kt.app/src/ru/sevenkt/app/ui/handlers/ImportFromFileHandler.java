@@ -2,6 +2,7 @@
 package ru.sevenkt.app.ui.handlers;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,25 +25,27 @@ import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.sevenkt.annotation.Parameter;
 import ru.sevenkt.app.ui.forms.DeviceDialog;
-import ru.sevenkt.archive.domain.Archive;
-import ru.sevenkt.archive.domain.MonthArchive;
-import ru.sevenkt.archive.domain.MonthRecord;
-import ru.sevenkt.archive.domain.Settings;
 import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.services.IDBService;
+import ru.sevenkt.domain.Archive;
+import ru.sevenkt.domain.ArchiveTypes;
+import ru.sevenkt.domain.MonthArchive;
+import ru.sevenkt.domain.MonthRecord;
+import ru.sevenkt.domain.Settings;
 
 public class ImportFromFileHandler {
 
 	@Inject
-	IArchiveService archiveService;
+	private IArchiveService archiveService;
 
 	@Inject
-	IDBService dbService;
+	private IDBService dbService;
 
-	Shell parentShell;
+	private Shell parentShell;
 
 	Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -56,10 +59,10 @@ public class ImportFromFileHandler {
 		String selected = fd.open();
 		try {
 			Archive archive = archiveService.readArchiveFromFile(new File(selected));
-			insertOrUpdateDeviceSettings(archive.getSettings());
-			insertMonthArchive(archive);
-			insertDayArchive(archive);
-			insertHourArchive(archive);
+			Device device = insertOrUpdateDeviceSettings(archive.getSettings());
+			insertMonthArchive(archive, device);
+			insertDayArchive(archive, device);
+			insertHourArchive(archive, device);
 			insertJournalSettings(archive);
 		} catch (Exception e) {
 
@@ -75,15 +78,15 @@ public class ImportFromFileHandler {
 		
 	}
 
-	private void insertHourArchive(Archive archive) throws Exception {
+	private void insertHourArchive(Archive archive, Device device) throws Exception {
 		
 	}
 
-	private void insertDayArchive(Archive archive) {
+	private void insertDayArchive(Archive archive, Device device) {
 		// TODO Auto-generated method stub		
 	}
 
-	private void insertMonthArchive(Archive archive) throws Exception {
+	private void insertMonthArchive(Archive archive, Device device) throws Exception {
 		MonthArchive ma = archive.getMonthArchive();	
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime();
 		LocalDate startArchiveDate = dateTime.minusYears(MonthArchive.MAX_YEAR_COUNT).toLocalDate();
@@ -94,15 +97,28 @@ public class ImportFromFileHandler {
 				continue;
 			}
 			MonthRecord mr = ma.getMonthRecord(year, startArchiveDate.getMonthValue());
-			if(mr.isValid()){
-				Measuring m=new Measuring();
+			if(mr.isValid()){		
+				Field[] fields = MonthRecord.class.getDeclaredFields();
+				for (Field field : fields) {
+					if(field.isAnnotationPresent(Parameter.class)){
+						Measuring m=new Measuring();
+						m.setArchiveType(ArchiveTypes.MONTH);
+						m.setDateTime(mr.getDate().atTime(0,0));
+						m.setDevice(device);
+						m.setParametr(field.getAnnotation(Parameter.class).value());
+						field.setAccessible(true);
+						float val=field.getFloat(mr);
+						m.setValue(val);
+						dbService.saveMeasuring(m);
+					}
+				}
 			}
 			startArchiveDate=startArchiveDate.plusMonths(1);
 		}
 		
 	}
 
-	private void insertOrUpdateDeviceSettings(Settings settings) {
+	private Device insertOrUpdateDeviceSettings(Settings settings) {
 		Device device = dbService.findDeviceBySerialNum(settings.getSerialNumber());
 		if (device == null) {
 			MessageBox messageBox = new MessageBox(parentShell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -143,6 +159,7 @@ public class ImportFromFileHandler {
 			device.setVolumeByImpulsSetting4(settings.getVolumeByImpulsSetting4()*1000);
 			dbService.saveDevice(device);
 		}
+		return device;
 	}
 
 	private static MultiStatus createMultiStatus(String msg, Throwable t) {

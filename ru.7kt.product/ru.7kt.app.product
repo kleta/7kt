@@ -29,7 +29,6 @@
       <plugin id="ch.qos.logback.classic"/>
       <plugin id="ch.qos.logback.core"/>
       <plugin id="com.ibm.icu"/>
-      <plugin id="db"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
       <plugin id="javax.persistence"/>
@@ -116,11 +115,12 @@
       <plugin id="org.w3c.dom.svg"/>
       <plugin id="ru.7kt.app"/>
       <plugin id="ru.7kt.archivedata"/>
+      <plugin id="ru.7kt.core"/>
+      <plugin id="ru.7kt.database"/>
    </plugins>
 
    <configurations>
       <plugin id="ch.qos.logback.classic" autoStart="true" startLevel="1" />
-      <plugin id="db" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.gemini.blueprint.extender" autoStart="true" startLevel="1" />
       <plugin id="ru.7kt.archivedata" autoStart="true" startLevel="0" />
    </configurations>
