@@ -8,6 +8,7 @@ import java.util.Arrays;
 import lombok.Data;
 import ru.sevenkt.annotation.Address;
 import ru.sevenkt.annotation.Length;
+import ru.sevenkt.annotation.Parameter;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(28)
@@ -26,50 +27,62 @@ public class HourRecord {
 	
 	@Address(value=2)
 	@Length(value=2)
+	@Parameter(Parameters.AVG_TEMP1)
 	private int avgTemp1;
 	
 	@Address(value=4)
 	@Length(value=2)
+	@Parameter(Parameters.AVG_TEMP2)
 	private int avgTemp2;
 	
 	@Address(value=6)
 	@Length(value=2)
+	@Parameter(Parameters.AVG_TEMP3)
 	private int avgTemp3;
 	
 	@Address(value=8)
 	@Length(value=2)
+	@Parameter(Parameters.AVG_TEMP4)
 	private int avgTemp4;
 
 	@Address(value=10)
 	@Length(value=1)
+	@Parameter(Parameters.AVG_P1)
 	private int avgPressure1;
 	
 	@Address(value=11)
 	@Length(value=1)
+	@Parameter(Parameters.AVG_P2)
 	private int avgPressure2;
 	
 	@Address(value=12)
 	@Length(value=2)
+	@Parameter(Parameters.W1)
 	private int volume1;
 
 	@Address(value=14)
 	@Length(value=2)
+	@Parameter(Parameters.W2)
 	private int volume2;
 	
 	@Address(value=16)
 	@Length(value=2)
+	@Parameter(Parameters.W3)
 	private int volume3;
 	
 	@Address(value=18)
 	@Length(value=2)
+	@Parameter(Parameters.W4)
 	private int volume4;
 	
 	@Address(value=20)
 	@Length(value=3)
+	@Parameter(Parameters.E1)
 	private float energy1;
 
 	@Address(value=23)
 	@Length(value=3)
+	@Parameter(Parameters.E2)
 	private float energy2;
 	
 	
@@ -82,6 +95,8 @@ public class HourRecord {
 	private int errorChannel2;
 
 	private int hour;
+
+	private boolean valid;
 
 	public HourRecord(byte[] hourRecordData, int hour) throws Exception {
 		data=hourRecordData;
@@ -116,5 +131,11 @@ public class HourRecord {
 		LocalDateTime date = LocalDateTime.of(year, month, day, hour, 0);
 		return date;
 	}
+	public void setValid(boolean b) {
+		valid=b;		
+	}
+	 public boolean isValid(){
+		 return valid;
+	 }
 	
 }

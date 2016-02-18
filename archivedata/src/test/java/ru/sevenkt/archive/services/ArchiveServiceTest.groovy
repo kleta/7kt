@@ -29,7 +29,7 @@ class ArchiveServiceTest extends  Specification{
 		archive=service.readArchiveFromFile(file);
 	}
 
-	def "тестируем правильность чтения настроек прибора"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"(){
 		given:
 		when:
 		def size=Settings.class.getAnnotation(Length.class).value()
@@ -49,7 +49,7 @@ class ArchiveServiceTest extends  Specification{
 	}
 
 
-	def "тестируем преобразование float24"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ float24"(){
 		given:
 		def data1=[0, -32, 64] as byte[]
 		def data2=[0x3A, 0x12, 0x42] as byte[]
@@ -65,7 +65,7 @@ class ArchiveServiceTest extends  Specification{
 		res2==36.55664f
 	}
 
-	def "тестируем преобразование float32"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ float32"(){
 		given:
 
 		def data2=[0x9B, 0xB6, 0xA6, 0x7D] as byte[]
@@ -78,7 +78,7 @@ class ArchiveServiceTest extends  Specification{
 		res2==2.7699999E37f
 	}
 
-	def "тестируем правильность чтения текущих данных"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"(){
 
 		given:
 
@@ -103,7 +103,7 @@ class ArchiveServiceTest extends  Specification{
 		cd.energy1==13805.526f
 	}
 
-	def "читаем месячный архив"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"(){
 		given:
 		when:
 		MonthArchive ma=archive.monthArchive
@@ -114,7 +114,7 @@ class ArchiveServiceTest extends  Specification{
 		for(Integer i : 0..15){
 			MonthRecord record=ma.getMonthRecord(year, month)
 			record.data.length==74
-			println "${record.getDate()} объём ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
+			println "${record.getDate()} пїЅпїЅпїЅпїЅпїЅ ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
 			if(month%12==0){
 				year++
 				month=0
@@ -122,7 +122,7 @@ class ArchiveServiceTest extends  Specification{
 			month++
 		}
 	}
-	def "читаем месячный архив за 13 год "(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 13 пїЅпїЅпїЅ "(){
 		given:
 		when:
 		MonthArchive ma=archive.monthArchive
@@ -133,7 +133,7 @@ class ArchiveServiceTest extends  Specification{
 		for(Integer i : 0..15){
 			MonthRecord record=ma.getMonthRecord(year, month)
 			record.data.length==74
-			println "${record.getDate()} объём ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
+			println "${record.getDate()} пїЅпїЅпїЅпїЅпїЅ ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
 			if(month%12==0){
 				year++
 				month=0
@@ -142,25 +142,25 @@ class ArchiveServiceTest extends  Specification{
 		}
 	}
 
-	def "читаем суточный архив"(){
-		given:
-		when:
-		DayArchive da=archive.getDayArchive();
-		then:
-		da.data.length==13416
-		LocalDate endDate=LocalDate.parse("2016-02-05")
-		LocalDate startDay=LocalDate.parse("2015-12-23")
-		while (startDay.isBefore(endDate)){
-			println startDay
-			DayRecord record=da.getDayRecord(startDay,archive.currentData.currentDateTime);
-			record.data.length==56
-			println "${record.getDate()} объём ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
+//	def "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"(){
+//		given:
+//		when:
+//		DayArchive da=archive.getDayArchive();
+//		then:
+//		da.data.length==13416
+//		LocalDate endDate=LocalDate.parse("2016-02-05")
+//		LocalDate startDay=LocalDate.parse("2015-12-23")
+//		while (startDay.isBefore(endDate)){
+//			println startDay
+//			DayRecord record=da.getDayRecord(startDay,archive.currentData.currentDateTime);
+//			record.data.length==56
+//			println "${record.getDate()} пїЅпїЅпїЅпїЅпїЅ ${record.volume1} er1 ${record.errorChannel1} er2 ${record.errorChannel2} t1 ${record.timeError1} t2 ${record.timeError2}"
+//
+//			startDay=startDay.plusDays(1)
+//		}
+//	}
 
-			startDay=startDay.plusDays(1)
-		}
-	}
-
-	def "читаем часовой архив"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"(){
 		given:
 		when:
 		HourArchive ha=archive.getHourArchive();
@@ -173,12 +173,12 @@ class ArchiveServiceTest extends  Specification{
 			HourRecord record=ha.getHourRecord(startDay, archive.currentData.currentDateTime);
 			record.data.length==28
 			def roundVol1=new BigDecimal(record.volume1*10).setScale(2, RoundingMode.UP).floatValue();
-			println "${record.getDateTime()} объём ${roundVol1} er1 ${record.errorChannel1} er2 ${record.errorChannel2}"
+			println "${record.getDateTime()} пїЅпїЅпїЅпїЅпїЅ ${roundVol1} er1 ${record.errorChannel1} er2 ${record.errorChannel2}"
 			startDay=startDay.plusHours(1)
 		}
 	}
 
-	def "проверяем значения в часовом архиве на дату 2016-01-28T14:00:00"(){
+	def "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ 2016-01-28T14:00:00"(){
 		given:		
 
 		when:
@@ -205,17 +205,17 @@ class ArchiveServiceTest extends  Specification{
 		roundVol4==131.44
 	}
 	
-	def "читаем журнал установок"(){
-		given:
-		def j=archive.journalSettings
-		
-		when:
-		def records=j.records;
-		
-		then:
-			records.size()==6
-		
-	}
+//	def "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"(){
+//		given:
+//		def j=archive.journalSettings
+//		
+//		when:
+//		def records=j.records;
+//		
+//		then:
+//			records.size()==6
+//		
+//	}
 	
 	
 }

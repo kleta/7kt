@@ -20,9 +20,10 @@ public class HourArchive {
 		int hour = recDateTime.getHour();
 		int month = recDateTime.getMonth().getValue();
 		int day = recDateTime.getDayOfMonth();
-		if (recDateTime.isBefore(archiveCurrenDatetime.minusDays(MAX_DAY_COUNT)))
-			throw new Exception("������� ������ " + MAX_DAY_COUNT + " �����. ������������� ���� " + recDateTime
-					+ " ������� �� ������� ������� ��������");
+		LocalDateTime minusDays = archiveCurrenDatetime.minusDays(MAX_DAY_COUNT + 1);
+		if (recDateTime.isBefore(minusDays))
+			throw new Exception("Глубина часового архива " + MAX_DAY_COUNT + " суток. Данные запрашиваемые за дату "
+					+ recDateTime + " превышают глубину хранения");
 
 		Length annotationLength = HourRecord.class.getAnnotation(Length.class);
 		int size = annotationLength.value();
@@ -35,23 +36,11 @@ public class HourArchive {
 			hourRecordData[i] = data[address + i];
 		}
 		HourRecord hourRecord = new HourRecord(hourRecordData, hour);
-		if (!hourRecord.getDateTime().equals(recDateTime)) {
-			hourRecord.setAvgPressure1(0);
-			hourRecord.setAvgPressure2(0);
-			hourRecord.setAvgTemp1(0);
-			hourRecord.setAvgTemp2(0);
-			hourRecord.setAvgTemp3(0);
-			hourRecord.setAvgTemp4(0);
-			hourRecord.setDay(recDateTime.getDayOfMonth());
-			hourRecord.setEnergy1(0);
-			hourRecord.setEnergy2(0);
-			hourRecord.setMonthYear(convertToMonthYearFormat(recDateTime.toLocalDate()));
-			hourRecord.setHour(recDateTime.getHour());
-			hourRecord.setVolume1(0);
-			hourRecord.setVolume2(0);
-			hourRecord.setVolume3(0);
-			hourRecord.setVolume4(0);
-		}
+		LocalDateTime dateTime = hourRecord.getDateTime();
+		if (dateTime.equals(recDateTime)) {
+			hourRecord.setValid(true);
+		} else
+			hourRecord.setValid(false);
 		return hourRecord;
 	}
 
@@ -70,25 +59,28 @@ public class HourArchive {
 
 		while (startDateTime.isBefore(LocalDateTime.of(requestDate.plusDays(1), LocalTime.of(0, 1)))) {
 			HourRecord hr = getHourRecord(startDateTime, archiveCurrenDatetime);
-			String s = String.format("Date %s p1=%d p2=%d t1=%d t2=%d t3=%d t4=%d", hr.getDateTime(), hr.getAvgPressure1(),
-					hr.getAvgPressure2(), hr.getAvgTemp1(), hr.getAvgTemp2(), hr.getAvgTemp3(), hr.getAvgTemp4());
-			System.out.println(s);
-			dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() + hr.getAvgPressure1());
-			dayRecord.setAvgPressure2(dayRecord.getAvgPressure2() + hr.getAvgPressure2());
-			dayRecord.setAvgTemp1(dayRecord.getAvgTemp1() + hr.getAvgTemp1());
-			dayRecord.setAvgTemp2(dayRecord.getAvgTemp2() + hr.getAvgTemp2());
-			dayRecord.setAvgTemp3(dayRecord.getAvgTemp3() + hr.getAvgTemp3());
-			dayRecord.setAvgTemp4(dayRecord.getAvgTemp4() + hr.getAvgTemp4());
+			if (hr.isValid()) {
+				String s = String.format("Date %s v1=%d v2=%d v3=%d v4=%d e1=%f e2=%f", hr.getDateTime(),
+						hr.getVolume1(), hr.getVolume2(), hr.getVolume3(), hr.getVolume4(),
+						hr.getEnergy1(), hr.getEnergy2());
+				System.out.println(s);
+				dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() + hr.getAvgPressure1());
+				dayRecord.setAvgPressure2(dayRecord.getAvgPressure2() + hr.getAvgPressure2());
+				dayRecord.setAvgTemp1(dayRecord.getAvgTemp1() + hr.getAvgTemp1());
+				dayRecord.setAvgTemp2(dayRecord.getAvgTemp2() + hr.getAvgTemp2());
+				dayRecord.setAvgTemp3(dayRecord.getAvgTemp3() + hr.getAvgTemp3());
+				dayRecord.setAvgTemp4(dayRecord.getAvgTemp4() + hr.getAvgTemp4());
 
-			dayRecord.setEnergy1(dayRecord.getEnergy1() + hr.getEnergy1());
-			dayRecord.setEnergy2(dayRecord.getEnergy2() + hr.getEnergy2());
+				dayRecord.setEnergy1(dayRecord.getEnergy1() + hr.getEnergy1());
+				dayRecord.setEnergy2(dayRecord.getEnergy2() + hr.getEnergy2());
 
-			dayRecord.setVolume1(dayRecord.getVolume1() + hr.getVolume1());
-			dayRecord.setVolume2(dayRecord.getVolume2() + hr.getVolume2());
-			dayRecord.setVolume3(dayRecord.getVolume3() + hr.getVolume3());
-			dayRecord.setVolume4(dayRecord.getVolume4() + hr.getVolume4());
+				dayRecord.setVolume1(dayRecord.getVolume1() + hr.getVolume1());
+				dayRecord.setVolume2(dayRecord.getVolume2() + hr.getVolume2());
+				dayRecord.setVolume3(dayRecord.getVolume3() + hr.getVolume3());
+				dayRecord.setVolume4(dayRecord.getVolume4() + hr.getVolume4());
+
+			}
 			startDateTime = startDateTime.plusHours(1);
-
 		}
 		dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() / 24);
 		dayRecord.setAvgPressure2(dayRecord.getAvgPressure2() / 24);

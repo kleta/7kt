@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -21,50 +18,41 @@ public class Measuring {
 	@EmbeddedId
 	private MeasuringPK id;
 	
+
 	@ManyToOne
-	@JoinColumn(name="idDevice")
+	@JoinColumn(name="idDevice", referencedColumnName = "id", insertable=false, updatable=false)
 	private Device device;
 	
 	
 	private Float value;
 
-	public Device getDevice() {
-		return device;
+
+	public void setArchiveType(ArchiveTypes month) {
+		if(id==null)
+			id=new MeasuringPK();
+		id.setArchiveType(month);		
 	}
 
-	public void setDevice(Device device) {
-		this.device = device;
+
+	public void setDateTime(LocalDateTime atTime) {
+		if(id==null)
+			id=new MeasuringPK();
+		id.setDateTime(atTime);
+		
 	}
 
-	public Parameters getParametr() {
-		return id.getParametr();
+
+	public void setParametr(Parameters value2) {
+		if(id==null)
+			id=new MeasuringPK();
+		id.setParameter(value2);	
+	}
+	
+	public void setDevice(Device device){
+		if(id==null)
+			id=new MeasuringPK();
+		this.device=device;
+		id.setIdDevice(device.getId());
 	}
 
-	public void setParametr(Parameters parametr) {
-		 id.setParametr(parametr);
-	}
-
-	public ArchiveTypes getArchiveType() {
-		return id.getArchiveType();
-	}
-
-	public void setArchiveType(ArchiveTypes archiveType) {
-		id.setArchiveType(archiveType);
-	}
-
-	public LocalDateTime getDateTime() {
-		return id.getDateTime();
-	}
-
-	public void setDateTime(LocalDateTime dateTime) {
-		id.setDateTime(dateTime);
-	}
-
-	public Float getValue() {
-		return value;
-	}
-
-	public void setValue(Float value) {
-		this.value = value;
-	}
 }
