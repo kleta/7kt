@@ -5,5 +5,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="META-INF"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+	<classpathentry kind="lib" path="org.eclipse.nebula.widgets.cdatetime_0.14.0.201602191853.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

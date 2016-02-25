@@ -21,5 +21,13 @@
          </property>
       </product>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="ru.sevenkt.app.ui.MeasuringView"
+            id="ru.sevenkt.app.ui.MeasuringView"
+            name="New ViewPart">
+      </view>
+   </extension>
 
 </plugin>

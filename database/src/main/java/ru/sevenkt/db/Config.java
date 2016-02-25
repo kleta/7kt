@@ -69,7 +69,7 @@ public class Config {
 				env.getProperty("eclipselink.ddl-generation.output-mode"));
 		jpaProperties.put("eclipselink.target-database", env.getProperty("eclipselink.target-database"));
 		jpaProperties.put("eclipselink.weaving", env.getProperty("eclipselink.weaving"));
-		jpaProperties.put("eclipselink.logging.level", env.getProperty("eclipselink.logging.level"));
+		jpaProperties.put("eclipselink.logging.level.sql", env.getProperty("eclipselink.logging.level.sql"));
 		jpaProperties.put("eclipselink.logging.parameters", env.getProperty("eclipselink.logging.parameters"));
 
 		factory.setJpaProperties(jpaProperties);

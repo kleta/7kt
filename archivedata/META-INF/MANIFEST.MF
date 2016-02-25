@@ -5,7 +5,7 @@ Bundle-SymbolicName: ru.7kt.archivedata
 Bundle-Version: 1.0.0.qualifier
 Export-Package: ru.sevenkt.archive.services
 Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false
-Import-Package: ru.sevenkt.annotation,
+Import-Package: ru.sevenkt.annotations,
  ru.sevenkt.domain,
  ru.sevenkt.exceptions,
  ru.sevenkt.utils

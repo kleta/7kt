@@ -3,6 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: App
 Bundle-SymbolicName: ru.7kt.app;singleton:=true
 Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: META-INF/,
+ .,
+ org.eclipse.nebula.widgets.cdatetime_0.14.0.201602191853.jar
 Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.core.runtime;bundle-version="3.11.1",
  org.eclipse.swt;bundle-version="3.104.1",
@@ -22,9 +25,12 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.jface.databinding,
  com.ibm.icu,
  ru.7kt.core;bundle-version="1.0.0",
- ru.7kt.database;bundle-version="1.0.0"
-Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
- org.slf4j;version="1.7.2"
+ ru.7kt.database;bundle-version="1.0.0",
+ org.eclipse.ui;bundle-version="3.107.0",
+ org.eclipse.ui.forms;bundle-version="3.6.200",
+ org.eclipse.nebula.widgets.cdatetime;bundle-version="0.14.0",
+ org.eclipse.nebula.visualization.xygraph;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-ClassPath: META-INF/,
- .
+Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
+ javax.inject;version="1.0.0",
+ org.slf4j;version="1.7.2"

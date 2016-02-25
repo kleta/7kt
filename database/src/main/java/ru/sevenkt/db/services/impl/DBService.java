@@ -2,12 +2,15 @@ package ru.sevenkt.db.services.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import ru.sevenkt.db.entities.Device;
@@ -281,6 +284,37 @@ public class DBService implements IDBService {
 	@Override
 	public Device findDeviceBySerialNum(int serialNumber) {
 		return dr.findBySerialNum(serialNumber+"");
+	}
+
+
+
+	@Override
+	public void saveMeasurings(List<Measuring> measurings) {
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		try {
+			for (Measuring measuring : measurings) {
+				mr.save(measuring);
+			}
+		} catch (Exception ex) {
+			tx.rollback();
+			throw ex;
+		} finally {
+			try {
+				tx.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				tx.rollback();
+			}
+		}		
+		
+	}
+
+
+
+	@Override
+	public List<Device> findAllDevices() {
+		return StreamSupport.stream(dr.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
 }

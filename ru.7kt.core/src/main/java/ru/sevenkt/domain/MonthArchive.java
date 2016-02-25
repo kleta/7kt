@@ -2,7 +2,7 @@ package ru.sevenkt.domain;
 
 import java.time.LocalDate;
 
-import ru.sevenkt.annotation.Length;
+import ru.sevenkt.annotations.Length;
 
 @Length(value = 2964)
 public class MonthArchive {

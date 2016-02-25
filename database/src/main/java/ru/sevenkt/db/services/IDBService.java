@@ -13,23 +13,17 @@ public interface IDBService {
 	
 	void saveNode(Node node);
 	
-//	void saveArchiveType(ArchiveType archiveType);
+
 	
 	void saveDevice(Device device);
 	
 	void saveMeasuring(Measuring measuring);
 	
-//	void saveParameter(Parameter parameter);
-	
 	void deleteNode(Node node);
-	
-//	void deleteArchiveType(ArchiveType archiveType);
-	
+
 	void deleteDevice(Device device);
 	
 	void deleteMeasuring(Measuring measuring);
-	
-//	void deleteParameter(Parameter parameter);
 	
 	List<Node> findAllNodes();
 	
@@ -42,6 +36,10 @@ public interface IDBService {
 	List<Measuring> findHourArchive(Device device, LocalDate start, LocalDate end);
 
 	Device findDeviceBySerialNum(int serialNumber);
+
+	void saveMeasurings(List<Measuring> measurings);
+
+	List<Device> findAllDevices();
 	
 	
 	

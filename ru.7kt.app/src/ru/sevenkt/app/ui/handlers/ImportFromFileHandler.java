@@ -7,7 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +29,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ru.sevenkt.annotation.Parameter;
+import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.app.ui.forms.DeviceDialog;
 import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.db.entities.Device;
@@ -67,8 +70,8 @@ public class ImportFromFileHandler {
 			Archive archive = archiveService.readArchiveFromFile(new File(selected));
 			Device device = insertOrUpdateDeviceSettings(archive.getSettings());
 			if (device != null) {
-				// insertMonthArchive(archive, device);
-				// insertDayArchive(archive, device);
+				insertMonthArchive(archive, device);
+				insertDayArchive(archive, device);
 				insertHourArchive(archive, device);
 				insertJournalSettings(archive, device);
 			}
@@ -92,13 +95,16 @@ public class ImportFromFileHandler {
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime();
 		LocalDateTime startArchiveDate = dateTime.minusDays(HourArchive.MAX_DAY_COUNT);
 		while (!startArchiveDate.isAfter(dateTime)) {
+			List<Measuring> avgMeasurings = new ArrayList<>();
+			Map<Parameters, List<Measuring>> consumptionMeasuring = new HashMap<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
+			LOG.info("Импортируются данные за " + localDate);
 			System.out.println(localDate);
-			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime);
+			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
 			DayRecord dayConsumption = dr2.minus(dr1);
-			// DayRecord diff = dayConsumption.minus(sumDay);
+
 			for (int i = 1; i < 25; i++) {
 				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
 				HourRecord hr = ha.getHourRecord(localDateTime, dateTime);
@@ -113,31 +119,98 @@ public class ImportFromFileHandler {
 							Parameters parameter = field.getAnnotation(Parameter.class).value();
 							m.setParametr(parameter);
 							field.setAccessible(true);
-							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)){
+							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								float val = field.getInt(hr);
 								m.setValue(val / 10);
+								avgMeasurings.add(m);
 							}
 							if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
-									|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)){
+									|| parameter.equals(Parameters.AVG_TEMP3)
+									|| parameter.equals(Parameters.AVG_TEMP4)) {
 								float val = field.getInt(hr);
-								m.setValue(val / 100);
+								m.setValue((val / 100 > 100 ? 0 : val / 100));
+								avgMeasurings.add(m);
 							}
-								
-							if (!sumDay.equals(dayConsumption)
-									&& (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)
-											|| parameter.equals(Parameters.W1) || parameter.equals(Parameters.W2)
-											|| parameter.equals(Parameters.W3) || parameter.equals(Parameters.W4))) {
 
-							} else {
+							if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
+								float val = field.getFloat(hr);
+								m.setValue(val);
+								List<Measuring> meas = consumptionMeasuring.get(parameter);
+								if (meas == null)
+									consumptionMeasuring.put(parameter, new ArrayList<>());
+								consumptionMeasuring.get(parameter).add(m);
+							}
+							if (parameter.equals(Parameters.W1) || parameter.equals(Parameters.W2)
+									|| parameter.equals(Parameters.W3) || parameter.equals(Parameters.W4)) {
+								float val = field.getInt(hr);
+								switch (parameter) {
+								case W1:
+									val = val * archive.getSettings().getVolumeByImpulsSetting1();
+									break;
+								case W2:
+									val = val * archive.getSettings().getVolumeByImpulsSetting2();
+									break;
+								case W3:
+									val = val * archive.getSettings().getVolumeByImpulsSetting3();
+									break;
+								case W4:
+									val = val * archive.getSettings().getVolumeByImpulsSetting4();
+									break;
 
-								dbService.saveMeasuring(m);
+								default:
+									break;
+								}
+								m.setValue(val);
+								List<Measuring> meas = consumptionMeasuring.get(parameter);
+								if (meas == null)
+									consumptionMeasuring.put(parameter, new ArrayList<>());
+								consumptionMeasuring.get(parameter).add(m);
+
 							}
 						}
 					}
 				}
 			}
-
+			List<Measuring> list = avgMeasurings;
+			// list.addAll(avgMeasurings);
+			Set<Parameters> keySet = consumptionMeasuring.keySet();
+			for (Parameters parameter : keySet) {
+				List<Measuring> measurings = consumptionMeasuring.get(parameter);
+				if (!dayConsumption.equalsValues(sumDay)) {
+					DayRecord diffRecord = dayConsumption.minus(sumDay);
+					float diffVal = 0;
+					switch (parameter) {
+					case W1:
+						diffVal = diffRecord.getVolume1();
+						break;
+					case W2:
+						diffVal = diffRecord.getVolume2();
+						break;
+					case W3:
+						diffVal = diffRecord.getVolume3();
+						break;
+					case W4:
+						diffVal = diffRecord.getVolume4();
+						break;
+					case E1:
+						diffVal = diffRecord.getEnergy1();
+						break;
+					case E2:
+						diffVal = diffRecord.getEnergy2();
+						break;
+					default:
+						break;
+					}
+					long countNotZerroValue = measurings.stream().filter(m -> m.getValue() != 0).count();
+					float addValue = diffVal / countNotZerroValue;
+					measurings.stream().filter(m -> m.getValue() != 0)
+							.forEach(m -> m.setValue(m.getValue() + addValue));
+				}
+				list.addAll(measurings);
+			}
+			dbService.saveMeasurings(list);
 			startArchiveDate = startArchiveDate.plusDays(1);
+
 		}
 	}
 
@@ -145,6 +218,7 @@ public class ImportFromFileHandler {
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
 		LocalDate startArchiveDate = dateTime.minusMonths(DayArchive.MAX_MONTH_COUNT).toLocalDate();
+		List<Measuring> measurings = new ArrayList<>();
 		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
 			DayRecord dr = da.getDayRecord(startArchiveDate, dateTime);
 			if (dr.isValid()) {
@@ -162,12 +236,13 @@ public class ImportFromFileHandler {
 						field.setAccessible(true);
 						float val = field.getFloat(dr);
 						m.setValue(val);
-						dbService.saveMeasuring(m);
+						measurings.add(m);
 					}
 				}
 			}
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
+		dbService.saveMeasurings(measurings);
 
 	}
 
@@ -175,6 +250,7 @@ public class ImportFromFileHandler {
 		MonthArchive ma = archive.getMonthArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withDayOfMonth(1);
 		LocalDate startArchiveDate = dateTime.minusYears(MonthArchive.MAX_YEAR_COUNT).toLocalDate();
+		List<Measuring> measurings = new ArrayList<>();
 		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
 			int year = startArchiveDate.getYear() - 2000;
 			if (year < 15) {
@@ -194,13 +270,13 @@ public class ImportFromFileHandler {
 						field.setAccessible(true);
 						float val = field.getFloat(mr);
 						m.setValue(val);
-						dbService.saveMeasuring(m);
+						measurings.add(m);
 					}
 				}
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
-
+		dbService.saveMeasurings(measurings);
 	}
 
 	private Device insertOrUpdateDeviceSettings(Settings settings) {

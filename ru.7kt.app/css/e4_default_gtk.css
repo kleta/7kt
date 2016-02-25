@@ -1,9 +1,12 @@
+
+@import url("e4_basestyle.css");
+
 .MTrimmedWindow { 
     background-color: #E2E2E2; 
 }
 
 .MPartStack {
-	font-size: 8;
+	font-size: 11;
 	swt-simple: false;
 	swt-mru-visible: false;
 }
@@ -50,3 +53,4 @@ CTabFolder.MArea .MPartStack, CTabFolder.MArea .MPartStack.active {
 CTabFolder Canvas {
   background-color: #F8F8F8;
 }
+

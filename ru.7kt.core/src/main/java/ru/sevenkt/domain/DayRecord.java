@@ -6,9 +6,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import lombok.Data;
-import ru.sevenkt.annotation.Address;
-import ru.sevenkt.annotation.Length;
-import ru.sevenkt.annotation.Parameter;
+import ru.sevenkt.annotations.Address;
+import ru.sevenkt.annotations.Length;
+import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(value = 56)
@@ -188,24 +188,11 @@ public class DayRecord implements Cloneable{
 		dr2.setWeight4(getWeight4()-dr1.getWeight4());
 		return dr2;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DayRecord other = (DayRecord) obj;
-		if (day != other.day)
-			return false;
+	
+	public boolean equalsValues(DayRecord other) {
 		if (Float.floatToIntBits(energy1) != Float.floatToIntBits(other.energy1))
 			return false;
 		if (Float.floatToIntBits(energy2) != Float.floatToIntBits(other.energy2))
-			return false;
-		if (monthYear != other.monthYear)
-			return false;
-		if (valid != other.valid)
 			return false;
 		if (Float.floatToIntBits(volume1) != Float.floatToIntBits(other.volume1))
 			return false;
@@ -217,20 +204,6 @@ public class DayRecord implements Cloneable{
 			return false;
 		return true;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + day;
-		result = prime * result + Float.floatToIntBits(energy1);
-		result = prime * result + Float.floatToIntBits(energy2);
-		result = prime * result + monthYear;
-		result = prime * result + (valid ? 1231 : 1237);
-		result = prime * result + Float.floatToIntBits(volume1);
-		result = prime * result + Float.floatToIntBits(volume2);
-		result = prime * result + Float.floatToIntBits(volume3);
-		result = prime * result + Float.floatToIntBits(volume4);
-		return result;
-	}
+	
 	
 }

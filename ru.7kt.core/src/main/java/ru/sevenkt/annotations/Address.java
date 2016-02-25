@@ -1,4 +1,4 @@
-package ru.sevenkt.annotation;
+package ru.sevenkt.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -4,8 +4,8 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import lombok.Data;
-import ru.sevenkt.annotation.Address;
-import ru.sevenkt.annotation.Length;
+import ru.sevenkt.annotations.Address;
+import ru.sevenkt.annotations.Length;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(10)

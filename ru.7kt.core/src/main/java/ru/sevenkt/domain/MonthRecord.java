@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-import ru.sevenkt.annotation.Address;
-import ru.sevenkt.annotation.Length;
-import ru.sevenkt.annotation.Parameter;
+import ru.sevenkt.annotations.Address;
+import ru.sevenkt.annotations.Length;
+import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(value=74)

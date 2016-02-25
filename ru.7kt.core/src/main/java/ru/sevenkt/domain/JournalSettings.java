@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
-import ru.sevenkt.annotation.Length;
+import ru.sevenkt.annotations.Length;
 
 @Length(value = 2560)
 @Data

@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
-import ru.sevenkt.annotation.Length;
+import ru.sevenkt.annotations.Length;
 import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.domain.Archive;
 

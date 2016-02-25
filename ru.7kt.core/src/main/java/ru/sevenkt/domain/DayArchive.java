@@ -3,7 +3,7 @@ package ru.sevenkt.domain;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import ru.sevenkt.annotation.Length;
+import ru.sevenkt.annotations.Length;
 
 @Length(value = 13416)
 public class DayArchive {
