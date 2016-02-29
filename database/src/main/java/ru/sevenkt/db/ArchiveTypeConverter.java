@@ -10,6 +10,8 @@ public class ArchiveTypeConverter implements AttributeConverter<ArchiveTypes, In
 
 	@Override
 	public Integer convertToDatabaseColumn(ArchiveTypes attribute) {
+		if(attribute==null)
+			System.out.println();
 		return attribute.getId();
 	}
 

@@ -231,11 +231,15 @@ public class ImportFromFileHandler {
 						m.setDevice(device);
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						m.setParametr(parameter);
-						if (parameter.equals(Parameters.E1))
-							System.out.println();
 						field.setAccessible(true);
-						float val = field.getFloat(dr);
-						m.setValue(val);
+						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+							float val = field.getInt(dr);
+							m.setValue((val / 100 > 100 ? 0 : val / 100));
+						} else {
+							float val = field.getFloat(dr);
+							m.setValue(val);
+						}
 						measurings.add(m);
 					}
 				}
@@ -268,8 +272,15 @@ public class ImportFromFileHandler {
 						m.setDevice(device);
 						m.setParametr(field.getAnnotation(Parameter.class).value());
 						field.setAccessible(true);
-						float val = field.getFloat(mr);
-						m.setValue(val);
+						Parameters parameter = field.getAnnotation(Parameter.class).value();
+						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+							float val = field.getInt(mr);
+							m.setValue((val / 100 > 100 ? 0 : val / 100));
+						} else {
+							float val = field.getFloat(mr);
+							m.setValue(val);
+						}
 						measurings.add(m);
 					}
 				}

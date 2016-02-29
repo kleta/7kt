@@ -51,7 +51,7 @@ public class Archive {
 				field.set(this, obj);
 				if(field.getName().equals("settings")){
 					if(!settings.isVersionSupport())
-							throw new VersionNotSupportedException("������ ������ "+settings.getArchiveVersion()+" �� ��������������");
+							throw new VersionNotSupportedException("Версия архива "+settings.getArchiveVersion()+" не поддерживается");
 				}
 			}
 		}

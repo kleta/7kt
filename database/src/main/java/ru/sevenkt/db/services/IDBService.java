@@ -29,17 +29,13 @@ public interface IDBService {
 	
 	List<Device> findDeviceByNode(Node node);
 	
-	List<Measuring> findMonthArchive(Device device, LocalDate start, LocalDate end);
-	
-	List<Measuring> findDayArchive(Device device, LocalDate start, LocalDate end);
-
-	List<Measuring> findHourArchive(Device device, LocalDate start, LocalDate end);
-
 	Device findDeviceBySerialNum(int serialNumber);
 
 	void saveMeasurings(List<Measuring> measurings);
 
 	List<Device> findAllDevices();
+
+	List<Measuring> findArchive(Device device, LocalDate startDate, LocalDate endDate, ArchiveTypes archiveType);
 	
 	
 	

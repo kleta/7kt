@@ -26,11 +26,7 @@ import ru.sevenkt.domain.Parameters;
 @Service
 public class DBService implements IDBService {
 
-//	@Autowired
-//	private ParameterRepo pr;
-//
-//	@Autowired
-//	private ArchiveTypeRepo atr;
+
 
 	@Autowired
 	private DeviceRepo dr;
@@ -71,25 +67,7 @@ public class DBService implements IDBService {
 	}
 
 
-//	@Override
-//	public void saveArchiveType(ArchiveType archiveType) {
-//		EntityTransaction tx = em.getTransaction();
-//		tx.begin();
-//		try {
-//			atr.save(archiveType);
-//		} catch (Exception ex) {
-//			tx.rollback();
-//			throw ex;
-//		} finally {
-//			try {
-//				tx.commit();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				tx.rollback();
-//			}
-//		}		
-//		
-//	}
+
 
 
 	@Override
@@ -134,25 +112,7 @@ public class DBService implements IDBService {
 	}
 
 
-//	@Override
-//	public void saveParameter(Parameter parameter) {
-//		EntityTransaction tx = em.getTransaction();
-//		tx.begin();
-//		try {
-//			pr.save(parameter);
-//		} catch (Exception ex) {
-//			tx.rollback();
-//			throw ex;
-//		} finally {
-//			try {
-//				tx.commit();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				tx.rollback();
-//			}
-//		}		
-//		
-//	}
+
 
 
 	@Override
@@ -176,25 +136,7 @@ public class DBService implements IDBService {
 	}
 
 
-//	@Override
-//	public void deleteArchiveType(ArchiveType archiveType) {
-//		EntityTransaction tx = em.getTransaction();
-//		tx.begin();
-//		try {
-//			atr.delete(archiveType);
-//		} catch (Exception ex) {
-//			tx.rollback();
-//			throw ex;
-//		} finally {
-//			try {
-//				tx.commit();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				tx.rollback();
-//			}
-//		}
-//		
-//	}
+
 
 
 	@Override
@@ -225,25 +167,7 @@ public class DBService implements IDBService {
 	}
 
 
-//	@Override
-//	public void deleteParameter(Parameter parameter) {
-//		EntityTransaction tx = em.getTransaction();
-//		tx.begin();
-//		try {
-//			pr.delete(parameter);
-//		} catch (Exception ex) {
-//			tx.rollback();
-//			throw ex;
-//		} finally {
-//			try {
-//				tx.commit();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				tx.rollback();
-//			}
-//		}		
-//		
-//	}
+
 
 
 	@Override
@@ -260,25 +184,7 @@ public class DBService implements IDBService {
 	}
 
 
-	@Override
-	public List<Measuring> findMonthArchive(Device device, LocalDate start, LocalDate end) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Measuring> findDayArchive(Device device, LocalDate start, LocalDate end) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Measuring> findHourArchive(Device device, LocalDate start, LocalDate end) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 
 	@Override
@@ -315,6 +221,14 @@ public class DBService implements IDBService {
 	@Override
 	public List<Device> findAllDevices() {
 		return StreamSupport.stream(dr.findAll().spliterator(), false).collect(Collectors.toList());
+	}
+
+
+
+	@Override
+	public List<Measuring> findArchive(Device device, LocalDate startDate, LocalDate endDate,
+			ArchiveTypes archiveType) {
+		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0,0), endDate.atTime(0,0));
 	}
 
 }
