@@ -3,6 +3,7 @@ package ru.sevenkt.app.ui.handlers;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,12 +16,15 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -70,10 +74,31 @@ public class ImportFromFileHandler {
 			Archive archive = archiveService.readArchiveFromFile(new File(selected));
 			Device device = insertOrUpdateDeviceSettings(archive.getSettings());
 			if (device != null) {
-				insertMonthArchive(archive, device);
-				insertDayArchive(archive, device);
-				insertHourArchive(archive, device);
-				insertJournalSettings(archive, device);
+				IRunnableWithProgress op = new IRunnableWithProgress() {
+					
+					@Override
+					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+						try {
+							monitor.beginTask("Импорт данных", 4);
+							insertMonthArchive(archive, device, monitor);
+							insertDayArchive(archive, device, monitor);
+							insertHourArchive(archive, device, monitor);
+							//insertJournalSettings(archive, device, monitor);
+							monitor.worked(4);
+							Thread.sleep(1000);
+							monitor.done();
+						} catch (Exception e) {
+							MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
+							ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
+							LOG.error(e.getMessage(), e);
+						}
+						
+						
+					}
+				};
+	            ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(parentShell);           
+	            progressDialog.run(true, true, op);
+				
 			}
 		} catch (Exception e) {
 
@@ -85,24 +110,28 @@ public class ImportFromFileHandler {
 
 	}
 
-	private void insertJournalSettings(Archive archive, Device device) throws Exception {
+	private void insertJournalSettings(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 
 	}
 
-	private void insertHourArchive(Archive archive, Device device) throws Exception {
+	private void insertHourArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		HourArchive ha = archive.getHourArchive();
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime();
 		LocalDateTime startArchiveDate = dateTime.minusDays(HourArchive.MAX_DAY_COUNT);
+		monitor.subTask("Импорт часового архива");
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> avgMeasurings = new ArrayList<>();
 			Map<Parameters, List<Measuring>> consumptionMeasuring = new HashMap<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
+			if (localDate.equals(LocalDate.of(2016, 2, 4)))
+				System.out.println();
 			LOG.info("Импортируются данные за " + localDate);
 			System.out.println(localDate);
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
+
 			DayRecord dayConsumption = dr2.minus(dr1);
 
 			for (int i = 1; i < 25; i++) {
@@ -179,28 +208,29 @@ public class ImportFromFileHandler {
 				if (!dayConsumption.equalsValues(sumDay)) {
 					DayRecord diffRecord = dayConsumption.minus(sumDay);
 					float diffVal = 0;
-					switch (parameter) {
-					case W1:
-						diffVal = diffRecord.getVolume1();
-						break;
-					case W2:
-						diffVal = diffRecord.getVolume2();
-						break;
-					case W3:
-						diffVal = diffRecord.getVolume3();
-						break;
-					case W4:
-						diffVal = diffRecord.getVolume4();
-						break;
-					case E1:
-						diffVal = diffRecord.getEnergy1();
-						break;
-					case E2:
-						diffVal = diffRecord.getEnergy2();
-						break;
-					default:
-						break;
-					}
+					if (dr2.isValid() && dr1.isValid())
+						switch (parameter) {
+						case W1:
+							diffVal = diffRecord.getVolume1();
+							break;
+						case W2:
+							diffVal = diffRecord.getVolume2();
+							break;
+						case W3:
+							diffVal = diffRecord.getVolume3();
+							break;
+						case W4:
+							diffVal = diffRecord.getVolume4();
+							break;
+						case E1:
+							diffVal = diffRecord.getEnergy1();
+							break;
+						case E2:
+							diffVal = diffRecord.getEnergy2();
+							break;
+						default:
+							break;
+						}
 					long countNotZerroValue = measurings.stream().filter(m -> m.getValue() != 0).count();
 					float addValue = diffVal / countNotZerroValue;
 					measurings.stream().filter(m -> m.getValue() != 0)
@@ -212,9 +242,10 @@ public class ImportFromFileHandler {
 			startArchiveDate = startArchiveDate.plusDays(1);
 
 		}
+		monitor.worked(3);
 	}
 
-	private void insertDayArchive(Archive archive, Device device) throws Exception {
+	private void insertDayArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
 		LocalDate startArchiveDate = dateTime.minusMonths(DayArchive.MAX_MONTH_COUNT).toLocalDate();
@@ -246,11 +277,13 @@ public class ImportFromFileHandler {
 			}
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
+		monitor.subTask("Импорт дневного архива");
 		dbService.saveMeasurings(measurings);
+		monitor.worked(2);
 
 	}
 
-	private void insertMonthArchive(Archive archive, Device device) throws Exception {
+	private void insertMonthArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		MonthArchive ma = archive.getMonthArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withDayOfMonth(1);
 		LocalDate startArchiveDate = dateTime.minusYears(MonthArchive.MAX_YEAR_COUNT).toLocalDate();
@@ -287,7 +320,9 @@ public class ImportFromFileHandler {
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
+		monitor.subTask("Импорт месячного архива");
 		dbService.saveMeasurings(measurings);
+		monitor.worked(1);
 	}
 
 	private Device insertOrUpdateDeviceSettings(Settings settings) {

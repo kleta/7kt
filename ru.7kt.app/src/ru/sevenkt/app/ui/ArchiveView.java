@@ -1,23 +1,54 @@
 
 package ru.sevenkt.app.ui;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Collections;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.forms.widgets.ScrolledForm;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.eclipse.draw2d.LightweightSystem;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider;
+import org.eclipse.nebula.visualization.xygraph.figures.Trace;
+import org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle;
+import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
+import org.eclipse.nebula.widgets.cdatetime.CDT;
+import org.eclipse.nebula.widgets.cdatetime.CDateTime;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
@@ -26,52 +57,31 @@ import ru.sevenkt.app.ui.handlers.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
-
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.nebula.widgets.cdatetime.CDateTime;
-import org.eclipse.nebula.widgets.cdatetime.CDT;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.e4.core.di.annotations.Optional;
-import org.eclipse.e4.core.services.events.IEventBroker;
-import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Canvas;
 
 public class ArchiveView implements EventHandler {
 	@Inject
 	private IEventBroker broker;
 
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+
 	private Table table;
+
 	private Device device;
 
 	private Date startPeriodSelectedDate;
 
 	private Date endPeriodSelectedDate;
+
 	private Button requestButton;
 
 	private ArchiveTypes selectedArchiveType;
+
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
 	private TableViewer tableViewer;
+
+	private CircularBufferDataProvider traceDataProvider;
 
 	@Inject
 	public ArchiveView() {
@@ -249,11 +259,41 @@ public class ArchiveView implements EventHandler {
 		tbtmNewItem.setControl(scrldfrmNewScrolledform_1);
 		formToolkit.paintBordersFor(scrldfrmNewScrolledform_1);
 		scrldfrmNewScrolledform_1.setText("График");
+		scrldfrmNewScrolledform_1.getBody().setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+		Canvas canvas = new Canvas(scrldfrmNewScrolledform_1.getBody(), SWT.NONE);
+		formToolkit.adapt(canvas);
+		formToolkit.paintBordersFor(canvas);
+		
+		final LightweightSystem lws = new LightweightSystem(canvas);
+
+		// create a new XY Graph.
+		XYGraph xyGraph = new XYGraph();
+		xyGraph.setTitle("Simple Example");
+		// set it as the content of LightwightSystem
+		lws.setContents(xyGraph);
+
+		// create a trace data provider, which will provide the data to the
+		// trace.
+		traceDataProvider = new CircularBufferDataProvider(false);
+		traceDataProvider.setBufferSize(100);
+		
+
+		// create the trace
+		Trace trace = new Trace("Trace1-XY Plot", xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
+
+		// set trace property
+		trace.setPointStyle(PointStyle.XCROSS);
+
+		// add the trace to xyGraph
+		xyGraph.addTrace(trace);
 
 	}
 
 	@Override
 	public void handleEvent(Event event) {
+		traceDataProvider.setCurrentXDataArray(new double[] { 10, 23, 34, 45, 56, 78, 88, 99 });
+		traceDataProvider.setCurrentYDataArray(new double[] { 11, 44, 55, 45, 88, 98, 52, 23 });
 		List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
 		table = tableViewer.getTable();
 		table.setLinesVisible(true);
@@ -268,7 +308,7 @@ public class ArchiveView implements EventHandler {
 				}
 
 				public String getText(Object element) {
-					return element == null ? "" : ((TableRow)element).getDateTime().toString();
+					return element == null ? "" : ((TableRow) element).getDateTime().format(formatter);
 				}
 			});
 			TableColumn dateColumn = dateViewerColumn.getColumn();
