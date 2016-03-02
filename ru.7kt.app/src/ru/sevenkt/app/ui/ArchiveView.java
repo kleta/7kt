@@ -275,7 +275,7 @@ public class ArchiveView implements EventHandler {
 
 		// create a trace data provider, which will provide the data to the
 		// trace.
-		traceDataProvider = new CircularBufferDataProvider(false);
+		traceDataProvider = new CircularBufferDataProvider(true);
 		traceDataProvider.setBufferSize(100);
 		
 
@@ -292,8 +292,7 @@ public class ArchiveView implements EventHandler {
 
 	@Override
 	public void handleEvent(Event event) {
-		traceDataProvider.setCurrentXDataArray(new double[] { 10, 23, 34, 45, 56, 78, 88, 99 });
-		traceDataProvider.setCurrentYDataArray(new double[] { 11, 44, 55, 45, 88, 98, 52, 23 });
+		
 		List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
 		table = tableViewer.getTable();
 		table.setLinesVisible(true);
@@ -322,6 +321,9 @@ public class ArchiveView implements EventHandler {
 				column.setText(parameter.getName());
 			}
 		}
-		tableViewer.setInput(event.getProperty(AppEventConstants.TABLE_ROWS));
+		List<?> input=(List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
+		tableViewer.setInput(input);
+		traceDataProvider.setCurrentXDataArray(new double[] { 10, 23, 34, 45, 56, 78, 88, 99 });
+		traceDataProvider.setCurrentYDataArray(new double[] { 11, 44, 55, 45, 88, 98, 52, 23 });
 	}
 }
