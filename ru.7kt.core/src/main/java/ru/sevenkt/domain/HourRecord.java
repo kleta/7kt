@@ -57,22 +57,22 @@ public class HourRecord {
 	
 	@Address(value=12)
 	@Length(value=2)
-	@Parameter(Parameters.W1)
+	@Parameter(Parameters.V1)
 	private int volume1;
 
 	@Address(value=14)
 	@Length(value=2)
-	@Parameter(Parameters.W2)
+	@Parameter(Parameters.V2)
 	private int volume2;
 	
 	@Address(value=16)
 	@Length(value=2)
-	@Parameter(Parameters.W3)
+	@Parameter(Parameters.V3)
 	private int volume3;
 	
 	@Address(value=18)
 	@Length(value=2)
-	@Parameter(Parameters.W4)
+	@Parameter(Parameters.V4)
 	private int volume4;
 	
 	@Address(value=20)

@@ -28,6 +28,7 @@
    <plugins>
       <plugin id="ch.qos.logback.classic"/>
       <plugin id="ch.qos.logback.core"/>
+      <plugin id="ch.qos.logback.slf4j" fragment="true"/>
       <plugin id="com.ibm.icu"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
@@ -40,6 +41,7 @@
       <plugin id="org.apache.commons.codec"/>
       <plugin id="org.apache.commons.jxpath"/>
       <plugin id="org.apache.commons.logging"/>
+      <plugin id="org.apache.poi"/>
       <plugin id="org.aspectj.runtime"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
@@ -92,7 +94,6 @@
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
       <plugin id="org.eclipse.nebula.cwt"/>
-      <plugin id="org.eclipse.nebula.visualization.xygraph"/>
       <plugin id="org.eclipse.nebula.widgets.cdatetime"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>
@@ -118,6 +119,7 @@
       <plugin id="org.springframework.jdbc"/>
       <plugin id="org.springframework.orm"/>
       <plugin id="org.springframework.transaction"/>
+      <plugin id="org.swtchart"/>
       <plugin id="org.w3c.css.sac"/>
       <plugin id="org.w3c.dom.events"/>
       <plugin id="org.w3c.dom.smil"/>

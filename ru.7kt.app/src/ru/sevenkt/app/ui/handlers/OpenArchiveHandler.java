@@ -114,6 +114,7 @@ public class OpenArchiveHandler implements EventHandler {
 		} while (startDateTime.isBefore(endDateTime));
 		result.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
 		result.put(AppEventConstants.TABLE_ROWS, listTableRow);
+		result.put(AppEventConstants.DEVICE, device);
 		broker.send(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, result);
 	}
 

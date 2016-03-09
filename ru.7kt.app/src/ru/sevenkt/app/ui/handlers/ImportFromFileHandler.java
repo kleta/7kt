@@ -169,20 +169,19 @@ public class ImportFromFileHandler {
 									consumptionMeasuring.put(parameter, new ArrayList<>());
 								consumptionMeasuring.get(parameter).add(m);
 							}
-							if (parameter.equals(Parameters.W1) || parameter.equals(Parameters.W2)
-									|| parameter.equals(Parameters.W3) || parameter.equals(Parameters.W4)) {
+							if (parameter.getCategory().equals("Объём")) {
 								float val = field.getInt(hr);
 								switch (parameter) {
-								case W1:
+								case V1:
 									val = val * archive.getSettings().getVolumeByImpulsSetting1();
 									break;
-								case W2:
+								case V2:
 									val = val * archive.getSettings().getVolumeByImpulsSetting2();
 									break;
-								case W3:
+								case V3:
 									val = val * archive.getSettings().getVolumeByImpulsSetting3();
 									break;
-								case W4:
+								case V4:
 									val = val * archive.getSettings().getVolumeByImpulsSetting4();
 									break;
 
@@ -210,16 +209,16 @@ public class ImportFromFileHandler {
 					float diffVal = 0;
 					if (dr2.isValid() && dr1.isValid())
 						switch (parameter) {
-						case W1:
+						case V1:
 							diffVal = diffRecord.getVolume1();
 							break;
-						case W2:
+						case V2:
 							diffVal = diffRecord.getVolume2();
 							break;
-						case W3:
+						case V3:
 							diffVal = diffRecord.getVolume3();
 							break;
-						case W4:
+						case V4:
 							diffVal = diffRecord.getVolume4();
 							break;
 						case E1:

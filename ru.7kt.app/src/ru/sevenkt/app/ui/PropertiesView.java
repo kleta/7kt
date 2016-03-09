@@ -90,7 +90,11 @@ public class PropertiesView {
 			public String getText(Object element) {
 				Properties e = (Properties) element;
 				Object key = e.keys().nextElement();
-				return e.get(key).toString();
+				Object object = e.get(key);
+				if(object instanceof Float){
+					return Math.round((Float)object)+"";
+				}
+				return object.toString();
 			}
 		});
 		valueTableColumn = tableViewerColumn_1.getColumn();

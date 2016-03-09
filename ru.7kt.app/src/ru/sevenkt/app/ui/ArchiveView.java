@@ -1,21 +1,29 @@
 
 package ru.sevenkt.app.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -23,10 +31,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider;
-import org.eclipse.nebula.visualization.xygraph.figures.Trace;
-import org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle;
-import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
 import org.eclipse.nebula.widgets.cdatetime.CDT;
 import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.SWT;
@@ -34,6 +38,7 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
@@ -42,22 +47,29 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
+import org.eclipse.wb.swt.ResourceManager;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
+import org.swtchart.Chart;
+import org.swtchart.IAxis;
+import org.swtchart.IAxisTick;
+import org.swtchart.ILineSeries;
+import org.swtchart.ILineSeries.PlotSymbolType;
+import org.swtchart.ISeries.SeriesType;
 
 import ru.sevenkt.app.ui.handlers.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
-import org.eclipse.swt.widgets.Canvas;
+import ru.sevenkt.domain.ParametersConst;
 
 public class ArchiveView implements EventHandler {
 	@Inject
@@ -80,8 +92,9 @@ public class ArchiveView implements EventHandler {
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 	private TableViewer tableViewer;
+	private ScrolledForm сhartsScrolledform;
 
-	private CircularBufferDataProvider traceDataProvider;
+	private IAction exportToExcelAction;
 
 	@Inject
 	public ArchiveView() {
@@ -91,7 +104,7 @@ public class ArchiveView implements EventHandler {
 	@PostConstruct
 	public void postConstruct(Composite parent, @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Device device) {
 		this.device = device;
-
+		createActions();
 		broker.subscribe(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, this);
 		parent.setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -104,13 +117,19 @@ public class ArchiveView implements EventHandler {
 		CTabItem tbtmNewItem_1 = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setText("Таблица");
 
-		ScrolledForm scrldfrmNewScrolledform = formToolkit.createScrolledForm(tabFolder);
-		tbtmNewItem_1.setControl(scrldfrmNewScrolledform);
-		formToolkit.paintBordersFor(scrldfrmNewScrolledform);
-		scrldfrmNewScrolledform.setText("Просмотр архива");
-		scrldfrmNewScrolledform.getBody().setLayout(new FormLayout());
+		tabFolder.setSelection(0);
 
-		Section sctnNewSection = formToolkit.createSection(scrldfrmNewScrolledform.getBody(),
+		ScrolledForm arсhiveScrolledform = formToolkit.createScrolledForm(tabFolder);
+		tbtmNewItem_1.setControl(arсhiveScrolledform);
+		formToolkit.paintBordersFor(arсhiveScrolledform);
+		arсhiveScrolledform.setText("Просмотр архива");
+		arсhiveScrolledform.getBody().setLayout(new FormLayout());
+		ToolBarManager tbm = (ToolBarManager)arсhiveScrolledform.getToolBarManager();
+		tbm.add(exportToExcelAction);
+		tbm.update(true);
+		arсhiveScrolledform.reflow(true);
+
+		Section sctnNewSection = formToolkit.createSection(arсhiveScrolledform.getBody(),
 				Section.TWISTIE | Section.TITLE_BAR);
 		FormData fd_sctnNewSection = new FormData();
 		fd_sctnNewSection.right = new FormAttachment(100, -4);
@@ -229,7 +248,7 @@ public class ArchiveView implements EventHandler {
 		});
 		requestButton.setLayoutData(fd_requestButton);
 
-		Section sctnNewSection_1 = formToolkit.createSection(scrldfrmNewScrolledform.getBody(),
+		Section sctnNewSection_1 = formToolkit.createSection(arсhiveScrolledform.getBody(),
 				Section.TWISTIE | Section.TITLE_BAR);
 		FormData fd_sctnNewSection_1 = new FormData();
 		fd_sctnNewSection_1.right = new FormAttachment(sctnNewSection, 0, SWT.RIGHT);
@@ -252,78 +271,159 @@ public class ArchiveView implements EventHandler {
 		table.setHeaderVisible(true);
 		formToolkit.paintBordersFor(table);
 
-		CTabItem tbtmNewItem = new CTabItem(tabFolder, SWT.NONE);
-		tbtmNewItem.setText("График");
+		CTabItem tbtmChartsItem = new CTabItem(tabFolder, SWT.NONE);
+		tbtmChartsItem.setText("Графики");
 
-		ScrolledForm scrldfrmNewScrolledform_1 = formToolkit.createScrolledForm(tabFolder);
-		tbtmNewItem.setControl(scrldfrmNewScrolledform_1);
-		formToolkit.paintBordersFor(scrldfrmNewScrolledform_1);
-		scrldfrmNewScrolledform_1.setText("График");
-		scrldfrmNewScrolledform_1.getBody().setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		Canvas canvas = new Canvas(scrldfrmNewScrolledform_1.getBody(), SWT.NONE);
-		formToolkit.adapt(canvas);
-		formToolkit.paintBordersFor(canvas);
-		
-		final LightweightSystem lws = new LightweightSystem(canvas);
-
-		// create a new XY Graph.
-		XYGraph xyGraph = new XYGraph();
-		xyGraph.setTitle("Simple Example");
-		// set it as the content of LightwightSystem
-		lws.setContents(xyGraph);
-
-		// create a trace data provider, which will provide the data to the
-		// trace.
-		traceDataProvider = new CircularBufferDataProvider(true);
-		traceDataProvider.setBufferSize(100);
-		
-
-		// create the trace
-		Trace trace = new Trace("Trace1-XY Plot", xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
-
-		// set trace property
-		trace.setPointStyle(PointStyle.XCROSS);
-
-		// add the trace to xyGraph
-		xyGraph.addTrace(trace);
+		сhartsScrolledform = formToolkit.createScrolledForm(tabFolder);
+		tbtmChartsItem.setControl(сhartsScrolledform);
+		formToolkit.paintBordersFor(сhartsScrolledform);
+		сhartsScrolledform.setText("Графики");
+		сhartsScrolledform.getBody().setLayout(new FillLayout(SWT.VERTICAL));
 
 	}
 
 	@Override
 	public void handleEvent(Event event) {
-		
-		List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
-		table = tableViewer.getTable();
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		if (!parameters.isEmpty()) {
-			parameters.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
-			TableViewerColumn dateViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-			dateViewerColumn.setLabelProvider(new ColumnLabelProvider() {
-				public Image getImage(Object element) {
-					// TODO Auto-generated method stub
-					return null;
-				}
+		Object obj = event.getProperty(AppEventConstants.DEVICE);
+		if (device.equals(obj)) {
+			List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
+			table = tableViewer.getTable();
+			table.setLinesVisible(true);
+			table.setHeaderVisible(true);
+			if (!parameters.isEmpty()) {
+				parameters.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
+				TableViewerColumn dateViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+				dateViewerColumn.setLabelProvider(new ColumnLabelProvider() {
+					public Image getImage(Object element) {
+						// TODO Auto-generated method stub
+						return null;
+					}
 
-				public String getText(Object element) {
-					return element == null ? "" : ((TableRow) element).getDateTime().format(formatter);
+					public String getText(Object element) {
+						return element == null ? "" : ((TableRow) element).getDateTime().format(formatter);
+					}
+				});
+				TableColumn dateColumn = dateViewerColumn.getColumn();
+				dateColumn.setWidth(100);
+				dateColumn.setText("Дата");
+				for (Parameters parameter : parameters) {
+					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter));
+					TableColumn column = tableViewerColumn.getColumn();
+					column.setWidth(100);
+					column.setText(parameter.getName());
 				}
-			});
-			TableColumn dateColumn = dateViewerColumn.getColumn();
-			dateColumn.setWidth(100);
-			dateColumn.setText("Дата");
-			for (Parameters parameter : parameters) {
-				TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-				tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter));
-				TableColumn column = tableViewerColumn.getColumn();
-				column.setWidth(100);
-				column.setText(parameter.getName());
+			}
+			List<?> input = (List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
+			tableViewer.setInput(input);
+			exportToExcelAction.setEnabled(true);
+			createCharts(input, parameters);
+		}
+	}
+
+	private void createCharts(List<?> input, List<Parameters> parameters) {
+		removeCharts();
+		Map<String, List<Parameters>> groupByCategory = parameters.stream()
+				.collect(Collectors.groupingBy(Parameters::getCategory));
+		for (String key : groupByCategory.keySet()) {
+			if (key.equals(ParametersConst.ENERGY) || key.equals(ParametersConst.VOLUME)
+					|| key.equals(ParametersConst.WEIGHT)) {
+				Section section = formToolkit.createSection(сhartsScrolledform.getBody(),
+						Section.TWISTIE | Section.TITLE_BAR);
+				formToolkit.paintBordersFor(section);
+				section.setText(key);
+				
+
+				Composite composite = formToolkit.createComposite(section, SWT.NONE);
+				formToolkit.paintBordersFor(composite);
+				composite.setLayout(new FillLayout(SWT.VERTICAL));
+				section.setClient(composite);
+				Chart chart = new Chart(composite, SWT.NONE);
+				chart.getTitle().setVisible(false);
+				IAxis xAxis = chart.getAxisSet().getXAxis(0);
+
+				xAxis.getTitle().setVisible(false);
+				chart.getAxisSet().getYAxis(0).getTitle().setText(groupByCategory.get(key).get(0).getUnit());
+				List<Parameters> params = groupByCategory.get(key);
+				createDateFormat(chart);
+				int i = 3;
+				for (Parameters parameter : params) {
+					Color c = Display.getDefault().getSystemColor(i);
+					createSeries(parameter, input, chart, c);
+					i = i + 3;
+				}
+				chart.getAxisSet().adjustRange();
+
 			}
 		}
-		List<?> input=(List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
-		tableViewer.setInput(input);
-		traceDataProvider.setCurrentXDataArray(new double[] { 10, 23, 34, 45, 56, 78, 88, 99 });
-		traceDataProvider.setCurrentYDataArray(new double[] { 11, 44, 55, 45, 88, 98, 52, 23 });
+
+	}
+
+	private void createDateFormat(Chart chart) {
+		DateFormat format;
+		switch (selectedArchiveType) {
+		case MONTH:
+			format = new SimpleDateFormat("MM.YY");
+			break;
+		case DAY:
+			format = new SimpleDateFormat("dd.MM.yy");
+			break;
+		case HOUR:
+			format = new SimpleDateFormat("dd.MM.yy HH:mm");
+			break;
+
+		default:
+			format = new SimpleDateFormat("dd.MM.yy HH:mm");
+			break;
+		}
+		IAxisTick xTick = chart.getAxisSet().getXAxis(0).getTick();
+		xTick.setFormat(format);
+
+	}
+
+	private void createSeries(Parameters parameter, List<?> input, Chart chart, Color c) {
+		Date[] xSeries = new Date[input.size()];
+		double[] ySeries = new double[input.size()];
+		int i = 0;
+		for (Object object : input) {
+			TableRow tr = (TableRow) object;
+			LocalDateTime ldt = tr.getDateTime();
+			Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
+			xSeries[i] = Date.from(instant);
+			Float val = (Float) tr.getValues().get(parameter);
+			if(val==null)
+				val=0.0f;
+			ySeries[i++] = val;
+		}
+		ILineSeries series = (ILineSeries) chart.getSeriesSet().createSeries(SeriesType.LINE, parameter.getName());
+		series.setXDateSeries(xSeries);
+		series.setLineColor(c);
+		series.setYSeries(ySeries);
+		series.setSymbolType(PlotSymbolType.NONE);
+
+	}
+
+	private void removeCharts() {
+		Control[] charts = сhartsScrolledform.getBody().getChildren();
+		for (Control control : charts) {
+			control.dispose();
+		}
+
+	}
+	private void createActions(){
+		exportToExcelAction= new Action("Экспорт в Excel") {
+
+			@Override
+			public void run() {				
+				List<TableRow> tableRows = (List<TableRow>)tableViewer.getInput();
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put(AppEventConstants.DEVICE, device);
+				map.put(AppEventConstants.TABLE_ROWS, tableRows);			
+				broker.send(AppEventConstants.TOPIC_EXPORT_EXCEL, map);
+			}
+
+		};		
+		exportToExcelAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("ru.7kt.app", "icons/application-vnd.ms-excel.ico"));	
+		exportToExcelAction.setEnabled(false);
 	}
 }

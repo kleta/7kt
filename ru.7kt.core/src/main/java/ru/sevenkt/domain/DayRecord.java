@@ -57,22 +57,22 @@ public class DayRecord implements Cloneable{
 
 	@Address(value = 12)
 	@Length(value = 4)
-	@Parameter(Parameters.W1)
+	@Parameter(Parameters.V1)
 	private float volume1;
 
 	@Address(value = 16)
 	@Length(value = 4)
-	@Parameter(Parameters.W2)
+	@Parameter(Parameters.V2)
 	private float volume2;
 
 	@Address(value = 20)
 	@Length(value = 4)
-	@Parameter(Parameters.W3)
+	@Parameter(Parameters.V3)
 	private float volume3;
 
 	@Address(value = 24)
 	@Length(value = 4)
-	@Parameter(Parameters.W4)
+	@Parameter(Parameters.V4)
 	private float volume4;
 
 	@Address(value = 28)

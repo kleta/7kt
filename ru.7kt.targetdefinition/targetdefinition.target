@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="45">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="48">
 <locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.calendarcombo.feature.feature.group" version="1.0.0.201602191853"/>
+<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="0.14.0.201602191853"/>
+<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
+</location>
 <location path="${project_loc}\gemini-blueprint" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.springframework.ide.eclipse.data.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
 <unit id="org.springframework.ide.eclipse.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
 <repository location="http://dist.springsource.com/release/TOOLS/update/3.7.2.RELEASE/e4.5/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.persistence.jpa.feature.group" version="2.5.2.v20140319-9ad6abd"/>
-<repository location="http://download.eclipse.org/rt/eclipselink/updates/2.5.2.v20140319-9ad6abd"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.slf4j.feature.feature.group" version="1.6.6"/>
-<unit id="ch.qos.logback.feature.feature.group" version="1.0.7"/>
-<unit id="ch.qos.logback.beagle.feature.feature.group" version="1.1.4.201209042005"/>
-<repository location="http://logback.qos.ch/p2/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201602191853"/>
-<unit id="org.eclipse.nebula.widgets.calendarcombo.feature.feature.group" version="1.0.0.201602191853"/>
-<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="0.14.0.201602191853"/>
-<unit id="org.eclipse.nebula.feature.feature.group" version="1.0.0.201602191853"/>
-<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="2.2.102.v20160129-0947"/>
@@ -31,6 +19,19 @@
 <unit id="org.eclipse.equinox.executable.feature.group" version="3.6.200.v20150602-1417"/>
 <unit id="org.eclipse.jdt.source.feature.group" version="3.11.2.v20160212-1500"/>
 <repository location="http://download.eclipse.org/releases/mars/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.persistence.jpa.feature.group" version="2.5.2.v20140319-9ad6abd"/>
+<repository location="http://download.eclipse.org/rt/eclipselink/updates/2.5.2.v20140319-9ad6abd"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.apache.poi" version="3.9.0.v201405241750"/>
+<unit id="ch.qos.logback.classic" version="1.0.7.v20121108-1250"/>
+<unit id="ch.qos.logback.core" version="1.0.7.v20121108-1250"/>
+<unit id="org.swtchart" version="0.7.0.v201201201914"/>
+<unit id="ch.qos.logback.slf4j" version="1.0.7.v20121108-1250"/>
+<unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
 </location>
 </locations>
 <environment>

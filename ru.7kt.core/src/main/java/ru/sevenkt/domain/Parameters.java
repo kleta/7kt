@@ -1,47 +1,60 @@
 package ru.sevenkt.domain;
 
 public enum Parameters {
-	W1(1,"Объем V1, м3"),
-	W2(2,"Объем V2, м3"),
-	W3(3,"Объем V2, м3"),
-	W4(4,"Объем V2, м3"),
-	E1(5,"Энергия Е1, Гкал"),
-	E2(6,"Энергия Е2, Гкал"),
-	M1(7, "Масса М1, т"),
-	M2(8, "Масса М2, т"),
-	M3(9, "Масса М3, т"),
-	M4(10, "Масса М4, т"),
-	WORK(11, "Наработка, ч"), 
-	AVG_TEMP1(12, "Температура T1"),
-	AVG_TEMP2(13, "Температура T2"),
-	AVG_TEMP3(14, "Температура T3"),
-	AVG_TEMP4(15, "Температура T4"),
-	AVG_P1(16, "Давление P1"),
-	AVG_P2(17, "Давление P2");
+	V1(1,"V1", ParametersConst.VOLUME, "м3"),
+	V2(2,"V2", ParametersConst.VOLUME, "м3"),
+	V3(3,"V3", ParametersConst.VOLUME, "м3"),
+	V4(4,"V4", ParametersConst.VOLUME, "м3"),
+	E1(5,"Е1", ParametersConst.ENERGY, "Гкал"),
+	E2(6,"Е2", ParametersConst.ENERGY, "Гкал"),
+	M1(7, "М1", ParametersConst.WEIGHT, "т"),
+	M2(8, "М2", ParametersConst.WEIGHT, "т"),
+	M3(9, "М3", ParametersConst.WEIGHT, "т"),
+	M4(10, "М4", ParametersConst.WEIGHT, "т"),
+	WORK(11, "Наработка", ParametersConst.TIME, "ч"), 
+	AVG_TEMP1(12, "T1", ParametersConst.TEMP, "°C"),
+	AVG_TEMP2(13, "T2", ParametersConst.TEMP, "°C"),
+	AVG_TEMP3(14, "T3", ParametersConst.TEMP, "°C"),
+	AVG_TEMP4(15, "T4", ParametersConst.TEMP, "°C"),
+	AVG_P1(16, "P1", ParametersConst.PRESSURE, ""),
+	AVG_P2(17, "P2", ParametersConst.PRESSURE, "");
 	
-	Parameters(int id, String name){
-		this.setId(id);
-		this.setName(name);
+
+	Parameters(int id, String name, String category, String unit){
+		this.id=id;
+		this.name=name;
+		this.category=category;
+		this.unit=unit;
 	}
 	
-	public int getId() {
-		return id;
+	
+
+	
+
+	private int id;
+
+	private String name;
+	
+	private String category;
+	
+	private String unit;
+
+	public String getUnit() {
+		return unit;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public String getCategory() {
+		return category;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getName() {
 		return name;
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	private int id;
-
-	private String name;
+	
+	
 
 }
