@@ -75,7 +75,7 @@ public class ImportFromFileHandler {
 			Device device = insertOrUpdateDeviceSettings(archive.getSettings());
 			if (device != null) {
 				IRunnableWithProgress op = new IRunnableWithProgress() {
-					
+
 					@Override
 					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 						try {
@@ -83,7 +83,7 @@ public class ImportFromFileHandler {
 							insertMonthArchive(archive, device, monitor);
 							insertDayArchive(archive, device, monitor);
 							insertHourArchive(archive, device, monitor);
-							//insertJournalSettings(archive, device, monitor);
+							// insertJournalSettings(archive, device, monitor);
 							monitor.worked(4);
 							Thread.sleep(1000);
 							monitor.done();
@@ -92,13 +92,12 @@ public class ImportFromFileHandler {
 							ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
 							LOG.error(e.getMessage(), e);
 						}
-						
-						
+
 					}
 				};
-	            ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(parentShell);           
-	            progressDialog.run(true, true, op);
-				
+				ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(parentShell);
+				progressDialog.run(true, true, op);
+
 			}
 		} catch (Exception e) {
 
@@ -233,7 +232,7 @@ public class ImportFromFileHandler {
 					long countNotZerroValue = measurings.stream().filter(m -> m.getValue() != 0).count();
 					float addValue = diffVal / countNotZerroValue;
 					measurings.stream().filter(m -> m.getValue() != 0)
-							.forEach(m -> m.setValue(m.getValue() + addValue));
+							.forEach(m -> m.setValue(Math.round((m.getValue() + addValue)*100)/100f));
 				}
 				list.addAll(measurings);
 			}
@@ -268,6 +267,9 @@ public class ImportFromFileHandler {
 							m.setValue((val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(dr);
+							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+								val=val/10;
+							}
 							m.setValue(val);
 						}
 						measurings.add(m);
@@ -276,6 +278,8 @@ public class ImportFromFileHandler {
 			}
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
+		measurings.stream().filter(m -> m.getValue() != 0)
+		.forEach(m -> m.setValue(Math.round(m.getValue()*100)/100f));
 		monitor.subTask("Импорт дневного архива");
 		dbService.saveMeasurings(measurings);
 		monitor.worked(2);
@@ -311,6 +315,9 @@ public class ImportFromFileHandler {
 							m.setValue((val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(mr);
+							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+								val=val/10;
+							}
 							m.setValue(val);
 						}
 						measurings.add(m);
@@ -319,6 +326,8 @@ public class ImportFromFileHandler {
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
+		measurings.stream().filter(m -> m.getValue() != 0)
+		.forEach(m -> m.setValue((Math.round(m.getValue()*100)/100f)) );
 		monitor.subTask("Импорт месячного архива");
 		dbService.saveMeasurings(measurings);
 		monitor.worked(1);

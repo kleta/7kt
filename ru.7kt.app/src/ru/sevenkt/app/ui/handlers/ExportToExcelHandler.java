@@ -91,7 +91,8 @@ public class ExportToExcelHandler implements EventHandler {
 				cell.setCellStyle(cellStyle);
 				int k = 1;
 				for (Parameters parameter : params) {
-					row.createCell(k++).setCellValue((Float) tr.getValues().get(parameter));
+					Float val = (Float)tr.getValues().get(parameter);
+					row.createCell(k++).setCellValue(val);
 				}
 
 			}
