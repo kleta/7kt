@@ -27,8 +27,10 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.nebula.widgets.cdatetime.CDT;
@@ -36,6 +38,8 @@ import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -124,7 +128,7 @@ public class ArchiveView implements EventHandler {
 		formToolkit.paintBordersFor(arсhiveScrolledform);
 		arсhiveScrolledform.setText("Просмотр архива");
 		arсhiveScrolledform.getBody().setLayout(new FormLayout());
-		ToolBarManager tbm = (ToolBarManager)arсhiveScrolledform.getToolBarManager();
+		ToolBarManager tbm = (ToolBarManager) arсhiveScrolledform.getToolBarManager();
 		tbm.add(exportToExcelAction);
 		tbm.update(true);
 		arсhiveScrolledform.reflow(true);
@@ -205,7 +209,8 @@ public class ArchiveView implements EventHandler {
 		});
 		comboViewer.setContentProvider(ArrayContentProvider.getInstance());
 		comboViewer.setInput(ArchiveTypes.values());
-
+		ISelection selection = new StructuredSelection(ArchiveTypes.values()[0]);
+		comboViewer.setSelection(selection);
 		Combo combo = comboViewer.getCombo();
 		FormData fd_combo = new FormData();
 		fd_combo.top = new FormAttachment(startPeriodDateTime, 0, SWT.TOP);
@@ -290,22 +295,22 @@ public class ArchiveView implements EventHandler {
 			table = tableViewer.getTable();
 			table.setLinesVisible(true);
 			table.setHeaderVisible(true);
+			TableViewerColumn dateViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+			dateViewerColumn.setLabelProvider(new ColumnLabelProvider() {
+				public Image getImage(Object element) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				public String getText(Object element) {
+					return element == null ? "" : ((TableRow) element).getDateTime().format(formatter);
+				}
+			});
+			TableColumn dateColumn = dateViewerColumn.getColumn();
+			dateColumn.setWidth(100);
+			dateColumn.setText("Дата");
 			if (!parameters.isEmpty()) {
 				parameters.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
-				TableViewerColumn dateViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-				dateViewerColumn.setLabelProvider(new ColumnLabelProvider() {
-					public Image getImage(Object element) {
-						// TODO Auto-generated method stub
-						return null;
-					}
-
-					public String getText(Object element) {
-						return element == null ? "" : ((TableRow) element).getDateTime().format(formatter);
-					}
-				});
-				TableColumn dateColumn = dateViewerColumn.getColumn();
-				dateColumn.setWidth(100);
-				dateColumn.setText("Дата");
 				for (Parameters parameter : parameters) {
 					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter));
@@ -313,11 +318,13 @@ public class ArchiveView implements EventHandler {
 					column.setWidth(100);
 					column.setText(parameter.getName());
 				}
+				
 			}
 			List<?> input = (List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
 			tableViewer.setInput(input);
 			exportToExcelAction.setEnabled(true);
 			createCharts(input, parameters);
+
 		}
 	}
 
@@ -328,11 +335,12 @@ public class ArchiveView implements EventHandler {
 		for (String key : groupByCategory.keySet()) {
 			if (key.equals(ParametersConst.ENERGY) || key.equals(ParametersConst.VOLUME)
 					|| key.equals(ParametersConst.WEIGHT)) {
+				// Label l=new Label(сhartsScrolledform.getBody(), SWT.NONE);
+				// l.setText(key);
 				Section section = formToolkit.createSection(сhartsScrolledform.getBody(),
-						Section.TWISTIE | Section.TITLE_BAR);
+						Section.EXPANDED | Section.TWISTIE | Section.TITLE_BAR);
 				formToolkit.paintBordersFor(section);
 				section.setText(key);
-				
 
 				Composite composite = formToolkit.createComposite(section, SWT.NONE);
 				formToolkit.paintBordersFor(composite);
@@ -353,7 +361,7 @@ public class ArchiveView implements EventHandler {
 					i = i + 3;
 				}
 				chart.getAxisSet().adjustRange();
-
+				сhartsScrolledform.getBody().layout(true);
 			}
 		}
 
@@ -389,18 +397,19 @@ public class ArchiveView implements EventHandler {
 			TableRow tr = (TableRow) object;
 			LocalDateTime ldt = tr.getDateTime();
 			Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
-			xSeries[i] = Date.from(instant);
+
 			Float val = (Float) tr.getValues().get(parameter);
-			if(val==null)
-				val=0.0f;
-			ySeries[i++] = val;
+			xSeries[i] = Date.from(instant);
+			if (val == null) {
+				ySeries[i++] = -0.1;
+			} else
+				ySeries[i++] = val;
 		}
 		ILineSeries series = (ILineSeries) chart.getSeriesSet().createSeries(SeriesType.LINE, parameter.getName());
 		series.setXDateSeries(xSeries);
 		series.setLineColor(c);
 		series.setYSeries(ySeries);
 		series.setSymbolType(PlotSymbolType.NONE);
-
 	}
 
 	private void removeCharts() {
@@ -408,22 +417,24 @@ public class ArchiveView implements EventHandler {
 		for (Control control : charts) {
 			control.dispose();
 		}
-
+		сhartsScrolledform.getBody().setLayout(new FillLayout(SWT.VERTICAL));
 	}
-	private void createActions(){
-		exportToExcelAction= new Action("Экспорт в Excel") {
+
+	private void createActions() {
+		exportToExcelAction = new Action("Экспорт в Excel") {
 
 			@Override
-			public void run() {				
-				List<TableRow> tableRows = (List<TableRow>)tableViewer.getInput();
+			public void run() {
+				List<TableRow> tableRows = (List<TableRow>) tableViewer.getInput();
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put(AppEventConstants.DEVICE, device);
-				map.put(AppEventConstants.TABLE_ROWS, tableRows);			
+				map.put(AppEventConstants.TABLE_ROWS, tableRows);
 				broker.send(AppEventConstants.TOPIC_EXPORT_EXCEL, map);
 			}
 
-		};		
-		exportToExcelAction.setImageDescriptor(ResourceManager.getPluginImageDescriptor("ru.7kt.app", "icons/application-vnd.ms-excel.ico"));	
+		};
+		exportToExcelAction.setImageDescriptor(
+				ResourceManager.getPluginImageDescriptor("ru.7kt.app", "icons/application-vnd.ms-excel.ico"));
 		exportToExcelAction.setEnabled(false);
 	}
 }

@@ -139,6 +139,9 @@ public class ImportFromFileHandler {
 				if (hr.isValid()) {
 					Field[] fields = HourRecord.class.getDeclaredFields();
 					for (Field field : fields) {
+						field.setAccessible(true);
+						if(field.getName().equals("errorChannel1") || field.getName().equals("errorChannel1"))
+							System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(hr)));
 						if (field.isAnnotationPresent(Parameter.class)) {
 							Measuring m = new Measuring();
 							m.setArchiveType(ArchiveTypes.HOUR);
@@ -146,7 +149,6 @@ public class ImportFromFileHandler {
 							m.setDevice(device);
 							Parameters parameter = field.getAnnotation(Parameter.class).value();
 							m.setParametr(parameter);
-							field.setAccessible(true);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								float val = field.getInt(hr);
 								m.setValue(val / 10);
@@ -232,7 +234,7 @@ public class ImportFromFileHandler {
 					long countNotZerroValue = measurings.stream().filter(m -> m.getValue() != 0).count();
 					float addValue = diffVal / countNotZerroValue;
 					measurings.stream().filter(m -> m.getValue() != 0)
-							.forEach(m -> m.setValue(Math.round((m.getValue() + addValue)*100)/100f));
+							.forEach(m -> m.setValue(m.getValue() + addValue));
 				}
 				list.addAll(measurings);
 			}
@@ -253,6 +255,13 @@ public class ImportFromFileHandler {
 			if (dr.isValid()) {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
+					field.setAccessible(true);
+					if(field.getName().equals("errorChannel1")){
+						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError1());
+					}
+					if(field.getName().equals("errorChannel2")){
+						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError2());
+					}
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
@@ -260,7 +269,6 @@ public class ImportFromFileHandler {
 						m.setDevice(device);
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						m.setParametr(parameter);
-						field.setAccessible(true);
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(dr);
@@ -278,8 +286,6 @@ public class ImportFromFileHandler {
 			}
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
-		measurings.stream().filter(m -> m.getValue() != 0)
-		.forEach(m -> m.setValue(Math.round(m.getValue()*100)/100f));
 		monitor.subTask("Импорт дневного архива");
 		dbService.saveMeasurings(measurings);
 		monitor.worked(2);
@@ -301,13 +307,20 @@ public class ImportFromFileHandler {
 			if (mr.isValid()) {
 				Field[] fields = MonthRecord.class.getDeclaredFields();
 				for (Field field : fields) {
+					field.setAccessible(true);
+					if(field.getName().equals("errorChannel1")){
+						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError1());
+					}
+					if(field.getName().equals("errorChannel2")){
+						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError2());
+					}
+					
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.MONTH);
 						m.setDateTime(mr.getDate().atTime(0, 0));
 						m.setDevice(device);
 						m.setParametr(field.getAnnotation(Parameter.class).value());
-						field.setAccessible(true);
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
@@ -326,8 +339,6 @@ public class ImportFromFileHandler {
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
-		measurings.stream().filter(m -> m.getValue() != 0)
-		.forEach(m -> m.setValue((Math.round(m.getValue()*100)/100f)) );
 		monitor.subTask("Импорт месячного архива");
 		dbService.saveMeasurings(measurings);
 		monitor.worked(1);

@@ -4,12 +4,14 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import lombok.Data;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(value=74)
+@Data
 public class MonthRecord {
 	
 	private byte[] data;

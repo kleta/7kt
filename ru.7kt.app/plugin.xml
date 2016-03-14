@@ -12,10 +12,6 @@
                value="bundleclass://ru.7kt.app/ru.sevenkt.app.E4LifeCycle">
          </property>
          <property
-               name="applicationCSS"
-               value="platform:/plugin/ru.7kt.app/css/default.css">
-         </property>
-         <property
                name="appName"
                value="ru.7kt.app">
          </property>

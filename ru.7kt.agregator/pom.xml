@@ -18,5 +18,6 @@
   	<module>../ru.7kt.core</module>
   	<module>../archivedata</module>
   	<module>../database</module>
+  	<module>../ru.7kt.parent</module>
   </modules>
 </project>

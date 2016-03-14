@@ -61,7 +61,7 @@ public class ExportToExcelHandler implements EventHandler {
 		Device device = (Device) event.getProperty(AppEventConstants.DEVICE);
 		List<TableRow> tableRows = (List<TableRow>) event.getProperty(AppEventConstants.TABLE_ROWS);
 		String tmpDir = System.getProperty("java.io.tmpdir");
-		String fileName = tmpDir + device.getDeviceName()
+		String fileName = tmpDir+ device.getDeviceName()
 				+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHss")) + ".xls";
 		Workbook wb = new HSSFWorkbook();
 		CreationHelper createHelper = wb.getCreationHelper();

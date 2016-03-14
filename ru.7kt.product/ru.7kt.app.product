@@ -3,6 +3,7 @@
 
 <product name="ru.7kt.app" uid="7kt" id="ru.7kt.app.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
@@ -15,15 +16,17 @@
 
    <windowImages/>
 
-   <launcher>
+   <launcher name="7kt">
       <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
    </launcher>
 
+
    <vm>
    </vm>
+
 
    <plugins>
       <plugin id="ch.qos.logback.classic"/>
@@ -135,5 +138,12 @@
       <plugin id="org.eclipse.gemini.blueprint.extender" autoStart="true" startLevel="1" />
       <plugin id="ru.7kt.archivedata" autoStart="true" startLevel="0" />
    </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>
