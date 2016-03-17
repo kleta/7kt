@@ -61,7 +61,7 @@ public class ExportToExcelHandler implements EventHandler {
 		Device device = (Device) event.getProperty(AppEventConstants.DEVICE);
 		List<TableRow> tableRows = (List<TableRow>) event.getProperty(AppEventConstants.TABLE_ROWS);
 		String tmpDir = System.getProperty("java.io.tmpdir");
-		String fileName = tmpDir+ device.getDeviceName()
+		String fileName = tmpDir + device.getDeviceName()
 				+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHss")) + ".xls";
 		Workbook wb = new HSSFWorkbook();
 		CreationHelper createHelper = wb.getCreationHelper();
@@ -75,7 +75,8 @@ public class ExportToExcelHandler implements EventHandler {
 			Row row = sheet.createRow(0);
 			row.createCell(0).setCellValue("Дата");
 			Set<Parameters> parameters = firstRow.getValues().keySet();
-			List<Parameters> params = parameters.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName())).collect(Collectors.toList());
+			List<Parameters> params = parameters.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName()))
+					.collect(Collectors.toList());
 			int i = 1;
 			for (Parameters parameter : params) {
 				row.createCell(i).setCellValue(parameter.getCategory() + " " + parameter.getName());
@@ -91,8 +92,12 @@ public class ExportToExcelHandler implements EventHandler {
 				cell.setCellStyle(cellStyle);
 				int k = 1;
 				for (Parameters parameter : params) {
-					Float val = (Float)tr.getValues().get(parameter);
-					row.createCell(k++).setCellValue(val);
+					Float val = (Float) tr.getValues().get(parameter);
+					if (val != null)
+						row.createCell(k).setCellValue(val);
+					else
+						row.createCell(k).setCellValue("Нет данных");
+					k++;
 				}
 
 			}
@@ -107,8 +112,6 @@ public class ExportToExcelHandler implements EventHandler {
 		}
 
 	}
-
-	
 
 	private static MultiStatus createMultiStatus(String msg, Throwable t) {
 

@@ -2,17 +2,14 @@ package ru.sevenkt.domain;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import lombok.Data;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(value = 56)
-@Data
 public class DayRecord implements Cloneable{
 
 	private byte[] data;
@@ -203,6 +200,144 @@ public class DayRecord implements Cloneable{
 		if (Float.floatToIntBits(volume4) != Float.floatToIntBits(other.volume4))
 			return false;
 		return true;
+	}
+	public byte[] getData() {
+		return data;
+	}
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+	public int getDay() {
+		return day;
+	}
+	public void setDay(int day) {
+		this.day = day;
+	}
+	public int getMonthYear() {
+		return monthYear;
+	}
+	public void setMonthYear(int monthYear) {
+		this.monthYear = monthYear;
+	}
+	public int getAvgTemp1() {
+		return avgTemp1;
+	}
+	public void setAvgTemp1(int avgTemp1) {
+		this.avgTemp1 = avgTemp1;
+	}
+	public int getAvgTemp2() {
+		return avgTemp2;
+	}
+	public void setAvgTemp2(int avgTemp2) {
+		this.avgTemp2 = avgTemp2;
+	}
+	public int getAvgTemp3() {
+		return avgTemp3;
+	}
+	public void setAvgTemp3(int avgTemp3) {
+		this.avgTemp3 = avgTemp3;
+	}
+	public int getAvgTemp4() {
+		return avgTemp4;
+	}
+	public void setAvgTemp4(int avgTemp4) {
+		this.avgTemp4 = avgTemp4;
+	}
+	public int getAvgPressure1() {
+		return avgPressure1;
+	}
+	public void setAvgPressure1(int avgPressure1) {
+		this.avgPressure1 = avgPressure1;
+	}
+	public int getAvgPressure2() {
+		return avgPressure2;
+	}
+	public void setAvgPressure2(int avgPressure2) {
+		this.avgPressure2 = avgPressure2;
+	}
+	public float getVolume1() {
+		return volume1;
+	}
+	public void setVolume1(float volume1) {
+		this.volume1 = volume1;
+	}
+	public float getVolume2() {
+		return volume2;
+	}
+	public void setVolume2(float volume2) {
+		this.volume2 = volume2;
+	}
+	public float getVolume3() {
+		return volume3;
+	}
+	public void setVolume3(float volume3) {
+		this.volume3 = volume3;
+	}
+	public float getVolume4() {
+		return volume4;
+	}
+	public void setVolume4(float volume4) {
+		this.volume4 = volume4;
+	}
+	public float getEnergy1() {
+		return energy1;
+	}
+	public void setEnergy1(float energy1) {
+		this.energy1 = energy1;
+	}
+	public float getEnergy2() {
+		return energy2;
+	}
+	public void setEnergy2(float energy2) {
+		this.energy2 = energy2;
+	}
+	public float getWeight1() {
+		return weight1;
+	}
+	public void setWeight1(float weight1) {
+		this.weight1 = weight1;
+	}
+	public float getWeight2() {
+		return weight2;
+	}
+	public void setWeight2(float weight2) {
+		this.weight2 = weight2;
+	}
+	public float getWeight3() {
+		return weight3;
+	}
+	public void setWeight3(float weight3) {
+		this.weight3 = weight3;
+	}
+	public float getWeight4() {
+		return weight4;
+	}
+	public void setWeight4(float weight4) {
+		this.weight4 = weight4;
+	}
+	public int getErrorChannel1() {
+		return errorChannel1;
+	}
+	public void setErrorChannel1(int errorChannel1) {
+		this.errorChannel1 = errorChannel1;
+	}
+	public int getErrorChannel2() {
+		return errorChannel2;
+	}
+	public void setErrorChannel2(int errorChannel2) {
+		this.errorChannel2 = errorChannel2;
+	}
+	public int getTimeError1() {
+		return timeError1;
+	}
+	public void setTimeError1(int timeError1) {
+		this.timeError1 = timeError1;
+	}
+	public int getTimeError2() {
+		return timeError2;
+	}
+	public void setTimeError2(int timeError2) {
+		this.timeError2 = timeError2;
 	}
 	
 	

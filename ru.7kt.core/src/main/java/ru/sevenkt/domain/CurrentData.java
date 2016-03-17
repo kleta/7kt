@@ -4,13 +4,11 @@ import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import lombok.Data;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(value = 48)
-@Data
 public class CurrentData {
 
 	@Address(value = 0)
@@ -104,6 +102,134 @@ public class CurrentData {
 	
 	public LocalDateTime getCurrentDateTime(){
 		return LocalDateTime.of(year+2000, month, day, hour, 0);
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public void setMonth(int month) {
+		this.month = month;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
+
+	public long getWorkHour() {
+		return workHour;
+	}
+
+	public void setWorkHour(long workHour) {
+		this.workHour = workHour;
+	}
+
+	public float getVolume1() {
+		return volume1;
+	}
+
+	public void setVolume1(float volume1) {
+		this.volume1 = volume1;
+	}
+
+	public float getVolume2() {
+		return volume2;
+	}
+
+	public void setVolume2(float volume2) {
+		this.volume2 = volume2;
+	}
+
+	public float getVolume3() {
+		return volume3;
+	}
+
+	public void setVolume3(float volume3) {
+		this.volume3 = volume3;
+	}
+
+	public float getVolume4() {
+		return volume4;
+	}
+
+	public void setVolume4(float volume4) {
+		this.volume4 = volume4;
+	}
+
+	public float getEnergy1() {
+		return energy1;
+	}
+
+	public void setEnergy1(float energy1) {
+		this.energy1 = energy1;
+	}
+
+	public float getEnergy2() {
+		return energy2;
+	}
+
+	public void setEnergy2(float energy2) {
+		this.energy2 = energy2;
+	}
+
+	public float getWeight1() {
+		return weight1;
+	}
+
+	public void setWeight1(float weight1) {
+		this.weight1 = weight1;
+	}
+
+	public float getWeight2() {
+		return weight2;
+	}
+
+	public void setWeight2(float weight2) {
+		this.weight2 = weight2;
+	}
+
+	public float getWeight3() {
+		return weight3;
+	}
+
+	public void setWeight3(float weight3) {
+		this.weight3 = weight3;
+	}
+
+	public float getWeight4() {
+		return weight4;
+	}
+
+	public void setWeight4(float weight4) {
+		this.weight4 = weight4;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 
 }

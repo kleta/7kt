@@ -3,12 +3,10 @@ package ru.sevenkt.domain;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
-import lombok.Data;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.exceptions.VersionNotSupportedException;
 
-@Data
 @Length(58060)
 public class Archive {
 	private byte[] data;
@@ -55,5 +53,61 @@ public class Archive {
 				}
 			}
 		}
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public Settings getSettings() {
+		return settings;
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
+
+	public CurrentData getCurrentData() {
+		return currentData;
+	}
+
+	public void setCurrentData(CurrentData currentData) {
+		this.currentData = currentData;
+	}
+
+	public MonthArchive getMonthArchive() {
+		return monthArchive;
+	}
+
+	public void setMonthArchive(MonthArchive monthArchive) {
+		this.monthArchive = monthArchive;
+	}
+
+	public DayArchive getDayArchive() {
+		return dayArchive;
+	}
+
+	public void setDayArchive(DayArchive dayArchive) {
+		this.dayArchive = dayArchive;
+	}
+
+	public HourArchive getHourArchive() {
+		return hourArchive;
+	}
+
+	public void setHourArchive(HourArchive hourArchive) {
+		this.hourArchive = hourArchive;
+	}
+
+	public JournalSettings getJournalSettings() {
+		return journalSettings;
+	}
+
+	public void setJournalSettings(JournalSettings journalSettings) {
+		this.journalSettings = journalSettings;
 	}
 }

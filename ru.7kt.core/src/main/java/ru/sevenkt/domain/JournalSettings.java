@@ -3,11 +3,9 @@ package ru.sevenkt.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
 import ru.sevenkt.annotations.Length;
 
 @Length(value = 2560)
-@Data
 public class JournalSettings {
 	//private byte[] data;
 	
@@ -31,6 +29,14 @@ public class JournalSettings {
 		}
 		
 			
+	}
+
+	public List<JournalSettingsRecord> getRecords() {
+		return records;
+	}
+
+	public void setRecords(List<JournalSettingsRecord> records) {
+		this.records = records;
 	}
 	
 }

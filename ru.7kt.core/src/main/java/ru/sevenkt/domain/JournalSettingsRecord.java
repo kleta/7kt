@@ -3,13 +3,11 @@ package ru.sevenkt.domain;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-import lombok.Data;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(10)
-@Data
 public class JournalSettingsRecord {
 	
 	@Address(value=0)
@@ -53,5 +51,45 @@ public class JournalSettingsRecord {
 			}
 
 		}
+	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public int getMonthYear() {
+		return monthYear;
+	}
+
+	public void setMonthYear(int monthYear) {
+		this.monthYear = monthYear;
+	}
+
+	public long getWorkHour() {
+		return workHour;
+	}
+
+	public void setWorkHour(long workHour) {
+		this.workHour = workHour;
+	}
+
+	public JournalEvents getEvent() {
+		return event;
+	}
+
+	public void setEvent(JournalEvents event) {
+		this.event = event;
 	}
 }

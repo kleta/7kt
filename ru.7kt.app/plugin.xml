@@ -15,6 +15,10 @@
                name="appName"
                value="ru.7kt.app">
          </property>
+         <property
+               name="applicationCSS"
+               value="platform:/plugin/ru.7kt.app/css/e4_classic_win7.css">
+         </property>
       </product>
    </extension>
    <extension

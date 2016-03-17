@@ -100,4 +100,20 @@ public class HourArchive {
 		dayRecord.setAvgTemp4(dayRecord.getAvgTemp4() / 24);
 		return dayRecord;
 	}
+
+	public static int getMAX_DAY_COUNT() {
+		return MAX_DAY_COUNT;
+	}
+
+	public static void setMAX_DAY_COUNT(int mAX_DAY_COUNT) {
+		MAX_DAY_COUNT = mAX_DAY_COUNT;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 }

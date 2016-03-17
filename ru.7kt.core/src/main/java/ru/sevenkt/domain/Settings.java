@@ -3,13 +3,11 @@ package ru.sevenkt.domain;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
-import lombok.Data;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.utils.DataUtils;
 
 @Length(80)
-@Data
 public class Settings {
 	public static Integer[] SUPPORTED_ARCHIVE_VERSION = { 3 };
 
@@ -101,6 +99,142 @@ public class Settings {
 
 	public boolean isVersionSupport() {
 		return Arrays.asList(SUPPORTED_ARCHIVE_VERSION).contains(archiveVersion);
+	}
+
+	public static Integer[] getSUPPORTED_ARCHIVE_VERSION() {
+		return SUPPORTED_ARCHIVE_VERSION;
+	}
+
+	public static void setSUPPORTED_ARCHIVE_VERSION(Integer[] sUPPORTED_ARCHIVE_VERSION) {
+		SUPPORTED_ARCHIVE_VERSION = sUPPORTED_ARCHIVE_VERSION;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public int getArchiveLength() {
+		return archiveLength;
+	}
+
+	public void setArchiveLength(int archiveLength) {
+		this.archiveLength = archiveLength;
+	}
+
+	public int getArchiveVersion() {
+		return archiveVersion;
+	}
+
+	public void setArchiveVersion(int archiveVersion) {
+		this.archiveVersion = archiveVersion;
+	}
+
+	public int getSerialNumber() {
+		return serialNumber;
+	}
+
+	public void setSerialNumber(int serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
+	public int getDeviceVersion() {
+		return deviceVersion;
+	}
+
+	public void setDeviceVersion(int deviceVersion) {
+		this.deviceVersion = deviceVersion;
+	}
+
+	public int getwMin0() {
+		return wMin0;
+	}
+
+	public void setwMin0(int wMin0) {
+		this.wMin0 = wMin0;
+	}
+
+	public int getwMin1() {
+		return wMin1;
+	}
+
+	public void setwMin1(int wMin1) {
+		this.wMin1 = wMin1;
+	}
+
+	public int getwMax12() {
+		return wMax12;
+	}
+
+	public void setwMax12(int wMax12) {
+		this.wMax12 = wMax12;
+	}
+
+	public int getwMax34() {
+		return wMax34;
+	}
+
+	public void setwMax34(int wMax34) {
+		this.wMax34 = wMax34;
+	}
+
+	public int getNetAddress() {
+		return netAddress;
+	}
+
+	public void setNetAddress(int netAddress) {
+		this.netAddress = netAddress;
+	}
+
+	public int getFormulaNum() {
+		return formulaNum;
+	}
+
+	public void setFormulaNum(int formulaNum) {
+		this.formulaNum = formulaNum;
+	}
+
+	public float getTempColdWaterSetting() {
+		return tempColdWaterSetting;
+	}
+
+	public void setTempColdWaterSetting(float tempColdWaterSetting) {
+		this.tempColdWaterSetting = tempColdWaterSetting;
+	}
+
+	public float getVolumeByImpulsSetting1() {
+		return volumeByImpulsSetting1;
+	}
+
+	public void setVolumeByImpulsSetting1(float volumeByImpulsSetting1) {
+		this.volumeByImpulsSetting1 = volumeByImpulsSetting1;
+	}
+
+	public float getVolumeByImpulsSetting2() {
+		return volumeByImpulsSetting2;
+	}
+
+	public void setVolumeByImpulsSetting2(float volumeByImpulsSetting2) {
+		this.volumeByImpulsSetting2 = volumeByImpulsSetting2;
+	}
+
+	public float getVolumeByImpulsSetting3() {
+		return volumeByImpulsSetting3;
+	}
+
+	public void setVolumeByImpulsSetting3(float volumeByImpulsSetting3) {
+		this.volumeByImpulsSetting3 = volumeByImpulsSetting3;
+	}
+
+	public float getVolumeByImpulsSetting4() {
+		return volumeByImpulsSetting4;
+	}
+
+	public void setVolumeByImpulsSetting4(float volumeByImpulsSetting4) {
+		this.volumeByImpulsSetting4 = volumeByImpulsSetting4;
 	}
 
 }

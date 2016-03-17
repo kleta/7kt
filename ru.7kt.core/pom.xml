@@ -8,12 +8,5 @@
 		<relativePath>../ru.7kt.parent</relativePath>
 	</parent>
 	<artifactId>ru.7kt.core</artifactId>
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
-		</dependency>
-
-	</dependencies>
+	<packaging>eclipse-plugin</packaging>
 </project>
