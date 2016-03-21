@@ -25,7 +25,7 @@
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_98ufsE35EeSRPKdhyBjzXA" elementId="7kt.partstack.bottom" containerData="20">
           <tags>NoAutoCollapse</tags>
-          <children xsi:type="basic:Part" xmi:id="_2j15wMopEeWgFZI886Y61g" elementId="ru.7kt.app.part.output" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.OutputView" label="Вывод" iconURI="platform:/plugin/ru.7kt.app/icons/application--pencil.png"/>
+          <children xsi:type="basic:Part" xmi:id="_A173YOzWEeWkP5iWQZC8YA" elementId="ru.7kt.app.part.outputview" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.OutputView" label="Журнал" iconURI="platform:/plugin/ru.7kt.app/icons/application--pencil.png"/>
         </children>
       </children>
     </children>
