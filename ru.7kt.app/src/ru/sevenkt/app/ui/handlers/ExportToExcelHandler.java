@@ -75,6 +75,12 @@ public class ExportToExcelHandler implements EventHandler {
 			Row row = sheet.createRow(0);
 			row.createCell(0).setCellValue("Дата");
 			Set<Parameters> parameters = firstRow.getValues().keySet();
+			for (TableRow tr : tableRows){
+				if(!tr.getValues().isEmpty()){
+					parameters = tr.getValues().keySet();
+					break;
+				}
+			}			
 			List<Parameters> params = parameters.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName()))
 					.collect(Collectors.toList());
 			int i = 1;

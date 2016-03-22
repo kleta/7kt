@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.jface.viewers.ISelection;
@@ -22,14 +23,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.wb.swt.ResourceManager;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
+import ru.sevenkt.app.ui.handlers.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.services.IDBService;
 
-public class DevicesView {
+public class DevicesView implements EventHandler{
 
 	@Inject
 	private IDBService dbService;
+	
+	@Inject
+	private IEventBroker broker;
 
 	@Inject
 	ESelectionService selectionService;
@@ -104,6 +111,7 @@ public class DevicesView {
 
 	@PostConstruct
 	public void postConstruct(Composite parent, ESelectionService s, EMenuService ms) {
+		broker.subscribe(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, this);
 		treeViewer = new TreeViewer(parent, SWT.BORDER);
 		treeViewer.setLabelProvider(new ViewerLabelProvider());
 		treeViewer.setContentProvider(new TreeContentProvider(dbService));
@@ -113,6 +121,12 @@ public class DevicesView {
 			IStructuredSelection selection = treeViewer.getStructuredSelection();
 			s.setSelection(selection.getFirstElement());
 		});
+		treeViewer.setInput("");
+		treeViewer.expandToLevel(2);
+	}
+
+	@Override
+	public void handleEvent(Event event) {
 		treeViewer.setInput("");
 		treeViewer.expandToLevel(2);
 	}

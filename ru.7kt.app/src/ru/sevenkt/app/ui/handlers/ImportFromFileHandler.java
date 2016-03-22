@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -54,6 +55,9 @@ public class ImportFromFileHandler {
 
 	@Inject
 	private IArchiveService archiveService;
+	
+	@Inject
+	private IEventBroker broker;
 
 	@Inject
 	private IDBService dbService;
@@ -368,6 +372,7 @@ public class ImportFromFileHandler {
 				dialog.create();
 				if (dialog.open() == Window.OK) {
 					dbService.saveDevice(dialog.getDevice());
+					broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 				}
 
 			}

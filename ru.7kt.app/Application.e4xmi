@@ -6,7 +6,7 @@
       <children xsi:type="basic:PartStack" xmi:id="_3xTOcDGNEeSuG80xnFR2ZQ" elementId="7kt.partstack.right" containerData="17">
         <children xsi:type="basic:Part" xmi:id="_CeXAcMopEeWgFZI886Y61g" elementId="ru.7kt.app.part.devices" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.DevicesView" label="Устройства" iconURI="platform:/plugin/ru.7kt.app/icons/pda.png">
           <menus xsi:type="menu:PopupMenu" xmi:id="_iaV9YMsEEeW_Qf64bg1C_g" elementId="ru.7kt.app.popupmenu.device" label="Меню">
-            <children xsi:type="menu:HandledMenuItem" xmi:id="_yYeOAMsEEeW_Qf64bg1C_g" elementId="ru.7kt.app.handledmenuitem." label="Просмотр архива" command="_qzLmsMr7EeW_Qf64bg1C_g"/>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_yYeOAMsEEeW_Qf64bg1C_g" elementId="ru.7kt.app.handledmenuitem." label="Просмотр архива" iconURI="platform:/plugin/ru.7kt.app/icons/table.png" command="_qzLmsMr7EeW_Qf64bg1C_g"/>
           </menus>
           <toolbar xmi:id="_zZIPkNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.toolbar.0">
             <children xsi:type="menu:HandledToolItem" xmi:id="_1rlaYNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.handledtoolitem.0" iconURI="platform:/plugin/ru.7kt.app/icons/pda--plus.png" tooltip="Добавить устройство" command="_QQytIMr7EeW_Qf64bg1C_g"/>
@@ -31,9 +31,9 @@
     </children>
     <mainMenu xmi:id="_6NS9gDGSEeSVeK7-4q31bA" elementId="power-quality-ui.menu.0">
       <children xsi:type="menu:Menu" xmi:id="_tm0bwMomEeWgFZI886Y61g" elementId="ru.7kt.app.menu." label="Файл">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_Pl9lUMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.importfile" label="Импорт данных из файла" command="_x-oFUMotEeWgFZI886Y61g"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_Pl9lUMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.importfile" label="Импорт данных из файла" iconURI="platform:/plugin/ru.7kt.app/icons/document-import.png" command="_x-oFUMotEeWgFZI886Y61g"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_kCes0MooEeWgFZI886Y61g" elementId="ru.7kt.app.menuseparator.0"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_mWNqAMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.exit" label="Выход"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_mWNqAMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.exit" label="Выход" command="_Eh4NUO_6EeW3JpRafYy2Ig"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_UbjwYMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.connection" label="Связь">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_8ruBgMoqEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.requestdevice" label="Опросить устройство" enabled="false"/>
@@ -57,6 +57,7 @@
   <handlers xmi:id="_5c3_kMotEeWgFZI886Y61g" elementId="ru.7kt.app.handler.importfromfile" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ImportFromFileHandler" command="_x-oFUMotEeWgFZI886Y61g"/>
   <handlers xmi:id="_eXUF0NeGEeWLJqbY6SbmKw" elementId="ru.7kt.app.handler.viewarchive" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.OpenArchiveHandler" command="_qzLmsMr7EeW_Qf64bg1C_g"/>
   <handlers xmi:id="_Z0DwwOWiEeWbzbW9ffwc0g" elementId="ru.7kt.app.handler.0" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ExportToExcelHandler" command="__RQ0cMr7EeW_Qf64bg1C_g"/>
+  <handlers xmi:id="_UZzvUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.handler.exit" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ExitHandler" command="_Eh4NUO_6EeW3JpRafYy2Ig"/>
   <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
@@ -70,6 +71,7 @@
   <commands xmi:id="_qzLmsMr7EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.openarchiveview" commandName="Прсмотр архивов"/>
   <commands xmi:id="__RQ0cMr7EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.exporttoexcel" commandName="Экспорт в Excel"/>
   <commands xmi:id="_Kb450Mr8EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.properties" commandName="Свойства"/>
+  <commands xmi:id="_Eh4NUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.command.exit" commandName="Выход"/>
   <addons xmi:id="_DrjJAjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_DrjJAzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_DrjJBDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

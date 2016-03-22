@@ -1,8 +1,10 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: ru.7kt.app;singleton:=true
+Bundle-ManifestVersion: 2
 Bundle-Name: App
+Bundle-SymbolicName: ru.7kt.app;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: META-INF/,.
+Bundle-ClassPath: META-INF/,
+ .
 Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.core.runtime;bundle-version="3.11.1",
  org.eclipse.swt;bundle-version="3.104.1",
@@ -32,8 +34,6 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.apache.poi;bundle-version="3.9.0",
  ch.qos.logback.core;bundle-version="1.0.7",
  ch.qos.logback.classic
-Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
  javax.inject;version="1.0.0"
-

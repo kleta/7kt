@@ -11,6 +11,8 @@ public class AppEventConstants {
 	public static final String ARCHIVE_PARAMETERS = "archive_parameters";
 	public static final String TABLE_ROWS = "table_rows";
 	public static final String TOPIC_EXPORT_EXCEL = "export_to_excel";
+	public static final String TOPIC_REFRESH_DEVICE_VIEW = "refresh_device";
+	
 	
 
 }
