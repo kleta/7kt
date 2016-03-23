@@ -127,11 +127,14 @@
       <plugin id="org.w3c.dom.events"/>
       <plugin id="org.w3c.dom.smil"/>
       <plugin id="org.w3c.dom.svg"/>
+      <plugin id="org.w3c.dom.svg.patch" fragment="true"/>
       <plugin id="ru.7kt.app"/>
       <plugin id="ru.7kt.archivedata"/>
       <plugin id="ru.7kt.core"/>
       <plugin id="ru.7kt.database"/>
       <plugin id="ru.7kt.log" version="1.0.0.qualifier" fragment="true"/>
+      <plugin id="ru.7kt.reports"/>
+      <plugin id="ru.7kt.reports.templates" fragment="true"/>
    </plugins>
 
    <configurations>
