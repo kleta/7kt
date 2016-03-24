@@ -41,8 +41,10 @@ public class Archive {
 				Class<?> fieldType = field.getType();
 				int dataSize = fieldType.getAnnotation(Length.class).value();
 				byte[] fieldData = new byte[dataSize];
+				long fromAddress = field.getAnnotation(Address.class).value();
 				for (int i = 0; i < dataSize; i++) {
-					fieldData[i] = data[(int) (field.getAnnotation(Address.class).value() + i)];
+			
+					fieldData[i] = data[(int) (fromAddress + i)];
 				}
 				Constructor<?> cons = fieldType.getConstructor(byte[].class);
 				Object obj = cons.newInstance(fieldData);
