@@ -318,7 +318,7 @@ public class ArchiveView implements EventHandler {
 					column.setWidth(100);
 					column.setText(parameter.getName());
 				}
-				
+
 			}
 			List<?> input = (List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
 			tableViewer.setInput(input);
@@ -333,36 +333,37 @@ public class ArchiveView implements EventHandler {
 		Map<String, List<Parameters>> groupByCategory = parameters.stream()
 				.collect(Collectors.groupingBy(Parameters::getCategory));
 		for (String key : groupByCategory.keySet()) {
-			if (key.equals(ParametersConst.ENERGY) || key.equals(ParametersConst.VOLUME)
-					|| key.equals(ParametersConst.WEIGHT)) {
-				// Label l=new Label(сhartsScrolledform.getBody(), SWT.NONE);
-				// l.setText(key);
-				Section section = formToolkit.createSection(сhartsScrolledform.getBody(),
-						Section.EXPANDED | Section.TWISTIE | Section.TITLE_BAR);
-				formToolkit.paintBordersFor(section);
-				section.setText(key);
+			// if (key.equals(ParametersConst.ENERGY) ||
+			// key.equals(ParametersConst.VOLUME)
+			// || key.equals(ParametersConst.WEIGHT)) {
+			// // Label l=new Label(сhartsScrolledform.getBody(), SWT.NONE);
+			// // l.setText(key);
+			Section section = formToolkit.createSection(сhartsScrolledform.getBody(),
+					Section.EXPANDED | Section.TWISTIE | Section.TITLE_BAR);
+			formToolkit.paintBordersFor(section);
+			section.setText(key);
 
-				Composite composite = formToolkit.createComposite(section, SWT.NONE);
-				formToolkit.paintBordersFor(composite);
-				composite.setLayout(new FillLayout(SWT.VERTICAL));
-				section.setClient(composite);
-				Chart chart = new Chart(composite, SWT.NONE);
-				chart.getTitle().setVisible(false);
-				IAxis xAxis = chart.getAxisSet().getXAxis(0);
+			Composite composite = formToolkit.createComposite(section, SWT.NONE);
+			formToolkit.paintBordersFor(composite);
+			composite.setLayout(new FillLayout(SWT.VERTICAL));
+			section.setClient(composite);
+			Chart chart = new Chart(composite, SWT.NONE);
+			chart.getTitle().setVisible(false);
+			IAxis xAxis = chart.getAxisSet().getXAxis(0);
 
-				xAxis.getTitle().setVisible(false);
-				chart.getAxisSet().getYAxis(0).getTitle().setText(groupByCategory.get(key).get(0).getUnit());
-				List<Parameters> params = groupByCategory.get(key);
-				createDateFormat(chart);
-				int i = 3;
-				for (Parameters parameter : params) {
-					Color c = Display.getDefault().getSystemColor(i);
-					createSeries(parameter, input, chart, c);
-					i = i + 3;
-				}
-				chart.getAxisSet().adjustRange();
-				сhartsScrolledform.getBody().layout(true);
+			xAxis.getTitle().setVisible(false);
+			chart.getAxisSet().getYAxis(0).getTitle().setText(groupByCategory.get(key).get(0).getUnit());
+			List<Parameters> params = groupByCategory.get(key);
+			createDateFormat(chart);
+			int i = 3;
+			for (Parameters parameter : params) {
+				Color c = Display.getDefault().getSystemColor(i);
+				createSeries(parameter, input, chart, c);
+				i = i + 3;
 			}
+			chart.getAxisSet().adjustRange();
+			сhartsScrolledform.getBody().layout(true);
+			// }
 		}
 
 	}
