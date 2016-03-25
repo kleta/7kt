@@ -125,6 +125,8 @@ public class HourRecord {
 		int year = (monthYear & 0xF0)/16 + 2000;	
 		year=year<2015 ?year+16:year;	
 		int month = monthYear & 0xF;
+		if(month<1 || month>12 || day<1 || day>31 || hour<0 || hour>24)
+			return null;
 		LocalDateTime date = LocalDateTime.of(year, month, day, hour, 0);
 		return date;
 	}

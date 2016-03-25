@@ -37,7 +37,7 @@ public class HourArchive {
 		}
 		HourRecord hourRecord = new HourRecord(hourRecordData, hour);
 		LocalDateTime dateTime = hourRecord.getDateTime();
-		if (dateTime.equals(recDateTime)) {
+		if (recDateTime.equals(dateTime)) {
 			hourRecord.setValid(true);
 		} else
 			hourRecord.setValid(false);

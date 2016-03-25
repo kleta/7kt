@@ -32,7 +32,7 @@ public class DayArchive {
 			dayRecordData[i] = data[address + i];
 		}
 		DayRecord dr = new DayRecord(dayRecordData);
-		if(dr.getDate().equals(requestDate)){
+		if(requestDate.equals(dr.getDate())){
 			dr.setValid(true);
 		}
 		else

@@ -32,9 +32,9 @@ public class MonthArchive {
 		}
 		MonthRecord mr = new MonthRecord(monthRecordData);
 		LocalDate reqDate=LocalDate.of(year+2000, month, 1);
-//		if(year==16)
-//			System.out.println();
-		if(mr.getDate().equals(reqDate)){
+		if (year == 16)
+			System.out.println();
+		if(reqDate.equals(mr.getDate())){
 			mr.setValid(true);
 		}
 		else{

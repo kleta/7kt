@@ -164,6 +164,8 @@ public class MonthRecord {
 	}
 	
 	public LocalDate getDate(){
+		if(month<1 || month>12 || day<1 || day>31)
+			return null;
 		LocalDate date = LocalDate.of(year+2000, month, day);
 		return date;
 	}
