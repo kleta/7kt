@@ -15,4 +15,6 @@ public interface MeasuringRepo extends CrudRepository<Measuring, MeasuringPK> {
 	List<Measuring> findByDeviceAndArchiveTypeAndDateTimeBetween(Device device, ArchiveTypes archiveType,
 			LocalDateTime atTime, LocalDateTime atTime2);
 
+	void deleteByDevice(Device device);
+
 }

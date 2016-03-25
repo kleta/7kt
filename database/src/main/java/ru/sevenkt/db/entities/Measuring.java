@@ -2,6 +2,7 @@ package ru.sevenkt.db.entities;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ public class Measuring {
 	@EmbeddedId
 	private MeasuringPK id;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "idDevice", referencedColumnName = "id", insertable = false, updatable = false)
 	private Device device;
 	

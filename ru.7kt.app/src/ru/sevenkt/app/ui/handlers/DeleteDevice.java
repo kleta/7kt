@@ -1,0 +1,62 @@
+
+package ru.sevenkt.app.ui.handlers;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.model.application.MApplication;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.basic.MPartStack;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.modeling.EModelService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
+
+import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.services.IDBService;
+
+public class DeleteDevice {
+
+	@Inject
+	private IDBService db;
+
+	@Inject
+	private IEventBroker broker;
+
+	@Execute
+	public void execute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object, EPartService partService, EModelService modelService,
+			MApplication application) {
+		if (object instanceof Device) {
+			Device device = (Device) object;
+			db.deleteDevice(device);
+			broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
+			closeArchiveView(device, partService, modelService, application);
+		}
+	}
+
+	private void closeArchiveView(Device device, EPartService partService, EModelService modelService,
+			MApplication application) {
+
+		MPart part = (MPart) modelService.find("ru.7kt.app.partdescriptor.arciveView_" + device.getId(), application);
+		if (part != null) {
+			partService.hidePart(part);
+		}
+		
+
+	}
+
+	@CanExecute
+	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)
+			throws IllegalArgumentException, IllegalAccessException {
+
+		if (object instanceof Device)
+			return true;
+		return false;
+
+	}
+
+}

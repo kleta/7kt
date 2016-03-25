@@ -58,6 +58,7 @@
   <handlers xmi:id="_eXUF0NeGEeWLJqbY6SbmKw" elementId="ru.7kt.app.handler.viewarchive" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.OpenArchiveHandler" command="_qzLmsMr7EeW_Qf64bg1C_g"/>
   <handlers xmi:id="_Z0DwwOWiEeWbzbW9ffwc0g" elementId="ru.7kt.app.handler.0" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ExportToExcelHandler" command="__RQ0cMr7EeW_Qf64bg1C_g"/>
   <handlers xmi:id="_UZzvUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.handler.exit" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ExitHandler" command="_Eh4NUO_6EeW3JpRafYy2Ig"/>
+  <handlers xmi:id="_l0bboPI1EeWsXeL9JOEsaw" elementId="ru.7kt.app.handler.1" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.DeleteDevice" command="_YSvKUMr7EeW_Qf64bg1C_g"/>
   <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>

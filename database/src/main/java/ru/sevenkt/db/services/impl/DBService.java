@@ -144,9 +144,10 @@ public class DBService implements IDBService {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
-			dr.delete(device);
+			mr.deleteByDevice(device);
 		} catch (Exception ex) {
 			tx.rollback();
+			ex.printStackTrace();
 			throw ex;
 		} finally {
 			try {
@@ -230,5 +231,9 @@ public class DBService implements IDBService {
 			ArchiveTypes archiveType) {
 		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0,0), endDate.atTime(0,0));
 	}
+
+
+
+	
 
 }
