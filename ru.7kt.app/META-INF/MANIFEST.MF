@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: App
 Bundle-SymbolicName: ru.7kt.app;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-ClassPath: META-INF/,
  .
 Require-Bundle: javax.inject;bundle-version="1.0.0",

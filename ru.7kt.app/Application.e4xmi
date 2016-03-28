@@ -43,7 +43,7 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_MVLCoMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.preferences" label="Настройки" enabled="false"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_c0slkMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.help" label="Помощь">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_SjSxwMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.about" label="О программе" enabled="false"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_SjSxwMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.about" label="О программе" enabled="false" command="_tgtxsPSBEeW0rYQ9NpWXnQ"/>
       </children>
     </mainMenu>
     <trimBars xmi:id="_6IS80D2HEeSI97fZJ_qSMA" elementId="powerquality-ui.trimbar.top">
@@ -59,6 +59,7 @@
   <handlers xmi:id="_Z0DwwOWiEeWbzbW9ffwc0g" elementId="ru.7kt.app.handler.0" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ExportToExcelHandler" command="__RQ0cMr7EeW_Qf64bg1C_g"/>
   <handlers xmi:id="_UZzvUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.handler.exit" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ExitHandler" command="_Eh4NUO_6EeW3JpRafYy2Ig"/>
   <handlers xmi:id="_l0bboPI1EeWsXeL9JOEsaw" elementId="ru.7kt.app.handler.1" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.DeleteDevice" command="_YSvKUMr7EeW_Qf64bg1C_g"/>
+  <handlers xmi:id="_0vd3YPSBEeW0rYQ9NpWXnQ" elementId="ru.7kt.app.handler.about" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.AboutHandler" command="_tgtxsPSBEeW0rYQ9NpWXnQ"/>
   <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
@@ -73,6 +74,7 @@
   <commands xmi:id="__RQ0cMr7EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.exporttoexcel" commandName="Экспорт в Excel"/>
   <commands xmi:id="_Kb450Mr8EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.properties" commandName="Свойства"/>
   <commands xmi:id="_Eh4NUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.command.exit" commandName="Выход"/>
+  <commands xmi:id="_tgtxsPSBEeW0rYQ9NpWXnQ" elementId="ru.7kt.app.command.about" commandName="О программе"/>
   <addons xmi:id="_DrjJAjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_DrjJAzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_DrjJBDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
