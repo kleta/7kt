@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="51">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="53">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.widgets.calendarcombo.feature.feature.group" version="1.0.0.201602191853"/>
-<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
-</location>
 <location path="${project_loc}\gemini-blueprint" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.springframework.ide.eclipse.data.feature.feature.group" version="3.7.2.201511260958-RELEASE"/>
@@ -32,11 +28,15 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.cwt.feature.feature.group" version="0.9.0.201509301423"/>
-<unit id="com.jaspersoft.studio.foundation.bundles.feature.group" version="1.0.5"/>
-<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="0.14.0.201509301423"/>
-<unit id="net.sf.jasperreports.feature.feature.group" version="6.2.0.final"/>
-<unit id="com.jaspersoft.studio.feature.feature.group" version="6.2.0.final"/>
+<unit id="org.eclipse.nebula.widgets.calendarcombo.feature.feature.group" version="1.0.0.201603250059"/>
+<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.cwt.feature.feature.group" version="0.9.0.201601132332"/>
+<unit id="com.jaspersoft.studio.foundation.bundles.feature.group" version="1.0.6"/>
+<unit id="net.sf.jasperreports.feature.feature.group" version="6.2.1.final"/>
+<unit id="com.jaspersoft.studio.feature.feature.group" version="6.2.1.final"/>
+<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="0.14.0.201601132332"/>
 <repository location="http://jasperstudio.sourceforge.net/updates/"/>
 </location>
 </locations>
