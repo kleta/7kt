@@ -47,7 +47,6 @@ public class Measuring {
 			id = new MeasuringPK();
 		dateTime=atTime;
 		id.setDateTime(atTime);
-
 	}
 
 	public void setParametr(Parameters value2) {

@@ -1,6 +1,7 @@
 package ru.sevenkt.db.services.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -142,9 +143,12 @@ public class DBService implements IDBService {
 	@Override
 	public void deleteDevice(Device device) {
 		EntityTransaction tx = em.getTransaction();
+		//LocalDateTime max = mr.getMaxDateTimeByDevice(device);
+		LocalDateTime min = mr.getMinDateTimeByDevice(device);
 		tx.begin();
 		try {
-			mr.deleteByDevice(device);
+			//mr.deleteByDeviceAndDateTimeBetween(device);
+			
 		} catch (Exception ex) {
 			tx.rollback();
 			ex.printStackTrace();
