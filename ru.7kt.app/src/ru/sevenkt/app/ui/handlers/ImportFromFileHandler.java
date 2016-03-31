@@ -64,7 +64,7 @@ public class ImportFromFileHandler {
 
 	private Shell parentShell;
 
-	Logger LOG = LoggerFactory.getLogger(getClass());
+	private Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell parentShell) {

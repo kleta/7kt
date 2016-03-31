@@ -27,8 +27,6 @@ import ru.sevenkt.domain.Parameters;
 @Service
 public class DBService implements IDBService {
 
-
-
 	@Autowired
 	private DeviceRepo dr;
 
@@ -40,13 +38,11 @@ public class DBService implements IDBService {
 
 	@Autowired
 	private EntityManager em;
-	
+
 	@PostConstruct
-	private void init(){
-		
+	private void init() {
+
 	}
-
-
 
 	@Override
 	public void saveNode(Node node) {
@@ -64,12 +60,8 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 				tx.rollback();
 			}
-		}		
+		}
 	}
-
-
-
-
 
 	@Override
 	public void saveDevice(Device device) {
@@ -87,10 +79,9 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 				tx.rollback();
 			}
-		}		
-		
-	}
+		}
 
+	}
 
 	@Override
 	public void saveMeasuring(Measuring measuring) {
@@ -108,13 +99,9 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 				tx.rollback();
 			}
-		}		
-		
+		}
+
 	}
-
-
-
-
 
 	@Override
 	public void deleteNode(Node node) {
@@ -132,23 +119,41 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 				tx.rollback();
 			}
-		}		
-		
+		}
+
 	}
-
-
-
-
 
 	@Override
 	public void deleteDevice(Device device) {
 		EntityTransaction tx = em.getTransaction();
-		//LocalDateTime max = mr.getMaxDateTimeByDevice(device);
-		LocalDateTime min = mr.getMinDateTimeByDevice(device);
+		Measuring minM = mr.findTopByDeviceOrderByDateTimeAsc(device);
+		Measuring maxM = mr.findTopByDeviceOrderByDateTimeDesc(device);
+
+		if (minM != null && maxM != null) {
+			LocalDateTime min = minM.getDateTime();
+			LocalDateTime max = maxM.getDateTime();
+			while (min.isBefore(max)) {
+				tx.begin();
+				try {
+					mr.deleteByDeviceAndDateTimeBetween(device, min, min.plusMonths(1));
+					min = min.plusMonths(1);
+				} catch (Exception ex) {
+					tx.rollback();
+					ex.printStackTrace();
+					throw ex;
+				} finally {
+					try {
+						tx.commit();
+					} catch (Exception e) {
+						e.printStackTrace();
+						tx.rollback();
+					}
+				}
+			}
+		}
 		tx.begin();
 		try {
-			//mr.deleteByDeviceAndDateTimeBetween(device);
-			
+			dr.delete(device);
 		} catch (Exception ex) {
 			tx.rollback();
 			ex.printStackTrace();
@@ -160,20 +165,14 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 				tx.rollback();
 			}
-		}		
-		
-	}
+		}
 
+	}
 
 	@Override
 	public void deleteMeasuring(Measuring measuring) {
-		
-		
+
 	}
-
-
-
-
 
 	@Override
 	public List<Node> findAllNodes() {
@@ -181,23 +180,16 @@ public class DBService implements IDBService {
 		return null;
 	}
 
-
 	@Override
 	public List<Device> findDeviceByNode(Node node) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-	
-
-
 	@Override
 	public Device findDeviceBySerialNum(int serialNumber) {
-		return dr.findBySerialNum(serialNumber+"");
+		return dr.findBySerialNum(serialNumber + "");
 	}
-
-
 
 	@Override
 	public void saveMeasurings(List<Measuring> measurings) {
@@ -217,27 +209,20 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 				tx.rollback();
 			}
-		}		
-		
+		}
+
 	}
-
-
 
 	@Override
 	public List<Device> findAllDevices() {
 		return StreamSupport.stream(dr.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
-
-
 	@Override
 	public List<Measuring> findArchive(Device device, LocalDate startDate, LocalDate endDate,
 			ArchiveTypes archiveType) {
-		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0,0), endDate.atTime(0,0));
+		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0, 0),
+				endDate.atTime(0, 0));
 	}
-
-
-
-	
 
 }

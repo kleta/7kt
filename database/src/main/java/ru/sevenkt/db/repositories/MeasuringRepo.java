@@ -21,9 +21,10 @@ public interface MeasuringRepo extends CrudRepository<Measuring, MeasuringPK> {
 	void deleteByDeviceAndDateTimeBetween(Device device, LocalDateTime start, LocalDateTime end);
 	
 
-	//Measuring findTopByDevice
+	Measuring findTopByDeviceOrderByDateTimeAsc(Device device);
 
-	@Query("select min(m.dateTime) from Measuring m")
-	LocalDateTime  getMinDateTimeByDevice(Device device);
+	Measuring findTopByDeviceOrderByDateTimeDesc(Device device);
+
+	
 	
 }

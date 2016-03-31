@@ -20,7 +20,7 @@ public class Measuring {
 	@EmbeddedId
 	private MeasuringPK id;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "idDevice", referencedColumnName = "id", insertable = false, updatable = false)
 	private Device device;
 	
