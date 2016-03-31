@@ -1,5 +1,6 @@
 package ru.sevenkt.db.entities;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,12 @@ import ru.sevenkt.annotations.Prop;
 
 @Entity
 @Data
-public class Device {
+public class Device implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2048945841888190110L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -84,5 +90,34 @@ public class Device {
 			}
 		}
 		return list;
+	}
+
+	public Device(Device device) {
+		this.deviceName=device.getDeviceName()+"";
+		this.deviceVersion=new Integer(device.getDeviceVersion());
+		this.formulaNum=new Integer(device.getFormulaNum());
+		this.id=new Integer(device.getId());
+		this.netAddress=device.getNetAddress();
+		nodes=new ArrayList<>();
+		nodes.addAll(device.getNodes());
+		this.serialNum=device.getSerialNum()+"";
+		this.tempColdWaterSetting=new Float(device.getTempColdWaterSetting());
+		this.volumeByImpulsSetting1=new Float(device.getVolumeByImpulsSetting1());
+		this.volumeByImpulsSetting2=new Float(device.getVolumeByImpulsSetting2());
+		this.volumeByImpulsSetting3=new Float(device.getVolumeByImpulsSetting3());
+		this.volumeByImpulsSetting4=new Float(device.getVolumeByImpulsSetting4());
+		this.wMax12=new Integer(device.getWMax12());
+		this.wMax34=new Integer(device.getWMax34());
+		this.wMin0=new Integer(device.getWMin0());
+		this.wMin1=new Integer(device.getWMin1());
+		
+		
+		
+		
+		
+	}
+
+	public Device() {
+		
 	}
 }
