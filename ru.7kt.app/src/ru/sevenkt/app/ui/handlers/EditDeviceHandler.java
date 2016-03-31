@@ -47,7 +47,7 @@ public class EditDeviceHandler implements EventHandler {
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				dbService.saveDevice(dialog.getDevice());
-				broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
+				broker.post(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 			}
 			
 		}

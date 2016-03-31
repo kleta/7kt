@@ -4,6 +4,7 @@ package ru.sevenkt.app.ui.handlers;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,26 +23,34 @@ public class DeviceViewDynamicMenuConribution {
 
 	private Device currentSelection;
 	private Shell shell;
+	private MDirectMenuItem openArchiveItem;
+	private MDirectMenuItem propertiesItem;
+	
+	@PostConstruct
+	public void init(){
+		openArchiveItem = MMenuFactory.INSTANCE.createDirectMenuItem();
+		openArchiveItem.setLabel("Просмотр архивов");
+		openArchiveItem.setIconURI("platform:/plugin/ru.7kt.app/icons/table.png");
+
+		openArchiveItem.setContributorURI("platform:/plugin/ru.7kt.app");
+		openArchiveItem.setContributionURI("bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.OpenArchiveHandler");
+		
+		propertiesItem = MMenuFactory.INSTANCE.createDirectMenuItem();
+		propertiesItem.setLabel("Свойства");
+		propertiesItem.setIconURI("platform:/plugin/ru.7kt.app/icons/property.png");
+
+		propertiesItem.setContributorURI("platform:/plugin/ru.7kt.app");
+		propertiesItem.setContributionURI("bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.EditDeviceHandler");
+	}
 
 	@AboutToShow
 	public void aboutToShow(List<MMenuElement> items) {
 		if (currentSelection instanceof Device) {
-			MDirectMenuItem openArchiveItem = MMenuFactory.INSTANCE.createDirectMenuItem();
-			openArchiveItem.setLabel("Просмотр архивов");
-			openArchiveItem.setIconURI("platform:/plugin/ru.7kt.app/icons/table.png");
-
-			openArchiveItem.setContributorURI("platform:/plugin/ru.7kt.app");
-			openArchiveItem.setContributionURI("bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.OpenArchiveHandler");
+			
 			items.add(openArchiveItem);
 			
 			items.add(MMenuFactory.INSTANCE.createMenuSeparator());
-			
-			MDirectMenuItem propertiesItem = MMenuFactory.INSTANCE.createDirectMenuItem();
-			propertiesItem.setLabel("Свойства");
-			propertiesItem.setIconURI("platform:/plugin/ru.7kt.app/icons/property.png");
-
-			propertiesItem.setContributorURI("platform:/plugin/ru.7kt.app");
-			propertiesItem.setContributionURI("bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.EditDeviceHandler");
+						
 			items.add(propertiesItem);
 		}
 	}

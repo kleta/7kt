@@ -131,7 +131,7 @@ public class DevicesView implements EventHandler{
 			
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
-				broker.send(AppEventConstants.TOPIC_EDIT_DEVICE, "");
+				broker.post(AppEventConstants.TOPIC_EDIT_DEVICE, "");
 			}
 		});
 	}
