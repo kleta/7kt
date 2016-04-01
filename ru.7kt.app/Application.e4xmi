@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_DrjJADGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ide.application" bindingContexts="_DrjJCTGFEeSeO8huCdGv8Q">
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_DrjJADGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ide.application" bindingContexts="_DrjJCTGFEeSeO8huCdGv8Q">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_DrjJATGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.main.menu" accessibilityPhrase="" label="7 Координат" iconURI="platform:/plugin/ru.7kt.app/icons/logo48.png" width="500" height="400">
     <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_3H8IYDGNEeSuG80xnFR2ZQ" elementId="7kt.partsashcontainer.devices" horizontal="true">
       <children xsi:type="basic:PartStack" xmi:id="_3xTOcDGNEeSuG80xnFR2ZQ" elementId="7kt.partstack.right" containerData="17">
         <children xsi:type="basic:Part" xmi:id="_CeXAcMopEeWgFZI886Y61g" elementId="ru.7kt.app.part.devices" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.DevicesView" label="Устройства" iconURI="platform:/plugin/ru.7kt.app/icons/pda.png">
           <menus xsi:type="menu:PopupMenu" xmi:id="_iaV9YMsEEeW_Qf64bg1C_g" elementId="ru.7kt.app.popupmenu.device" label="Меню">
-            <children xsi:type="menu:DynamicMenuContribution" xmi:id="_nbSTQPbsEeWNeMUtWF3r6w" elementId="ru.7kt.app.dynamicmenucontribution.0" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.DeviceViewDynamicMenuConribution"/>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_096VQPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Удалить" iconURI="platform:/plugin/ru.7kt.app/icons/pda--minus.png" command="_YSvKUMr7EeW_Qf64bg1C_g">
+              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_YFa1EPezEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
+            </children>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_TSSIIPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Просмотр архивов" iconURI="platform:/plugin/ru.7kt.app/icons/table.png" command="_qzLmsMr7EeW_Qf64bg1C_g">
+              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UUwRwPexEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
+            </children>
+            <children xsi:type="menu:MenuSeparator" xmi:id="_cN8bkPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.menuseparator.1"/>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_syb64PesEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Настройки устройства" iconURI="platform:/plugin/ru.7kt.app/icons/property.png" command="_Kb450Mr8EeW_Qf64bg1C_g">
+              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_Q1Zg4PevEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
+            </children>
           </menus>
           <toolbar xmi:id="_zZIPkNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.toolbar.0">
             <children xsi:type="menu:HandledToolItem" xmi:id="_1rlaYNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.handledtoolitem.0" iconURI="platform:/plugin/ru.7kt.app/icons/pda--plus.png" tooltip="Добавить устройство" command="_QQytIMr7EeW_Qf64bg1C_g"/>
-            <children xsi:type="menu:HandledToolItem" xmi:id="_339yYNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.handledtoolitem.1" iconURI="platform:/plugin/ru.7kt.app/icons/pda--minus.png" command="_YSvKUMr7EeW_Qf64bg1C_g"/>
+            <children xsi:type="menu:HandledToolItem" xmi:id="_339yYNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.handledtoolitem." label="" iconURI="platform:/plugin/ru.7kt.app/icons/pda--minus.png" tooltip="Удалить устройство" command="_YSvKUMr7EeW_Qf64bg1C_g"/>
+            <children xsi:type="menu:HandledToolItem" xmi:id="_JPRVoPeyEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.1" iconURI="platform:/plugin/ru.7kt.app/icons/table.png" tooltip="Просмотр архивов" command="_qzLmsMr7EeW_Qf64bg1C_g"/>
+            <children xsi:type="menu:HandledToolItem" xmi:id="_JnlSgPezEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.2" iconURI="platform:/plugin/ru.7kt.app/icons/property.png" tooltip="Настройки устройства" command="_Kb450Mr8EeW_Qf64bg1C_g"/>
           </toolbar>
         </children>
       </children>

@@ -55,7 +55,7 @@ public class ImportFromFileHandler {
 
 	@Inject
 	private IArchiveService archiveService;
-	
+
 	@Inject
 	private IEventBroker broker;
 
@@ -74,42 +74,45 @@ public class ImportFromFileHandler {
 		String[] filterExt = { "*.bin" };
 		fd.setFilterExtensions(filterExt);
 		String selected = fd.open();
-		try {
-			Archive archive = archiveService.readArchiveFromFile(new File(selected));
-			Device device = insertOrUpdateDeviceSettings(archive.getSettings());
-			if (device != null) {
-				IRunnableWithProgress op = new IRunnableWithProgress() {
+		if (selected != null)
+			try {
+				Archive archive = archiveService.readArchiveFromFile(new File(selected));
+				Device device = insertOrUpdateDeviceSettings(archive.getSettings());
+				if (device != null) {
+					IRunnableWithProgress op = new IRunnableWithProgress() {
 
-					@Override
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						try {
-							monitor.beginTask("Импорт данных", 4);
-							insertMonthArchive(archive, device, monitor);
-							insertDayArchive(archive, device, monitor);
-							insertHourArchive(archive, device, monitor);
-							// insertJournalSettings(archive, device, monitor);
-							monitor.worked(4);
-							Thread.sleep(1000);
-							monitor.done();
-						} catch (Exception e) {
-							MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
-							ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
-							LOG.error(e.getMessage(), e);
+						@Override
+						public void run(IProgressMonitor monitor)
+								throws InvocationTargetException, InterruptedException {
+							try {
+								monitor.beginTask("Импорт данных", 4);
+								insertMonthArchive(archive, device, monitor);
+								insertDayArchive(archive, device, monitor);
+								insertHourArchive(archive, device, monitor);
+								// insertJournalSettings(archive, device,
+								// monitor);
+								monitor.worked(4);
+								Thread.sleep(1000);
+								monitor.done();
+							} catch (Exception e) {
+								MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
+								ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
+								LOG.error(e.getMessage(), e);
+							}
+
 						}
+					};
+					ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(parentShell);
+					progressDialog.run(true, true, op);
 
-					}
-				};
-				ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(parentShell);
-				progressDialog.run(true, true, op);
+				}
+			} catch (Exception e) {
 
+				MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
+
+				ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
+				LOG.error(e.getMessage(), e);
 			}
-		} catch (Exception e) {
-
-			MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
-
-			ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
-			LOG.error(e.getMessage(), e);
-		}
 
 	}
 
@@ -127,10 +130,10 @@ public class ImportFromFileHandler {
 			List<Measuring> avgMeasurings = new ArrayList<>();
 			Map<Parameters, List<Measuring>> consumptionMeasuring = new HashMap<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-////			if (localDate.equals(LocalDate.of(2016, 2, 4)))
-////				System.out.println();
+			//// if (localDate.equals(LocalDate.of(2016, 2, 4)))
+			//// System.out.println();
 			LOG.info("Импортируются данные за " + localDate);
-//			System.out.println(localDate);
+			// System.out.println(localDate);
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
@@ -144,8 +147,9 @@ public class ImportFromFileHandler {
 					Field[] fields = HourRecord.class.getDeclaredFields();
 					for (Field field : fields) {
 						field.setAccessible(true);
-//						if(field.getName().equals("errorChannel1") || field.getName().equals("errorChannel1"))
-//							System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(hr)));
+						// if(field.getName().equals("errorChannel1") ||
+						// field.getName().equals("errorChannel1"))
+						// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(hr)));
 						if (field.isAnnotationPresent(Parameter.class)) {
 							Measuring m = new Measuring();
 							m.setArchiveType(ArchiveTypes.HOUR);
@@ -260,12 +264,12 @@ public class ImportFromFileHandler {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-//					if(field.getName().equals("errorChannel1")){
-//						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError1());
-//					}
-//					if(field.getName().equals("errorChannel2")){
-//						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError2());
-//					}
+					// if(field.getName().equals("errorChannel1")){
+					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError1());
+					// }
+					// if(field.getName().equals("errorChannel2")){
+					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError2());
+					// }
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
@@ -280,7 +284,7 @@ public class ImportFromFileHandler {
 						} else {
 							float val = field.getFloat(dr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
-								val=val/10;
+								val = val / 10;
 							}
 							m.setValue(val);
 						}
@@ -312,13 +316,13 @@ public class ImportFromFileHandler {
 				Field[] fields = MonthRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-//					if(field.getName().equals("errorChannel1")){
-//						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError1());
-//					}
-//					if(field.getName().equals("errorChannel2")){
-//						System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError2());
-//					}
-					
+					// if(field.getName().equals("errorChannel1")){
+					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError1());
+					// }
+					// if(field.getName().equals("errorChannel2")){
+					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError2());
+					// }
+
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.MONTH);
@@ -333,7 +337,7 @@ public class ImportFromFileHandler {
 						} else {
 							float val = field.getFloat(mr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
-								val=val/10;
+								val = val / 10;
 							}
 							m.setValue(val);
 						}

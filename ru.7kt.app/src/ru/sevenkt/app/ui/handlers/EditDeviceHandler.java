@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -64,4 +65,13 @@ public class EditDeviceHandler implements EventHandler {
 		execute();
 	}
 
+	@CanExecute
+	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)
+			throws IllegalArgumentException, IllegalAccessException {
+
+		if (object instanceof Device)
+			return true;
+		return false;
+
+	}
 }

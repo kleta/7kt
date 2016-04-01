@@ -22,12 +22,16 @@
       </product>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-      <view
-            class="ru.sevenkt.app.ui.MeasuringView"
-            id="ru.sevenkt.app.ui.MeasuringView"
-            name="New ViewPart">
-      </view>
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="ru.7kt.app.deviceselection">
+         <with
+               variable="org.eclipse.ui.selection">
+            <instanceof
+                  value="ru.sevenkt.db.entities.Device">
+            </instanceof>
+         </with>
+      </definition>
    </extension>
 
 </plugin>
