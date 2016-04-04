@@ -38,6 +38,7 @@ import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.app.ui.forms.DeviceDialog;
 import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.Archive;
@@ -46,6 +47,8 @@ import ru.sevenkt.domain.DayArchive;
 import ru.sevenkt.domain.DayRecord;
 import ru.sevenkt.domain.HourArchive;
 import ru.sevenkt.domain.HourRecord;
+import ru.sevenkt.domain.JournalSettings;
+import ru.sevenkt.domain.JournalSettingsRecord;
 import ru.sevenkt.domain.MonthArchive;
 import ru.sevenkt.domain.MonthRecord;
 import ru.sevenkt.domain.Parameters;
@@ -85,13 +88,12 @@ public class ImportFromFileHandler {
 						public void run(IProgressMonitor monitor)
 								throws InvocationTargetException, InterruptedException {
 							try {
-								monitor.beginTask("Импорт данных", 4);
+								monitor.beginTask("Импорт данных", 5);
 								insertMonthArchive(archive, device, monitor);
 								insertDayArchive(archive, device, monitor);
 								insertHourArchive(archive, device, monitor);
-								// insertJournalSettings(archive, device,
-								// monitor);
-								monitor.worked(4);
+								insertJournalSettings(archive, device, monitor);
+								monitor.worked(5);
 								Thread.sleep(1000);
 								monitor.done();
 							} catch (Exception e) {
@@ -117,7 +119,20 @@ public class ImportFromFileHandler {
 	}
 
 	private void insertJournalSettings(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
-
+		JournalSettings js = archive.getJournalSettings();
+		List<JournalSettingsRecord> records = js.getRecords();
+		List<Journal> list=new ArrayList<>();
+		for (JournalSettingsRecord journalSettingsRecord : records) {
+			Journal record = new Journal();
+			record.setDevice(device);
+			record.setDateTime(journalSettingsRecord.getDateTime());
+			record.setWorkHour(journalSettingsRecord.getWorkHour());
+			record.setEvent(journalSettingsRecord.getEvent());
+			list.add(record);
+		}
+		monitor.subTask("Импорт журнала настроек");
+		dbService.saveJournal(list);
+		monitor.worked(4);
 	}
 
 	private void insertHourArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {

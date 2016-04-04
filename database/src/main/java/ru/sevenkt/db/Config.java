@@ -22,6 +22,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
 import ru.sevenkt.db.repositories.DeviceRepo;
+import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.services.IDBService;
@@ -122,16 +123,7 @@ public class Config {
 
 	}
 	
-//	@Bean
-//	public  ParameterRepo parameterRepo(EntityManager em){
-//		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
-//		return jpaRepositoryFactory.getRepository(ParameterRepo.class);
-//	}
-//	@Bean
-//	public  ArchiveTypeRepo archiveTypeRepo(EntityManager em){
-//		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
-//		return jpaRepositoryFactory.getRepository(ArchiveTypeRepo.class);
-////	}
+
 	@Bean
 	public  DeviceRepo deviceRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
@@ -146,6 +138,11 @@ public class Config {
 	public  NodeRepo nodeRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(NodeRepo.class);
+	}
+	@Bean
+	public  JournalRepo journalRepo(EntityManager em){
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(JournalRepo.class);
 	}
 	
 	@Bean

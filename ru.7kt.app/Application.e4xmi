@@ -58,7 +58,9 @@
       </children>
     </mainMenu>
     <trimBars xmi:id="_6IS80D2HEeSI97fZJ_qSMA" elementId="powerquality-ui.trimbar.top">
-      <children xsi:type="menu:ToolBar" xmi:id="_AoiWsD2IEeSI97fZJ_qSMA" elementId="powerquality-ui.toolbar.1"/>
+      <children xsi:type="menu:ToolBar" xmi:id="_AoiWsD2IEeSI97fZJ_qSMA" elementId="powerquality-ui.toolbar.1">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_PUANgPfZEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.3" iconURI="platform:/plugin/ru.7kt.app/icons/document-import.png" tooltip="Импорт данных из файла" command="_x-oFUMotEeWgFZI886Y61g"/>
+      </children>
     </trimBars>
     <trimBars xmi:id="_ca8oYNbZEeWMyekcOAJjzw" elementId="ru.7kt.app.trimbar.0" side="Bottom">
       <children xsi:type="menu:ToolControl" xmi:id="_d09IQNbZEeWMyekcOAJjzw" elementId="ru.7kt.app.toolcontrol.0" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.StatusBar"/>

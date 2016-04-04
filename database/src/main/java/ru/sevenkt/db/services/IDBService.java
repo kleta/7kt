@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
 import ru.sevenkt.domain.ArchiveTypes;
@@ -36,6 +37,10 @@ public interface IDBService {
 	List<Device> findAllDevices();
 
 	List<Measuring> findArchive(Device device, LocalDate startDate, LocalDate endDate, ArchiveTypes archiveType);
+
+	List<Journal> findJournal(Device device, LocalDate startDate, LocalDate endDate);
+	
+	void saveJournal(List<Journal> list);
 	
 	
 	

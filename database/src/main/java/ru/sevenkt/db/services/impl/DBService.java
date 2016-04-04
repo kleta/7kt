@@ -15,9 +15,11 @@ import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
 import ru.sevenkt.db.repositories.DeviceRepo;
+import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.services.IDBService;
@@ -35,6 +37,9 @@ public class DBService implements IDBService {
 
 	@Autowired
 	private NodeRepo nr;
+
+	@Autowired
+	private JournalRepo jr;
 
 	@Autowired
 	private EntityManager em;
@@ -223,6 +228,34 @@ public class DBService implements IDBService {
 			ArchiveTypes archiveType) {
 		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0, 0),
 				endDate.atTime(0, 0));
+	}
+
+	@Override
+	public List<Journal> findJournal(Device device, LocalDate startDate, LocalDate endDate) {
+		jr.findByDeviceAndDateTimeBetween(device, startDate, endDate);
+		return null;
+	}
+
+	@Override
+	public void saveJournal(List<Journal> journals) {
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		try {
+			for (Journal journal : journals) {
+				jr.save(journal);
+			}
+		} catch (Exception ex) {
+			tx.rollback();
+			throw ex;
+		} finally {
+			try {
+				tx.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				tx.rollback();
+			}
+		}
+		
 	}
 
 }

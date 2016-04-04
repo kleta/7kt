@@ -11,5 +11,7 @@ version="2.1"
 		<class>ru.sevenkt.db.ArchiveTypeConverter</class>
 		<class>ru.sevenkt.db.ParameterConverter</class>
 		<class>ru.sevenkt.db.LocalDateTimeConverter</class>
+		<class>ru.sevenkt.db.EventTypeConverter</class>
+		<class>ru.sevenkt.db.entities.Journal</class>
 	</persistence-unit>
 </persistence>
