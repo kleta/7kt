@@ -9,10 +9,14 @@
             <children xsi:type="menu:HandledMenuItem" xmi:id="_096VQPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Удалить" iconURI="platform:/plugin/ru.7kt.app/icons/pda--minus.png" command="_YSvKUMr7EeW_Qf64bg1C_g">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_YFa1EPezEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
             </children>
+            <children xsi:type="menu:MenuSeparator" xmi:id="_cN8bkPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.menuseparator.1"/>
             <children xsi:type="menu:HandledMenuItem" xmi:id="_TSSIIPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Просмотр архивов" iconURI="platform:/plugin/ru.7kt.app/icons/table.png" command="_qzLmsMr7EeW_Qf64bg1C_g">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UUwRwPexEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
             </children>
-            <children xsi:type="menu:MenuSeparator" xmi:id="_cN8bkPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.menuseparator.1"/>
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_15aKwPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.handledmenuitem." label="Журнал настроек" iconURI="platform:/plugin/ru.7kt.app/icons/calendar-list.png" command="_TnxGgPr_EeWTE_9cDLU1ZQ">
+              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_9EPZwPr_EeWTE_9cDLU1ZQ" coreExpressionId="ru.7kt.app.deviceselection"/>
+            </children>
+            <children xsi:type="menu:MenuSeparator" xmi:id="_v1FQ0Pr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.menuseparator.2"/>
             <children xsi:type="menu:HandledMenuItem" xmi:id="_syb64PesEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Настройки устройства" iconURI="platform:/plugin/ru.7kt.app/icons/property.png" command="_Kb450Mr8EeW_Qf64bg1C_g">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_Q1Zg4PevEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
             </children>
@@ -20,7 +24,10 @@
           <toolbar xmi:id="_zZIPkNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.toolbar.0">
             <children xsi:type="menu:HandledToolItem" xmi:id="_1rlaYNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.handledtoolitem.0" iconURI="platform:/plugin/ru.7kt.app/icons/pda--plus.png" tooltip="Добавить устройство" command="_QQytIMr7EeW_Qf64bg1C_g"/>
             <children xsi:type="menu:HandledToolItem" xmi:id="_339yYNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.handledtoolitem." label="" iconURI="platform:/plugin/ru.7kt.app/icons/pda--minus.png" tooltip="Удалить устройство" command="_YSvKUMr7EeW_Qf64bg1C_g"/>
+            <children xsi:type="menu:ToolBarSeparator" xmi:id="_UNRqgPsDEeWTE_9cDLU1ZQ" elementId="ru.7kt.app.toolbarseparator.1"/>
             <children xsi:type="menu:HandledToolItem" xmi:id="_JPRVoPeyEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.1" iconURI="platform:/plugin/ru.7kt.app/icons/table.png" tooltip="Просмотр архивов" command="_qzLmsMr7EeW_Qf64bg1C_g"/>
+            <children xsi:type="menu:HandledToolItem" xmi:id="_Wif1cPsDEeWTE_9cDLU1ZQ" elementId="ru.7kt.app.handledtoolitem.4" iconURI="platform:/plugin/ru.7kt.app/icons/calendar-list.png" tooltip="Журнал настроек" command="_TnxGgPr_EeWTE_9cDLU1ZQ"/>
+            <children xsi:type="menu:ToolBarSeparator" xmi:id="_dOhokPsDEeWTE_9cDLU1ZQ" elementId="ru.7kt.app.toolbarseparator.2"/>
             <children xsi:type="menu:HandledToolItem" xmi:id="_JnlSgPezEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.2" iconURI="platform:/plugin/ru.7kt.app/icons/property.png" tooltip="Настройки устройства" command="_Kb450Mr8EeW_Qf64bg1C_g"/>
           </toolbar>
         </children>
@@ -60,6 +67,7 @@
     <trimBars xmi:id="_6IS80D2HEeSI97fZJ_qSMA" elementId="powerquality-ui.trimbar.top">
       <children xsi:type="menu:ToolBar" xmi:id="_AoiWsD2IEeSI97fZJ_qSMA" elementId="powerquality-ui.toolbar.1">
         <children xsi:type="menu:HandledToolItem" xmi:id="_PUANgPfZEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.3" iconURI="platform:/plugin/ru.7kt.app/icons/document-import.png" tooltip="Импорт данных из файла" command="_x-oFUMotEeWgFZI886Y61g"/>
+        <children xsi:type="menu:ToolBarSeparator" xmi:id="_04gj4Pr-EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.toolbarseparator.0"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_ca8oYNbZEeWMyekcOAJjzw" elementId="ru.7kt.app.trimbar.0" side="Bottom">
@@ -74,6 +82,7 @@
   <handlers xmi:id="_l0bboPI1EeWsXeL9JOEsaw" elementId="ru.7kt.app.handler.1" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.DeleteDevice" command="_YSvKUMr7EeW_Qf64bg1C_g"/>
   <handlers xmi:id="_0vd3YPSBEeW0rYQ9NpWXnQ" elementId="ru.7kt.app.handler.about" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.AboutHandler" command="_tgtxsPSBEeW0rYQ9NpWXnQ"/>
   <handlers xmi:id="_gPWVMPblEeWNeMUtWF3r6w" elementId="ru.7kt.app.handler.2" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.EditDeviceHandler" command="_Kb450Mr8EeW_Qf64bg1C_g"/>
+  <handlers xmi:id="_l6NjIPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.handler.3" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.JournalSettingsHandler" command="_TnxGgPr_EeWTE_9cDLU1ZQ"/>
   <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
@@ -89,6 +98,7 @@
   <commands xmi:id="_Kb450Mr8EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.properties" commandName="Свойства"/>
   <commands xmi:id="_Eh4NUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.command.exit" commandName="Выход"/>
   <commands xmi:id="_tgtxsPSBEeW0rYQ9NpWXnQ" elementId="ru.7kt.app.command.about" commandName="О программе"/>
+  <commands xmi:id="_TnxGgPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.command.journalsettings" commandName="Журнал настроек"/>
   <addons xmi:id="_DrjJAjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_DrjJAzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_DrjJBDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
