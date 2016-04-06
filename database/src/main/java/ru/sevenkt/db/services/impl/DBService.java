@@ -232,8 +232,8 @@ public class DBService implements IDBService {
 
 	@Override
 	public List<Journal> findJournal(Device device, LocalDate startDate, LocalDate endDate) {
-		jr.findByDeviceAndDateTimeBetween(device, startDate, endDate);
-		return null;
+		List<Journal> ret = jr.findByDeviceAndDateTimeBetween(device, startDate, endDate);
+		return ret;
 	}
 
 	@Override
@@ -256,6 +256,12 @@ public class DBService implements IDBService {
 			}
 		}
 		
+	}
+
+	@Override
+	public List<Journal> findJournal(Device device) {
+		List<Journal> ret = jr.findByDevice(device);
+		return ret;
 	}
 
 }

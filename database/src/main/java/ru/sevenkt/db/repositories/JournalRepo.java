@@ -13,4 +13,6 @@ public interface JournalRepo extends CrudRepository<Journal, JournalPK> {
 
 	List<Journal> findByDeviceAndDateTimeBetween(Device device, LocalDate startDate, LocalDate endDate);
 
+	List<Journal> findByDevice(Device device);
+
 }

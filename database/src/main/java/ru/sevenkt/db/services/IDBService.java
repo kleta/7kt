@@ -41,6 +41,8 @@ public interface IDBService {
 	List<Journal> findJournal(Device device, LocalDate startDate, LocalDate endDate);
 	
 	void saveJournal(List<Journal> list);
+
+	List<Journal> findJournal(Device device);
 	
 	
 	

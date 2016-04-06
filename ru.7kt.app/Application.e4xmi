@@ -88,6 +88,7 @@
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
   </rootContext>
   <descriptors xmi:id="_LEdRgMsDEeW_Qf64bg1C_g" elementId="ru.7kt.app.partdescriptor.arciveView" iconURI="platform:/plugin/ru.7kt.app/icons/chart-up.png" allowMultiple="true" closeable="true" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.ArchiveView"/>
+  <descriptors xmi:id="_Dz3pUPuWEeWSeo9gV6qCOQ" elementId="ru.7kt.app.partdescriptor.journalsettings" label="Журнал настроек" iconURI="platform:/plugin/ru.7kt.app/icons/calendar-list.png" closeable="true" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.JournalSettingsView"/>
   <commands xmi:id="_x-oFUMotEeWgFZI886Y61g" elementId="ru.7kt.app.command.importfromfile" commandName="Импорт данных из файла"/>
   <commands xmi:id="_L9Li4Mr7EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.addnode" commandName="Добавить узел"/>
   <commands xmi:id="_QQytIMr7EeW_Qf64bg1C_g" elementId="ru.7kt.app.command.adddevice" commandName="Добавить устройство"/>
