@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-03-24T14:25:37 -->
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2016-04-07T16:23:25 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dayReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa2e6756-87b8-4cf3-abba-b72a5ddb5753">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
@@ -31,7 +31,7 @@
 FROM measuring, device 
 where device.id=measuring.iddevice 
 and device.id= $P{idDevice}  
-and datetime BETWEEN  $P{dateFrom}  and  $P{dateTo} ]]>
+and datetime BETWEEN  $P{dateFrom}  and  $P{dateTo}]]>
 	</queryString>
 	<field name="ARCHIVETYPE" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -50,7 +50,7 @@ and datetime BETWEEN  $P{dateFrom}  and  $P{dateTo} ]]>
 	</field>
 	<sortField name="DATETIME"/>
 	<variable name="Variable_1" class="java.lang.String"/>
-	<filterExpression><![CDATA[$F{ARCHIVETYPE}==2]]></filterExpression>
+	<filterExpression><![CDATA[$F{ARCHIVETYPE}==3]]></filterExpression>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -94,6 +94,10 @@ and datetime BETWEEN  $P{dateFrom}  and  $P{dateTo} ]]>
 				<reportElement x="140" y="35" width="40" height="14" uuid="a0e3bb94-a1e5-42de-9138-c5e54faeac93"/>
 				<text><![CDATA[7KT №]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="140" y="21" width="240" height="13" uuid="97b0177e-3b19-46f9-bf65-0a38932afa01"/>
+				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
