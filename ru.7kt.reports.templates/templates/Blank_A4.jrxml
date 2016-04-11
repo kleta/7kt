@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-07T16:51:01 -->
+<!-- 2016-04-07T17:18:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e162755-e549-4ea3-9935-c094e02c9aaf">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="idDevice" class="java.lang.Integer"/>
+	<parameter name="dateFrom" class="java.sql.Timestamp"/>
+	<parameter name="dateTo" class="java.sql.Timestamp"/>
 	<queryString>
 		<![CDATA[select a.datetime, a.value as v1, b.value as v2, c.value as v3, d.value as v4, e.value as e1, f.value as e2, g.value as m1, h.value as m2, i.value as m3, j.value as m4, 
  l.value as t1, m.value as t2, n.value as t3, o.value as t4, p.value as p1, q.value as p2  from
@@ -28,8 +31,7 @@ where a.datetime=b.datetime
   and a.datetime=g.datetime and a.datetime=h.datetime and a.datetime=i.datetime and a.datetime=j.datetime 
   and a.datetime=l.datetime and a.datetime=m.datetime and a.datetime=n.datetime 
   and a.datetime=o.datetime and a.datetime=p.datetime and a.datetime=q.datetime
-order by a.datetime
-]]>
+order by a.datetime]]>
 	</queryString>
 	<background>
 		<band splitType="Stretch"/>
