@@ -32,6 +32,7 @@ import org.osgi.service.event.EventHandler;
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Measuring;
+import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
@@ -96,10 +97,11 @@ public class OpenArchiveHandler implements EventHandler {
 		List<Measuring> measurings = dbService.findArchive(device, startDate, endDate, archiveType);
 		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
-		Map<Parameters, List<Measuring>> groupByParameters = measurings.stream()
-				.collect(Collectors.groupingBy(Measuring::getParameter));
 		List<Parameters> parameters = new ArrayList<>();
-		groupByParameters.keySet().iterator().forEachRemaining(parameters::add);
+		List<Params> params = device.getParams();
+		for (Params param : params) {
+			parameters.add(param.getId());
+		}
 		List<TableRow> listTableRow = new ArrayList<>();
 		do {
 			TableRow tr = new TableRow();
@@ -121,7 +123,18 @@ public class OpenArchiveHandler implements EventHandler {
 							tr.getValues().put(measuring.getParameter(), measuring.getValue());
 					}
 				}
-				listTableRow.add(tr);
+				if(parameters.contains(Parameters.M1_SUB_M2)){
+					Object m1 = tr.getValues().get(Parameters.M1);
+					Object m2 = tr.getValues().get(Parameters.M2);
+					if(m1!=null && m2!=null)
+						tr.getValues().put(Parameters.M1_SUB_M2, ((Float)m1)-((Float)m2));
+				}
+				if(parameters.contains(Parameters.M3_SUB_M4)){
+					Object m1 = tr.getValues().get(Parameters.M3);
+					Object m2 = tr.getValues().get(Parameters.M4);
+					if(m1!=null && m2!=null)
+						tr.getValues().put(Parameters.M3_SUB_M4, ((Float)m1)-((Float)m2));
+				}
 				startDateTime = startDateTime.plusMonths(1);
 				break;
 			case DAY:
@@ -139,7 +152,18 @@ public class OpenArchiveHandler implements EventHandler {
 							tr.getValues().put(measuring.getParameter(), measuring.getValue());
 					}
 				}
-				listTableRow.add(tr);
+				if(parameters.contains(Parameters.M1_SUB_M2)){
+					Object m1 = tr.getValues().get(Parameters.M1);
+					Object m2 = tr.getValues().get(Parameters.M2);
+					if(m1!=null && m2!=null)
+						tr.getValues().put(Parameters.M1_SUB_M2, ((Float)m1)-((Float)m2));
+				}
+				if(parameters.contains(Parameters.M3_SUB_M4)){
+					Object m1 = tr.getValues().get(Parameters.M3);
+					Object m2 = tr.getValues().get(Parameters.M4);
+					if(m1!=null && m2!=null)
+						tr.getValues().put(Parameters.M3_SUB_M4, ((Float)m1)-((Float)m2));
+				}
 				startDateTime = startDateTime.plusDays(1);
 				break;
 			case HOUR:
@@ -147,12 +171,36 @@ public class OpenArchiveHandler implements EventHandler {
 					for (Measuring measuring : lm) {
 						tr.getValues().put(measuring.getParameter(), measuring.getValue());
 					}
-				listTableRow.add(tr);
 				startDateTime = startDateTime.plusHours(1);
 				break;
 			default:
 				break;
 			}
+			if(parameters.contains(Parameters.V1_SUB_V2)){
+				Object v1 = tr.getValues().get(Parameters.V1);
+				Object v2 = tr.getValues().get(Parameters.V2);
+				if(v1!=null && v2!=null)
+				tr.getValues().put(Parameters.V1_SUB_V2, ((Float)v1)-((Float)v2));
+			}
+			if(parameters.contains(Parameters.V3_SUB_V4)){
+				Object v3 = tr.getValues().get(Parameters.V3);
+				Object v4 = tr.getValues().get(Parameters.V4);
+				if(v3!=null && v4!=null)
+					tr.getValues().put(Parameters.V3_SUB_V4, ((Float)v3)-((Float)v4));
+			}
+			if(parameters.contains(Parameters.T1_SUB_T2)){
+				Object t1 = tr.getValues().get(Parameters.AVG_TEMP1);
+				Object t2 = tr.getValues().get(Parameters.AVG_TEMP2);
+				if(t1!=null && t2!=null)
+					tr.getValues().put(Parameters.T1_SUB_T2, ((Float)t1)-((Float)t2));
+			}
+			if(parameters.contains(Parameters.T3_SUB_T4)){
+				Object t1 = tr.getValues().get(Parameters.AVG_TEMP3);
+				Object t2 = tr.getValues().get(Parameters.AVG_TEMP4);
+				if(t1!=null && t2!=null)
+					tr.getValues().put(Parameters.T3_SUB_T4, ((Float)t1)-((Float)t2));
+			}
+			listTableRow.add(tr);
 		} while (startDateTime.isBefore(endDateTime));
 		result.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
 		result.put(AppEventConstants.TABLE_ROWS, listTableRow);
