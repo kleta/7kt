@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.app.ui.forms.DeviceDialog;
+import ru.sevenkt.app.ui.forms.ParametersModel;
 import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Journal;
@@ -387,7 +388,7 @@ public class ImportFromFileHandler {
 				device.setVolumeByImpulsSetting2(settings.getVolumeByImpulsSetting2() * 1000);
 				device.setVolumeByImpulsSetting3(settings.getVolumeByImpulsSetting3() * 1000);
 				device.setVolumeByImpulsSetting4(settings.getVolumeByImpulsSetting4() * 1000);
-				DeviceDialog dialog = new DeviceDialog(parentShell, device);
+				DeviceDialog dialog = new DeviceDialog(parentShell, device, new ParametersModel(new ArrayList<>()));
 				dialog.create();
 				if (dialog.open() == Window.OK) {
 					dbService.saveDevice(dialog.getDevice());

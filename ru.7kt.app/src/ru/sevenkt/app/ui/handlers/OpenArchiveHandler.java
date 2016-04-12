@@ -166,6 +166,5 @@ public class OpenArchiveHandler implements EventHandler {
 		if (object instanceof Device)
 			return true;
 		return false;
-
 	}
 }

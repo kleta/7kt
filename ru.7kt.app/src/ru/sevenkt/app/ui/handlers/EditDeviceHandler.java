@@ -16,6 +16,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import ru.sevenkt.app.ui.forms.DeviceDialog;
+import ru.sevenkt.app.ui.forms.ParametersModel;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.services.IDBService;
 
@@ -37,17 +38,17 @@ public class EditDeviceHandler implements EventHandler {
 	}
 
 	@Execute
-	public void execute() {
-		if (currentSelection != null && currentSelection instanceof Device) {
-			
-			
+	public void execute() throws IllegalArgumentException, IllegalAccessException {
+		if (currentSelection != null && currentSelection instanceof Device) {			
 			Device device = (Device) currentSelection;
 			Device oldDevice = new Device(device);
 			
-			DeviceDialog dialog = new DeviceDialog(shell, oldDevice);
+			DeviceDialog dialog = new DeviceDialog(shell, oldDevice, new ParametersModel(oldDevice.getParams()));
 			dialog.create();
 			if (dialog.open() == Window.OK) {
-				dbService.saveDevice(dialog.getDevice());
+				device=dialog.getDevice();
+				device.setParams(dialog.getParams());
+				dbService.saveDevice(device);
 				broker.post(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 			}
 			
@@ -62,7 +63,12 @@ public class EditDeviceHandler implements EventHandler {
 
 	@Override
 	public void handleEvent(Event event) {
-		execute();
+		try {
+			execute();
+		} catch (IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@CanExecute

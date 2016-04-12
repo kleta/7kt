@@ -7,4 +7,5 @@ public interface ParametersConst {
 	public final static String TEMP="Температура";
 	public final static String PRESSURE="Давление";
 	public final static String TIME="Время";
+	public final static String ERROR="Код ошибки";
 }

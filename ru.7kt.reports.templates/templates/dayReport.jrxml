@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
-<!-- 2016-04-08T15:02:06 -->
+<!-- 2016-04-11T17:11:52 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="dayReport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa2e6756-87b8-4cf3-abba-b72a5ddb5753">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
@@ -203,7 +203,7 @@ where a.datetime=b.datetime
 					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="measuring" uuid="a358d071-b11a-4b8e-abf8-1d89d3b78daa">
+					<datasetRun subDataset="measuring" uuid="b577de08-17c7-43ed-b9ff-681156f0408a">
 						<datasetParameter name="dateFrom">
 							<datasetParameterExpression><![CDATA[$P{dateFrom}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -215,12 +215,12 @@ where a.datetime=b.datetime
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="60" uuid="299f767f-6229-47ae-97ae-8eaa65821bb4">
+					<jr:column width="80" uuid="299f767f-6229-47ae-97ae-8eaa65821bb4">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="60" height="30" uuid="152740bd-001f-436c-994d-bb9f903b4e7a"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="152740bd-001f-436c-994d-bb9f903b4e7a"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[Дата]]></text>
 							</staticText>
@@ -228,17 +228,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="60" height="30" uuid="aefd2555-5623-4eb5-aa22-86dc8d1efd9b"/>
+								<reportElement x="0" y="0" width="80" height="30" uuid="aefd2555-5623-4eb5-aa22-86dc8d1efd9b"/>
 								<textFieldExpression><![CDATA[$F{DATETIME}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="47" uuid="d2a0ec78-4231-4b1f-a70b-647aea73b2de">
+					<jr:column width="45" uuid="d2a0ec78-4231-4b1f-a70b-647aea73b2de">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="47" height="30" uuid="245d7234-2af3-4fe7-96bc-406d5d391513"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="245d7234-2af3-4fe7-96bc-406d5d391513"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[V1]]></text>
 							</staticText>
@@ -246,17 +246,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="47" height="30" uuid="db632c87-d564-4bb3-993a-f97c1b28f27e"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="db632c87-d564-4bb3-993a-f97c1b28f27e"/>
 								<textFieldExpression><![CDATA[$F{V1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="eeb9984b-39fc-4292-ac52-881427b5403f">
+					<jr:column width="45" uuid="eeb9984b-39fc-4292-ac52-881427b5403f">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="37ef9b4f-d039-41c2-821f-39da37f66cb7"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="37ef9b4f-d039-41c2-821f-39da37f66cb7"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[V2]]></text>
 							</staticText>
@@ -264,17 +264,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="6cbeb9d3-fffc-485c-8bf8-9bf13b9a5b27"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="6cbeb9d3-fffc-485c-8bf8-9bf13b9a5b27"/>
 								<textFieldExpression><![CDATA[$F{V2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="47" uuid="855a400f-e3d3-4674-b815-4d3b13fa4666">
+					<jr:column width="45" uuid="855a400f-e3d3-4674-b815-4d3b13fa4666">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="47" height="30" uuid="ff0d7c7f-27a0-48f4-b646-b40dd177041c"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="ff0d7c7f-27a0-48f4-b646-b40dd177041c"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[V3]]></text>
 							</staticText>
@@ -282,17 +282,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="47" height="30" uuid="c7c55cd0-d868-42a6-9d4f-52348f5575e2"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="c7c55cd0-d868-42a6-9d4f-52348f5575e2"/>
 								<textFieldExpression><![CDATA[$F{V3}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="47" uuid="e6db9969-6f4e-466c-97dc-e32261a58ce8">
+					<jr:column width="45" uuid="e6db9969-6f4e-466c-97dc-e32261a58ce8">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="47" height="30" uuid="e8a02768-644a-4245-932a-55ae1b4485a9"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="e8a02768-644a-4245-932a-55ae1b4485a9"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[V4]]></text>
 							</staticText>
@@ -300,17 +300,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="47" height="30" uuid="d4037b58-10f4-4073-99f3-57ce40033301"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="d4037b58-10f4-4073-99f3-57ce40033301"/>
 								<textFieldExpression><![CDATA[$F{V4}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="d26e676c-36c6-4252-8638-d1c49b31a257">
+					<jr:column width="45" uuid="d26e676c-36c6-4252-8638-d1c49b31a257">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="644f0c12-3a3c-423d-bed3-840fce2c29a9"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="644f0c12-3a3c-423d-bed3-840fce2c29a9"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[E1]]></text>
 							</staticText>
@@ -318,17 +318,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="309da56e-223b-4ee8-a60a-5ec02a3606de"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="309da56e-223b-4ee8-a60a-5ec02a3606de"/>
 								<textFieldExpression><![CDATA[$F{E1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="59023868-f05a-4359-a324-e9eb19295d6e">
+					<jr:column width="45" uuid="59023868-f05a-4359-a324-e9eb19295d6e">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="87202dd2-c02d-43ba-9742-13a9efd23c9f"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="87202dd2-c02d-43ba-9742-13a9efd23c9f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[E2]]></text>
 							</staticText>
@@ -336,17 +336,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="5dfc41bf-fec3-4059-afe3-cd5b440b8995"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="5dfc41bf-fec3-4059-afe3-cd5b440b8995"/>
 								<textFieldExpression><![CDATA[$F{E2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="47" uuid="bf572284-243a-4cbc-ac3d-92b4349250b2">
+					<jr:column width="45" uuid="bf572284-243a-4cbc-ac3d-92b4349250b2">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="47" height="30" uuid="d0ccbd8f-b14c-4c38-8e98-c77255a1673d"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="d0ccbd8f-b14c-4c38-8e98-c77255a1673d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[M1]]></text>
 							</staticText>
@@ -354,17 +354,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="47" height="30" uuid="32232dd9-6bca-47c8-8de4-a95ad3029535"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="32232dd9-6bca-47c8-8de4-a95ad3029535"/>
 								<textFieldExpression><![CDATA[$F{M1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="47" uuid="f55e3ea6-b93f-4bc2-b754-7391b6be3485">
+					<jr:column width="46" uuid="f55e3ea6-b93f-4bc2-b754-7391b6be3485">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="47" height="30" uuid="233cf882-5b98-4233-9b84-4036e77ff4ed"/>
+								<reportElement x="0" y="0" width="46" height="30" uuid="233cf882-5b98-4233-9b84-4036e77ff4ed"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[M2]]></text>
 							</staticText>
@@ -372,17 +372,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="47" height="30" uuid="7ce62aaf-6eb3-4bfe-bcb0-a339af6ef308"/>
+								<reportElement x="0" y="0" width="46" height="30" uuid="7ce62aaf-6eb3-4bfe-bcb0-a339af6ef308"/>
 								<textFieldExpression><![CDATA[$F{M2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="9026e16b-fd02-4163-b9d7-98b53a12b5ee">
+					<jr:column width="45" uuid="9026e16b-fd02-4163-b9d7-98b53a12b5ee">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="0cd33bd1-d32e-4950-983c-d280db172e4b"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="0cd33bd1-d32e-4950-983c-d280db172e4b"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[M3]]></text>
 							</staticText>
@@ -390,17 +390,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="e173b1c8-27c9-4147-b10a-de7913fcaed4"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="e173b1c8-27c9-4147-b10a-de7913fcaed4"/>
 								<textFieldExpression><![CDATA[$F{M3}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="47" uuid="ab30497f-6c51-4bf2-91e5-83cc30fdf5e1">
+					<jr:column width="45" uuid="ab30497f-6c51-4bf2-91e5-83cc30fdf5e1">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="47" height="30" uuid="894e18d0-aa5b-4049-aba0-e0a753b55e22"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="894e18d0-aa5b-4049-aba0-e0a753b55e22"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[M4]]></text>
 							</staticText>
@@ -408,17 +408,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="47" height="30" uuid="09fb6983-6c79-4fbe-b84f-449ab7a5e1cf"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="09fb6983-6c79-4fbe-b84f-449ab7a5e1cf"/>
 								<textFieldExpression><![CDATA[$F{M4}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="4597e9db-edba-49bb-bb05-06ddef187662">
+					<jr:column width="45" uuid="4597e9db-edba-49bb-bb05-06ddef187662">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="cbbbd92c-bc13-49be-90c6-4a2dedfebd67"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="cbbbd92c-bc13-49be-90c6-4a2dedfebd67"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[T1]]></text>
 							</staticText>
@@ -426,17 +426,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="d8cbbf02-e355-40d9-9559-fe87e70661b1"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="d8cbbf02-e355-40d9-9559-fe87e70661b1"/>
 								<textFieldExpression><![CDATA[$F{T1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="5f06c246-ae6b-4439-a4bd-6bdc73769ca6">
+					<jr:column width="45" uuid="5f06c246-ae6b-4439-a4bd-6bdc73769ca6">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column13"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="cf3a8e3d-289d-45e6-8ad8-f80ee6ec8cfd"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="cf3a8e3d-289d-45e6-8ad8-f80ee6ec8cfd"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[T2]]></text>
 							</staticText>
@@ -444,17 +444,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="62b0ad1f-1cfc-4611-b1a4-e61004ef18b7"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="62b0ad1f-1cfc-4611-b1a4-e61004ef18b7"/>
 								<textFieldExpression><![CDATA[$F{T2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="9d5659e3-1b52-4a06-a9f6-2b216d1dc8b9">
+					<jr:column width="45" uuid="9d5659e3-1b52-4a06-a9f6-2b216d1dc8b9">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column14"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="881eb029-3dcc-4d70-af6d-c784edf94d8f"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="881eb029-3dcc-4d70-af6d-c784edf94d8f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[T3]]></text>
 							</staticText>
@@ -462,7 +462,7 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="e95f5029-9544-4509-ae56-8c668a910082"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="e95f5029-9544-4509-ae56-8c668a910082"/>
 								<textFieldExpression><![CDATA[$F{T3}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -485,12 +485,12 @@ where a.datetime=b.datetime
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="ebbbd356-8cb2-47f0-a474-47f64eb702f1">
+					<jr:column width="45" uuid="ebbbd356-8cb2-47f0-a474-47f64eb702f1">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column16"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="b288d302-2b1e-4221-8217-5357a09ae8f4"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="b288d302-2b1e-4221-8217-5357a09ae8f4"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[P1]]></text>
 							</staticText>
@@ -498,17 +498,17 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="c6c716f4-040a-4851-8861-51822ac19619"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="c6c716f4-040a-4851-8861-51822ac19619"/>
 								<textFieldExpression><![CDATA[$F{P1}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="46" uuid="906a7261-124b-43a4-bddb-af706c9a2e97">
+					<jr:column width="45" uuid="906a7261-124b-43a4-bddb-af706c9a2e97">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column17"/>
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="46" height="30" uuid="c116f330-cf56-412d-8b3d-814d7b07f857"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="c116f330-cf56-412d-8b3d-814d7b07f857"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[P2]]></text>
 							</staticText>
@@ -516,7 +516,7 @@ where a.datetime=b.datetime
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="46" height="30" uuid="b622b552-dee8-4eef-a7b0-fed601a3eb8f"/>
+								<reportElement x="0" y="0" width="45" height="30" uuid="b622b552-dee8-4eef-a7b0-fed601a3eb8f"/>
 								<textFieldExpression><![CDATA[$F{P2}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>

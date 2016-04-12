@@ -76,6 +76,12 @@ public class Device implements Serializable{
 			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "idNode", referencedColumnName = "id") })
 	private List<Node> nodes;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "DeviceToParams", joinColumns = {
+			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "idParam", referencedColumnName = "id") })
+	private List<Params> params;
 
 	public List<Properties> getProperies() throws IllegalArgumentException, IllegalAccessException {
 		List<Properties> list=new ArrayList<>();
@@ -111,10 +117,8 @@ public class Device implements Serializable{
 		this.wMin0=new Integer(device.getWMin0());
 		this.wMin1=new Integer(device.getWMin1());
 		
-		
-		
-		
-		
+		params=new ArrayList<>();
+		params.addAll(device.getParams());	
 	}
 
 	public Device() {
