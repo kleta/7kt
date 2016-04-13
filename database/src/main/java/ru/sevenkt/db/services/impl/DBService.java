@@ -158,6 +158,7 @@ public class DBService implements IDBService {
 		}
 		tx.begin();
 		try {
+			jr.deleteAll();
 			dr.delete(device);
 		} catch (Exception ex) {
 			tx.rollback();

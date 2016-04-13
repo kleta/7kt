@@ -122,7 +122,7 @@ public class ImportFromFileHandler {
 	private void insertJournalSettings(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		JournalSettings js = archive.getJournalSettings();
 		List<JournalSettingsRecord> records = js.getRecords();
-		List<Journal> list=new ArrayList<>();
+		List<Journal> list = new ArrayList<>();
 		for (JournalSettingsRecord journalSettingsRecord : records) {
 			Journal record = new Journal();
 			record.setDevice(device);
@@ -143,132 +143,161 @@ public class ImportFromFileHandler {
 		LocalDateTime startArchiveDate = dateTime.minusDays(HourArchive.MAX_DAY_COUNT);
 		monitor.subTask("Импорт часового архива");
 		while (!startArchiveDate.isAfter(dateTime)) {
-			List<Measuring> avgMeasurings = new ArrayList<>();
-			Map<Parameters, List<Measuring>> consumptionMeasuring = new HashMap<>();
+			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-			//// if (localDate.equals(LocalDate.of(2016, 2, 4)))
-			//// System.out.println();
+			if (localDate.equals(LocalDate.of(2015, 12, 31)))
+				System.out.println();
 			LOG.info("Импортируются данные за " + localDate);
 			// System.out.println(localDate);
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
-
 			DayRecord dayConsumption = dr2.minus(dr1);
 
 			for (int i = 1; i < 25; i++) {
 				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
 				HourRecord hr = ha.getHourRecord(localDateTime, dateTime);
 				if (hr.isValid()) {
-					Field[] fields = HourRecord.class.getDeclaredFields();
-					for (Field field : fields) {
-						field.setAccessible(true);
-						// if(field.getName().equals("errorChannel1") ||
-						// field.getName().equals("errorChannel1"))
-						// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(hr)));
-						if (field.isAnnotationPresent(Parameter.class)) {
-							Measuring m = new Measuring();
-							m.setArchiveType(ArchiveTypes.HOUR);
-							m.setDateTime(hr.getDateTime());
-							m.setDevice(device);
-							Parameters parameter = field.getAnnotation(Parameter.class).value();
-							m.setParametr(parameter);
-							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
-								float val = field.getInt(hr);
-								m.setValue(val / 10);
-								avgMeasurings.add(m);
-							}
-							if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
-									|| parameter.equals(Parameters.AVG_TEMP3)
-									|| parameter.equals(Parameters.AVG_TEMP4)) {
-								float val = field.getInt(hr);
-								m.setValue((val / 100 > 100 ? 0 : val / 100));
-								avgMeasurings.add(m);
-							}
-
-							if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
-								float val = field.getFloat(hr);
-								m.setValue(val);
-								List<Measuring> meas = consumptionMeasuring.get(parameter);
-								if (meas == null)
-									consumptionMeasuring.put(parameter, new ArrayList<>());
-								consumptionMeasuring.get(parameter).add(m);
-							}
-							if (parameter.getCategory().equals("Объём")) {
-								float val = field.getInt(hr);
-								switch (parameter) {
-								case V1:
-									val = val * archive.getSettings().getVolumeByImpulsSetting1();
-									break;
-								case V2:
-									val = val * archive.getSettings().getVolumeByImpulsSetting2();
-									break;
-								case V3:
-									val = val * archive.getSettings().getVolumeByImpulsSetting3();
-									break;
-								case V4:
-									val = val * archive.getSettings().getVolumeByImpulsSetting4();
-									break;
-
-								default:
-									break;
-								}
-								m.setValue(val);
-								List<Measuring> meas = consumptionMeasuring.get(parameter);
-								if (meas == null)
-									consumptionMeasuring.put(parameter, new ArrayList<>());
-								consumptionMeasuring.get(parameter).add(m);
-
-							}
-						}
-					}
+					List<Measuring> hourMeasurings = geHourtMeasurings(hr, localDateTime, archive.getSettings());
+					measurings.addAll(hourMeasurings);
 				}
 			}
-			List<Measuring> list = avgMeasurings;
-			// list.addAll(avgMeasurings);
-			Set<Parameters> keySet = consumptionMeasuring.keySet();
-			for (Parameters parameter : keySet) {
-				List<Measuring> measurings = consumptionMeasuring.get(parameter);
-				if (!dayConsumption.equalsValues(sumDay)) {
-					DayRecord diffRecord = dayConsumption.minus(sumDay);
-					float diffVal = 0;
-					if (dr2.isValid() && dr1.isValid())
-						switch (parameter) {
-						case V1:
-							diffVal = diffRecord.getVolume1();
-							break;
-						case V2:
-							diffVal = diffRecord.getVolume2();
-							break;
-						case V3:
-							diffVal = diffRecord.getVolume3();
-							break;
-						case V4:
-							diffVal = diffRecord.getVolume4();
-							break;
-						case E1:
-							diffVal = diffRecord.getEnergy1();
-							break;
-						case E2:
-							diffVal = diffRecord.getEnergy2();
-							break;
-						default:
-							break;
-						}
-					long countNotZerroValue = measurings.stream().filter(m -> m.getValue() != 0).count();
-					float addValue = diffVal / countNotZerroValue;
-					measurings.stream().filter(m -> m.getValue() != 0)
-							.forEach(m -> m.setValue(m.getValue() + addValue));
-				}
-				list.addAll(measurings);
-			}
-			dbService.saveMeasurings(list);
+			smoothedHourMeasuring(measurings, dayConsumption, sumDay);
+			measurings.forEach(m -> m.setDevice(device));
+			dbService.saveMeasurings(measurings);
 			startArchiveDate = startArchiveDate.plusDays(1);
-
 		}
 		monitor.worked(3);
 	}
 
+	private void smoothedHourMeasuring(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
+		for (Measuring measuring : measurings) {
+			Parameters parameter = measuring.getParameter();
+			float multiplier = 1.0f;
+			if (measuring.getValue() > 0)
+				switch (parameter) {
+				case V1:
+					float dayVolume1 = dayConsumption.getVolume1();
+					float sumVolume1 = sumDay.getVolume1();
+					float m = (dayVolume1 / sumVolume1);
+					multiplier=m;
+					break;
+				case V2:
+					multiplier = dayConsumption.getVolume2() / sumDay.getVolume2();
+					break;
+				case V3:
+					multiplier = dayConsumption.getVolume3() / sumDay.getVolume3();
+					break;
+				case V4:
+					multiplier = dayConsumption.getVolume4() / sumDay.getVolume4();
+					break;
+				case E1:
+					multiplier = dayConsumption.getEnergy1() / sumDay.getEnergy1();
+					break;
+				case E2:
+					multiplier = dayConsumption.getEnergy2() / sumDay.getEnergy2();
+					break;
+				default:
+					break;
+				}
+			float value = measuring.getValue() * multiplier;
+			measuring.setValue(value);
+		}
+
+	}
+
+	private List<Measuring> geHourtMeasurings(HourRecord hr, LocalDateTime localDateTime, Settings settings)
+			throws IllegalArgumentException, IllegalAccessException {
+		List<Measuring> measurings = new ArrayList<>();
+		Field[] fields = HourRecord.class.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
+				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+			if (field.isAnnotationPresent(Parameter.class)) {
+				Measuring m = new Measuring();
+				m.setArchiveType(ArchiveTypes.HOUR);
+				m.setDateTime(hr.getDateTime());
+				// m.setDevice(device);
+				Parameters parameter = field.getAnnotation(Parameter.class).value();
+				m.setParametr(parameter);
+				if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+					float val = field.getInt(hr);
+					m.setValue(val / 10);
+				}
+				if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+						|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+					float val = field.getInt(hr);
+					m.setValue((val / 100 > 100 ? 0 : val / 100));
+				}
+
+				if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
+					float val = field.getFloat(hr);
+					m.setValue(val);
+				}
+				if (parameter.getCategory().equals("Объём")) {
+					float val = field.getInt(hr);
+					switch (parameter) {
+					case V1:
+						val = val * settings.getVolumeByImpulsSetting1();
+						break;
+					case V2:
+						val = val * settings.getVolumeByImpulsSetting2();
+						break;
+					case V3:
+						val = val * settings.getVolumeByImpulsSetting3();
+						break;
+					case V4:
+						val = val * settings.getVolumeByImpulsSetting4();
+						break;
+
+					default:
+						break;
+					}
+					m.setValue(val);
+				}
+				measurings.add(m);
+			}
+		}
+		return measurings;
+	}
+
+	// Set<Parameters> keySet = consumptionMeasuring.keySet();
+	// for (Parameters parameter : keySet) {
+	// List<Measuring> measurings = consumptionMeasuring.get(parameter);
+	// if (!dayConsumption.equalsValues(sumDay)) {
+	// DayRecord diffRecord = dayConsumption.minus(sumDay);
+	// float diffVal = 0;
+	// if (dr2.isValid() && dr1.isValid())
+	// switch (parameter) {
+	// case V1:
+	// diffVal = diffRecord.getVolume1();
+	// break;
+	// case V2:
+	// diffVal = diffRecord.getVolume2();
+	// break;
+	// case V3:
+	// diffVal = diffRecord.getVolume3();
+	// break;
+	// case V4:
+	// diffVal = diffRecord.getVolume4();
+	// break;
+	// case E1:
+	// diffVal = diffRecord.getEnergy1();
+	// break;
+	// case E2:
+	// diffVal = diffRecord.getEnergy2();
+	// break;
+	// default:
+	// break;
+	// }
+	// long countNotZerroValue = measurings.stream().filter(m ->
+	// m.getValue() != 0).count();
+	// float addValue = diffVal / countNotZerroValue;
+	// measurings.stream().filter(m -> m.getValue() != 0)
+	// .forEach(m -> m.setValue(m.getValue() + addValue));
+	// }
 	private void insertDayArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
@@ -280,29 +309,37 @@ public class ImportFromFileHandler {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					// if(field.getName().equals("errorChannel1")){
-					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError1());
-					// }
-					// if(field.getName().equals("errorChannel2")){
-					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(dr))+":"+dr.getTimeError2());
-					// }
+					if (field.getName().equals("errorChannel1")) {
+						System.out.println(
+								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+					}
+					if (field.getName().equals("errorChannel2")) {
+						System.out.println(
+								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+					}
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
-						m.setDateTime(dr.getDate().atTime(0, 0));
 						m.setDevice(device);
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						m.setParametr(parameter);
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(dr);
+							m.setDateTime(dr.getDate().atTime(0, 0).minusDays(1));
 							m.setValue((val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(dr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								val = val / 10;
+								m.setDateTime(dr.getDate().atTime(0, 0).minusDays(1));
+								m.setValue(val);
+							} else {
+								m.setDateTime(dr.getDate().atTime(0, 0));
+								m.setValue(val);
 							}
-							m.setValue(val);
 						}
 						measurings.add(m);
 					}
@@ -332,12 +369,14 @@ public class ImportFromFileHandler {
 				Field[] fields = MonthRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					// if(field.getName().equals("errorChannel1")){
-					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError1());
-					// }
-					// if(field.getName().equals("errorChannel2")){
-					// System.out.println(field.getName()+":"+Integer.toBinaryString(field.getInt(mr))+":"+mr.getTimeError2());
-					// }
+					if (field.getName().equals("errorChannel1")) {
+						System.out.println(field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
+								+ field.getInt(mr) + ":" + mr.getTimeError1());
+					}
+					if (field.getName().equals("errorChannel2")) {
+						System.out.println(field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
+								+ field.getInt(mr) + ":" + mr.getTimeError2());
+					}
 
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();

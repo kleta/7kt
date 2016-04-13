@@ -60,16 +60,8 @@ public class HourArchive {
 		dayRecord.setMonthYear(convertToMonthYearFormat(requestDate));
 
 		while (startDateTime.isBefore(LocalDateTime.of(requestDate.plusDays(1), LocalTime.of(0, 1)))) {
-			if (startDateTime.equals(LocalDateTime.of(2015, 12, 23, 10, 0)))
-				System.out.println();
 			HourRecord hr = getHourRecord(startDateTime, archiveCurrenDatetime);
 			if (hr.isValid()) {
-				// String s = String.format("Date %s v1=%d v2=%d v3=%d v4=%d
-				// e1=%f e2=%f", hr.getDateTime(),
-				// hr.getVolume1(), hr.getVolume2(), hr.getVolume3(),
-				// hr.getVolume4(),
-				// hr.getEnergy1(), hr.getEnergy2());
-				// System.out.println(s);
 				dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() + hr.getAvgPressure1());
 				dayRecord.setAvgPressure2(dayRecord.getAvgPressure2() + hr.getAvgPressure2());
 				dayRecord.setAvgTemp1(dayRecord.getAvgTemp1() + hr.getAvgTemp1());
