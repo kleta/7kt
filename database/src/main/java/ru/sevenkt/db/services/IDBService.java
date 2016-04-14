@@ -43,7 +43,11 @@ public interface IDBService {
 	void saveJournal(List<Journal> list);
 
 	List<Journal> findJournal(Device device);
-	
+
+
+
+	Double getSmoothedMultiplier(Measuring measuring);
+
 	
 	
 	

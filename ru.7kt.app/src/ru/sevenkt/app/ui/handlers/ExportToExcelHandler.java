@@ -4,6 +4,7 @@ package ru.sevenkt.app.ui.handlers;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -38,8 +39,10 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.sevenkt.app.ui.ArchiveColumnLabelProvider;
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
 
 public class ExportToExcelHandler implements EventHandler {
@@ -59,6 +62,8 @@ public class ExportToExcelHandler implements EventHandler {
 	@Override
 	public void handleEvent(Event event) {
 		Device device = (Device) event.getProperty(AppEventConstants.DEVICE);
+		List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
+		ArchiveTypes at=(ArchiveTypes) event.getProperty(AppEventConstants.ARCHIVE_TYPE);
 		List<TableRow> tableRows = (List<TableRow>) event.getProperty(AppEventConstants.TABLE_ROWS);
 		String tmpDir = System.getProperty("java.io.tmpdir");
 		String fileName = tmpDir + device.getDeviceName()
@@ -74,17 +79,11 @@ public class ExportToExcelHandler implements EventHandler {
 			TableRow firstRow = tableRows.get(0);
 			Row row = sheet.createRow(0);
 			row.createCell(0).setCellValue("Дата");
-			Set<Parameters> parameters = firstRow.getValues().keySet();
-			for (TableRow tr : tableRows){
-				if(!tr.getValues().isEmpty()){
-					parameters = tr.getValues().keySet();
-					break;
-				}
-			}			
-			List<Parameters> params = parameters.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName()))
-					.collect(Collectors.toList());
+			// List<Parameters> params = parameters.stream().sorted((p1, p2) ->
+			// p1.getOrderIndex().compareTo(p2.getOrderIndex()))
+			// .collect(Collectors.toList());
 			int i = 1;
-			for (Parameters parameter : params) {
+			for (Parameters parameter : parameters) {
 				row.createCell(i).setCellValue(parameter.getCategory() + " " + parameter.getName());
 				i++;
 			}
@@ -97,10 +96,26 @@ public class ExportToExcelHandler implements EventHandler {
 				cell.setCellValue(date);
 				cell.setCellStyle(cellStyle);
 				int k = 1;
-				for (Parameters parameter : params) {
-					Float val = (Float) tr.getValues().get(parameter);
+				for (Parameters parameter : parameters) {
+					Object val = tr.getValues().get(parameter);
 					if (val != null)
-						row.createCell(k).setCellValue(val);
+						if (val instanceof Double) {
+							BigDecimal bdVal = null;
+							switch(at){
+							case MONTH:
+								bdVal = new BigDecimal(val.toString()).setScale(2, BigDecimal.ROUND_HALF_UP);
+								break;
+							case DAY:
+								bdVal = new BigDecimal(val.toString()).setScale(3, BigDecimal.ROUND_HALF_UP);
+								break;
+							case HOUR:
+								bdVal = new BigDecimal(val.toString()).setScale(4, BigDecimal.ROUND_HALF_UP);
+								break;
+							}
+							float floatValue = bdVal.floatValue();
+							row.createCell(k).setCellValue(floatValue);
+						} else
+							row.createCell(k).setCellValue(val.toString());
 					else
 						row.createCell(k).setCellValue("Нет данных");
 					k++;

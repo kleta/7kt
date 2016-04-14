@@ -4,6 +4,7 @@ package ru.sevenkt.app.ui.handlers;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -173,14 +174,11 @@ public class ImportFromFileHandler {
 	private void smoothedHourMeasuring(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
 		for (Measuring measuring : measurings) {
 			Parameters parameter = measuring.getParameter();
-			float multiplier = 1.0f;
+			double multiplier = 1;
 			if (measuring.getValue() > 0)
 				switch (parameter) {
-				case V1:
-					float dayVolume1 = dayConsumption.getVolume1();
-					float sumVolume1 = sumDay.getVolume1();
-					float m = (dayVolume1 / sumVolume1);
-					multiplier=m;
+				case V1:				
+					multiplier=dayConsumption.getVolume1()/sumDay.getVolume1();
 					break;
 				case V2:
 					multiplier = dayConsumption.getVolume2() / sumDay.getVolume2();
@@ -200,7 +198,7 @@ public class ImportFromFileHandler {
 				default:
 					break;
 				}
-			float value = measuring.getValue() * multiplier;
+			double value = measuring.getValue() * multiplier;		
 			measuring.setValue(value);
 		}
 
@@ -212,9 +210,9 @@ public class ImportFromFileHandler {
 		Field[] fields = HourRecord.class.getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
-				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
-						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+//			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
+//				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+//						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
 			if (field.isAnnotationPresent(Parameter.class)) {
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.HOUR);
@@ -224,23 +222,24 @@ public class ImportFromFileHandler {
 				m.setParametr(parameter);
 				if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 					float val = field.getInt(hr);
-					m.setValue(val / 10);
+					m.setValue((double) (val / 10));
 				}
 				if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 						|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 					float val = field.getInt(hr);
-					m.setValue((val / 100 > 100 ? 0 : val / 100));
+					m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
 				}
 
 				if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
 					float val = field.getFloat(hr);
-					m.setValue(val);
+					m.setValue((double) val);
 				}
 				if (parameter.getCategory().equals("Объём")) {
 					float val = field.getInt(hr);
 					switch (parameter) {
 					case V1:
 						val = val * settings.getVolumeByImpulsSetting1();
+						System.out.println(hr.getDateTime()+"	"+val);
 						break;
 					case V2:
 						val = val * settings.getVolumeByImpulsSetting2();
@@ -255,7 +254,7 @@ public class ImportFromFileHandler {
 					default:
 						break;
 					}
-					m.setValue(val);
+					m.setValue(Double.valueOf(val));
 				}
 				measurings.add(m);
 			}
@@ -263,62 +262,30 @@ public class ImportFromFileHandler {
 		return measurings;
 	}
 
-	// Set<Parameters> keySet = consumptionMeasuring.keySet();
-	// for (Parameters parameter : keySet) {
-	// List<Measuring> measurings = consumptionMeasuring.get(parameter);
-	// if (!dayConsumption.equalsValues(sumDay)) {
-	// DayRecord diffRecord = dayConsumption.minus(sumDay);
-	// float diffVal = 0;
-	// if (dr2.isValid() && dr1.isValid())
-	// switch (parameter) {
-	// case V1:
-	// diffVal = diffRecord.getVolume1();
-	// break;
-	// case V2:
-	// diffVal = diffRecord.getVolume2();
-	// break;
-	// case V3:
-	// diffVal = diffRecord.getVolume3();
-	// break;
-	// case V4:
-	// diffVal = diffRecord.getVolume4();
-	// break;
-	// case E1:
-	// diffVal = diffRecord.getEnergy1();
-	// break;
-	// case E2:
-	// diffVal = diffRecord.getEnergy2();
-	// break;
-	// default:
-	// break;
-	// }
-	// long countNotZerroValue = measurings.stream().filter(m ->
-	// m.getValue() != 0).count();
-	// float addValue = diffVal / countNotZerroValue;
-	// measurings.stream().filter(m -> m.getValue() != 0)
-	// .forEach(m -> m.setValue(m.getValue() + addValue));
-	// }
+	
 	private void insertDayArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
 		LocalDate startArchiveDate = dateTime.minusMonths(DayArchive.MAX_MONTH_COUNT).toLocalDate();
 		List<Measuring> measurings = new ArrayList<>();
 		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
+			if (startArchiveDate.equals(LocalDate.of(2015, 12, 31)))
+				System.out.println();
 			DayRecord dr = da.getDayRecord(startArchiveDate, dateTime);
 			if (dr.isValid()) {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.getName().equals("errorChannel1")) {
-						System.out.println(
-								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
-					}
-					if (field.getName().equals("errorChannel2")) {
-						System.out.println(
-								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
-					}
+//					if (field.getName().equals("errorChannel1")) {
+//						System.out.println(
+//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+//					}
+//					if (field.getName().equals("errorChannel2")) {
+//						System.out.println(
+//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+//					}
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
@@ -329,16 +296,19 @@ public class ImportFromFileHandler {
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(dr);
 							m.setDateTime(dr.getDate().atTime(0, 0).minusDays(1));
-							m.setValue((val / 100 > 100 ? 0 : val / 100));
+							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(dr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								val = val / 10;
 								m.setDateTime(dr.getDate().atTime(0, 0).minusDays(1));
-								m.setValue(val);
+								m.setValue((double) val);
 							} else {
-								m.setDateTime(dr.getDate().atTime(0, 0));
-								m.setValue(val);
+								if (parameter.equals(Parameters.V1)){
+									System.out.println(dr.getDate()+"     "+val);
+								}
+								m.setDateTime(dr.getDate().atTime(0, 0));								
+								m.setValue((double) val);
 							}
 						}
 						measurings.add(m);
@@ -388,13 +358,13 @@ public class ImportFromFileHandler {
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(mr);
-							m.setValue((val / 100 > 100 ? 0 : val / 100));
+							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(mr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								val = val / 10;
 							}
-							m.setValue(val);
+							m.setValue((double) val);
 						}
 						measurings.add(m);
 					}

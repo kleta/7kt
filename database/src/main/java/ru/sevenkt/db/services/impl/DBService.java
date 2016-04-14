@@ -2,6 +2,7 @@ package ru.sevenkt.db.services.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -25,6 +26,7 @@ import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
+import ru.sevenkt.domain.ParametersConst;
 
 @Service
 public class DBService implements IDBService {
@@ -90,6 +92,7 @@ public class DBService implements IDBService {
 
 	@Override
 	public void saveMeasuring(Measuring measuring) {
+		measuring.setTimestamp(LocalDateTime.now());
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
@@ -203,6 +206,7 @@ public class DBService implements IDBService {
 		tx.begin();
 		try {
 			for (Measuring measuring : measurings) {
+				measuring.setTimestamp(LocalDateTime.now());
 				mr.save(measuring);
 			}
 		} catch (Exception ex) {
@@ -256,13 +260,40 @@ public class DBService implements IDBService {
 				tx.rollback();
 			}
 		}
-		
+
 	}
 
 	@Override
 	public List<Journal> findJournal(Device device) {
 		List<Journal> ret = jr.findByDevice(device);
 		return ret;
+	}
+
+	@Override
+	public Double getSmoothedMultiplier(Measuring measuring) {
+		if ((measuring.getParameter().getCategory().equals(ParametersConst.VOLUME)
+				|| measuring.getParameter().getCategory().equals(ParametersConst.ENERGY))
+				&& measuring.getArchiveType().equals(ArchiveTypes.HOUR)) {
+			LocalDateTime dt = measuring.getDateTime();
+			LocalDateTime dtFrom = null;
+			LocalDateTime dtTo = null;
+			if (dt.toLocalTime().equals(LocalTime.of(0, 0))) {
+				dtFrom = dt.minusHours(23);
+				dtTo = dt;
+			} else {
+				dtFrom = dt.withHour(1);
+				dtTo = dtFrom.plusHours(23);
+			}
+			Double sum = mr.getSumHoursValue(measuring.getParameter(), measuring.getDevice(),ArchiveTypes.HOUR, dtFrom, dtTo);
+			Measuring prevDay = mr.findByParameterAndDeviceAndArchiveTypeAndDateTime(measuring.getParameter(),
+					measuring.getDevice(), ArchiveTypes.DAY, dtTo.minusDays(1));
+			Measuring thisDay = mr.findByParameterAndDeviceAndArchiveTypeAndDateTime(measuring.getParameter(),
+					measuring.getDevice(), ArchiveTypes.DAY, dtTo);
+			if (prevDay != null && thisDay != null && sum != 0)
+				return (thisDay.getValue() - prevDay.getValue()) / sum;
+
+		}
+		return (double) 1;
 	}
 
 }

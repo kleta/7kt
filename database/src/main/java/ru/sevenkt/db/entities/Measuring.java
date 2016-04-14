@@ -33,7 +33,9 @@ public class Measuring {
 	@Column(insertable = false, updatable = false)
 	private ArchiveTypes archiveType;
 
-	private Float value;
+	private Double value;
+	
+	private LocalDateTime timestamp;
 
 	public void setArchiveType(ArchiveTypes month) {
 		if (id == null)

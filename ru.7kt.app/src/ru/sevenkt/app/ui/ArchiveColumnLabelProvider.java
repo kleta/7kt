@@ -1,17 +1,23 @@
 package ru.sevenkt.app.ui;
 
+import java.math.BigDecimal;
+
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
+import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
 
 public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
+	
 	private Parameters parameter;
+	private ArchiveTypes at;
 	
 	
-	public ArchiveColumnLabelProvider(Parameters parameter) {
+	public ArchiveColumnLabelProvider(Parameters parameter, ArchiveTypes at) {
 		super();
 		this.parameter = parameter;
+		this.at=at;
 	}
 
 	public Image getImage(Object element) {
@@ -22,6 +28,22 @@ public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 	public String getText(Object element) {
 		TableRow tr = (TableRow)element;
 		Object val = tr.getValues().get(parameter);
+		if(val instanceof Double){
+			BigDecimal bdVal;
+			switch(at){
+			case MONTH:
+				bdVal = new BigDecimal(val.toString());
+				return bdVal.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+			case DAY:
+				bdVal = new BigDecimal(val.toString());
+				return bdVal.setScale(3, BigDecimal.ROUND_HALF_UP).toString();
+			case HOUR:
+				bdVal = new BigDecimal(val.toString());
+				return bdVal.setScale(4, BigDecimal.ROUND_HALF_UP).toString();
+			}
+			
+			
+		}		
 		return val == null ? "Нет данных" : val.toString();
 	}
 }

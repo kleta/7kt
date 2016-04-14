@@ -100,6 +100,8 @@ public class ArchiveView implements EventHandler {
 
 	private IAction exportToExcelAction;
 
+	private List<Parameters> parameters;
+
 	@Inject
 	public ArchiveView() {
 
@@ -291,7 +293,7 @@ public class ArchiveView implements EventHandler {
 	public void handleEvent(Event event) {
 		Object obj = event.getProperty(AppEventConstants.DEVICE);
 		if (device.equals(obj)) {
-			List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
+			parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
 			table = tableViewer.getTable();
 			table.setLinesVisible(true);
 			table.setHeaderVisible(true);
@@ -313,7 +315,7 @@ public class ArchiveView implements EventHandler {
 				parameters.sort((p1, p2) -> new Integer(p1.getOrderIndex()).compareTo(new Integer(p2.getOrderIndex())));
 				for (Parameters parameter : parameters) {
 					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter));
+					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter, selectedArchiveType));
 					TableColumn column = tableViewerColumn.getColumn();
 					column.setWidth(100);
 					column.setText(parameter.getName());
@@ -323,12 +325,12 @@ public class ArchiveView implements EventHandler {
 			List<?> input = (List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
 			tableViewer.setInput(input);
 			exportToExcelAction.setEnabled(true);
-			createCharts(input, parameters);
+			createCharts(input);
 
 		}
 	}
 
-	private void createCharts(List<?> input, List<Parameters> parameters) {
+	private void createCharts(List<?> input) {
 		removeCharts();
 		Map<String, List<Parameters>> groupByCategory = parameters.stream()
 				.collect(Collectors.groupingBy(Parameters::getCategory));
@@ -398,7 +400,7 @@ public class ArchiveView implements EventHandler {
 			LocalDateTime ldt = tr.getDateTime();
 			Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
 
-			Float val = (Float) tr.getValues().get(parameter);
+			Double val = (Double) tr.getValues().get(parameter);
 			xSeries[i] = Date.from(instant);
 			if (val == null) {
 				ySeries[i++] = -0.1;
@@ -429,6 +431,8 @@ public class ArchiveView implements EventHandler {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put(AppEventConstants.DEVICE, device);
 				map.put(AppEventConstants.TABLE_ROWS, tableRows);
+				map.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
+				map.put(AppEventConstants.ARCHIVE_TYPE, selectedArchiveType);
 				broker.send(AppEventConstants.TOPIC_EXPORT_EXCEL, map);
 			}
 
