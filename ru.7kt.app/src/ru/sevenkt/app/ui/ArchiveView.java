@@ -309,7 +309,7 @@ public class ArchiveView implements EventHandler {
 				}
 			});
 			TableColumn dateColumn = dateViewerColumn.getColumn();
-			dateColumn.setWidth(100);
+			//dateColumn.setWidth(100);
 			dateColumn.setText("Дата");
 			if (!parameters.isEmpty()) {
 				parameters.sort((p1, p2) -> new Integer(p1.getOrderIndex()).compareTo(new Integer(p2.getOrderIndex())));
@@ -317,13 +317,17 @@ public class ArchiveView implements EventHandler {
 					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter, selectedArchiveType));
 					TableColumn column = tableViewerColumn.getColumn();
-					column.setWidth(100);
+					//column.setWidth(100);
 					column.setText(parameter.getName());
 				}
 
 			}
 			List<?> input = (List<?>) event.getProperty(AppEventConstants.TABLE_ROWS);
 			tableViewer.setInput(input);
+			TableColumn[] columns = tableViewer.getTable().getColumns();
+			for (TableColumn tableColumn : columns) {
+				tableColumn.pack();
+			}
 			exportToExcelAction.setEnabled(true);
 			createCharts(input);
 

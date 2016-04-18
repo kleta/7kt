@@ -36,11 +36,11 @@ public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 				return bdVal.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
 			case DAY:
 				bdVal = new BigDecimal(val.toString());
-				return bdVal.setScale(3, BigDecimal.ROUND_HALF_UP).toString();
+				return bdVal.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
 			case HOUR:
 				bdVal = new BigDecimal(val.toString());
 				return bdVal.setScale(4, BigDecimal.ROUND_HALF_UP).toString();
-			}
+		}
 			
 			
 		}		

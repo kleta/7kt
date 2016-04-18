@@ -1,6 +1,7 @@
 package ru.sevenkt.domain;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -177,14 +178,23 @@ public class DayRecord implements Cloneable {
 		dr2.setAvgPressure2(getAvgPressure2() - dr1.getAvgPressure2());
 		dr2.setAvgTemp1(getAvgTemp1() - dr1.getAvgTemp1());
 		dr2.setAvgTemp2(getAvgTemp2() - dr1.getAvgTemp2());
-		dr2.setAvgTemp3(getAvgTemp3() - dr1.getAvgTemp3());
+		dr2.setAvgTemp3(getAvgTemp3() - dr1.getAvgTemp3()); 
 		dr2.setAvgTemp4(getAvgTemp4() - dr1.getAvgTemp4());
-		dr2.setEnergy1(getEnergy1() - dr1.getEnergy1());
-		dr2.setEnergy2(getEnergy2() - dr1.getEnergy2());
-		dr2.setVolume1(getVolume1() - dr1.getVolume1());
-		dr2.setVolume2(getVolume2() - dr1.getVolume2());
-		dr2.setVolume3(getVolume3() - dr1.getVolume3());
-		dr2.setVolume4(getVolume4() - dr1.getVolume4());
+		dr2.setEnergy1(new BigDecimal(getEnergy1()+"").subtract(new BigDecimal(dr1.getEnergy1()+"")).floatValue());
+		dr2.setEnergy2(new BigDecimal(getEnergy2()+"").subtract(new BigDecimal(dr1.getEnergy2()+"")).floatValue());
+//		BigDecimal v1 = new BigDecimal(getVolume1()+"");
+//		BigDecimal v2 = new BigDecimal(dr1.getVolume1()+"");
+//		System.out.println(dr2.getVolume1()- dr1.getVolume1());
+//		System.out.println(new Double(getVolume1()+"")-new Double(dr1.getVolume1()+""));
+//		System.out.println(v1.subtract(v2));
+//		System.out.println(v1.subtract(v2).doubleValue());
+		
+		dr2.setVolume1(new BigDecimal(getVolume1()+"").subtract(new BigDecimal(dr1.getVolume1()+"")).floatValue());
+		
+		
+		dr2.setVolume2(new BigDecimal(getVolume2()+"").subtract(new BigDecimal(dr1.getVolume2()+"")).floatValue());
+		dr2.setVolume3(new BigDecimal(getVolume3()+"").subtract(new BigDecimal(dr1.getVolume3()+"")).floatValue());
+		dr2.setVolume4(new BigDecimal(getVolume4()+"").subtract(new BigDecimal(dr1.getVolume4()+"")).floatValue());
 		dr2.setWeight1(getWeight1() - dr1.getWeight1());
 		dr2.setWeight2(getWeight2() - dr1.getWeight2());
 		dr2.setWeight3(getWeight3() - dr1.getWeight3());

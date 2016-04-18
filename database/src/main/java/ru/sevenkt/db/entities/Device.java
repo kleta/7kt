@@ -77,7 +77,7 @@ public class Device implements Serializable{
 					@JoinColumn(name = "idNode", referencedColumnName = "id") })
 	private List<Node> nodes;
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade=CascadeType.PERSIST)
 	@JoinTable(name = "DeviceToParams", joinColumns = {
 			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "idParam", referencedColumnName = "id") })

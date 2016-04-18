@@ -49,9 +49,7 @@ public class DeviceDialog extends TitleAreaDialog {
 	private ParametersModel paramModel;
 	private Button btnE;
 	private Button button;
-	private Button button_1;
 	private Button button_15;
-	private Button button_24;
 	private Button button_14;
 	private Button btnP;
 	private Button button_16;
@@ -78,6 +76,8 @@ public class DeviceDialog extends TitleAreaDialog {
 	private Button button_6;
 	private Button button_4;
 	private Button button_7;
+	private Button button_1;
+	private Button button_24;
 
 	/**
 	 * Create the dialog.
@@ -104,7 +104,7 @@ public class DeviceDialog extends TitleAreaDialog {
 		area.setLayout(new GridLayout(1, false));
 		
 		CTabFolder tabFolder = new CTabFolder(area, SWT.BORDER);
-		GridData gd_tabFolder = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_tabFolder = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		gd_tabFolder.widthHint = 491;
 		tabFolder.setLayoutData(gd_tabFolder);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
@@ -286,6 +286,7 @@ public class DeviceDialog extends TitleAreaDialog {
 		composite.setLayout(new GridLayout(3, false));
 		
 		Group group_1 = new Group(composite, SWT.NONE);
+		group_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		group_1.setText("Температура");
 		formToolkit.adapt(group_1);
 		formToolkit.paintBordersFor(group_1);
@@ -446,17 +447,17 @@ public class DeviceDialog extends TitleAreaDialog {
 		formToolkit.adapt(button, true, true);
 		new Label(composite, SWT.NONE);
 		
-		button_1 = new Button(composite, SWT.CHECK);
-		button_1.setText("Код ошибки");
-		formToolkit.adapt(button_1, true, true);
+		button_24 = new Button(composite, SWT.CHECK);
+		button_24.setText("Время отсутствия счёта");
+		formToolkit.adapt(button_24, true, true);
 		
 		button_15 = new Button(composite, SWT.CHECK);
 		button_15.setText("Время нормальной работы");
 		formToolkit.adapt(button_15, true, true);
 		
-		button_24 = new Button(composite, SWT.CHECK);
-		formToolkit.adapt(button_24, true, true);
-		button_24.setText("Время отсутствия счёта");
+		button_1 = new Button(composite, SWT.CHECK);
+		button_1.setText("Код ошибки");
+		formToolkit.adapt(button_1, true, true);
 
 		return area;
 	}
@@ -477,11 +478,15 @@ public class DeviceDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(526, 455);
+		return new Point(539, 455);
 	}
 
 	public Device getDevice() {
 		return device;
+	}
+
+	public List<Params> getParams() throws IllegalArgumentException, IllegalAccessException {
+		return paramModel.getParams();
 	}
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
@@ -530,17 +535,9 @@ public class DeviceDialog extends TitleAreaDialog {
 		IObservableValue e2ParamModelObserveValue = PojoProperties.value("e2").observe(paramModel);
 		bindingContext.bindValue(observeSelectionButtonObserveWidget, e2ParamModelObserveValue, null, null);
 		//
-		IObservableValue observeSelectionButton_1ObserveWidget = WidgetProperties.selection().observe(button_1);
-		IObservableValue errorCodeParamModelObserveValue = PojoProperties.value("errorCode").observe(paramModel);
-		bindingContext.bindValue(observeSelectionButton_1ObserveWidget, errorCodeParamModelObserveValue, null, null);
-		//
 		IObservableValue observeSelectionButton_15ObserveWidget = WidgetProperties.selection().observe(button_15);
 		IObservableValue workTimeParamModelObserveValue = PojoProperties.value("workTime").observe(paramModel);
 		bindingContext.bindValue(observeSelectionButton_15ObserveWidget, workTimeParamModelObserveValue, null, null);
-		//
-		IObservableValue observeSelectionButton_24ObserveWidget = WidgetProperties.selection().observe(button_24);
-		IObservableValue noWorkTimeParamModelObserveValue = PojoProperties.value("noWorkTime").observe(paramModel);
-		bindingContext.bindValue(observeSelectionButton_24ObserveWidget, noWorkTimeParamModelObserveValue, null, null);
 		//
 		IObservableValue observeSelectionButton_14ObserveWidget = WidgetProperties.selection().observe(button_14);
 		IObservableValue p1ParamModelObserveValue = PojoProperties.value("p1").observe(paramModel);
@@ -648,9 +645,4 @@ public class DeviceDialog extends TitleAreaDialog {
 		//
 		return bindingContext;
 	}
-
-	public List<Params> getParams() throws IllegalArgumentException, IllegalAccessException {
-		return paramModel.getParams();
-	}
-	
 }

@@ -87,17 +87,17 @@ public class OpenArchiveHandler implements EventHandler {
 		Map<String, Object> result = new HashMap<>();
 		switch (archiveType) {
 		case MONTH:
-			startDate=startDate.minusMonths(1);
+			startDate = startDate.minusMonths(1);
 			break;
 		case DAY:
-			startDate=startDate.minusDays(1);
+			startDate = startDate.minusDays(1);
 			break;
 		default:
 			break;
 		}
 		List<Measuring> measurings = dbService.findArchive(device, startDate, endDate, archiveType);
-		if(archiveType.equals(ArchiveTypes.HOUR))
-			smoothedHourMeasuring(measurings);
+		// if(archiveType.equals(ArchiveTypes.HOUR))
+		// smoothedHourMeasuring(measurings);
 		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
 		List<Parameters> parameters = new ArrayList<>();
@@ -119,53 +119,60 @@ public class OpenArchiveHandler implements EventHandler {
 						String category = measuring.getParameter().getCategory();
 						if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
 							Measuring prevMonthMeasuring = lmPrevMonth.get(i);
-							if(measuring.getParameter().equals(prevMonthMeasuring.getParameter()) && prevMonthMeasuring.getValue()<=measuring.getValue())
-								tr.getValues().put(measuring.getParameter(), measuring.getValue()-prevMonthMeasuring.getValue());
-						}
-						else
+							if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
+									&& prevMonthMeasuring.getValue() <= measuring.getValue())
+								tr.getValues().put(measuring.getParameter(),
+										measuring.getValue() - prevMonthMeasuring.getValue());
+						} else
 							tr.getValues().put(measuring.getParameter(), measuring.getValue());
 					}
 				}
-				if(parameters.contains(Parameters.M1_SUB_M2)){
+				if (parameters.contains(Parameters.M1_SUB_M2)) {
 					Object m1 = tr.getValues().get(Parameters.M1);
 					Object m2 = tr.getValues().get(Parameters.M2);
-					if(m1!=null && m2!=null)
-						tr.getValues().put(Parameters.M1_SUB_M2, ((Float)m1)-((Float)m2));
+					if (m1 != null && m2 != null)
+						tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
 				}
-				if(parameters.contains(Parameters.M3_SUB_M4)){
+				if (parameters.contains(Parameters.M3_SUB_M4)) {
 					Object m1 = tr.getValues().get(Parameters.M3);
 					Object m2 = tr.getValues().get(Parameters.M4);
-					if(m1!=null && m2!=null)
-						tr.getValues().put(Parameters.M3_SUB_M4, ((Float)m1)-((Float)m2));
+					if (m1 != null && m2 != null)
+						tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
 				}
 				startDateTime = startDateTime.plusMonths(1);
 				break;
 			case DAY:
 				List<Measuring> lmPrevDay = groupByDateTime.get(startDateTime.minusDays(1));
 				if (lmPrevDay != null && lm != null) {
-					for (int i = 0; i < lmPrevDay.size(); i++) {
+					for (int i = 0; i < lm.size(); i++) {
+
 						Measuring measuring = lm.get(i);
+
+						LocalDate localDate = measuring.getDateTime().toLocalDate();
+						if (localDate.equals(LocalDate.of(2016, 2, 3)))
+							System.out.println();
 						String category = measuring.getParameter().getCategory();
 						if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
 							Measuring prevDayMeasuring = lmPrevDay.get(i);
-							if(measuring.getParameter().equals(prevDayMeasuring.getParameter()) && prevDayMeasuring.getValue()<=measuring.getValue())
-								tr.getValues().put(measuring.getParameter(), measuring.getValue()-prevDayMeasuring.getValue());
-						}
-						else
+							if (measuring.getParameter().equals(prevDayMeasuring.getParameter())
+									&& prevDayMeasuring.getValue() <= measuring.getValue())
+								tr.getValues().put(measuring.getParameter(),
+										measuring.getValue() - prevDayMeasuring.getValue());
+						} else
 							tr.getValues().put(measuring.getParameter(), measuring.getValue());
 					}
 				}
-				if(parameters.contains(Parameters.M1_SUB_M2)){
+				if (parameters.contains(Parameters.M1_SUB_M2)) {
 					Object m1 = tr.getValues().get(Parameters.M1);
 					Object m2 = tr.getValues().get(Parameters.M2);
-					if(m1!=null && m2!=null)
-						tr.getValues().put(Parameters.M1_SUB_M2, ((Float)m1)-((Float)m2));
+					if (m1 != null && m2 != null)
+						tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
 				}
-				if(parameters.contains(Parameters.M3_SUB_M4)){
+				if (parameters.contains(Parameters.M3_SUB_M4)) {
 					Object m1 = tr.getValues().get(Parameters.M3);
 					Object m2 = tr.getValues().get(Parameters.M4);
-					if(m1!=null && m2!=null)
-						tr.getValues().put(Parameters.M3_SUB_M4, ((Float)m1)-((Float)m2));
+					if (m1 != null && m2 != null)
+						tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
 				}
 				startDateTime = startDateTime.plusDays(1);
 				break;
@@ -179,29 +186,29 @@ public class OpenArchiveHandler implements EventHandler {
 			default:
 				break;
 			}
-			if(parameters.contains(Parameters.V1_SUB_V2)){
+			if (parameters.contains(Parameters.V1_SUB_V2)) {
 				Object v1 = tr.getValues().get(Parameters.V1);
 				Object v2 = tr.getValues().get(Parameters.V2);
-				if(v1!=null && v2!=null)
-				tr.getValues().put(Parameters.V1_SUB_V2, ((Float)v1)-((Float)v2));
+				if (v1 != null && v2 != null)
+					tr.getValues().put(Parameters.V1_SUB_V2, ((Float) v1) - ((Float) v2));
 			}
-			if(parameters.contains(Parameters.V3_SUB_V4)){
+			if (parameters.contains(Parameters.V3_SUB_V4)) {
 				Object v3 = tr.getValues().get(Parameters.V3);
 				Object v4 = tr.getValues().get(Parameters.V4);
-				if(v3!=null && v4!=null)
-					tr.getValues().put(Parameters.V3_SUB_V4, ((Float)v3)-((Float)v4));
+				if (v3 != null && v4 != null)
+					tr.getValues().put(Parameters.V3_SUB_V4, ((Float) v3) - ((Float) v4));
 			}
-			if(parameters.contains(Parameters.T1_SUB_T2)){
+			if (parameters.contains(Parameters.T1_SUB_T2)) {
 				Object t1 = tr.getValues().get(Parameters.AVG_TEMP1);
 				Object t2 = tr.getValues().get(Parameters.AVG_TEMP2);
-				if(t1!=null && t2!=null)
-					tr.getValues().put(Parameters.T1_SUB_T2, ((Float)t1)-((Float)t2));
+				if (t1 != null && t2 != null)
+					tr.getValues().put(Parameters.T1_SUB_T2, ((Float) t1) - ((Float) t2));
 			}
-			if(parameters.contains(Parameters.T3_SUB_T4)){
+			if (parameters.contains(Parameters.T3_SUB_T4)) {
 				Object t1 = tr.getValues().get(Parameters.AVG_TEMP3);
 				Object t2 = tr.getValues().get(Parameters.AVG_TEMP4);
-				if(t1!=null && t2!=null)
-					tr.getValues().put(Parameters.T3_SUB_T4, ((Float)t1)-((Float)t2));
+				if (t1 != null && t2 != null)
+					tr.getValues().put(Parameters.T3_SUB_T4, ((Float) t1) - ((Float) t2));
 			}
 			listTableRow.add(tr);
 		} while (startDateTime.isBefore(endDateTime));
@@ -210,8 +217,9 @@ public class OpenArchiveHandler implements EventHandler {
 		result.put(AppEventConstants.DEVICE, device);
 		broker.send(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, result);
 	}
+
 	private void smoothedHourMeasuring(List<Measuring> lm) {
-		Map<LocalDateTime, Map<Parameters, Double>> cashMult=new HashMap<>();
+		Map<LocalDateTime, Map<Parameters, Double>> cashMult = new HashMap<>();
 		for (Measuring measuring : lm) {
 			LocalDateTime dt = measuring.getDateTime();
 			LocalDateTime dtFrom = null;
@@ -225,22 +233,21 @@ public class OpenArchiveHandler implements EventHandler {
 			}
 			Map<Parameters, Double> mapParameter = cashMult.get(dtTo);
 			Double mult;
-			if(mapParameter!=null){
-				mult=mapParameter.get(measuring.getParameter());
-				if(mult==null){
-					mult=dbService.getSmoothedMultiplier(measuring);
+			if (mapParameter != null) {
+				mult = mapParameter.get(measuring.getParameter());
+				if (mult == null) {
+					mult = dbService.getSmoothedMultiplier(measuring);
 					mapParameter.put(measuring.getParameter(), mult);
 				}
-			}
-			else{
-				mapParameter= new HashMap<>();
-				cashMult.put(dtTo,mapParameter);
-				mult=dbService.getSmoothedMultiplier(measuring);
+			} else {
+				mapParameter = new HashMap<>();
+				cashMult.put(dtTo, mapParameter);
+				mult = dbService.getSmoothedMultiplier(measuring);
 				mapParameter.put(measuring.getParameter(), mult);
 			}
-			measuring.setValue(measuring.getValue()*mult);
+			measuring.setValue(measuring.getValue() * mult);
 		}
-		
+
 	}
 
 	@CanExecute

@@ -101,19 +101,20 @@ public class ExportToExcelHandler implements EventHandler {
 					if (val != null)
 						if (val instanceof Double) {
 							BigDecimal bdVal = null;
-							switch(at){
-							case MONTH:
-								bdVal = new BigDecimal(val.toString()).setScale(2, BigDecimal.ROUND_HALF_UP);
-								break;
-							case DAY:
-								bdVal = new BigDecimal(val.toString()).setScale(3, BigDecimal.ROUND_HALF_UP);
-								break;
-							case HOUR:
-								bdVal = new BigDecimal(val.toString()).setScale(4, BigDecimal.ROUND_HALF_UP);
-								break;
-							}
-							float floatValue = bdVal.floatValue();
-							row.createCell(k).setCellValue(floatValue);
+							bdVal = new BigDecimal(val.toString()).setScale(5, BigDecimal.ROUND_HALF_UP);
+////							switch(at){
+////							case MONTH:
+////								bdVal = new BigDecimal(val.toString()).setScale(2, BigDecimal.ROUND_HALF_UP);
+////								break;
+////							case DAY:
+////								bdVal = new BigDecimal(val.toString()).setScale(3, BigDecimal.ROUND_HALF_UP);
+////								break;
+////							case HOUR:
+////								bdVal = new BigDecimal(val.toString()).setScale(2, BigDecimal.ROUND_HALF_UP);
+////								break;
+////							}
+							double doubleValue = bdVal.doubleValue();
+							row.createCell(k).setCellValue(doubleValue);
 						} else
 							row.createCell(k).setCellValue(val.toString());
 					else

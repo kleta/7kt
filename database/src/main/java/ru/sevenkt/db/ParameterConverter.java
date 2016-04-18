@@ -10,15 +10,18 @@ public class ParameterConverter implements AttributeConverter<Parameters, Intege
 
 	@Override
 	public Integer convertToDatabaseColumn(Parameters attribute) {
-		return attribute.getId();
+		if (attribute != null)
+			return attribute.getId();
+		return null;
 	}
 
 	@Override
 	public Parameters convertToEntityAttribute(Integer dbData) {
-		for (Parameters p : Parameters.values()) {
-			if (p.getId() == dbData)
-				return p;
-		}
+		if (dbData != null)
+			for (Parameters p : Parameters.values()) {
+				if (p.getId() == dbData)
+					return p;
+			}
 		return null;
 	}
 

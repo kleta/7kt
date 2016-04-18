@@ -18,8 +18,6 @@ public class Params {
 	
 	private String name;
 	
-//	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "params")
-//	private List<Device> devices;
 	
 	public Params(){
 	}

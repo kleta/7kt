@@ -42,6 +42,7 @@ import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
+import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.Archive;
 import ru.sevenkt.domain.ArchiveTypes;
@@ -146,15 +147,16 @@ public class ImportFromFileHandler {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-			if (localDate.equals(LocalDate.of(2015, 12, 31)))
+			if (localDate.equals(LocalDate.of(2016, 3, 24)))
 				System.out.println();
 			LOG.info("Импортируются данные за " + localDate);
 			// System.out.println(localDate);
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
+			if(!dr2.isValid())
+				dr2=dr1;
 			DayRecord dayConsumption = dr2.minus(dr1);
-
 			for (int i = 1; i < 25; i++) {
 				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
 				HourRecord hr = ha.getHourRecord(localDateTime, dateTime);
@@ -174,32 +176,49 @@ public class ImportFromFileHandler {
 	private void smoothedHourMeasuring(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
 		for (Measuring measuring : measurings) {
 			Parameters parameter = measuring.getParameter();
-			double multiplier = 1;
-			if (measuring.getValue() > 0)
+			BigDecimal multiplicand = new BigDecimal("1");
+			BigDecimal bdDay = null;
+			BigDecimal bdSumDay = null;
+			if (measuring.getValue().doubleValue() > 0)
 				switch (parameter) {
-				case V1:				
-					multiplier=dayConsumption.getVolume1()/sumDay.getVolume1();
+				case V1:
+					bdDay = new BigDecimal(dayConsumption.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 					break;
 				case V2:
-					multiplier = dayConsumption.getVolume2() / sumDay.getVolume2();
+					bdDay = new BigDecimal(dayConsumption.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 					break;
 				case V3:
-					multiplier = dayConsumption.getVolume3() / sumDay.getVolume3();
+					bdDay = new BigDecimal(dayConsumption.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 					break;
 				case V4:
-					multiplier = dayConsumption.getVolume4() / sumDay.getVolume4();
+					bdDay = new BigDecimal(dayConsumption.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 					break;
 				case E1:
-					multiplier = dayConsumption.getEnergy1() / sumDay.getEnergy1();
+					bdDay = new BigDecimal(dayConsumption.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 					break;
 				case E2:
-					multiplier = dayConsumption.getEnergy2() / sumDay.getEnergy2();
+					bdDay = new BigDecimal(dayConsumption.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 					break;
 				default:
 					break;
 				}
-			double value = measuring.getValue() * multiplier;		
-			measuring.setValue(value);
+			double value = measuring.getValue();
+			BigDecimal bdValue = new BigDecimal(value + "").setScale(2, BigDecimal.ROUND_HALF_UP).multiply(multiplicand)
+					.setScale(4, BigDecimal.ROUND_HALF_UP);
+
+			measuring.setValue(bdValue.doubleValue());
 		}
 
 	}
@@ -210,9 +229,11 @@ public class ImportFromFileHandler {
 		Field[] fields = HourRecord.class.getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-//			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
-//				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
-//						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+			// if (field.getName().equals("errorChannel1") ||
+			// field.getName().equals("errorChannel2"))
+			// System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+			// + Integer.toBinaryString(field.getInt(hr)) + ":" +
+			// field.getInt(hr));
 			if (field.isAnnotationPresent(Parameter.class)) {
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.HOUR);
@@ -232,14 +253,14 @@ public class ImportFromFileHandler {
 
 				if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
 					float val = field.getFloat(hr);
-					m.setValue((double) val);
+					m.setValue(new Double(val + ""));
 				}
 				if (parameter.getCategory().equals("Объём")) {
 					float val = field.getInt(hr);
 					switch (parameter) {
 					case V1:
 						val = val * settings.getVolumeByImpulsSetting1();
-						System.out.println(hr.getDateTime()+"	"+val);
+						// System.out.println(hr.getDateTime()+" "+val);
 						break;
 					case V2:
 						val = val * settings.getVolumeByImpulsSetting2();
@@ -254,7 +275,7 @@ public class ImportFromFileHandler {
 					default:
 						break;
 					}
-					m.setValue(Double.valueOf(val));
+					m.setValue(new Double(val + ""));
 				}
 				measurings.add(m);
 			}
@@ -262,30 +283,31 @@ public class ImportFromFileHandler {
 		return measurings;
 	}
 
-	
 	private void insertDayArchive(Archive archive, Device device, IProgressMonitor monitor) throws Exception {
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
 		LocalDate startArchiveDate = dateTime.minusMonths(DayArchive.MAX_MONTH_COUNT).toLocalDate();
 		List<Measuring> measurings = new ArrayList<>();
 		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
-			if (startArchiveDate.equals(LocalDate.of(2015, 12, 31)))
-				System.out.println();
+			// if (startArchiveDate.equals(LocalDate.of(2015, 12, 31)))
+			// System.out.println();
 			DayRecord dr = da.getDayRecord(startArchiveDate, dateTime);
 			if (dr.isValid()) {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-//					if (field.getName().equals("errorChannel1")) {
-//						System.out.println(
-//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
-//					}
-//					if (field.getName().equals("errorChannel2")) {
-//						System.out.println(
-//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
-//					}
+					// if (field.getName().equals("errorChannel1")) {
+					// System.out.println(
+					// dr.getDate() + ":" + field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(dr))
+					// + ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+					// }
+					// if (field.getName().equals("errorChannel2")) {
+					// System.out.println(
+					// dr.getDate() + ":" + field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(dr))
+					// + ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+					// }
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
@@ -295,20 +317,22 @@ public class ImportFromFileHandler {
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(dr);
-							m.setDateTime(dr.getDate().atTime(0, 0).minusDays(1));
+							m.setDateTime(dr.getDate().atTime(0, 0));
 							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(dr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								val = val / 10;
-								m.setDateTime(dr.getDate().atTime(0, 0).minusDays(1));
-								m.setValue((double) val);
+								m.setDateTime(dr.getDate().atTime(0, 0));
+								m.setValue(new Double(val + ""));
 							} else {
-								if (parameter.equals(Parameters.V1)){
-									System.out.println(dr.getDate()+"     "+val);
-								}
-								m.setDateTime(dr.getDate().atTime(0, 0));								
-								m.setValue((double) val);
+								// if (parameter.equals(Parameters.V1)){
+								// System.out.println(dr.getDate()+" "+new
+								// Double(val+""));
+								// }
+								BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+								m.setDateTime(dr.getDate().atTime(0, 0));
+								m.setValue(bdVal.doubleValue());
 							}
 						}
 						measurings.add(m);
@@ -339,14 +363,16 @@ public class ImportFromFileHandler {
 				Field[] fields = MonthRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.getName().equals("errorChannel1")) {
-						System.out.println(field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
-								+ field.getInt(mr) + ":" + mr.getTimeError1());
-					}
-					if (field.getName().equals("errorChannel2")) {
-						System.out.println(field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
-								+ field.getInt(mr) + ":" + mr.getTimeError2());
-					}
+					// if (field.getName().equals("errorChannel1")) {
+					// System.out.println(field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(mr)) + ":"
+					// + field.getInt(mr) + ":" + mr.getTimeError1());
+					// }
+					// if (field.getName().equals("errorChannel2")) {
+					// System.out.println(field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(mr)) + ":"
+					// + field.getInt(mr) + ":" + mr.getTimeError2());
+					// }
 
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
@@ -364,7 +390,7 @@ public class ImportFromFileHandler {
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								val = val / 10;
 							}
-							m.setValue((double) val);
+							m.setValue(new Double(val + ""));
 						}
 						measurings.add(m);
 					}
@@ -377,7 +403,7 @@ public class ImportFromFileHandler {
 		monitor.worked(1);
 	}
 
-	private Device insertOrUpdateDeviceSettings(Settings settings) {
+	private Device insertOrUpdateDeviceSettings(Settings settings) throws IllegalArgumentException, IllegalAccessException {
 		Device device = dbService.findDeviceBySerialNum(settings.getSerialNumber());
 		if (device == null) {
 			MessageBox messageBox = new MessageBox(parentShell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -397,12 +423,28 @@ public class ImportFromFileHandler {
 				device.setVolumeByImpulsSetting2(settings.getVolumeByImpulsSetting2() * 1000);
 				device.setVolumeByImpulsSetting3(settings.getVolumeByImpulsSetting3() * 1000);
 				device.setVolumeByImpulsSetting4(settings.getVolumeByImpulsSetting4() * 1000);
-				DeviceDialog dialog = new DeviceDialog(parentShell, device, new ParametersModel(new ArrayList<>()));
+				ArrayList<Params> params = new ArrayList<>();
+				params.add(new Params(Parameters.AVG_TEMP1));
+				params.add(new Params(Parameters.AVG_TEMP2));
+				params.add(new Params(Parameters.AVG_TEMP3));
+				params.add(new Params(Parameters.AVG_TEMP4));
+				params.add(new Params(Parameters.V1));
+				params.add(new Params(Parameters.V2));
+				params.add(new Params(Parameters.V3));
+				params.add(new Params(Parameters.V4));
+				params.add(new Params(Parameters.AVG_P1));
+				params.add(new Params(Parameters.AVG_P2));
+				params.add(new Params(Parameters.E1));
+				params.add(new Params(Parameters.E2));
+				DeviceDialog dialog = new DeviceDialog(parentShell, device, new ParametersModel(params));
 				dialog.create();
 				if (dialog.open() == Window.OK) {
 					dbService.saveDevice(dialog.getDevice());
+					device.setParams(dialog.getParams());
 					broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 				}
+				else
+					device=null;
 
 			}
 		} else {

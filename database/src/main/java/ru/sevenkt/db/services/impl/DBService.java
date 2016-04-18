@@ -23,6 +23,7 @@ import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
+import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
@@ -33,6 +34,9 @@ public class DBService implements IDBService {
 
 	@Autowired
 	private DeviceRepo dr;
+
+	@Autowired
+	private ParamsRepo pr;
 
 	@Autowired
 	private MeasuringRepo mr;
@@ -162,6 +166,9 @@ public class DBService implements IDBService {
 		tx.begin();
 		try {
 			jr.deleteAll();
+			long count = dr.count();
+			if(count==1)
+				pr.deleteAll();
 			dr.delete(device);
 		} catch (Exception ex) {
 			tx.rollback();
@@ -202,10 +209,13 @@ public class DBService implements IDBService {
 
 	@Override
 	public void saveMeasurings(List<Measuring> measurings) {
+		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
 			for (Measuring measuring : measurings) {
+				if(measuring.getDateTime().equals(LocalDateTime.of(2016, 1, 1, 0, 0)))
+					System.out.println();
 				measuring.setTimestamp(LocalDateTime.now());
 				mr.save(measuring);
 			}

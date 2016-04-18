@@ -25,6 +25,7 @@ import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
+import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.db.services.impl.DBService;
 
@@ -72,6 +73,7 @@ public class Config {
 		jpaProperties.put("eclipselink.weaving", env.getProperty("eclipselink.weaving"));
 		jpaProperties.put("eclipselink.logging.level.sql", env.getProperty("eclipselink.logging.level.sql"));
 		jpaProperties.put("eclipselink.logging.parameters", env.getProperty("eclipselink.logging.parameters"));
+		jpaProperties.put("eclipselink.logging.file", env.getProperty("eclipselink.logging.file"));
 
 		factory.setJpaProperties(jpaProperties);
 
@@ -143,6 +145,11 @@ public class Config {
 	public  JournalRepo journalRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(JournalRepo.class);
+	}
+	@Bean
+	public  ParamsRepo paramsRepo(EntityManager em){
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(ParamsRepo.class);
 	}
 	
 	@Bean
