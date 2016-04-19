@@ -19,6 +19,7 @@ import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
+import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
@@ -79,6 +80,12 @@ public class DBService implements IDBService {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
+			List<Params> params = device.getParams();
+			if (device.getId() == null) {	
+				device.setParams(null);
+				dr.save(device);
+				device.setParams(params);
+			}
 			dr.save(device);
 		} catch (Exception ex) {
 			tx.rollback();
@@ -167,7 +174,7 @@ public class DBService implements IDBService {
 		try {
 			jr.deleteAll();
 			long count = dr.count();
-			if(count==1)
+			if (count == 1)
 				pr.deleteAll();
 			dr.delete(device);
 		} catch (Exception ex) {
@@ -209,12 +216,12 @@ public class DBService implements IDBService {
 
 	@Override
 	public void saveMeasurings(List<Measuring> measurings) {
-		
+
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
 			for (Measuring measuring : measurings) {
-				if(measuring.getDateTime().equals(LocalDateTime.of(2016, 1, 1, 0, 0)))
+				if (measuring.getDateTime().equals(LocalDateTime.of(2016, 1, 1, 0, 0)))
 					System.out.println();
 				measuring.setTimestamp(LocalDateTime.now());
 				mr.save(measuring);
@@ -294,7 +301,8 @@ public class DBService implements IDBService {
 				dtFrom = dt.withHour(1);
 				dtTo = dtFrom.plusHours(23);
 			}
-			Double sum = mr.getSumHoursValue(measuring.getParameter(), measuring.getDevice(),ArchiveTypes.HOUR, dtFrom, dtTo);
+			Double sum = mr.getSumHoursValue(measuring.getParameter(), measuring.getDevice(), ArchiveTypes.HOUR, dtFrom,
+					dtTo);
 			Measuring prevDay = mr.findByParameterAndDeviceAndArchiveTypeAndDateTime(measuring.getParameter(),
 					measuring.getDevice(), ArchiveTypes.DAY, dtTo.minusDays(1));
 			Measuring thisDay = mr.findByParameterAndDeviceAndArchiveTypeAndDateTime(measuring.getParameter(),
