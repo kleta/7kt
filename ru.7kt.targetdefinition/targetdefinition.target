@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="62">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="68">
 <locations>
 <location path="${project_loc}\gemini-blueprint" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -30,6 +30,22 @@
 <unit id="ch.qos.logback.slf4j" version="1.0.7.v20121108-1250"/>
 <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.rcptt.watson.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.launching.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.module.nebula.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.ecl.ide.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.core.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.tesla.ecl.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.ecl.platform.ui.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.updates.feature.group" version="2.0.2.201511100835"/>
+<unit id="org.eclipse.rcptt.ecl.server.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.ecl.core.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.tesla.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.ecl.platform.feature.group" version="2.0.2.201511100655"/>
+<unit id="org.eclipse.rcptt.platform.feature.group" version="2.0.2.201511100835"/>
+<repository location="http://download.eclipse.org/rcptt/release/2.0.2/repository/"/>
 </location>
 </locations>
 <environment>
