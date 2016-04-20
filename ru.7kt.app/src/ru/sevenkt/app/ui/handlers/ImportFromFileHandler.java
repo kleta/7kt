@@ -230,9 +230,9 @@ public class ImportFromFileHandler {
 		Field[] fields = HourRecord.class.getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
-				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
-						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+//			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
+//				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+//						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
 			if (field.isAnnotationPresent(Parameter.class)) {
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.HOUR);
