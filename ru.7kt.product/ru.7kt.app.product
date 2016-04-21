@@ -41,9 +41,15 @@
       <plugin id="org.apache.batik.css"/>
       <plugin id="org.apache.batik.util"/>
       <plugin id="org.apache.batik.util.gui"/>
+      <plugin id="org.apache.commons.beanutils"/>
       <plugin id="org.apache.commons.codec"/>
+      <plugin id="org.apache.commons.collections"/>
       <plugin id="org.apache.commons.jxpath"/>
+      <plugin id="org.apache.commons.lang"/>
       <plugin id="org.apache.commons.logging"/>
+      <plugin id="org.apache.felix.gogo.runtime"/>
+      <plugin id="org.apache.felix.gogo.shell"/>
+      <plugin id="org.apache.oro"/>
       <plugin id="org.apache.poi"/>
       <plugin id="org.aspectj.runtime"/>
       <plugin id="org.eclipse.core.commands"/>
@@ -85,6 +91,7 @@
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.concurrent"/>
+      <plugin id="org.eclipse.equinox.console"/>
       <plugin id="org.eclipse.equinox.ds"/>
       <plugin id="org.eclipse.equinox.event"/>
       <plugin id="org.eclipse.equinox.preferences"/>
@@ -96,6 +103,11 @@
       <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.jubula.communication"/>
+      <plugin id="org.eclipse.jubula.rc.common"/>
+      <plugin id="org.eclipse.jubula.rc.rcp"/>
+      <plugin id="org.eclipse.jubula.toolkit.api"/>
+      <plugin id="org.eclipse.jubula.tools"/>
       <plugin id="org.eclipse.nebula.cwt"/>
       <plugin id="org.eclipse.nebula.widgets.cdatetime"/>
       <plugin id="org.eclipse.osgi"/>
@@ -113,6 +125,7 @@
       <plugin id="org.eclipse.ui.forms"/>
       <plugin id="org.eclipse.ui.workbench"/>
       <plugin id="org.slf4j.api"/>
+      <plugin id="org.slf4j.jcl"/>
       <plugin id="org.springframework.aop"/>
       <plugin id="org.springframework.beans"/>
       <plugin id="org.springframework.context"/>
@@ -145,6 +158,7 @@
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.gemini.blueprint.extender" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.jubula.rc.rcp" autoStart="true" startLevel="2" />
       <plugin id="org.slf4j.api" autoStart="true" startLevel="0" />
       <plugin id="ru.7kt.archivedata" autoStart="true" startLevel="2" />
    </configurations>
