@@ -230,9 +230,9 @@ public class ImportFromFileHandler {
 		Field[] fields = HourRecord.class.getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-//			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
-//				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
-//						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
+				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
 			if (field.isAnnotationPresent(Parameter.class)) {
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.HOUR);
@@ -295,16 +295,16 @@ public class ImportFromFileHandler {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.getName().equals("errorChannel1")) {
-						System.out.println(
-								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
-					}
-					if (field.getName().equals("errorChannel2")) {
-						System.out.println(
-								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
-					}
+//					if (field.getName().equals("errorChannel1")) {
+//						System.out.println(
+//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+//					}
+//					if (field.getName().equals("errorChannel2")) {
+//						System.out.println(
+//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+//					}
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
@@ -360,16 +360,14 @@ public class ImportFromFileHandler {
 				Field[] fields = MonthRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					// if (field.getName().equals("errorChannel1")) {
-					// System.out.println(field.getName() + ":" +
-					// Integer.toBinaryString(field.getInt(mr)) + ":"
-					// + field.getInt(mr) + ":" + mr.getTimeError1());
-					// }
-					// if (field.getName().equals("errorChannel2")) {
-					// System.out.println(field.getName() + ":" +
-					// Integer.toBinaryString(field.getInt(mr)) + ":"
-					// + field.getInt(mr) + ":" + mr.getTimeError2());
-					// }
+					if (field.getName().equals("errorChannel1")) {
+						System.out.println(mr.getDate()+"-"+field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
+								+ field.getInt(mr) + ":" + mr.getTimeError1());
+					}
+					if (field.getName().equals("errorChannel2")) {
+						System.out.println(mr.getDate()+"-"+field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
+								+ field.getInt(mr) + ":" + mr.getTimeError2());
+					}
 
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
