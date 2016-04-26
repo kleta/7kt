@@ -85,10 +85,12 @@ public class HourRecord {
 	
 	@Address(value=26)
 	@Length(value=1)
+	@Parameter(Parameters.ERROR_CODE1)
 	private int errorChannel1;
 	
 	@Address(value=27)
 	@Length(value=1)
+	@Parameter(Parameters.ERROR_CODE2)
 	private int errorChannel2;
 
 	private int hour;

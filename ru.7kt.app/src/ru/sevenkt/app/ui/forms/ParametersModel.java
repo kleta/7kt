@@ -44,7 +44,10 @@ public class ParametersModel {
 		for (Params param : params) {
 			Parameters p = param.getId();
 			switch (p) {
-			case ERROR_CODE:
+			case ERROR_CODE1:
+				errorCode = true;
+				break;
+			case ERROR_CODE2:
 				errorCode = true;
 				break;
 			case M1_SUB_M2:
@@ -74,7 +77,10 @@ public class ParametersModel {
 			case E2:
 				e2 = true;
 				break;
-			case ERROR_TIME:
+			case ERROR_TIME1:
+				noWorkTime = true;
+				break;
+			case ERROR_TIME2:
 				noWorkTime = true;
 				break;
 			case M1:
@@ -396,8 +402,8 @@ public class ParametersModel {
 				if (val)
 					switch (fieldName) {
 					case "errorCode":
-
-						params.add(new Params(Parameters.ERROR_CODE));
+						params.add(new Params(Parameters.ERROR_CODE1));
+						params.add(new Params(Parameters.ERROR_CODE2));
 						break;
 					case "m1Subm2":
 
@@ -437,7 +443,8 @@ public class ParametersModel {
 						break;
 					case "noWorkTime":
 
-						params.add(new Params(Parameters.ERROR_TIME));
+						params.add(new Params(Parameters.ERROR_TIME1));
+						params.add(new Params(Parameters.ERROR_TIME2));
 						break;
 					case "m1":
 

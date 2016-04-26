@@ -59,7 +59,7 @@ public class DeviceDialog extends TitleAreaDialog {
 	private Button button_20;
 	private Button button_21;
 	private Button button_22;
-	private Button button_23;
+	private Button btnMm;
 	private Button button_8;
 	private Button button_9;
 	private Button button_11;
@@ -403,9 +403,9 @@ public class DeviceDialog extends TitleAreaDialog {
 		button_22.setText("M1-M2");
 		formToolkit.adapt(button_22, true, true);
 		
-		button_23 = new Button(group_3, SWT.CHECK);
-		button_23.setText("M3_M4");
-		formToolkit.adapt(button_23, true, true);
+		btnMm = new Button(group_3, SWT.CHECK);
+		btnMm.setText("M3-M4");
+		formToolkit.adapt(btnMm, true, true);
 		
 		Group group_4 = new Group(composite, SWT.NONE);
 		group_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -575,7 +575,7 @@ public class DeviceDialog extends TitleAreaDialog {
 		IObservableValue m1Subm2ParamModelObserveValue = PojoProperties.value("m1Subm2").observe(paramModel);
 		bindingContext.bindValue(observeSelectionButton_22ObserveWidget, m1Subm2ParamModelObserveValue, null, null);
 		//
-		IObservableValue observeSelectionButton_23ObserveWidget = WidgetProperties.selection().observe(button_23);
+		IObservableValue observeSelectionButton_23ObserveWidget = WidgetProperties.selection().observe(btnMm);
 		IObservableValue m3Subm4ParamModelObserveValue = PojoProperties.value("m3Subm4").observe(paramModel);
 		bindingContext.bindValue(observeSelectionButton_23ObserveWidget, m3Subm4ParamModelObserveValue, null, null);
 		//

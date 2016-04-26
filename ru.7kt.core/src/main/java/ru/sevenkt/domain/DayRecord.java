@@ -105,18 +105,22 @@ public class DayRecord implements Cloneable {
 
 	@Address(value = 52)
 	@Length(value = 1)
+	@Parameter(Parameters.ERROR_CODE1)
 	private int errorChannel1;
 
 	@Address(value = 53)
 	@Length(value = 1)
+	@Parameter(Parameters.ERROR_CODE2)
 	private int errorChannel2;
 
 	@Address(value = 54)
 	@Length(value = 1)
+	@Parameter(Parameters.ERROR_TIME1)
 	private int timeError1;
 
 	@Address(value = 55)
 	@Length(value = 1)
+	@Parameter(Parameters.ERROR_TIME2)
 	private int timeError2;
 
 	private boolean valid;

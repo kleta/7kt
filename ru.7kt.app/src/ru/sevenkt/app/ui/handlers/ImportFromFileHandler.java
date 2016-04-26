@@ -56,6 +56,7 @@ import ru.sevenkt.domain.JournalSettingsRecord;
 import ru.sevenkt.domain.MonthArchive;
 import ru.sevenkt.domain.MonthRecord;
 import ru.sevenkt.domain.Parameters;
+import ru.sevenkt.domain.ParametersConst;
 import ru.sevenkt.domain.Settings;
 
 public class ImportFromFileHandler {
@@ -155,8 +156,8 @@ public class ImportFromFileHandler {
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
-			if(!dr2.isValid())
-				dr2=dr1;
+			if (!dr2.isValid())
+				dr2 = dr1;
 			DayRecord dayConsumption = dr2.minus(dr1);
 			for (int i = 1; i < 25; i++) {
 				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
@@ -254,7 +255,7 @@ public class ImportFromFileHandler {
 					float val = field.getFloat(hr);
 					m.setValue(new Double(val + ""));
 				}
-				if (parameter.getCategory().equals("Объём")) {
+				if (parameter.getCategory().equals(ParametersConst.VOLUME)) {
 					float val = field.getInt(hr);
 					switch (parameter) {
 					case V1:
@@ -276,6 +277,9 @@ public class ImportFromFileHandler {
 					}
 					m.setValue(new Double(val + ""));
 				}
+				if (parameter.getCategory().equals(ParametersConst.ERROR)) {
+					m.setValue((double) field.getInt(hr));
+				}
 				measurings.add(m);
 			}
 		}
@@ -295,40 +299,40 @@ public class ImportFromFileHandler {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-//					if (field.getName().equals("errorChannel1")) {
-//						System.out.println(
-//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
-//					}
-//					if (field.getName().equals("errorChannel2")) {
-//						System.out.println(
-//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
-//					}
+					// if (field.getName().equals("errorChannel1")) {
+					// System.out.println(
+					// dr.getDate() + ":" + field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(dr))
+					// + ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+					// }
+					// if (field.getName().equals("errorChannel2")) {
+					// System.out.println(
+					// dr.getDate() + ":" + field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(dr))
+					// + ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+					// }
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
 						m.setDevice(device);
+						m.setDateTime(dr.getDate().atTime(0, 0));
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						m.setParametr(parameter);
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(dr);
-							m.setDateTime(dr.getDate().atTime(0, 0));
 							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
 						} else {
 							float val = field.getFloat(dr);
 							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 								val = val / 10;
-								m.setDateTime(dr.getDate().atTime(0, 0));
+								
 								m.setValue(new Double(val + ""));
+							} else if (parameter.getCategory().equals(ParametersConst.ERROR)) {
+								int i1=field.getInt(dr);
+								m.setValue((double) i1);
 							} else {
-								// if (parameter.equals(Parameters.V1)){
-								// System.out.println(dr.getDate()+" "+new
-								// Double(val+""));
-								// }
 								BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-								m.setDateTime(dr.getDate().atTime(0, 0));
 								m.setValue(bdVal.doubleValue());
 							}
 						}
@@ -361,12 +365,14 @@ public class ImportFromFileHandler {
 				for (Field field : fields) {
 					field.setAccessible(true);
 					if (field.getName().equals("errorChannel1")) {
-						System.out.println(mr.getDate()+"-"+field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
-								+ field.getInt(mr) + ":" + mr.getTimeError1());
+						System.out.println(
+								mr.getDate() + "-" + field.getName() + ":" + Integer.toBinaryString(field.getInt(mr))
+										+ ":" + field.getInt(mr) + ":" + mr.getTimeError1());
 					}
 					if (field.getName().equals("errorChannel2")) {
-						System.out.println(mr.getDate()+"-"+field.getName() + ":" + Integer.toBinaryString(field.getInt(mr)) + ":"
-								+ field.getInt(mr) + ":" + mr.getTimeError2());
+						System.out.println(
+								mr.getDate() + "-" + field.getName() + ":" + Integer.toBinaryString(field.getInt(mr))
+										+ ":" + field.getInt(mr) + ":" + mr.getTimeError2());
 					}
 
 					if (field.isAnnotationPresent(Parameter.class)) {
@@ -398,7 +404,8 @@ public class ImportFromFileHandler {
 		monitor.worked(1);
 	}
 
-	private Device insertOrUpdateDeviceSettings(Settings settings) throws IllegalArgumentException, IllegalAccessException {
+	private Device insertOrUpdateDeviceSettings(Settings settings)
+			throws IllegalArgumentException, IllegalAccessException {
 		Device device = dbService.findDeviceBySerialNum(settings.getSerialNumber());
 		if (device == null) {
 			MessageBox messageBox = new MessageBox(parentShell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
@@ -420,28 +427,33 @@ public class ImportFromFileHandler {
 				device.setVolumeByImpulsSetting4(settings.getVolumeByImpulsSetting4() * 1000);
 				ArrayList<Params> params = new ArrayList<>();
 				params.add(new Params(Parameters.AVG_TEMP1));
-				params.add(new Params(Parameters.AVG_TEMP2));
-				params.add(new Params(Parameters.AVG_TEMP3));
-				params.add(new Params(Parameters.AVG_TEMP4));
+				params.add(new Params(Parameters.AVG_TEMP2));				
 				params.add(new Params(Parameters.V1));
-				params.add(new Params(Parameters.V2));
-				params.add(new Params(Parameters.V3));
-				params.add(new Params(Parameters.V4));
+				params.add(new Params(Parameters.V2));				
+				params.add(new Params(Parameters.M1));
+				params.add(new Params(Parameters.M2));				
 				params.add(new Params(Parameters.AVG_P1));
 				params.add(new Params(Parameters.AVG_P2));
 				params.add(new Params(Parameters.E1));
 				params.add(new Params(Parameters.E2));
+				if((device.getFormulaNum()+"").length()>1){
+					params.add(new Params(Parameters.AVG_TEMP3));
+					params.add(new Params(Parameters.AVG_TEMP4));
+					params.add(new Params(Parameters.V3));
+					params.add(new Params(Parameters.V4));
+					params.add(new Params(Parameters.M3));
+					params.add(new Params(Parameters.M4));
+				}
 				DeviceDialog dialog = new DeviceDialog(parentShell, device, new ParametersModel(params));
 				dialog.create();
 				if (dialog.open() == Window.OK) {
-					device=dialog.getDevice();
+					device = dialog.getDevice();
 					List<Params> selectedParams = dialog.getParams();
 					device.setParams(selectedParams);
 					dbService.saveDevice(device);
 					broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
-				}
-				else
-					device=null;
+				} else
+					device = null;
 
 			}
 		} else {

@@ -111,18 +111,22 @@ public class MonthRecord {
 	
 	@Address(value=64)
 	@Length(value=1)
+	@Parameter(Parameters.ERROR_CODE1)
 	private int errorChannel1;
 	
 	@Address(value=65)
 	@Length(value=1)
+	@Parameter(Parameters.ERROR_CODE2)
 	private int errorChannel2;
 	
 	@Address(value=66)
 	@Length(value=2)
+	@Parameter(Parameters.ERROR_TIME1)
 	private int timeError1;
 	
 	@Address(value=68)
 	@Length(value=4)
+	@Parameter(Parameters.ERROR_TIME2)
 	private int timeError2;
 	
 	private boolean valid;
