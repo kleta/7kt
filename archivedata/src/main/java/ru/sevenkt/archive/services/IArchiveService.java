@@ -1,7 +1,6 @@
 package ru.sevenkt.archive.services;
 
 import java.io.File;
-import java.io.IOException;
 
 import ru.sevenkt.domain.Archive;;;
 

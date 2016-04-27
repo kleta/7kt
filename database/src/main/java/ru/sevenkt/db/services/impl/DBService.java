@@ -1,8 +1,11 @@
 package ru.sevenkt.db.services.impl;
 
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -11,24 +14,39 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.repositories.DeviceRepo;
+import ru.sevenkt.db.repositories.ErrorRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.services.IDBService;
+import ru.sevenkt.domain.Archive;
 import ru.sevenkt.domain.ArchiveTypes;
+import ru.sevenkt.domain.DayArchive;
+import ru.sevenkt.domain.DayRecord;
+import ru.sevenkt.domain.ErrorCodes;
+import ru.sevenkt.domain.HourArchive;
+import ru.sevenkt.domain.HourRecord;
+import ru.sevenkt.domain.JournalSettings;
+import ru.sevenkt.domain.JournalSettingsRecord;
+import ru.sevenkt.domain.MonthArchive;
+import ru.sevenkt.domain.MonthRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.ParametersConst;
+import ru.sevenkt.domain.Settings;
 
 @Service
 public class DBService implements IDBService {
@@ -49,7 +67,12 @@ public class DBService implements IDBService {
 	private JournalRepo jr;
 
 	@Autowired
+	private ErrorRepo er;
+
+	@Autowired
 	private EntityManager em;
+
+	private Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@PostConstruct
 	private void init() {
@@ -76,18 +99,19 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public void saveDevice(Device device) {
+	public void saveDevice(Device device) throws Exception {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
 			List<Params> params = device.getParams();
-			if (device.getId() == null) {	
+			if (device.getId() == null) {
 				device.setParams(null);
 				dr.save(device);
 				device.setParams(params);
 			}
 			dr.save(device);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			tx.rollback();
 			throw ex;
 		} finally {
@@ -95,7 +119,7 @@ public class DBService implements IDBService {
 				tx.commit();
 			} catch (Exception e) {
 				e.printStackTrace();
-				tx.rollback();
+				throw e;
 			}
 		}
 
@@ -221,8 +245,6 @@ public class DBService implements IDBService {
 		tx.begin();
 		try {
 			for (Measuring measuring : measurings) {
-				if (measuring.getDateTime().equals(LocalDateTime.of(2016, 1, 1, 0, 0)))
-					System.out.println();
 				measuring.setTimestamp(LocalDateTime.now());
 				mr.save(measuring);
 			}
@@ -287,31 +309,705 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public Double getSmoothedMultiplier(Measuring measuring) {
-		if ((measuring.getParameter().getCategory().equals(ParametersConst.VOLUME)
-				|| measuring.getParameter().getCategory().equals(ParametersConst.ENERGY))
-				&& measuring.getArchiveType().equals(ArchiveTypes.HOUR)) {
-			LocalDateTime dt = measuring.getDateTime();
-			LocalDateTime dtFrom = null;
-			LocalDateTime dtTo = null;
-			if (dt.toLocalTime().equals(LocalTime.of(0, 0))) {
-				dtFrom = dt.minusHours(23);
-				dtTo = dt;
-			} else {
-				dtFrom = dt.withHour(1);
-				dtTo = dtFrom.plusHours(23);
+	public void insertMonthArchive(Archive archive, Device device) throws Exception {
+		MonthArchive ma = archive.getMonthArchive();
+		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withDayOfMonth(1);
+		LocalDate startArchiveDate = dateTime.minusYears(MonthArchive.MAX_YEAR_COUNT).toLocalDate();
+		List<Measuring> measurings = new ArrayList<>();
+		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
+			int year = startArchiveDate.getYear() - 2000;
+			if (year < 15) {
+				startArchiveDate = startArchiveDate.plusMonths(1);
+				continue;
 			}
-			Double sum = mr.getSumHoursValue(measuring.getParameter(), measuring.getDevice(), ArchiveTypes.HOUR, dtFrom,
-					dtTo);
-			Measuring prevDay = mr.findByParameterAndDeviceAndArchiveTypeAndDateTime(measuring.getParameter(),
-					measuring.getDevice(), ArchiveTypes.DAY, dtTo.minusDays(1));
-			Measuring thisDay = mr.findByParameterAndDeviceAndArchiveTypeAndDateTime(measuring.getParameter(),
-					measuring.getDevice(), ArchiveTypes.DAY, dtTo);
-			if (prevDay != null && thisDay != null && sum != 0)
-				return (thisDay.getValue() - prevDay.getValue()) / sum;
+			MonthRecord mr = ma.getMonthRecord(year, startArchiveDate.getMonthValue());
+			if (mr.isValid()) {
+				Field[] fields = MonthRecord.class.getDeclaredFields();
+				for (Field field : fields) {
+					field.setAccessible(true);
+					if (field.getName().equals("errorChannel1")) {
+						System.out.println(
+								mr.getDate() + "-" + field.getName() + ":" + Integer.toBinaryString(field.getInt(mr))
+										+ ":" + field.getInt(mr) + ":" + mr.getTimeError1());
+					}
+					if (field.getName().equals("errorChannel2")) {
+						System.out.println(
+								mr.getDate() + "-" + field.getName() + ":" + Integer.toBinaryString(field.getInt(mr))
+										+ ":" + field.getInt(mr) + ":" + mr.getTimeError2());
+					}
 
+					if (field.isAnnotationPresent(Parameter.class)) {
+						Measuring m = new Measuring();
+						m.setArchiveType(ArchiveTypes.MONTH);
+						m.setDateTime(mr.getDate().atTime(0, 0));
+						m.setDevice(device);
+						m.setParametr(field.getAnnotation(Parameter.class).value());
+						Parameters parameter = field.getAnnotation(Parameter.class).value();
+						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+							float val = field.getInt(mr);
+							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
+						} else {
+							float val = field.getFloat(mr);
+							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+								val = val / 10;
+							}
+							m.setValue(new Double(val + ""));
+						}
+						measurings.add(m);
+					}
+				}
+			}
+			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
-		return (double) 1;
+		saveMeasurings(measurings);
+
+	}
+
+	@Override
+	public void insertHourArchive(Archive archive, Device device) throws Exception {
+		HourArchive ha = archive.getHourArchive();
+		DayArchive da = archive.getDayArchive();
+		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime();
+		LocalDateTime startArchiveDate = dateTime.minusDays(HourArchive.MAX_DAY_COUNT);
+		while (!startArchiveDate.isAfter(dateTime)) {
+			List<Measuring> measurings = new ArrayList<>();
+			List<Error> errors = new ArrayList<>();
+			LocalDate localDate = startArchiveDate.toLocalDate();
+			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
+			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
+			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
+			if (!dr2.isValid())
+				dr2 = dr1;
+			DayRecord dayConsumption = dr2.minus(dr1);
+			for (int i = 1; i < 25; i++) {
+				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
+				HourRecord hr = ha.getHourRecord(localDateTime, dateTime);
+				if (hr.isValid()) {
+					List<Measuring> hourMeasurings = geHourtMeasurings(hr, localDateTime, archive.getSettings());
+					measurings.addAll(hourMeasurings);
+					List<Error> hourErrors = calculateErrors(hr, archive.getSettings(), device);
+					errors.addAll(hourErrors);
+				}
+			}
+			smoothedHourMeasuring(measurings, dayConsumption, sumDay);
+			measurings.forEach(m -> m.setDevice(device));
+			saveMeasurings(measurings);
+			errors.forEach(e->e.setDevice(device));
+			saveErrors(errors);
+			startArchiveDate = startArchiveDate.plusDays(1);
+		}
+	}
+
+	private void saveErrors(List<Error> errors) {
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		try {
+			for (Error measuring : errors) {
+				er.save(measuring);
+			}
+		} catch (Exception ex) {
+			tx.rollback();
+			throw ex;
+		} finally {
+			try {
+				tx.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	private List<Error> calculateErrors(HourRecord hr, Settings settings, Device device) {
+		List<Error> errors = new ArrayList<>();
+		String formula = settings.getFormulaNum() + "";
+		int t1 = hr.getAvgTemp1()/100;
+		int t2 = hr.getAvgTemp2()/100;
+		int t3 = hr.getAvgTemp3()/100;
+		int t4 = hr.getAvgTemp4()/100;
+		int v1 = hr.getVolume1();
+		int v2 = hr.getVolume2();
+		int v3 = hr.getVolume3();
+		int v4 = hr.getVolume4();
+		LocalDateTime dateTime = hr.getDateTime();
+		if (formula.length() > 1) {
+			switch (formula.charAt(1) + "") {
+			case "1":
+				if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12() || v2 == 0 || v2 < device.getWMin1()
+						|| v2 > device.getWMax34()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v1 * 1.2 < v2 || t1 < t2) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "2":
+				if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (t1 < t2) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "3":
+				if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v2 == 0 || v2 < device.getWMin1() || v2 > device.getWMax34()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (t1 < t2) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "5":
+				if (t1 > 150 || t1 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v1 * 1.2 < v2) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "6":
+				if (t1 > 150 || t1 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			}
+			switch (formula.charAt(0) + "") {
+			case "1":
+				if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v3 == 0 || v3 < device.getWMin0() || v3 > device.getWMax12() || v4 == 0 || v4 < device.getWMin1()
+						|| v4 > device.getWMax34()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v3 * 1.2 < v4 || t3 < t4) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "2":
+				if (t3> 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v3 == 0 || v3 < device.getWMin0() || v3 > device.getWMax12()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (t3 < t4) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "3":
+				if (t3> 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v4 == 0 || v4 < device.getWMin0() || v4 > device.getWMax12()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (t3 < t4) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "5":
+				if (t3 > 150 || t3 < -60 ) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v3 == 0 || v3 < device.getWMin0() || v3 > device.getWMax12() ) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v3 * 1.2 < v4 ) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.E2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			case "6":
+				if (t3 > 150 || t3 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T2);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				break;
+			}
+		}
+		else{
+			if(formula.equals("41")){
+				if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60 || t3 > 150 || t3 < -60) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.T1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+				if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12() || v2 == 0 || v2 < device.getWMin1()
+						|| v2 > device.getWMax34()) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.HOUR);
+					error.setDateTime(dateTime);
+					error.setErrorCode(ErrorCodes.V1);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+			}
+			else{
+				switch (formula.charAt(0) + "") {
+				case "1":
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12() || v2 == 0 || v2 < device.getWMin1()
+							|| v2 > device.getWMax34()) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.V1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (v1 * 1.2 < v2 || t1 < t2) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.E1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					break;
+				case "2":
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12()) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.V1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (t1 < t2) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.E1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					break;
+				case "3":
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (v2 == 0 || v2 < device.getWMin1() || v2 > device.getWMax34()) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.V1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (t1 < t2) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.E1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					break;
+				case "5":
+					if (t1 > 150 || t1 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12()) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.V1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					if (v1 * 1.2 < v2) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.E1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					break;
+				case "6":
+					if (t1 > 150 || t1 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dateTime);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
+					break;
+				}
+			}
+		}
+		if(device.isControlPower()){
+			int a = hr.getErrorChannel1()&0b10000000;
+			if(a==0b10000000){
+				Error error = new Error();
+				error.setArchiveType(ArchiveTypes.HOUR);
+				error.setDateTime(dateTime);
+				error.setErrorCode(ErrorCodes.U);
+				error.setTimestamp(LocalDateTime.now());
+				errors.add(error);
+			}
+		}
+		return errors;
+	}
+
+	@Override
+	public void insertDayArchive(Archive archive, Device device) throws Exception {
+		DayArchive da = archive.getDayArchive();
+		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
+		LocalDate startArchiveDate = dateTime.minusMonths(DayArchive.MAX_MONTH_COUNT).toLocalDate();
+		List<Measuring> measurings = new ArrayList<>();
+		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
+			// if (startArchiveDate.equals(LocalDate.of(2015, 12, 31)))
+			// System.out.println();
+			DayRecord dr = da.getDayRecord(startArchiveDate, dateTime);
+			if (dr.isValid()) {
+				Field[] fields = DayRecord.class.getDeclaredFields();
+				for (Field field : fields) {
+					field.setAccessible(true);
+					// if (field.getName().equals("errorChannel1")) {
+					// System.out.println(
+					// dr.getDate() + ":" + field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(dr))
+					// + ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+					// }
+					// if (field.getName().equals("errorChannel2")) {
+					// System.out.println(
+					// dr.getDate() + ":" + field.getName() + ":" +
+					// Integer.toBinaryString(field.getInt(dr))
+					// + ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+					// }
+					if (field.isAnnotationPresent(Parameter.class)) {
+						Measuring m = new Measuring();
+						m.setArchiveType(ArchiveTypes.DAY);
+						m.setDevice(device);
+						m.setDateTime(dr.getDate().atTime(0, 0));
+						Parameters parameter = field.getAnnotation(Parameter.class).value();
+						m.setParametr(parameter);
+						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+							float val = field.getInt(dr);
+							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
+						} else {
+							float val = field.getFloat(dr);
+							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+								val = val / 10;
+
+								m.setValue(new Double(val + ""));
+							} else if (parameter.getCategory().equals(ParametersConst.ERROR)) {
+								int i1 = field.getInt(dr);
+								m.setValue((double) i1);
+							} else {
+								BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+								m.setValue(bdVal.doubleValue());
+							}
+						}
+						measurings.add(m);
+					}
+				}
+			}
+			startArchiveDate = startArchiveDate.plusDays(1);
+		}
+
+		saveMeasurings(measurings);
+
+	}
+
+	@Override
+	public void insertJournalSettings(Archive archive, Device device) throws Exception {
+		JournalSettings js = archive.getJournalSettings();
+		List<JournalSettingsRecord> records = js.getRecords();
+		List<Journal> list = new ArrayList<>();
+		for (JournalSettingsRecord journalSettingsRecord : records) {
+			Journal record = new Journal();
+			record.setDevice(device);
+			record.setDateTime(journalSettingsRecord.getDateTime());
+			record.setWorkHour(journalSettingsRecord.getWorkHour());
+			record.setEvent(journalSettingsRecord.getEvent());
+			list.add(record);
+		}
+		saveJournal(list);
+	}
+
+	private List<Measuring> geHourtMeasurings(HourRecord hr, LocalDateTime localDateTime, Settings settings)
+			throws IllegalArgumentException, IllegalAccessException {
+		List<Measuring> measurings = new ArrayList<>();
+		Field[] fields = HourRecord.class.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
+				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+			if (field.isAnnotationPresent(Parameter.class)) {
+				Measuring m = new Measuring();
+				m.setArchiveType(ArchiveTypes.HOUR);
+				m.setDateTime(hr.getDateTime());
+				// m.setDevice(device);
+				Parameters parameter = field.getAnnotation(Parameter.class).value();
+				m.setParametr(parameter);
+				if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+					float val = field.getInt(hr);
+					m.setValue((double) (val / 10));
+				}
+				if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+						|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+					float val = field.getInt(hr);
+					m.setValue((double) ((val / 100 > 150 || val / 100 < -60) ? 0 : val / 100));
+				}
+
+				if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
+					float val = field.getFloat(hr);
+					m.setValue(new Double(val + ""));
+				}
+				if (parameter.getCategory().equals(ParametersConst.VOLUME)) {
+					float val = field.getInt(hr);
+					switch (parameter) {
+					case V1:
+						val = val * settings.getVolumeByImpulsSetting1();
+						// System.out.println(hr.getDateTime()+" "+val);
+						break;
+					case V2:
+						val = val * settings.getVolumeByImpulsSetting2();
+						break;
+					case V3:
+						val = val * settings.getVolumeByImpulsSetting3();
+						break;
+					case V4:
+						val = val * settings.getVolumeByImpulsSetting4();
+						break;
+
+					default:
+						break;
+					}
+					m.setValue(new Double(val + ""));
+				}
+				if (parameter.getCategory().equals(ParametersConst.ERROR)) {
+					m.setValue((double) field.getInt(hr));
+				}
+				measurings.add(m);
+			}
+		}
+		return measurings;
+	}
+
+	private void smoothedHourMeasuring(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
+		for (Measuring measuring : measurings) {
+			Parameters parameter = measuring.getParameter();
+			BigDecimal multiplicand = new BigDecimal("1");
+			BigDecimal bdDay = null;
+			BigDecimal bdSumDay = null;
+			if (measuring.getValue().doubleValue() > 0)
+				switch (parameter) {
+				case V1:
+					bdDay = new BigDecimal(dayConsumption.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					break;
+				case V2:
+					bdDay = new BigDecimal(dayConsumption.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					break;
+				case V3:
+					bdDay = new BigDecimal(dayConsumption.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					break;
+				case V4:
+					bdDay = new BigDecimal(dayConsumption.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					break;
+				case E1:
+					bdDay = new BigDecimal(dayConsumption.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					break;
+				case E2:
+					bdDay = new BigDecimal(dayConsumption.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					bdSumDay = new BigDecimal(sumDay.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					break;
+				default:
+					break;
+				}
+			double value = measuring.getValue();
+			BigDecimal bdValue = new BigDecimal(value + "").setScale(2, BigDecimal.ROUND_HALF_UP).multiply(multiplicand)
+					.setScale(4, BigDecimal.ROUND_HALF_UP);
+
+			measuring.setValue(bdValue.doubleValue());
+		}
+
 	}
 
 }

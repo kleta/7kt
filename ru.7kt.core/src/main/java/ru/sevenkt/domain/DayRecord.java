@@ -186,12 +186,6 @@ public class DayRecord implements Cloneable {
 		dr2.setAvgTemp4(getAvgTemp4() - dr1.getAvgTemp4());
 		dr2.setEnergy1(new BigDecimal(getEnergy1()+"").subtract(new BigDecimal(dr1.getEnergy1()+"")).floatValue());
 		dr2.setEnergy2(new BigDecimal(getEnergy2()+"").subtract(new BigDecimal(dr1.getEnergy2()+"")).floatValue());
-//		BigDecimal v1 = new BigDecimal(getVolume1()+"");
-//		BigDecimal v2 = new BigDecimal(dr1.getVolume1()+"");
-//		System.out.println(dr2.getVolume1()- dr1.getVolume1());
-//		System.out.println(new Double(getVolume1()+"")-new Double(dr1.getVolume1()+""));
-//		System.out.println(v1.subtract(v2));
-//		System.out.println(v1.subtract(v2).doubleValue());
 		
 		dr2.setVolume1(new BigDecimal(getVolume1()+"").subtract(new BigDecimal(dr1.getVolume1()+"")).floatValue());
 		

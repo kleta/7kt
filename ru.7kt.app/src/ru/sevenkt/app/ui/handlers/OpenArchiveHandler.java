@@ -3,10 +3,8 @@ package ru.sevenkt.app.ui.handlers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.swing.text.TableView.TableCell;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
@@ -218,37 +215,7 @@ public class OpenArchiveHandler implements EventHandler {
 		broker.send(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, result);
 	}
 
-	private void smoothedHourMeasuring(List<Measuring> lm) {
-		Map<LocalDateTime, Map<Parameters, Double>> cashMult = new HashMap<>();
-		for (Measuring measuring : lm) {
-			LocalDateTime dt = measuring.getDateTime();
-			LocalDateTime dtFrom = null;
-			LocalDateTime dtTo = null;
-			if (dt.toLocalTime().equals(LocalTime.of(0, 0))) {
-				dtFrom = dt.minusHours(23);
-				dtTo = dt;
-			} else {
-				dtFrom = dt.withHour(1);
-				dtTo = dtFrom.plusHours(23);
-			}
-			Map<Parameters, Double> mapParameter = cashMult.get(dtTo);
-			Double mult;
-			if (mapParameter != null) {
-				mult = mapParameter.get(measuring.getParameter());
-				if (mult == null) {
-					mult = dbService.getSmoothedMultiplier(measuring);
-					mapParameter.put(measuring.getParameter(), mult);
-				}
-			} else {
-				mapParameter = new HashMap<>();
-				cashMult.put(dtTo, mapParameter);
-				mult = dbService.getSmoothedMultiplier(measuring);
-				mapParameter.put(measuring.getParameter(), mult);
-			}
-			measuring.setValue(measuring.getValue() * mult);
-		}
-
-	}
+	
 
 	@CanExecute
 	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)

@@ -15,11 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import lombok.Data;
 import ru.sevenkt.annotations.Prop;
 
 @Entity
+@Table(name="Devices")
 @Data
 public class Device implements Serializable{
 
@@ -49,6 +51,8 @@ public class Device implements Serializable{
 	private int wMax12;
 
 	private int wMax34;
+	
+	private boolean controlPower;
 
 	@Prop(name = "Сетевой адрес")
 	private int netAddress;
@@ -116,6 +120,7 @@ public class Device implements Serializable{
 		this.wMax34=new Integer(device.getWMax34());
 		this.wMin0=new Integer(device.getWMin0());
 		this.wMin1=new Integer(device.getWMin1());
+		this.controlPower=device.controlPower;
 		
 		params=new ArrayList<>();
 		params.addAll(device.getParams());	

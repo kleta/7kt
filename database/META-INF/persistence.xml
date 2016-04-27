@@ -14,5 +14,7 @@ version="2.1"
 		<class>ru.sevenkt.db.EventTypeConverter</class>
 		<class>ru.sevenkt.db.entities.Journal</class>
 		<class>ru.sevenkt.db.entities.Params</class>
+		<class>ru.sevenkt.db.entities.Error</class>
+		<class>ru.sevenkt.db.ErrorCodeConverter</class>
 	</persistence-unit>
 </persistence>

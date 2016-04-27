@@ -1,22 +1,5 @@
 package ru.sevenkt.archive.services
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.LocalDateTime
-
-import ru.sevenkt.archive.domain.Archive
-import ru.sevenkt.archive.domain.CurrentData;
-import ru.sevenkt.archive.domain.DayArchive
-import ru.sevenkt.archive.domain.DayRecord;
-import ru.sevenkt.archive.domain.HourArchive
-import ru.sevenkt.archive.domain.HourRecord
-import ru.sevenkt.archive.domain.Length
-import ru.sevenkt.archive.domain.MonthArchive;
-import ru.sevenkt.archive.domain.MonthRecord
-import ru.sevenkt.archive.domain.Settings;
-import ru.sevenkt.archive.services.impl.ArchiveServiceImpl
-import ru.sevenkt.archive.utils.DataUtils
-import spock.lang.Shared;
-import spock.lang.Specification
+import ru.sevenkt.domain.Archive;
 
 
 class ArchiveServiceTest extends  Specification{

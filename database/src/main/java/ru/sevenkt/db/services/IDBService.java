@@ -7,8 +7,8 @@ import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
+import ru.sevenkt.domain.Archive;
 import ru.sevenkt.domain.ArchiveTypes;
-import ru.sevenkt.domain.Parameters;
 
 public interface IDBService {
 	
@@ -16,7 +16,7 @@ public interface IDBService {
 	
 
 	
-	void saveDevice(Device device);
+	void saveDevice(Device device) throws Exception;
 	
 	void saveMeasuring(Measuring measuring);
 	
@@ -45,8 +45,19 @@ public interface IDBService {
 	List<Journal> findJournal(Device device);
 
 
+	void insertMonthArchive(Archive archive, Device device) throws Exception;
 
-	Double getSmoothedMultiplier(Measuring measuring);
+
+
+	void insertHourArchive(Archive archive, Device device) throws Exception;
+
+
+
+	void insertDayArchive(Archive archive, Device device) throws Exception;
+
+
+
+	void insertJournalSettings(Archive archive, Device device) throws Exception;
 
 	
 	

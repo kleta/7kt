@@ -1,7 +1,6 @@
 
 package ru.sevenkt.app.ui.handlers;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -12,8 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -29,7 +26,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -39,7 +35,6 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ru.sevenkt.app.ui.ArchiveColumnLabelProvider;
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.domain.ArchiveTypes;

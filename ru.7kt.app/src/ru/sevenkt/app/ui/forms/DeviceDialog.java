@@ -1,37 +1,35 @@
 package ru.sevenkt.app.ui.forms;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.widgets.Text;
-
-import ru.sevenkt.db.entities.Device;
-import ru.sevenkt.db.entities.Params;
-
-import org.eclipse.swt.layout.FormAttachment;
-
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.core.databinding.beans.PojoProperties;
-import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.wb.swt.ResourceManager;
+
+import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Params;
 
 public class DeviceDialog extends TitleAreaDialog {
 	private DataBindingContext m_bindingContext;
@@ -78,6 +76,7 @@ public class DeviceDialog extends TitleAreaDialog {
 	private Button button_7;
 	private Button button_1;
 	private Button button_24;
+	private Button button_23;
 
 	/**
 	 * Create the dialog.
@@ -104,7 +103,8 @@ public class DeviceDialog extends TitleAreaDialog {
 		area.setLayout(new GridLayout(1, false));
 		
 		CTabFolder tabFolder = new CTabFolder(area, SWT.BORDER);
-		GridData gd_tabFolder = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		GridData gd_tabFolder = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+		gd_tabFolder.heightHint = 280;
 		gd_tabFolder.widthHint = 491;
 		tabFolder.setLayoutData(gd_tabFolder);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
@@ -276,6 +276,14 @@ public class DeviceDialog extends TitleAreaDialog {
 		fd_text_9.left = new FormAttachment(label_8, 8);
 		fd_text_9.top = new FormAttachment(text_8, 6);
 		text_9.setLayoutData(fd_text_9);
+		
+		button_23 = new Button(container, SWT.CHECK);
+		FormData fd_button_23 = new FormData();
+		fd_button_23.top = new FormAttachment(text_9, 6);
+		fd_button_23.left = new FormAttachment(label, 0, SWT.LEFT);
+		button_23.setLayoutData(fd_button_23);
+		formToolkit.adapt(button_23, true, true);
+		button_23.setText("Контроль сетевого питания");
 		
 		CTabItem tbtmNewItem_1 = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setText("Параметры");
@@ -478,7 +486,7 @@ public class DeviceDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(539, 455);
+		return new Point(539, 475);
 	}
 
 	public Device getDevice() {
@@ -642,6 +650,10 @@ public class DeviceDialog extends TitleAreaDialog {
 		IObservableValue observeSelectionButton_7ObserveWidget = WidgetProperties.selection().observe(button_7);
 		IObservableValue t3Subt4ParamModelObserveValue = PojoProperties.value("t3Subt4").observe(paramModel);
 		bindingContext.bindValue(observeSelectionButton_7ObserveWidget, t3Subt4ParamModelObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_23ObserveWidget_1 = WidgetProperties.selection().observe(button_23);
+		IObservableValue controlPowerDeviceObserveValue = PojoProperties.value("controlPower").observe(device);
+		bindingContext.bindValue(observeSelectionButton_23ObserveWidget_1, controlPowerDeviceObserveValue, null, null);
 		//
 		return bindingContext;
 	}

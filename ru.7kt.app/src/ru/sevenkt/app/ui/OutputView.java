@@ -3,21 +3,12 @@ package ru.sevenkt.app.ui;
  
 
 
-import javax.inject.Inject;
-
-import java.util.List;
-
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Logger;
-import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.core.Appender;
-import ch.qos.logback.core.AppenderBase;
 
 public class OutputView{
 	private Text text;

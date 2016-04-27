@@ -10,9 +10,8 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -21,12 +20,9 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.TableViewerColumnSorter;
 
 import ru.sevenkt.db.entities.Device;
-
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.wb.swt.TableViewerColumnSorter;
 
 public class PropertiesView {
 

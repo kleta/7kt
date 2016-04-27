@@ -3,7 +3,6 @@ package ru.sevenkt.db;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.JournalEvents;
 
 @Converter(autoApply = true)

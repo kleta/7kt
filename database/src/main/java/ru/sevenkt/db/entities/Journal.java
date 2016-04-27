@@ -8,16 +8,14 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.eclipse.persistence.jpa.jpql.tools.model.IListChangeEvent.EventType;
+import javax.persistence.Table;
 
 import lombok.Data;
-import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.JournalEvents;
-import ru.sevenkt.domain.Parameters;
 
 @Entity
 @Data
+@Table(name="JournalSettings")
 public class Journal {
 
 	@EmbeddedId

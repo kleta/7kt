@@ -2,11 +2,7 @@ package ru.sevenkt.archive.services
 
 
 
-import java.time.LocalDate;
-
-import ru.sevenkt.archive.services.impl.ArchiveServiceImpl
-import spock.lang.Shared;
-import spock.lang.Specification;
+import ru.sevenkt.domain.Archive;;
 
 class HourArchiveTest extends Specification {
 

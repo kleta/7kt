@@ -22,6 +22,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
 import ru.sevenkt.db.repositories.DeviceRepo;
+import ru.sevenkt.db.repositories.ErrorRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
@@ -150,6 +151,11 @@ public class Config {
 	public  ParamsRepo paramsRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(ParamsRepo.class);
+	}
+	@Bean
+	public  ErrorRepo errorRepo(EntityManager em){
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(ErrorRepo.class);
 	}
 	
 	@Bean

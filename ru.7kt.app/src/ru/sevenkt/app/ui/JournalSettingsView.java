@@ -1,28 +1,27 @@
 
 package ru.sevenkt.app.ui;
 
-import javax.inject.Inject;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TableColumn;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import ru.sevenkt.app.ui.handlers.AppEventConstants;
 import ru.sevenkt.db.entities.Journal;
-
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.e4.core.services.events.IEventBroker;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 
 public class JournalSettingsView implements EventHandler {
 	private Table table;
