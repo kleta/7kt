@@ -29,10 +29,12 @@ import org.osgi.service.event.EventHandler;
 
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
+import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.ParametersConst;
 
@@ -93,10 +95,11 @@ public class OpenArchiveHandler implements EventHandler {
 			break;
 		}
 		List<Measuring> measurings = dbService.findArchive(device, startDate, endDate, archiveType);
-		// if(archiveType.equals(ArchiveTypes.HOUR))
-		// smoothedHourMeasuring(measurings);
-		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
+		List<Error> errors = dbService.findErrors(device, startDate, endDate, archiveType);
+		Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
+		Map<LocalDateTime, List<Error>> groupByDateTimeErrors = errors.stream()
+				.collect(Collectors.groupingBy(Error::getDateTime));
 		List<Parameters> parameters = new ArrayList<>();
 		List<Params> params = device.getParams();
 		for (Params param : params) {
@@ -106,10 +109,11 @@ public class OpenArchiveHandler implements EventHandler {
 		do {
 			TableRow tr = new TableRow();
 			tr.setDateTime(startDateTime);
-			List<Measuring> lm = groupByDateTime.get(startDateTime);
+			List<Measuring> lm = groupByDateTimeMeasurings.get(startDateTime);
+			List<Error> le = groupByDateTimeErrors.get(startDateTime);
 			switch (archiveType) {
 			case MONTH:
-				List<Measuring> lmPrevMonth = groupByDateTime.get(startDateTime.minusMonths(1));
+				List<Measuring> lmPrevMonth = groupByDateTimeMeasurings.get(startDateTime.minusMonths(1));
 				if (lmPrevMonth != null && lm != null) {
 					for (int i = 0; i < lmPrevMonth.size(); i++) {
 						Measuring measuring = lm.get(i);
@@ -136,10 +140,11 @@ public class OpenArchiveHandler implements EventHandler {
 					if (m1 != null && m2 != null)
 						tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
 				}
+				// addMonthErrorsColumn()
 				startDateTime = startDateTime.plusMonths(1);
 				break;
 			case DAY:
-				List<Measuring> lmPrevDay = groupByDateTime.get(startDateTime.minusDays(1));
+				List<Measuring> lmPrevDay = groupByDateTimeMeasurings.get(startDateTime.minusDays(1));
 				if (lmPrevDay != null && lm != null) {
 					for (int i = 0; i < lm.size(); i++) {
 
@@ -207,6 +212,7 @@ public class OpenArchiveHandler implements EventHandler {
 				if (t1 != null && t2 != null)
 					tr.getValues().put(Parameters.T3_SUB_T4, ((Float) t1) - ((Float) t2));
 			}
+			addErrorColumns(tr, le);
 			listTableRow.add(tr);
 		} while (startDateTime.isBefore(endDateTime));
 		result.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
@@ -215,7 +221,71 @@ public class OpenArchiveHandler implements EventHandler {
 		broker.send(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, result);
 	}
 
-	
+	private void addErrorColumns(TableRow tr, List<Error> le) {
+		LocalDateTime dateTime = tr.getDateTime();
+		if (le != null && !le.isEmpty()) {
+			Device device = le.get(0).getDevice();
+			List<Params> params = device.getParams();
+			for (Error error : le) {
+				ErrorCodes code = error.getErrorCode();
+				Object p = null;
+				switch (code) {
+				case E1:
+					p = tr.getValues().get(Parameters.ERROR_CODE1);
+					if (p == null)
+						tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+					else
+						tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+					break;
+				case E2:
+					p = tr.getValues().get(Parameters.ERROR_CODE2);
+					if (p == null)
+						tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
+					else
+						tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
+					break;
+				case T1:
+					p = tr.getValues().get(Parameters.ERROR_CODE1);
+					if (p == null)
+						tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+					else
+						tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+					break;
+				case T2:
+					p = tr.getValues().get(Parameters.ERROR_CODE2);
+					if (p == null)
+						tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
+					else
+						tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
+					break;
+				case U:
+					if (device.isControlPower()) {
+						p = tr.getValues().get(Parameters.ERROR_CODE1);
+						if (p == null)
+							tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+						else
+							tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+					}
+					break;
+				case V1:
+					p = tr.getValues().get(Parameters.ERROR_CODE1);
+					if (p == null)
+						tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+					else
+						tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+					break;
+				case V2:
+					p = tr.getValues().get(Parameters.ERROR_CODE2);
+					if (p == null)
+						tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
+					else
+						tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
+					break;
+				}
+			}
+
+		}
+	}
 
 	@CanExecute
 	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)

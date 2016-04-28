@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -210,7 +212,6 @@ public class DBService implements IDBService {
 				tx.commit();
 			} catch (Exception e) {
 				e.printStackTrace();
-				tx.rollback();
 			}
 		}
 
@@ -393,6 +394,25 @@ public class DBService implements IDBService {
 			smoothedHourMeasuring(measurings, dayConsumption, sumDay);
 			measurings.forEach(m -> m.setDevice(device));
 			saveMeasurings(measurings);
+			if(!errors.isEmpty()){
+				Map<ErrorCodes, List<Error>> groupByErrorCode = errors.stream().collect(Collectors.groupingBy(Error::getErrorCode));
+				Set<ErrorCodes> keySet = groupByErrorCode.keySet();
+				for (ErrorCodes errorCodes : keySet) {
+					Error error = new Error();
+					error.setArchiveType(ArchiveTypes.DAY);
+					error.setDateTime(LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusDays(1));
+					error.setErrorCode(errorCodes);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+					
+					error = new Error();
+					error.setArchiveType(ArchiveTypes.MONTH);
+					error.setDateTime(LocalDateTime.of(localDate.withDayOfMonth(1), LocalTime.of(0, 0)).plusMonths(1));
+					error.setErrorCode(errorCodes);
+					error.setTimestamp(LocalDateTime.now());
+					errors.add(error);
+				}
+			}
 			errors.forEach(e->e.setDevice(device));
 			saveErrors(errors);
 			startArchiveDate = startArchiveDate.plusDays(1);
@@ -1008,6 +1028,12 @@ public class DBService implements IDBService {
 			measuring.setValue(bdValue.doubleValue());
 		}
 
+	}
+
+	@Override
+	public List<Error> findErrors(Device device, LocalDate startDate, LocalDate endDate, ArchiveTypes archiveType) {
+		return er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0, 0),
+				endDate.atTime(0, 0));
 	}
 
 }

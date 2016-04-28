@@ -22,4 +22,9 @@ public enum ErrorCodes {
 	public Integer getId() {
 		return id;
 	}
+
+	public String getCode() {
+		return code;
+	}
+	
 }

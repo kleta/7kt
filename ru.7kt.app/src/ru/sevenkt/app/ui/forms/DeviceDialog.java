@@ -80,18 +80,20 @@ public class DeviceDialog extends TitleAreaDialog {
 
 	/**
 	 * Create the dialog.
+	 * 
 	 * @param parentShell
-	 * @param dev 
+	 * @param dev
 	 */
 	public DeviceDialog(Shell parentShell, Device dev, ParametersModel m) {
 		super(parentShell);
 		setHelpAvailable(false);
-		device=dev;
-		paramModel=m;
+		device = dev;
+		paramModel = m;
 	}
 
 	/**
 	 * Create contents of the dialog.
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -101,105 +103,106 @@ public class DeviceDialog extends TitleAreaDialog {
 		setTitle("Устройство");
 		Composite area = (Composite) super.createDialogArea(parent);
 		area.setLayout(new GridLayout(1, false));
-		
+
 		CTabFolder tabFolder = new CTabFolder(area, SWT.BORDER);
 		GridData gd_tabFolder = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
 		gd_tabFolder.heightHint = 280;
 		gd_tabFolder.widthHint = 491;
 		tabFolder.setLayoutData(gd_tabFolder);
-		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
-		
+		tabFolder.setSelectionBackground(
+				Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
+
 		CTabItem tbtmNewItem = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem.setText("Основные");
 		Composite container = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem.setControl(container);
 		container.setLayout(new FormLayout());
-		
+
 		Label label = new Label(container, SWT.NONE);
 		label.setText("Наименование:");
 		FormData fd_label = new FormData();
 		fd_label.top = new FormAttachment(0, 16);
 		fd_label.left = new FormAttachment(0, 10);
 		label.setLayoutData(fd_label);
-		
+
 		text = new Text(container, SWT.BORDER);
 		FormData fd_text = new FormData();
 		fd_text.left = new FormAttachment(label, 85);
 		fd_text.right = new FormAttachment(100, -10);
 		fd_text.top = new FormAttachment(label, -3, SWT.TOP);
 		text.setLayoutData(fd_text);
-		
+
 		Label label_1 = new Label(container, SWT.NONE);
 		label_1.setText("Серийный номер:");
 		FormData fd_label_1 = new FormData();
 		fd_label_1.top = new FormAttachment(label, 12);
 		fd_label_1.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_1.setLayoutData(fd_label_1);
-		
+
 		Label label_2 = new Label(container, SWT.NONE);
 		label_2.setText("Версия устройства:");
 		FormData fd_label_2 = new FormData();
 		fd_label_2.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_2.setLayoutData(fd_label_2);
-		
+
 		Label label_4 = new Label(container, SWT.NONE);
 		label_4.setText("Температура холод. воды:");
 		FormData fd_label_4 = new FormData();
 		fd_label_4.top = new FormAttachment(label_2, 12);
 		fd_label_4.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_4.setLayoutData(fd_label_4);
-		
+
 		Label label_5 = new Label(container, SWT.NONE);
 		label_5.setText("Вес импульса расходомера 1:");
 		FormData fd_label_5 = new FormData();
 		fd_label_5.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_5.setLayoutData(fd_label_5);
-		
+
 		Label label_6 = new Label(container, SWT.NONE);
 		label_6.setText("Вес импульса расходомера 2:");
 		FormData fd_label_6 = new FormData();
 		fd_label_6.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_6.setLayoutData(fd_label_6);
-		
+
 		Label label_7 = new Label(container, SWT.NONE);
 		label_7.setText("Вес импульса расходомера 3:");
 		FormData fd_label_7 = new FormData();
 		fd_label_7.right = new FormAttachment(label_5, 0, SWT.RIGHT);
 		label_7.setLayoutData(fd_label_7);
-		
+
 		Label label_8 = new Label(container, SWT.NONE);
 		label_8.setText("Вес импульса расходомера 4:");
 		FormData fd_label_8 = new FormData();
 		fd_label_8.top = new FormAttachment(label_7, 12);
 		fd_label_8.right = new FormAttachment(label_5, 0, SWT.RIGHT);
 		label_8.setLayoutData(fd_label_8);
-		
+
 		text_1 = new Text(container, SWT.BORDER);
 		FormData fd_text_1 = new FormData();
 		fd_text_1.right = new FormAttachment(text, 0, SWT.RIGHT);
 		fd_text_1.top = new FormAttachment(text, 6);
 		fd_text_1.left = new FormAttachment(label_1, 71);
 		text_1.setLayoutData(fd_text_1);
-		
+
 		text_2 = new Text(container, SWT.BORDER);
 		FormData fd_text_2 = new FormData();
 		fd_text_2.right = new FormAttachment(text, 0, SWT.RIGHT);
 		fd_text_2.top = new FormAttachment(text_1, 6);
 		text_2.setLayoutData(fd_text_2);
-		
+
 		text_3 = new Text(container, SWT.BORDER);
 		FormData fd_text_3 = new FormData();
 		fd_text_3.right = new FormAttachment(text, 0, SWT.RIGHT);
 		fd_text_3.top = new FormAttachment(text_2, 6);
 		fd_text_3.left = new FormAttachment(label_2, 65);
 		text_3.setLayoutData(fd_text_3);
-		
+
 		text_5 = new Text(container, SWT.BORDER);
 		FormData fd_text_5 = new FormData();
 		fd_text_5.left = new FormAttachment(label_4, 27);
 		fd_text_5.top = new FormAttachment(text_3, 6);
 		text_5.setLayoutData(fd_text_5);
-		
+
 		text_6 = new Text(container, SWT.BORDER);
 		fd_text_5.right = new FormAttachment(text_6, 0, SWT.RIGHT);
 		fd_label_5.top = new FormAttachment(text_6, 3, SWT.TOP);
@@ -208,7 +211,7 @@ public class DeviceDialog extends TitleAreaDialog {
 		fd_text_6.right = new FormAttachment(100, -51);
 		fd_text_6.left = new FormAttachment(label_5, 8);
 		text_6.setLayoutData(fd_text_6);
-		
+
 		text_7 = new Text(container, SWT.BORDER);
 		fd_label_6.top = new FormAttachment(text_7, 3, SWT.TOP);
 		FormData fd_text_7 = new FormData();
@@ -216,14 +219,14 @@ public class DeviceDialog extends TitleAreaDialog {
 		fd_text_7.right = new FormAttachment(100, -51);
 		fd_text_7.top = new FormAttachment(text_6, 6);
 		text_7.setLayoutData(fd_text_7);
-		
+
 		text_8 = new Text(container, SWT.BORDER);
 		fd_label_7.top = new FormAttachment(text_8, 3, SWT.TOP);
 		FormData fd_text_8 = new FormData();
 		fd_text_8.left = new FormAttachment(label_7, 8);
 		fd_text_8.top = new FormAttachment(text_7, 6);
 		text_8.setLayoutData(fd_text_8);
-		
+
 		Label label_10 = new Label(container, SWT.NONE);
 		label_10.setText(" °C");
 		FormData fd_label_10 = new FormData();
@@ -231,14 +234,14 @@ public class DeviceDialog extends TitleAreaDialog {
 		fd_label_10.right = new FormAttachment(text, -19, SWT.RIGHT);
 		fd_label_10.left = new FormAttachment(text_5, 6);
 		label_10.setLayoutData(fd_label_10);
-		
+
 		Label label_11 = new Label(container, SWT.NONE);
 		label_11.setText("л/имп");
 		FormData fd_label_11 = new FormData();
 		fd_label_11.top = new FormAttachment(label_8, 0, SWT.TOP);
 		fd_label_11.right = new FormAttachment(text, 0, SWT.RIGHT);
 		label_11.setLayoutData(fd_label_11);
-		
+
 		Label label_12 = new Label(container, SWT.NONE);
 		fd_text_8.right = new FormAttachment(100, -51);
 		label_12.setText("л/имп");
@@ -246,21 +249,21 @@ public class DeviceDialog extends TitleAreaDialog {
 		fd_label_12.top = new FormAttachment(label_7, 0, SWT.TOP);
 		fd_label_12.left = new FormAttachment(text_8, 6);
 		label_12.setLayoutData(fd_label_12);
-		
+
 		Label label_13 = new Label(container, SWT.NONE);
 		label_13.setText("л/имп");
 		FormData fd_label_13 = new FormData();
 		fd_label_13.top = new FormAttachment(label_6, 0, SWT.TOP);
 		fd_label_13.left = new FormAttachment(text_7, 6);
 		label_13.setLayoutData(fd_label_13);
-		
+
 		Label label_14 = new Label(container, SWT.NONE);
 		label_14.setText("л/имп");
 		FormData fd_label_14 = new FormData();
 		fd_label_14.top = new FormAttachment(label_5, 0, SWT.TOP);
 		fd_label_14.left = new FormAttachment(text_6, 6);
 		label_14.setLayoutData(fd_label_14);
-		
+
 		Label label_15 = new Label(container, SWT.NONE);
 		fd_label_2.top = new FormAttachment(label_15, 12);
 		fd_text_2.left = new FormAttachment(label_15, 134);
@@ -269,14 +272,14 @@ public class DeviceDialog extends TitleAreaDialog {
 		fd_label_15.top = new FormAttachment(label_1, 12);
 		fd_label_15.left = new FormAttachment(label, 0, SWT.LEFT);
 		label_15.setLayoutData(fd_label_15);
-		
+
 		text_9 = new Text(container, SWT.BORDER);
 		FormData fd_text_9 = new FormData();
 		fd_text_9.right = new FormAttachment(text_6, 0, SWT.RIGHT);
 		fd_text_9.left = new FormAttachment(label_8, 8);
 		fd_text_9.top = new FormAttachment(text_8, 6);
 		text_9.setLayoutData(fd_text_9);
-		
+
 		button_23 = new Button(container, SWT.CHECK);
 		FormData fd_button_23 = new FormData();
 		fd_button_23.top = new FormAttachment(text_9, 6);
@@ -284,185 +287,185 @@ public class DeviceDialog extends TitleAreaDialog {
 		button_23.setLayoutData(fd_button_23);
 		formToolkit.adapt(button_23, true, true);
 		button_23.setText("Контроль сетевого питания");
-		
+
 		CTabItem tbtmNewItem_1 = new CTabItem(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setText("Параметры");
-		
+
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmNewItem_1.setControl(composite);
 		formToolkit.paintBordersFor(composite);
 		composite.setLayout(new GridLayout(3, false));
-		
+
 		Group group_1 = new Group(composite, SWT.NONE);
 		group_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		group_1.setText("Температура");
 		formToolkit.adapt(group_1);
 		formToolkit.paintBordersFor(group_1);
 		group_1.setLayout(new GridLayout(2, false));
-		
+
 		button_2 = new Button(group_1, SWT.CHECK);
 		button_2.setText("T1");
 		button_2.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_2, true, true);
-		
+
 		button_3 = new Button(group_1, SWT.CHECK);
 		button_3.setText("T2");
 		button_3.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_3, true, true);
-		
+
 		button_5 = new Button(group_1, SWT.CHECK);
 		button_5.setText("T3");
 		button_5.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_5, true, true);
-		
+
 		button_6 = new Button(group_1, SWT.CHECK);
 		button_6.setText("T4");
 		button_6.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_6, true, true);
-		
+
 		button_4 = new Button(group_1, SWT.CHECK);
 		button_4.setText("T1-T2");
 		button_4.setBounds(0, 0, 52, 16);
 		formToolkit.adapt(button_4, true, true);
-		
+
 		button_7 = new Button(group_1, SWT.CHECK);
 		button_7.setText("T3-T4");
 		button_7.setBounds(0, 0, 52, 16);
 		formToolkit.adapt(button_7, true, true);
-		
+
 		Group group_2 = new Group(composite, SWT.NONE);
 		group_2.setText("Объем");
 		formToolkit.adapt(group_2);
 		formToolkit.paintBordersFor(group_2);
 		group_2.setLayout(new GridLayout(4, false));
-		
+
 		button_8 = new Button(group_2, SWT.CHECK);
 		button_8.setText("V1");
 		button_8.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_8, true, true);
-		
+
 		button_9 = new Button(group_2, SWT.CHECK);
 		button_9.setText("V2");
 		button_9.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_9, true, true);
-		
+
 		button_11 = new Button(group_2, SWT.CHECK);
 		button_11.setText("V3");
 		button_11.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_11, true, true);
-		
+
 		button_12 = new Button(group_2, SWT.CHECK);
 		button_12.setText("V4");
 		button_12.setBounds(0, 0, 34, 16);
 		formToolkit.adapt(button_12, true, true);
-		
+
 		btnV = new Button(group_2, SWT.CHECK);
 		btnV.setText("V5");
 		formToolkit.adapt(btnV, true, true);
-		
+
 		btnV_1 = new Button(group_2, SWT.CHECK);
 		btnV_1.setText("V6");
 		formToolkit.adapt(btnV_1, true, true);
-		
+
 		btnV_2 = new Button(group_2, SWT.CHECK);
 		btnV_2.setText("V7");
 		formToolkit.adapt(btnV_2, true, true);
-		
+
 		btnV_3 = new Button(group_2, SWT.CHECK);
 		btnV_3.setText("V8");
 		formToolkit.adapt(btnV_3, true, true);
-		
+
 		button_10 = new Button(group_2, SWT.CHECK);
 		button_10.setText("V1-V2");
 		button_10.setBounds(0, 0, 52, 16);
 		formToolkit.adapt(button_10, true, true);
-		
+
 		button_13 = new Button(group_2, SWT.CHECK);
 		button_13.setText("V3-V4");
 		button_13.setBounds(0, 0, 52, 16);
 		formToolkit.adapt(button_13, true, true);
 		new Label(group_2, SWT.NONE);
 		new Label(group_2, SWT.NONE);
-		
+
 		Group group_3 = new Group(composite, SWT.NONE);
 		group_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		group_3.setText("Масса");
 		formToolkit.adapt(group_3);
 		formToolkit.paintBordersFor(group_3);
 		group_3.setLayout(new GridLayout(2, false));
-		
+
 		button_18 = new Button(group_3, SWT.CHECK);
 		button_18.setText("M1");
 		formToolkit.adapt(button_18, true, true);
-		
+
 		button_19 = new Button(group_3, SWT.CHECK);
 		button_19.setText("M2");
 		formToolkit.adapt(button_19, true, true);
-		
+
 		button_20 = new Button(group_3, SWT.CHECK);
 		button_20.setText("M3");
 		formToolkit.adapt(button_20, true, true);
-		
+
 		button_21 = new Button(group_3, SWT.CHECK);
 		button_21.setText("M4");
 		formToolkit.adapt(button_21, true, true);
-		
+
 		button_22 = new Button(group_3, SWT.CHECK);
 		button_22.setText("M1-M2");
 		formToolkit.adapt(button_22, true, true);
-		
+
 		btnMm = new Button(group_3, SWT.CHECK);
 		btnMm.setText("M3-M4");
 		formToolkit.adapt(btnMm, true, true);
-		
+
 		Group group_4 = new Group(composite, SWT.NONE);
 		group_4.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		group_4.setText("Давление");
 		formToolkit.adapt(group_4);
 		formToolkit.paintBordersFor(group_4);
 		group_4.setLayout(new GridLayout(2, false));
-		
+
 		button_14 = new Button(group_4, SWT.CHECK);
 		button_14.setText("P1");
 		formToolkit.adapt(button_14, true, true);
-		
+
 		btnP = new Button(group_4, SWT.CHECK);
 		btnP.setText("P2");
 		formToolkit.adapt(btnP, true, true);
-		
+
 		button_16 = new Button(group_4, SWT.CHECK);
 		button_16.setText("P3");
 		formToolkit.adapt(button_16, true, true);
-		
+
 		button_17 = new Button(group_4, SWT.CHECK);
 		button_17.setText("P4");
 		formToolkit.adapt(button_17, true, true);
-		
+
 		Group group = new Group(composite, SWT.NONE);
 		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		group.setText("Энергия");
 		formToolkit.adapt(group);
 		formToolkit.paintBordersFor(group);
 		group.setLayout(new GridLayout(1, false));
-		
+
 		btnE = new Button(group, SWT.CHECK);
 		btnE.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		btnE.setText("E1");
 		formToolkit.adapt(btnE, true, true);
-		
+
 		button = new Button(group, SWT.CHECK);
 		button.setText("E2");
 		formToolkit.adapt(button, true, true);
 		new Label(composite, SWT.NONE);
-		
+
 		button_24 = new Button(composite, SWT.CHECK);
 		button_24.setText("Время отсутствия счёта");
 		formToolkit.adapt(button_24, true, true);
-		
+
 		button_15 = new Button(composite, SWT.CHECK);
 		button_15.setText("Время нормальной работы");
 		formToolkit.adapt(button_15, true, true);
-		
+
 		button_1 = new Button(composite, SWT.CHECK);
 		button_1.setText("Код ошибки");
 		formToolkit.adapt(button_1, true, true);
@@ -472,6 +475,7 @@ public class DeviceDialog extends TitleAreaDialog {
 
 	/**
 	 * Create contents of the button bar.
+	 * 
 	 * @param parent
 	 */
 	@Override
@@ -494,7 +498,10 @@ public class DeviceDialog extends TitleAreaDialog {
 	}
 
 	public List<Params> getParams() throws IllegalArgumentException, IllegalAccessException {
-		return paramModel.getParams();
+		if (device.getFormulaNum() + "".length() == 1)
+			return paramModel.getParams(1);
+		else
+			return paramModel.getParams(2);
 	}
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
@@ -654,6 +661,18 @@ public class DeviceDialog extends TitleAreaDialog {
 		IObservableValue observeSelectionButton_23ObserveWidget_1 = WidgetProperties.selection().observe(button_23);
 		IObservableValue controlPowerDeviceObserveValue = PojoProperties.value("controlPower").observe(device);
 		bindingContext.bindValue(observeSelectionButton_23ObserveWidget_1, controlPowerDeviceObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_15ObserveWidget_1 = WidgetProperties.selection().observe(button_15);
+		IObservableValue noErrorTimeParamModelObserveValue = PojoProperties.value("noErrorTime").observe(paramModel);
+		bindingContext.bindValue(observeSelectionButton_15ObserveWidget_1, noErrorTimeParamModelObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_1ObserveWidget = WidgetProperties.selection().observe(button_1);
+		IObservableValue errorCodeParamModelObserveValue = PojoProperties.value("errorCode").observe(paramModel);
+		bindingContext.bindValue(observeSelectionButton_1ObserveWidget, errorCodeParamModelObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_24ObserveWidget = WidgetProperties.selection().observe(button_24);
+		IObservableValue errorTimeParamModelObserveValue = PojoProperties.value("errorTime").observe(paramModel);
+		bindingContext.bindValue(observeSelectionButton_24ObserveWidget, errorTimeParamModelObserveValue, null, null);
 		//
 		return bindingContext;
 	}

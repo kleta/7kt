@@ -37,8 +37,8 @@ public class ParametersModel {
 	private boolean p3;
 	private boolean p4;
 	private boolean errorCode;
-	private boolean workTime;
-	private boolean noWorkTime;
+	private boolean noErrorTime;
+	private boolean errorTime;
 
 	public ParametersModel(List<Params> params) {
 		for (Params param : params) {
@@ -78,10 +78,10 @@ public class ParametersModel {
 				e2 = true;
 				break;
 			case ERROR_TIME1:
-				noWorkTime = true;
+				errorTime = true;
 				break;
 			case ERROR_TIME2:
-				noWorkTime = true;
+				errorTime = true;
 				break;
 			case M1:
 				m1 = true;
@@ -122,8 +122,11 @@ public class ParametersModel {
 			case V4:
 				v4 = true;
 				break;
-			case WORK:
-				workTime = true;
+			case NO_ERROR_TIME1:
+				noErrorTime = true;
+				break;
+			case NO_ERROR_TIME2:
+				noErrorTime = true;
 				break;
 			case V8:
 				v8 = true;
@@ -375,23 +378,23 @@ public class ParametersModel {
 		this.errorCode = errorCode;
 	}
 
-	public boolean isWorkTime() {
-		return workTime;
+	public boolean isNoErrorTime() {
+		return noErrorTime;
 	}
 
-	public void setWorkTime(boolean workTime) {
-		this.workTime = workTime;
+	public void setNoErrorTime(boolean workTime) {
+		this.noErrorTime = workTime;
 	}
 
-	public boolean isNoWorkTime() {
-		return noWorkTime;
+	public boolean isErrorTime() {
+		return errorTime;
 	}
 
-	public void setNoWorkTime(boolean noWorkTime) {
-		this.noWorkTime = noWorkTime;
+	public void setErrorTime(boolean noWorkTime) {
+		this.errorTime = noWorkTime;
 	}
 
-	public List<Params> getParams() throws IllegalArgumentException, IllegalAccessException {
+	public List<Params> getParams(int channels) throws IllegalArgumentException, IllegalAccessException {
 		List<Params> params = new ArrayList<>();
 		Field[] filds = getClass().getDeclaredFields();
 		for (Field field : filds) {
@@ -402,8 +405,12 @@ public class ParametersModel {
 				if (val)
 					switch (fieldName) {
 					case "errorCode":
-						params.add(new Params(Parameters.ERROR_CODE1));
-						params.add(new Params(Parameters.ERROR_CODE2));
+						if (channels == 1)
+							params.add(new Params(Parameters.ERROR_CODE1));
+						else {
+							params.add(new Params(Parameters.ERROR_CODE1));
+							params.add(new Params(Parameters.ERROR_CODE2));
+						}
 						break;
 					case "m1Subm2":
 
@@ -440,11 +447,6 @@ public class ParametersModel {
 					case "e2":
 
 						params.add(new Params(Parameters.E2));
-						break;
-					case "noWorkTime":
-
-						params.add(new Params(Parameters.ERROR_TIME1));
-						params.add(new Params(Parameters.ERROR_TIME2));
 						break;
 					case "m1":
 
@@ -498,9 +500,21 @@ public class ParametersModel {
 
 						params.add(new Params(Parameters.V4));
 						break;
-					case "workTime":
-
-						params.add(new Params(Parameters.WORK));
+					case "errorTime":
+						if (channels == 1)
+							params.add(new Params(Parameters.ERROR_TIME1));
+						else{
+							params.add(new Params(Parameters.ERROR_TIME1));
+							params.add(new Params(Parameters.ERROR_TIME2));
+						}
+						break;
+					case "noErrorTime":
+						if (channels == 1)
+							params.add(new Params(Parameters.NO_ERROR_TIME1));
+						else{
+							params.add(new Params(Parameters.NO_ERROR_TIME1));
+							params.add(new Params(Parameters.NO_ERROR_TIME2));
+						}
 						break;
 					case "v8":
 

@@ -11,7 +11,7 @@ public enum Parameters {
 	M2(8, "М2", ParametersConst.WEIGHT, "т", 16),
 	M3(9, "М3", ParametersConst.WEIGHT, "т", 18),
 	M4(10, "М4", ParametersConst.WEIGHT, "т", 19),
-	WORK(11, "ВНР", ParametersConst.TIME, "час", 28), 
+	NO_ERROR_TIME1(11, "ВНР1", ParametersConst.TIME, "час", 29), 
 	AVG_TEMP1(12, "T1", ParametersConst.TEMP, "°C", 3),
 	AVG_TEMP2(13, "T2", ParametersConst.TEMP, "°C", 4),
 	AVG_TEMP3(14, "T3", ParametersConst.TEMP, "°C", 6),
@@ -25,13 +25,15 @@ public enum Parameters {
 	T1_SUB_T2(22, "T1-T2", ParametersConst.CALCULATED, "°C", 5),
 	T3_SUB_T4(23, "T3-T4", ParametersConst.CALCULATED, "°C", 8),
 	ERROR_CODE1(24, "ОШ1",ParametersConst.ERROR,"код", 27),
-	ERROR_CODE2(30, "ОШ2",ParametersConst.ERROR,"код", 28),
-	ERROR_TIME1(29, "ВОС1",ParametersConst.ERROR,"час", 29),
-	ERROR_TIME2(31, "ВОС1",ParametersConst.ERROR,"час", 30),
 	V5(25,"V1", ParametersConst.VOLUME, "м3", 23),
 	V6(26,"V2", ParametersConst.VOLUME, "м3", 24),
 	V7(27,"V3", ParametersConst.VOLUME, "м3", 25),
-	V8(28,"V4", ParametersConst.VOLUME, "м3", 26);
+	V8(28,"V4", ParametersConst.VOLUME, "м3", 26),
+	ERROR_TIME1(29, "ВОС1",ParametersConst.ERROR,"час", 30),
+	ERROR_CODE2(30, "ОШ2",ParametersConst.ERROR,"код", 28),
+	NO_ERROR_TIME2(31, "ВНР1", ParametersConst.TIME, "час", 31), 
+	ERROR_TIME2(32, "ВОС2",ParametersConst.ERROR,"час", 32),
+	WORK(33,"Время работы",ParametersConst.TIME, "час", 33);
 	
 	
 
