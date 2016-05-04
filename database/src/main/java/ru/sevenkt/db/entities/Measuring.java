@@ -53,7 +53,7 @@ public class Measuring {
 		id.setDateTime(atTime);
 	}
 
-	public void setParametr(Parameters value2) {
+	public void setParameter(Parameters value2) {
 		if (id == null)
 			id = new MeasuringPK();
 		parameter=value2;

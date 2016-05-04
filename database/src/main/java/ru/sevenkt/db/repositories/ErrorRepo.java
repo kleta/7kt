@@ -15,5 +15,7 @@ public interface ErrorRepo extends CrudRepository<Error, ErrorPK> {
 	List<Error> findByDeviceAndArchiveTypeAndDateTimeBetween(Device device, ArchiveTypes archiveType,
 			LocalDateTime atTime, LocalDateTime atTime2);
 
+	void deleteByDeviceAndDateTimeBetween(Device device, LocalDateTime min, LocalDateTime plusMonths);
+
 
 }

@@ -113,76 +113,16 @@ public class OpenArchiveHandler implements EventHandler {
 			List<Error> le = groupByDateTimeErrors.get(startDateTime);
 			switch (archiveType) {
 			case MONTH:
-				List<Measuring> lmPrevMonth = groupByDateTimeMeasurings.get(startDateTime.minusMonths(1));
-				if (lmPrevMonth != null && lm != null) {
-					for (int i = 0; i < lmPrevMonth.size(); i++) {
-						Measuring measuring = lm.get(i);
-						String category = measuring.getParameter().getCategory();
-						if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
-							Measuring prevMonthMeasuring = lmPrevMonth.get(i);
-							if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
-									&& prevMonthMeasuring.getValue() <= measuring.getValue())
-								tr.getValues().put(measuring.getParameter(),
-										measuring.getValue() - prevMonthMeasuring.getValue());
-						} else
-							tr.getValues().put(measuring.getParameter(), measuring.getValue());
-					}
-				}
-				if (parameters.contains(Parameters.M1_SUB_M2)) {
-					Object m1 = tr.getValues().get(Parameters.M1);
-					Object m2 = tr.getValues().get(Parameters.M2);
-					if (m1 != null && m2 != null)
-						tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
-				}
-				if (parameters.contains(Parameters.M3_SUB_M4)) {
-					Object m1 = tr.getValues().get(Parameters.M3);
-					Object m2 = tr.getValues().get(Parameters.M4);
-					if (m1 != null && m2 != null)
-						tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
-				}
+				addMonthColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
 				// addMonthErrorsColumn()
 				startDateTime = startDateTime.plusMonths(1);
 				break;
 			case DAY:
-				List<Measuring> lmPrevDay = groupByDateTimeMeasurings.get(startDateTime.minusDays(1));
-				if (lmPrevDay != null && lm != null) {
-					for (int i = 0; i < lm.size(); i++) {
-
-						Measuring measuring = lm.get(i);
-
-						LocalDate localDate = measuring.getDateTime().toLocalDate();
-						if (localDate.equals(LocalDate.of(2016, 2, 3)))
-							System.out.println();
-						String category = measuring.getParameter().getCategory();
-						if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
-							Measuring prevDayMeasuring = lmPrevDay.get(i);
-							if (measuring.getParameter().equals(prevDayMeasuring.getParameter())
-									&& prevDayMeasuring.getValue() <= measuring.getValue())
-								tr.getValues().put(measuring.getParameter(),
-										measuring.getValue() - prevDayMeasuring.getValue());
-						} else
-							tr.getValues().put(measuring.getParameter(), measuring.getValue());
-					}
-				}
-				if (parameters.contains(Parameters.M1_SUB_M2)) {
-					Object m1 = tr.getValues().get(Parameters.M1);
-					Object m2 = tr.getValues().get(Parameters.M2);
-					if (m1 != null && m2 != null)
-						tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
-				}
-				if (parameters.contains(Parameters.M3_SUB_M4)) {
-					Object m1 = tr.getValues().get(Parameters.M3);
-					Object m2 = tr.getValues().get(Parameters.M4);
-					if (m1 != null && m2 != null)
-						tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
-				}
+				addDayColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
 				startDateTime = startDateTime.plusDays(1);
 				break;
 			case HOUR:
-				if (lm != null)
-					for (Measuring measuring : lm) {
-						tr.getValues().put(measuring.getParameter(), measuring.getValue());
-					}
+				addHourColumns(parameters, tr, lm);
 				startDateTime = startDateTime.plusHours(1);
 				break;
 			default:
@@ -219,6 +159,82 @@ public class OpenArchiveHandler implements EventHandler {
 		result.put(AppEventConstants.TABLE_ROWS, listTableRow);
 		result.put(AppEventConstants.DEVICE, device);
 		broker.send(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, result);
+	}
+
+	private void addHourColumns(List<Parameters> parameters, TableRow tr, List<Measuring> lm) {
+		if (lm != null)
+			for (Measuring measuring : lm) {
+				if (!parameters.equals(Parameters.ERROR_BYTE1) && !parameters.equals(Parameters.ERROR_BYTE2))
+					tr.getValues().put(measuring.getParameter(), measuring.getValue());
+			}
+	}
+
+	private void addDayColumns(LocalDateTime startDateTime,
+			Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings, List<Parameters> parameters, TableRow tr,
+			List<Measuring> lm) {
+		List<Measuring> lmPrevDay = groupByDateTimeMeasurings.get(startDateTime.minusDays(1));
+		if (lmPrevDay != null && lm != null) {
+			for (int i = 0; i < lm.size(); i++) {
+
+				Measuring measuring = lm.get(i);
+				Parameters parameter = measuring.getParameter();
+				String category = parameter.getCategory();
+				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
+					Measuring prevDayMeasuring = lmPrevDay.get(i);
+					if (parameter.equals(prevDayMeasuring.getParameter())
+							&& prevDayMeasuring.getValue() <= measuring.getValue())
+						tr.getValues().put(parameter,
+								measuring.getValue() - prevDayMeasuring.getValue());
+				} else if (!parameter.equals(Parameters.ERROR_BYTE1)
+						&& !parameter.equals(Parameters.ERROR_BYTE2))
+					tr.getValues().put(parameter, measuring.getValue());
+			}
+		}
+		if (parameters.contains(Parameters.M1_SUB_M2)) {
+			Object m1 = tr.getValues().get(Parameters.M1);
+			Object m2 = tr.getValues().get(Parameters.M2);
+			if (m1 != null && m2 != null)
+				tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
+		}
+		if (parameters.contains(Parameters.M3_SUB_M4)) {
+			Object m1 = tr.getValues().get(Parameters.M3);
+			Object m2 = tr.getValues().get(Parameters.M4);
+			if (m1 != null && m2 != null)
+				tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
+		}
+	}
+
+	private void addMonthColumns(LocalDateTime startDateTime,
+			Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings, List<Parameters> parameters, TableRow tr,
+			List<Measuring> lm) {
+		List<Measuring> lmPrevMonth = groupByDateTimeMeasurings.get(startDateTime.minusMonths(1));
+		if (lmPrevMonth != null && lm != null) {
+			for (int i = 0; i < lmPrevMonth.size(); i++) {
+				Measuring measuring = lm.get(i);
+				String category = measuring.getParameter().getCategory();
+				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
+					Measuring prevMonthMeasuring = lmPrevMonth.get(i);
+					if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
+							&& prevMonthMeasuring.getValue() <= measuring.getValue())
+						tr.getValues().put(measuring.getParameter(),
+								measuring.getValue() - prevMonthMeasuring.getValue());
+				} else if (!parameters.equals(Parameters.ERROR_BYTE1)
+						&& !parameters.equals(Parameters.ERROR_BYTE2))
+					tr.getValues().put(measuring.getParameter(), measuring.getValue());
+			}
+		}
+		if (parameters.contains(Parameters.M1_SUB_M2)) {
+			Object m1 = tr.getValues().get(Parameters.M1);
+			Object m2 = tr.getValues().get(Parameters.M2);
+			if (m1 != null && m2 != null)
+				tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
+		}
+		if (parameters.contains(Parameters.M3_SUB_M4)) {
+			Object m1 = tr.getValues().get(Parameters.M3);
+			Object m2 = tr.getValues().get(Parameters.M4);
+			if (m1 != null && m2 != null)
+				tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
+		}
 	}
 
 	private void addErrorColumns(TableRow tr, List<Error> le) {

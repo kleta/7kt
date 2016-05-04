@@ -33,7 +33,9 @@ public enum Parameters {
 	ERROR_CODE2(30, "ОШ2",ParametersConst.ERROR,"код", 28),
 	NO_ERROR_TIME2(31, "ВНР1", ParametersConst.TIME, "час", 31), 
 	ERROR_TIME2(32, "ВОС2",ParametersConst.ERROR,"час", 32),
-	WORK(33,"Время работы",ParametersConst.TIME, "час", 33);
+	WORK(33,"Время работы",ParametersConst.TIME, "час", 33),
+	ERROR_BYTE1(34,"Байт ошибки1",ParametersConst.ERROR, "час", 34),
+	ERROR_BYTE2(35,"Байт ошибки2",ParametersConst.ERROR, "час", 35);
 	
 	
 

@@ -12,8 +12,10 @@ import ru.sevenkt.domain.ErrorCodes;
 @Embeddable
 @Data
 public class ErrorPK implements Serializable {
-
-	private static final long serialVersionUID = 3757951555915656757L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3075370590240558439L;
 
 	private LocalDateTime dateTime;
 

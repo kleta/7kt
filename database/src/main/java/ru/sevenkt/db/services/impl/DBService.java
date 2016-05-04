@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.h2.api.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,6 +183,7 @@ public class DBService implements IDBService {
 				tx.begin();
 				try {
 					mr.deleteByDeviceAndDateTimeBetween(device, min, min.plusMonths(1));
+					er.deleteAll();
 					min = min.plusMonths(1);
 				} catch (Exception ex) {
 					tx.rollback();
@@ -342,7 +345,7 @@ public class DBService implements IDBService {
 						m.setArchiveType(ArchiveTypes.MONTH);
 						m.setDateTime(mr.getDate().atTime(0, 0));
 						m.setDevice(device);
-						m.setParametr(field.getAnnotation(Parameter.class).value());
+						m.setParameter(field.getAnnotation(Parameter.class).value());
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
@@ -391,11 +394,12 @@ public class DBService implements IDBService {
 					errors.addAll(hourErrors);
 				}
 			}
-			smoothedHourMeasuring(measurings, dayConsumption, sumDay);
-			measurings.forEach(m -> m.setDevice(device));
-			saveMeasurings(measurings);
-			if(!errors.isEmpty()){
-				Map<ErrorCodes, List<Error>> groupByErrorCode = errors.stream().collect(Collectors.groupingBy(Error::getErrorCode));
+			smoothHourMeasurings(measurings, dayConsumption, sumDay);
+			Map<ErrorCodes, Integer> dayErrorHours = insertHourErrorTimes(errors, device);
+			insertDayErrorTimes(localDate, dayErrorHours, device);
+			if (!errors.isEmpty()) {
+				Map<ErrorCodes, List<Error>> groupByErrorCode = errors.stream()
+						.collect(Collectors.groupingBy(Error::getErrorCode));
 				Set<ErrorCodes> keySet = groupByErrorCode.keySet();
 				for (ErrorCodes errorCodes : keySet) {
 					Error error = new Error();
@@ -404,19 +408,115 @@ public class DBService implements IDBService {
 					error.setErrorCode(errorCodes);
 					error.setTimestamp(LocalDateTime.now());
 					errors.add(error);
-					
+
 					error = new Error();
 					error.setArchiveType(ArchiveTypes.MONTH);
 					error.setDateTime(LocalDateTime.of(localDate.withDayOfMonth(1), LocalTime.of(0, 0)).plusMonths(1));
 					error.setErrorCode(errorCodes);
 					error.setTimestamp(LocalDateTime.now());
 					errors.add(error);
+
 				}
 			}
-			errors.forEach(e->e.setDevice(device));
+			measurings.forEach(m -> m.setDevice(device));
+			saveMeasurings(measurings);
+			errors.forEach(e -> e.setDevice(device));
 			saveErrors(errors);
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
+	}
+
+	private void insertDayErrorTimes(LocalDate localDate, Map<ErrorCodes, Integer> dayErrorHours, Device device) {
+		LocalDateTime date = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusDays(1);
+		if (!dayErrorHours.isEmpty()) {
+			Set<ErrorCodes> keySet = dayErrorHours.keySet();
+			Integer maxValue1 = 0;
+			Integer maxValue2 = 0;
+			for (ErrorCodes code : keySet) {
+				Integer value = dayErrorHours.get(code);
+				if (code.equals(ErrorCodes.E1) || code.equals(ErrorCodes.V1) || code.equals(ErrorCodes.T1)) {
+					Measuring m = new Measuring();
+					m.setArchiveType(ArchiveTypes.DAY);
+					m.setDateTime(date);
+					m.setDevice(device);
+					m.setTimestamp(LocalDateTime.now());
+					if (value > maxValue1){
+						m.setValue(new Double(value));
+						maxValue1=value;
+					}
+					else
+						m.setValue(new Double(maxValue1));
+					m.setParameter(Parameters.ERROR_TIME1);
+					mr.save(m);
+
+				}
+				if (code.equals(ErrorCodes.E2) || code.equals(ErrorCodes.V2) || code.equals(ErrorCodes.T2)) {
+					Measuring m = new Measuring();
+					m.setArchiveType(ArchiveTypes.DAY);
+					m.setDateTime(date);
+					m.setDevice(device);
+					m.setTimestamp(LocalDateTime.now());
+					if (value > maxValue2){
+						m.setValue(new Double(value));
+						maxValue2=value;
+					}
+					else
+						m.setValue(new Double(maxValue2));
+					m.setParameter(Parameters.ERROR_TIME2);
+					mr.save(m);
+
+				}
+			}
+		}
+
+	}
+
+	private Map<ErrorCodes, Integer> insertHourErrorTimes(List<Error> errors, Device device) {
+		Map<LocalDateTime, List<Error>> groupByDateTime = errors.stream()
+				.collect(Collectors.groupingBy(Error::getDateTime));
+		Set<LocalDateTime> keySet = groupByDateTime.keySet();
+		Map<ErrorCodes, Integer> map = new HashMap<>();
+		for (LocalDateTime localDateTime : keySet) {
+			List<Error> err = groupByDateTime.get(localDateTime);
+			for (Error error : err) {
+				if (error.getErrorCode().equals(ErrorCodes.E1) || error.getErrorCode().equals(ErrorCodes.V1)
+						|| error.getErrorCode().equals(ErrorCodes.T1)) {
+
+					Measuring m = new Measuring();
+					m.setArchiveType(ArchiveTypes.HOUR);
+					m.setDateTime(localDateTime);
+					m.setDevice(device);
+					m.setTimestamp(LocalDateTime.now());
+					m.setValue(new Double("1"));
+					m.setParameter(Parameters.ERROR_TIME1);
+					mr.save(m);
+					if (map.get(error.getErrorCode()) != null)
+						map.put(error.getErrorCode(), map.get(error.getErrorCode()) + 1);
+					else
+						map.put(error.getErrorCode(), 1);
+
+				}
+				if (error.getErrorCode().equals(ErrorCodes.E2) || error.getErrorCode().equals(ErrorCodes.V2)
+						|| error.getErrorCode().equals(ErrorCodes.T2)) {
+					Measuring m = new Measuring();
+					m.setArchiveType(ArchiveTypes.HOUR);
+					m.setDateTime(localDateTime);
+					m.setDevice(device);
+					m.setTimestamp(LocalDateTime.now());
+					m.setValue(new Double("1"));
+					m.setParameter(Parameters.ERROR_TIME2);
+					mr.save(m);
+					if (map.get(error.getErrorCode()) != null)
+						map.put(error.getErrorCode(), map.get(error.getErrorCode()) + 1);
+					else
+						map.put(error.getErrorCode(), 1);
+
+				}
+
+			}
+		}
+		return map;
+
 	}
 
 	private void saveErrors(List<Error> errors) {
@@ -436,16 +536,16 @@ public class DBService implements IDBService {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	private List<Error> calculateErrors(HourRecord hr, Settings settings, Device device) {
 		List<Error> errors = new ArrayList<>();
 		String formula = settings.getFormulaNum() + "";
-		int t1 = hr.getAvgTemp1()/100;
-		int t2 = hr.getAvgTemp2()/100;
-		int t3 = hr.getAvgTemp3()/100;
-		int t4 = hr.getAvgTemp4()/100;
+		int t1 = hr.getAvgTemp1() / 100;
+		int t2 = hr.getAvgTemp2() / 100;
+		int t3 = hr.getAvgTemp3() / 100;
+		int t4 = hr.getAvgTemp4() / 100;
 		int v1 = hr.getVolume1();
 		int v2 = hr.getVolume2();
 		int v3 = hr.getVolume3();
@@ -598,7 +698,7 @@ public class DBService implements IDBService {
 				}
 				break;
 			case "2":
-				if (t3> 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+				if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
 					Error error = new Error();
 					error.setArchiveType(ArchiveTypes.HOUR);
 					error.setDateTime(dateTime);
@@ -624,7 +724,7 @@ public class DBService implements IDBService {
 				}
 				break;
 			case "3":
-				if (t3> 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+				if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
 					Error error = new Error();
 					error.setArchiveType(ArchiveTypes.HOUR);
 					error.setDateTime(dateTime);
@@ -650,7 +750,7 @@ public class DBService implements IDBService {
 				}
 				break;
 			case "5":
-				if (t3 > 150 || t3 < -60 ) {
+				if (t3 > 150 || t3 < -60) {
 					Error error = new Error();
 					error.setArchiveType(ArchiveTypes.HOUR);
 					error.setDateTime(dateTime);
@@ -658,7 +758,7 @@ public class DBService implements IDBService {
 					error.setTimestamp(LocalDateTime.now());
 					errors.add(error);
 				}
-				if (v3 == 0 || v3 < device.getWMin0() || v3 > device.getWMax12() ) {
+				if (v3 == 0 || v3 < device.getWMin0() || v3 > device.getWMax12()) {
 					Error error = new Error();
 					error.setArchiveType(ArchiveTypes.HOUR);
 					error.setDateTime(dateTime);
@@ -666,7 +766,7 @@ public class DBService implements IDBService {
 					error.setTimestamp(LocalDateTime.now());
 					errors.add(error);
 				}
-				if (v3 * 1.2 < v4 ) {
+				if (v3 * 1.2 < v4) {
 					Error error = new Error();
 					error.setArchiveType(ArchiveTypes.HOUR);
 					error.setDateTime(dateTime);
@@ -686,9 +786,8 @@ public class DBService implements IDBService {
 				}
 				break;
 			}
-		}
-		else{
-			if(formula.equals("41")){
+		} else {
+			if (formula.equals("41")) {
 				if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60 || t3 > 150 || t3 < -60) {
 					Error error = new Error();
 					error.setArchiveType(ArchiveTypes.HOUR);
@@ -706,8 +805,7 @@ public class DBService implements IDBService {
 					error.setTimestamp(LocalDateTime.now());
 					errors.add(error);
 				}
-			}
-			else{
+			} else {
 				switch (formula.charAt(0) + "") {
 				case "1":
 					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
@@ -718,8 +816,8 @@ public class DBService implements IDBService {
 						error.setTimestamp(LocalDateTime.now());
 						errors.add(error);
 					}
-					if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12() || v2 == 0 || v2 < device.getWMin1()
-							|| v2 > device.getWMax34()) {
+					if (v1 == 0 || v1 < device.getWMin0() || v1 > device.getWMax12() || v2 == 0
+							|| v2 < device.getWMin1() || v2 > device.getWMax34()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
 						error.setDateTime(dateTime);
@@ -827,9 +925,9 @@ public class DBService implements IDBService {
 				}
 			}
 		}
-		if(device.isControlPower()){
-			int a = hr.getErrorChannel1()&0b10000000;
-			if(a==0b10000000){
+		if (device.isControlPower()) {
+			int a = hr.getErrorChannel1() & 0b10000000;
+			if (a == 0b10000000) {
 				Error error = new Error();
 				error.setArchiveType(ArchiveTypes.HOUR);
 				error.setDateTime(dateTime);
@@ -873,7 +971,7 @@ public class DBService implements IDBService {
 						m.setDevice(device);
 						m.setDateTime(dr.getDate().atTime(0, 0));
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
-						m.setParametr(parameter);
+						m.setParameter(parameter);
 						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 							float val = field.getInt(dr);
@@ -884,9 +982,10 @@ public class DBService implements IDBService {
 								val = val / 10;
 
 								m.setValue(new Double(val + ""));
-							} else if (parameter.getCategory().equals(ParametersConst.ERROR)) {
-								int i1 = field.getInt(dr);
-								m.setValue((double) i1);
+							} else if (parameter.equals(Parameters.ERROR_BYTE1)
+									|| parameter.equals(Parameters.ERROR_BYTE2)) {
+								m.setValue((double) field.getInt(dr));
+
 							} else {
 								BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 								m.setValue(bdVal.doubleValue());
@@ -934,7 +1033,7 @@ public class DBService implements IDBService {
 				m.setDateTime(hr.getDateTime());
 				// m.setDevice(device);
 				Parameters parameter = field.getAnnotation(Parameter.class).value();
-				m.setParametr(parameter);
+				m.setParameter(parameter);
 				if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
 					float val = field.getInt(hr);
 					m.setValue((double) (val / 10));
@@ -971,7 +1070,7 @@ public class DBService implements IDBService {
 					}
 					m.setValue(new Double(val + ""));
 				}
-				if (parameter.getCategory().equals(ParametersConst.ERROR)) {
+				if (parameter.equals(Parameters.ERROR_BYTE1) || parameter.equals(Parameters.ERROR_BYTE2)) {
 					m.setValue((double) field.getInt(hr));
 				}
 				measurings.add(m);
@@ -980,7 +1079,7 @@ public class DBService implements IDBService {
 		return measurings;
 	}
 
-	private void smoothedHourMeasuring(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
+	private void smoothHourMeasurings(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
 		for (Measuring measuring : measurings) {
 			Parameters parameter = measuring.getParameter();
 			BigDecimal multiplicand = new BigDecimal("1");
