@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import javax.annotation.PostConstruct;
@@ -374,9 +375,9 @@ public class DBService implements IDBService {
 		DayArchive da = archive.getDayArchive();
 		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime();
 		LocalDateTime startArchiveDate = dateTime.minusDays(HourArchive.MAX_DAY_COUNT);
+		List<Error> errors = new ArrayList<>();
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
-			List<Error> errors = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
@@ -395,128 +396,195 @@ public class DBService implements IDBService {
 				}
 			}
 			smoothHourMeasurings(measurings, dayConsumption, sumDay);
-			Map<ErrorCodes, Integer> dayErrorHours = insertHourErrorTimes(errors, device);
-			insertDayErrorTimes(localDate, dayErrorHours, device);
-			if (!errors.isEmpty()) {
-				Map<ErrorCodes, List<Error>> groupByErrorCode = errors.stream()
-						.collect(Collectors.groupingBy(Error::getErrorCode));
-				Set<ErrorCodes> keySet = groupByErrorCode.keySet();
-				for (ErrorCodes errorCodes : keySet) {
-					Error error = new Error();
-					error.setArchiveType(ArchiveTypes.DAY);
-					error.setDateTime(LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusDays(1));
-					error.setErrorCode(errorCodes);
-					error.setTimestamp(LocalDateTime.now());
-					errors.add(error);
-
-					error = new Error();
-					error.setArchiveType(ArchiveTypes.MONTH);
-					error.setDateTime(LocalDateTime.of(localDate.withDayOfMonth(1), LocalTime.of(0, 0)).plusMonths(1));
-					error.setErrorCode(errorCodes);
-					error.setTimestamp(LocalDateTime.now());
-					errors.add(error);
-
-				}
-			}
 			measurings.forEach(m -> m.setDevice(device));
 			saveMeasurings(measurings);
-			errors.forEach(e -> e.setDevice(device));
-			saveErrors(errors);
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
+		errors.forEach(e -> e.setDevice(device));
+		saveHourErrors(errors);
+		insertHourErrorTimes(errors);
+
 	}
 
-	private void insertDayErrorTimes(LocalDate localDate, Map<ErrorCodes, Integer> dayErrorHours, Device device) {
-		LocalDateTime date = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusDays(1);
-		if (!dayErrorHours.isEmpty()) {
-			Set<ErrorCodes> keySet = dayErrorHours.keySet();
-			Integer maxValue1 = 0;
-			Integer maxValue2 = 0;
-			for (ErrorCodes code : keySet) {
-				Integer value = dayErrorHours.get(code);
-				if (code.equals(ErrorCodes.E1) || code.equals(ErrorCodes.V1) || code.equals(ErrorCodes.T1)) {
-					Measuring m = new Measuring();
-					m.setArchiveType(ArchiveTypes.DAY);
-					m.setDateTime(date);
-					m.setDevice(device);
-					m.setTimestamp(LocalDateTime.now());
-					if (value > maxValue1){
-						m.setValue(new Double(value));
-						maxValue1=value;
-					}
+	private void insertHourErrorTimes(List<Error> errors) {
+		if (!errors.isEmpty()) {
+			Device device = errors.get(0).getDevice();
+			Map<LocalDateTime, List<Error>> groupByDateTime = errors.stream()
+					.collect(Collectors.groupingBy(Error::getDateTime));
+			Set<LocalDateTime> keySet = groupByDateTime.keySet();
+			Map<LocalDateTime, Integer> dayErrorHours1 = new HashMap<>();
+			Map<LocalDateTime, Integer> monthErrorHours1 = new HashMap<>();
+			Map<LocalDateTime, Integer> dayErrorHours2 = new HashMap<>();
+			Map<LocalDateTime, Integer> monthErrorHours2 = new HashMap<>();
+			for (LocalDateTime localDateTime : keySet) {
+				List<Error> errorsWithoutU = groupByDateTime.get(localDateTime).stream()
+						.filter(e -> !e.getErrorCode().equals(ErrorCodes.U)).collect(Collectors.toList());
+				boolean thisHourErrorTimeAlreadyInsert1 = false, thisHourErrorTimeAlreadyInsert2 = false;
+				for (Error error : errorsWithoutU) {
+					LocalTime time = error.getDateTime().toLocalTime();
+					LocalDateTime dayDt, monthDt;
+					if (time.equals(LocalTime.of(0, 0))) {
+						dayDt = localDateTime.withHour(0).withMinute(0);
+					} else
+						dayDt = localDateTime.plusDays(1).withHour(0).withMinute(0);
+					if (localDateTime.getDayOfMonth() == 1 && time.equals(LocalTime.of(0, 0)))
+						monthDt = localDateTime.withHour(0).withMinute(0);
 					else
-						m.setValue(new Double(maxValue1));
-					m.setParameter(Parameters.ERROR_TIME1);
-					mr.save(m);
+						monthDt = localDateTime.withDayOfMonth(1).plusMonths(1).withHour(0).withMinute(0);
 
-				}
-				if (code.equals(ErrorCodes.E2) || code.equals(ErrorCodes.V2) || code.equals(ErrorCodes.T2)) {
 					Measuring m = new Measuring();
-					m.setArchiveType(ArchiveTypes.DAY);
-					m.setDateTime(date);
-					m.setDevice(device);
+					m.setArchiveType(ArchiveTypes.HOUR);
+					m.setDateTime(localDateTime);
+					m.setDevice(error.getDevice());
 					m.setTimestamp(LocalDateTime.now());
-					if (value > maxValue2){
-						m.setValue(new Double(value));
-						maxValue2=value;
-					}
-					else
-						m.setValue(new Double(maxValue2));
-					m.setParameter(Parameters.ERROR_TIME2);
-					mr.save(m);
+					m.setValue(new Double("1"));
+					if (!thisHourErrorTimeAlreadyInsert1)
+						if (error.getErrorCode().equals(ErrorCodes.E1) || error.getErrorCode().equals(ErrorCodes.V1)
+								|| error.getErrorCode().equals(ErrorCodes.T1)) {
+							m.setParameter(Parameters.ERROR_TIME1);
+							thisHourErrorTimeAlreadyInsert1 = true;
+							Integer countHours = dayErrorHours1.get(dayDt);
+							if (countHours == null) {
+								countHours = 0;
+								dayErrorHours1.put(dayDt, countHours);
+							}
+							dayErrorHours1.put(dayDt, ++countHours);
+							countHours = monthErrorHours1.get(monthDt);
+							if (countHours == null) {
+								countHours = 0;
+								monthErrorHours1.put(monthDt, countHours);
+							}
+							monthErrorHours1.put(monthDt, ++countHours);
+							mr.save(m);
+						}
+					if (!thisHourErrorTimeAlreadyInsert2) {
+						if (error.getErrorCode().equals(ErrorCodes.E2) || error.getErrorCode().equals(ErrorCodes.V2)
+								|| error.getErrorCode().equals(ErrorCodes.T2)) {
+							m.setParameter(Parameters.ERROR_TIME2);
+							thisHourErrorTimeAlreadyInsert2 = true;
+							Integer countHours = dayErrorHours2.get(dayDt);
+							if (countHours == null) {
+								countHours = 0;
+								dayErrorHours2.put(dayDt, countHours);
+							}
+							dayErrorHours2.put(dayDt, ++countHours);
+							countHours = monthErrorHours2.get(monthDt);
+							if (countHours == null) {
+								countHours = 0;
+								monthErrorHours2.put(monthDt, countHours);
+							}
+							monthErrorHours2.put(monthDt, ++countHours);
+							mr.save(m);
+						}
 
+					}
 				}
+
+			}
+			Set<LocalDateTime> dayKeySet1 = dayErrorHours1.keySet();
+			for (LocalDateTime dt : dayKeySet1) {
+				Measuring m = new Measuring();
+				m.setArchiveType(ArchiveTypes.DAY);
+				m.setDateTime(dt);
+				m.setDevice(device);
+				m.setTimestamp(LocalDateTime.now());
+				m.setValue(dayErrorHours1.get(dt) + 0.0);
+				m.setParameter(Parameters.ERROR_TIME1);
+				mr.save(m);
+			}
+			Set<LocalDateTime> dayKey2 = dayErrorHours2.keySet();
+			for (LocalDateTime dt : dayKey2) {
+				Measuring m = new Measuring();
+				m.setArchiveType(ArchiveTypes.DAY);
+				m.setDateTime(dt);
+				m.setDevice(device);
+				m.setTimestamp(LocalDateTime.now());
+				m.setValue(dayErrorHours2.get(dt) + 0.0);
+				m.setParameter(Parameters.ERROR_TIME2);
+				mr.save(m);
+			}
+			Set<LocalDateTime> monthKeySet1 = monthErrorHours1.keySet();
+			for (LocalDateTime dt : monthKeySet1) {
+				Measuring m = new Measuring();
+				m.setArchiveType(ArchiveTypes.MONTH);
+				m.setDateTime(dt);
+				m.setDevice(device);
+				m.setTimestamp(LocalDateTime.now());
+				m.setValue(monthErrorHours1.get(dt) + 0.0);
+				m.setParameter(Parameters.ERROR_TIME1);
+				mr.save(m);
+			}
+			Set<LocalDateTime> monthKey2 = monthErrorHours2.keySet();
+			for (LocalDateTime dt : monthKey2) {
+				Measuring m = new Measuring();
+				m.setArchiveType(ArchiveTypes.MONTH);
+				m.setDateTime(dt);
+				m.setDevice(device);
+				m.setTimestamp(LocalDateTime.now());
+				m.setValue(monthErrorHours2.get(dt) + 0.0);
+				m.setParameter(Parameters.ERROR_TIME2);
+				mr.save(m);
 			}
 		}
 
 	}
 
-	private Map<ErrorCodes, Integer> insertHourErrorTimes(List<Error> errors, Device device) {
-		Map<LocalDateTime, List<Error>> groupByDateTime = errors.stream()
-				.collect(Collectors.groupingBy(Error::getDateTime));
-		Set<LocalDateTime> keySet = groupByDateTime.keySet();
-		Map<ErrorCodes, Integer> map = new HashMap<>();
-		for (LocalDateTime localDateTime : keySet) {
-			List<Error> err = groupByDateTime.get(localDateTime);
-			for (Error error : err) {
-				if (error.getErrorCode().equals(ErrorCodes.E1) || error.getErrorCode().equals(ErrorCodes.V1)
-						|| error.getErrorCode().equals(ErrorCodes.T1)) {
-
-					Measuring m = new Measuring();
-					m.setArchiveType(ArchiveTypes.HOUR);
-					m.setDateTime(localDateTime);
-					m.setDevice(device);
-					m.setTimestamp(LocalDateTime.now());
-					m.setValue(new Double("1"));
-					m.setParameter(Parameters.ERROR_TIME1);
-					mr.save(m);
-					if (map.get(error.getErrorCode()) != null)
-						map.put(error.getErrorCode(), map.get(error.getErrorCode()) + 1);
-					else
-						map.put(error.getErrorCode(), 1);
-
+	private void saveHourErrors(List<Error> errors) {
+		saveErrors(errors);
+		Map<ErrorCodes, List<Error>> groupByErrorCode = errors.stream()
+				.collect(Collectors.groupingBy(Error::getErrorCode));
+		Set<ErrorCodes> keySet = groupByErrorCode.keySet();
+		Map<LocalDateTime, List<Error>> dayErrorsMap = new HashMap<>();
+		Map<LocalDateTime, List<Error>> monthErrorsMap = new HashMap<>();
+		for (ErrorCodes errorCode : keySet) {
+			List<Error> ers = groupByErrorCode.get(errorCode);
+			for (Error error : ers) {
+				LocalTime time = error.getDateTime().toLocalTime();
+				LocalDateTime dt;
+				if (time.equals(LocalTime.of(0, 0))) {
+					dt = error.getDateTime().withHour(0).withMinute(0);
+				} else
+					dt = error.getDateTime().plusDays(1).withHour(0).withMinute(0);
+				Error e = new Error();
+				e.setDateTime(dt);
+				e.setArchiveType(ArchiveTypes.DAY);
+				e.setErrorCode(errorCode);
+				e.setTimestamp(LocalDateTime.now());
+				e.setDevice(error.getDevice());
+				List<Error> list = dayErrorsMap.get(dt);
+				if (list == null) {
+					list = new ArrayList<>();
+					dayErrorsMap.put(dt, list);
 				}
-				if (error.getErrorCode().equals(ErrorCodes.E2) || error.getErrorCode().equals(ErrorCodes.V2)
-						|| error.getErrorCode().equals(ErrorCodes.T2)) {
-					Measuring m = new Measuring();
-					m.setArchiveType(ArchiveTypes.HOUR);
-					m.setDateTime(localDateTime);
-					m.setDevice(device);
-					m.setTimestamp(LocalDateTime.now());
-					m.setValue(new Double("1"));
-					m.setParameter(Parameters.ERROR_TIME2);
-					mr.save(m);
-					if (map.get(error.getErrorCode()) != null)
-						map.put(error.getErrorCode(), map.get(error.getErrorCode()) + 1);
-					else
-						map.put(error.getErrorCode(), 1);
-
+				if (!list.contains(e))
+					list.add(e);
+				if (dt.getDayOfMonth() == 1 && time.equals(LocalTime.of(0, 0)))
+					dt = error.getDateTime().withHour(0).withMinute(0);
+				else
+					dt = error.getDateTime().withDayOfMonth(1).plusMonths(1).withHour(0).withMinute(0);
+				e = new Error();
+				e.setDateTime(dt);
+				e.setArchiveType(ArchiveTypes.MONTH);
+				e.setErrorCode(errorCode);
+				e.setTimestamp(LocalDateTime.now());
+				e.setDevice(error.getDevice());
+				list = monthErrorsMap.get(dt);
+				if (list == null) {
+					list = new ArrayList<>();
+					monthErrorsMap.put(dt, list);
 				}
-
+				if (!list.contains(e))
+					list.add(e);
 			}
 		}
-		return map;
-
+		Set<LocalDateTime> dayKeySet = dayErrorsMap.keySet();
+		for (LocalDateTime localDateTime : dayKeySet) {
+			saveErrors(dayErrorsMap.get(localDateTime));
+		}
+		Set<LocalDateTime> monthKeySet = monthErrorsMap.keySet();
+		for (LocalDateTime localDateTime : monthKeySet) {
+			saveErrors(monthErrorsMap.get(localDateTime));
+		}
 	}
 
 	private void saveErrors(List<Error> errors) {
