@@ -379,14 +379,20 @@ public class DBService implements IDBService {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
+			if (localDate.equals(LocalDate.of(2016, 2, 4)))
+				System.out.println();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
+			DayRecord dayConsumption;
 			if (!dr2.isValid())
-				dr2 = dr1;
-			DayRecord dayConsumption = dr2.minus(dr1);
+				dayConsumption = sumDay;
+			else
+				dayConsumption = dr2.minus(dr1);
 			for (int i = 1; i < 25; i++) {
 				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
+				if (i == 9)
+					System.out.println();
 				HourRecord hr = ha.getHourRecord(localDateTime, dateTime);
 				if (hr.isValid()) {
 					List<Measuring> hourMeasurings = geHourtMeasurings(hr, localDateTime, archive.getSettings());

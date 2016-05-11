@@ -179,7 +179,7 @@ public class OpenArchiveHandler implements EventHandler {
 				Measuring measuring = lm.get(i);
 				Parameters parameter = measuring.getParameter();
 				String category = parameter.getCategory();
-				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
+				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE) && !category.equals(ParametersConst.TIME)) {
 					Measuring prevDayMeasuring = lmPrevDay.get(i);
 					if (parameter.equals(prevDayMeasuring.getParameter())
 							&& prevDayMeasuring.getValue() <= measuring.getValue())
@@ -210,9 +210,10 @@ public class OpenArchiveHandler implements EventHandler {
 		List<Measuring> lmPrevMonth = groupByDateTimeMeasurings.get(startDateTime.minusMonths(1));
 		if (lmPrevMonth != null && lm != null) {
 			for (int i = 0; i < lmPrevMonth.size(); i++) {
+				System.out.println(i);
 				Measuring measuring = lm.get(i);
 				String category = measuring.getParameter().getCategory();
-				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)) {
+				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE) && !category.equals(ParametersConst.TIME)) {
 					Measuring prevMonthMeasuring = lmPrevMonth.get(i);
 					if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
 							&& prevMonthMeasuring.getValue() <= measuring.getValue())

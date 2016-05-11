@@ -29,10 +29,10 @@ public enum Parameters {
 	V6(26,"V2", ParametersConst.VOLUME, "м3", 24),
 	V7(27,"V3", ParametersConst.VOLUME, "м3", 25),
 	V8(28,"V4", ParametersConst.VOLUME, "м3", 26),
-	ERROR_TIME1(29, "ВОС1",ParametersConst.ERROR,"час", 30),
+	ERROR_TIME1(29, "ВОС1",ParametersConst.TIME,"час", 30),
 	ERROR_CODE2(30, "ОШ2",ParametersConst.ERROR,"код", 28),
 	NO_ERROR_TIME2(31, "ВНР1", ParametersConst.TIME, "час", 31), 
-	ERROR_TIME2(32, "ВОС2",ParametersConst.ERROR,"час", 32),
+	ERROR_TIME2(32, "ВОС2",ParametersConst.TIME,"час", 32),
 	WORK(33,"Время работы",ParametersConst.TIME, "час", 33),
 	ERROR_BYTE1(34,"Байт ошибки1",ParametersConst.ERROR, "час", 34),
 	ERROR_BYTE2(35,"Байт ошибки2",ParametersConst.ERROR, "час", 35);
