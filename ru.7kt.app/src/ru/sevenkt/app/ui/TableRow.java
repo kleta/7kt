@@ -1,6 +1,5 @@
 package ru.sevenkt.app.ui;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,16 +7,16 @@ import ru.sevenkt.domain.Parameters;
 
 public class TableRow {
 	
-	private LocalDateTime dateTime;
+	private Object firstColumn;
 	
 	private Map<Parameters, Object> values;
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public Object getDateTime() {
+		return firstColumn;
 	}
 
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
+	public void setDateTime(Object dateTime) {
+		this.firstColumn = dateTime;
 	}
 
 	public Map<Parameters, Object> getValues() {

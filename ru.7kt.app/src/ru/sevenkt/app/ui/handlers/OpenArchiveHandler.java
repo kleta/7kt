@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -82,19 +84,22 @@ public class OpenArchiveHandler implements EventHandler {
 			startDateTime = startDateTime.plusMonths(1).withDayOfMonth(1);
 		LocalDate endDate = (LocalDate) event.getProperty(AppEventConstants.END_DATE);
 		LocalDateTime endDateTime = endDate.atStartOfDay();
-
 		Map<String, Object> result = new HashMap<>();
 		switch (archiveType) {
+		case HOUR:
+			startDateTime = startDateTime.plusHours(1);
+			endDateTime=endDateTime.plusHours(1);
+			break;
 		case MONTH:
-			startDate = startDate.minusMonths(1);
+			//startDateTime = startDateTime.plusMonths(1);
 			break;
 		case DAY:
-			startDate = startDate.minusDays(1);
+			//startDateTime = startDateTime.plusDays(1);
 			break;
 		default:
 			break;
 		}
-		List<Measuring> measurings = dbService.findArchive(device, startDate, endDate, archiveType);
+		List<Measuring> measurings = dbService.findArchive(device, startDateTime, endDateTime, archiveType);
 		List<Error> errors = dbService.findErrors(device, startDate, endDate, archiveType);
 		Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
@@ -155,10 +160,42 @@ public class OpenArchiveHandler implements EventHandler {
 			addErrorColumns(tr, le);
 			listTableRow.add(tr);
 		} while (startDateTime.isBefore(endDateTime));
+		addSumRow(listTableRow, parameters);
+		addAvgRow(listTableRow, parameters);
 		result.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
 		result.put(AppEventConstants.TABLE_ROWS, listTableRow);
 		result.put(AppEventConstants.DEVICE, device);
 		broker.send(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, result);
+	}
+
+	private void addAvgRow(List<TableRow> listTableRow, List<Parameters> parameters) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void addSumRow(List<TableRow> listTableRow, List<Parameters> parameters) {
+		TableRow trSum = null;
+		for (Parameters parameter : parameters) {
+			if (!parameter.equals(Parameters.AVG_TEMP1) && !parameter.equals(Parameters.AVG_TEMP2)
+					&& !parameter.equals(Parameters.AVG_TEMP3) && !parameter.equals(Parameters.AVG_TEMP4)
+					&& !parameter.equals(Parameters.AVG_P1) && !parameter.equals(Parameters.AVG_P2)
+					&& !parameter.equals(Parameters.T1_SUB_T2) && !parameter.equals(Parameters.T3_SUB_T4)
+					&& !parameter.equals(Parameters.ERROR_CODE1) && !parameter.equals(Parameters.ERROR_CODE2)) {
+				if (trSum == null) {
+					trSum = new TableRow();
+					trSum.setDateTime("ИТОГО:");
+				}
+				Double val = new Double(0);
+				for (TableRow tr : listTableRow) {
+					if(tr.getValues().get(parameter)!=null)
+						val = val + (double) tr.getValues().get(parameter);
+				}
+				trSum.getValues().put(parameter, val);
+			}		
+		}
+		if(trSum!=null)
+			listTableRow.add(trSum);
+
 	}
 
 	private void addHourColumns(List<Parameters> parameters, TableRow tr, List<Measuring> lm) {
@@ -179,14 +216,13 @@ public class OpenArchiveHandler implements EventHandler {
 				Measuring measuring = lm.get(i);
 				Parameters parameter = measuring.getParameter();
 				String category = parameter.getCategory();
-				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE) && !category.equals(ParametersConst.TIME)) {
+				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)
+						&& !category.equals(ParametersConst.TIME)) {
 					Measuring prevDayMeasuring = lmPrevDay.get(i);
 					if (parameter.equals(prevDayMeasuring.getParameter())
 							&& prevDayMeasuring.getValue() <= measuring.getValue())
-						tr.getValues().put(parameter,
-								measuring.getValue() - prevDayMeasuring.getValue());
-				} else if (!parameter.equals(Parameters.ERROR_BYTE1)
-						&& !parameter.equals(Parameters.ERROR_BYTE2))
+						tr.getValues().put(parameter, measuring.getValue() - prevDayMeasuring.getValue());
+				} else if (!parameter.equals(Parameters.ERROR_BYTE1) && !parameter.equals(Parameters.ERROR_BYTE2))
 					tr.getValues().put(parameter, measuring.getValue());
 			}
 		}
@@ -213,14 +249,14 @@ public class OpenArchiveHandler implements EventHandler {
 				System.out.println(i);
 				Measuring measuring = lm.get(i);
 				String category = measuring.getParameter().getCategory();
-				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE) && !category.equals(ParametersConst.TIME)) {
+				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)
+						&& !category.equals(ParametersConst.TIME)) {
 					Measuring prevMonthMeasuring = lmPrevMonth.get(i);
 					if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
 							&& prevMonthMeasuring.getValue() <= measuring.getValue())
 						tr.getValues().put(measuring.getParameter(),
 								measuring.getValue() - prevMonthMeasuring.getValue());
-				} else if (!parameters.equals(Parameters.ERROR_BYTE1)
-						&& !parameters.equals(Parameters.ERROR_BYTE2))
+				} else if (!parameters.equals(Parameters.ERROR_BYTE1) && !parameters.equals(Parameters.ERROR_BYTE2))
 					tr.getValues().put(measuring.getParameter(), measuring.getValue());
 			}
 		}
@@ -239,68 +275,70 @@ public class OpenArchiveHandler implements EventHandler {
 	}
 
 	private void addErrorColumns(TableRow tr, List<Error> le) {
-		LocalDateTime dateTime = tr.getDateTime();
-		if (le != null && !le.isEmpty()) {
-			Device device = le.get(0).getDevice();
-			List<Params> params = device.getParams();
-			for (Error error : le) {
-				ErrorCodes code = error.getErrorCode();
-				Object p = null;
-				switch (code) {
-				case E1:
-					p = tr.getValues().get(Parameters.ERROR_CODE1);
-					if (p == null)
-						tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
-					else
-						tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
-					break;
-				case E2:
-					p = tr.getValues().get(Parameters.ERROR_CODE2);
-					if (p == null)
-						tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
-					else
-						tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
-					break;
-				case T1:
-					p = tr.getValues().get(Parameters.ERROR_CODE1);
-					if (p == null)
-						tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
-					else
-						tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
-					break;
-				case T2:
-					p = tr.getValues().get(Parameters.ERROR_CODE2);
-					if (p == null)
-						tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
-					else
-						tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
-					break;
-				case U:
-					if (device.isControlPower()) {
+		if (tr.getDateTime() instanceof LocalDateTime) {
+			LocalDateTime dateTime = (LocalDateTime) tr.getDateTime();
+			if (le != null && !le.isEmpty()) {
+				Device device = le.get(0).getDevice();
+				List<Params> params = device.getParams();
+				for (Error error : le) {
+					ErrorCodes code = error.getErrorCode();
+					Object p = null;
+					switch (code) {
+					case E1:
 						p = tr.getValues().get(Parameters.ERROR_CODE1);
 						if (p == null)
 							tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
 						else
 							tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+						break;
+					case E2:
+						p = tr.getValues().get(Parameters.ERROR_CODE2);
+						if (p == null)
+							tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
+						else
+							tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
+						break;
+					case T1:
+						p = tr.getValues().get(Parameters.ERROR_CODE1);
+						if (p == null)
+							tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+						else
+							tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+						break;
+					case T2:
+						p = tr.getValues().get(Parameters.ERROR_CODE2);
+						if (p == null)
+							tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
+						else
+							tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
+						break;
+					case U:
+						if (device.isControlPower()) {
+							p = tr.getValues().get(Parameters.ERROR_CODE1);
+							if (p == null)
+								tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+							else
+								tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+						}
+						break;
+					case V1:
+						p = tr.getValues().get(Parameters.ERROR_CODE1);
+						if (p == null)
+							tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
+						else
+							tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
+						break;
+					case V2:
+						p = tr.getValues().get(Parameters.ERROR_CODE2);
+						if (p == null)
+							tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
+						else
+							tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
+						break;
 					}
-					break;
-				case V1:
-					p = tr.getValues().get(Parameters.ERROR_CODE1);
-					if (p == null)
-						tr.getValues().put(Parameters.ERROR_CODE1, code.getCode());
-					else
-						tr.getValues().put(Parameters.ERROR_CODE1, p.toString() + code.getCode());
-					break;
-				case V2:
-					p = tr.getValues().get(Parameters.ERROR_CODE2);
-					if (p == null)
-						tr.getValues().put(Parameters.ERROR_CODE2, code.getCode());
-					else
-						tr.getValues().put(Parameters.ERROR_CODE2, p.toString() + code.getCode());
-					break;
 				}
-			}
 
+			}
 		}
 	}
 

@@ -303,11 +303,16 @@ public class ArchiveView implements EventHandler {
 				}
 
 				public String getText(Object element) {
-					return element == null ? "" : ((TableRow) element).getDateTime().format(formatter);
+					LocalDateTime date;
+					if (((TableRow) element).getDateTime() instanceof LocalDate) {
+						date = (LocalDateTime) ((TableRow) element).getDateTime();
+						return element == null ? "" : date.format(formatter);
+					} else
+						return element == null ? "" : ((TableRow) element).getDateTime().toString();
 				}
 			});
 			TableColumn dateColumn = dateViewerColumn.getColumn();
-			//dateColumn.setWidth(100);
+			// dateColumn.setWidth(100);
 			dateColumn.setText("Дата");
 			if (!parameters.isEmpty()) {
 				parameters.sort((p1, p2) -> new Integer(p1.getOrderIndex()).compareTo(new Integer(p2.getOrderIndex())));
@@ -315,7 +320,7 @@ public class ArchiveView implements EventHandler {
 					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter, selectedArchiveType));
 					TableColumn column = tableViewerColumn.getColumn();
-					//column.setWidth(100);
+					// column.setWidth(100);
 					column.setText(parameter.getName());
 				}
 
@@ -338,7 +343,8 @@ public class ArchiveView implements EventHandler {
 				.collect(Collectors.groupingBy(Parameters::getCategory));
 		for (String key : groupByCategory.keySet()) {
 			if (key.equals(ParametersConst.ENERGY) || key.equals(ParametersConst.VOLUME)
-					|| key.equals(ParametersConst.WEIGHT) || key.equals(ParametersConst.TEMP ) || key.equals(ParametersConst.PRESSURE)) {
+					|| key.equals(ParametersConst.WEIGHT) || key.equals(ParametersConst.TEMP)
+					|| key.equals(ParametersConst.PRESSURE)) {
 				// // Label l=new Label(сhartsScrolledform.getBody(), SWT.NONE);
 				// // l.setText(key);
 				Section section = formToolkit.createSection(сhartsScrolledform.getBody(),
@@ -399,15 +405,17 @@ public class ArchiveView implements EventHandler {
 		int i = 0;
 		for (Object object : input) {
 			TableRow tr = (TableRow) object;
-			LocalDateTime ldt = tr.getDateTime();
-			Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
+			if (tr.getDateTime() instanceof LocalDateTime) {
+				LocalDateTime ldt = (LocalDateTime) tr.getDateTime();
+				Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
 
-			Double val = (Double) tr.getValues().get(parameter);
-			xSeries[i] = Date.from(instant);
-			if (val == null) {
-				ySeries[i++] = -0.1;
-			} else
-				ySeries[i++] = val;
+				Double val = (Double) tr.getValues().get(parameter);
+				xSeries[i] = Date.from(instant);
+				if (val == null) {
+					ySeries[i++] = -0.1;
+				} else
+					ySeries[i++] = val;
+			}
 		}
 		ILineSeries series = (ILineSeries) chart.getSeriesSet().createSeries(SeriesType.LINE, parameter.getName());
 		series.setXDateSeries(xSeries);

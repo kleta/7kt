@@ -273,10 +273,10 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public List<Measuring> findArchive(Device device, LocalDate startDate, LocalDate endDate,
+	public List<Measuring> findArchive(Device device, LocalDateTime startDate, LocalDateTime endDate,
 			ArchiveTypes archiveType) {
-		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0, 0),
-				endDate.atTime(0, 0));
+		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate,
+				endDate);
 	}
 
 	@Override
@@ -379,8 +379,8 @@ public class DBService implements IDBService {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-			if (localDate.equals(LocalDate.of(2016, 2, 4)))
-				System.out.println();
+//			if (localDate.equals(LocalDate.of(2016, 2, 4)))
+//				System.out.println();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);

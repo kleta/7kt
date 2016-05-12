@@ -58,7 +58,7 @@ public class ExportToExcelHandler implements EventHandler {
 	public void handleEvent(Event event) {
 		Device device = (Device) event.getProperty(AppEventConstants.DEVICE);
 		List<Parameters> parameters = (List<Parameters>) event.getProperty(AppEventConstants.ARCHIVE_PARAMETERS);
-		ArchiveTypes at=(ArchiveTypes) event.getProperty(AppEventConstants.ARCHIVE_TYPE);
+		ArchiveTypes at = (ArchiveTypes) event.getProperty(AppEventConstants.ARCHIVE_TYPE);
 		List<TableRow> tableRows = (List<TableRow>) event.getProperty(AppEventConstants.TABLE_ROWS);
 		String tmpDir = System.getProperty("java.io.tmpdir");
 		String fileName = tmpDir + device.getDeviceName()
@@ -85,38 +85,28 @@ public class ExportToExcelHandler implements EventHandler {
 			i = 1;
 			for (TableRow tr : tableRows) {
 				row = sheet.createRow(i++);
-				Instant instant = tr.getDateTime().atZone(ZoneId.systemDefault()).toInstant();
-				Date date = Date.from(instant);
-				Cell cell = row.createCell(0);
-				cell.setCellValue(date);
-				cell.setCellStyle(cellStyle);
-				int k = 1;
-				for (Parameters parameter : parameters) {
-					Object val = tr.getValues().get(parameter);
-					if (val != null)
-						if (val instanceof Double) {
-							BigDecimal bdVal = null;
-							bdVal = new BigDecimal(val.toString()).setScale(5, BigDecimal.ROUND_HALF_UP);
-////							switch(at){
-////							case MONTH:
-////								bdVal = new BigDecimal(val.toString()).setScale(2, BigDecimal.ROUND_HALF_UP);
-////								break;
-////							case DAY:
-////								bdVal = new BigDecimal(val.toString()).setScale(3, BigDecimal.ROUND_HALF_UP);
-////								break;
-////							case HOUR:
-////								bdVal = new BigDecimal(val.toString()).setScale(2, BigDecimal.ROUND_HALF_UP);
-////								break;
-////							}
-							double doubleValue = bdVal.doubleValue();
-							row.createCell(k).setCellValue(doubleValue);
-						} else
-							row.createCell(k).setCellValue(val.toString());
-					else
-						row.createCell(k).setCellValue("Нет данных");
-					k++;
+				if (tr.getDateTime() instanceof LocalDateTime) {
+					Instant instant = ((LocalDateTime) tr.getDateTime()).atZone(ZoneId.systemDefault()).toInstant();
+					Date date = Date.from(instant);
+					Cell cell = row.createCell(0);
+					cell.setCellValue(date);
+					cell.setCellStyle(cellStyle);
+					int k = 1;
+					for (Parameters parameter : parameters) {
+						Object val = tr.getValues().get(parameter);
+						if (val != null)
+							if (val instanceof Double) {
+								BigDecimal bdVal = null;
+								bdVal = new BigDecimal(val.toString()).setScale(5, BigDecimal.ROUND_HALF_UP);
+								double doubleValue = bdVal.doubleValue();
+								row.createCell(k).setCellValue(doubleValue);
+							} else
+								row.createCell(k).setCellValue(val.toString());
+						else
+							row.createCell(k).setCellValue("Нет данных");
+						k++;
+					}
 				}
-
 			}
 			wb.write(fileOut);
 			fileOut.close();
