@@ -87,11 +87,11 @@ public class OpenArchiveHandler implements EventHandler {
 		Map<String, Object> result = new HashMap<>();
 		switch (archiveType) {
 		case HOUR:
-			startDateTime = startDateTime.plusHours(1);
-			endDateTime=endDateTime.plusHours(1);
+//			startDateTime = startDateTime.plusHours(1);
+//			endDateTime=endDateTime.plusHours(1);
 			break;
 		case MONTH:
-			//startDateTime = startDateTime.plusMonths(1);
+			startDateTime = startDateTime.minusMonths(1);
 			break;
 		case DAY:
 			//startDateTime = startDateTime.plusDays(1);
