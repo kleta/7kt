@@ -1,6 +1,7 @@
 
 package ru.sevenkt.app.ui.handlers;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -86,17 +87,18 @@ public class OpenArchiveHandler implements EventHandler {
 		LocalDateTime endDateTime = endDate.atStartOfDay();
 		Map<String, Object> result = new HashMap<>();
 		switch (archiveType) {
-		case HOUR:
-//			startDateTime = startDateTime.plusHours(1);
-//			endDateTime=endDateTime.plusHours(1);
-			break;
+		// case HOUR:
+		// startDateTime = startDateTime.plusHours(1);
+		//// endDateTime=endDateTime.plusHours(1);
+		// break;
 		case MONTH:
-			startDateTime = startDateTime.minusMonths(1);
+			startDateTime = startDateTime.withDayOfMonth(1);
 			break;
-		case DAY:
-			//startDateTime = startDateTime.plusDays(1);
-			break;
+		// case DAY:
+		// startDateTime = startDateTime.withHour(0);
+		// break;
 		default:
+			startDateTime = startDateTime.withHour(0);
 			break;
 		}
 		List<Measuring> measurings = dbService.findArchive(device, startDateTime, endDateTime, archiveType);
@@ -111,24 +113,32 @@ public class OpenArchiveHandler implements EventHandler {
 			parameters.add(param.getId());
 		}
 		List<TableRow> listTableRow = new ArrayList<>();
-		do {
+		while (startDateTime.isBefore(endDateTime)) {
 			TableRow tr = new TableRow();
-			tr.setDateTime(startDateTime);
-			List<Measuring> lm = groupByDateTimeMeasurings.get(startDateTime);
-			List<Error> le = groupByDateTimeErrors.get(startDateTime);
+			List<Measuring> lm = null;
+			List<Error> le = null;
 			switch (archiveType) {
 			case MONTH:
+				startDateTime = startDateTime.plusMonths(1);
+				tr.setDateTime(startDateTime);
+				lm = groupByDateTimeMeasurings.get(startDateTime);
+				le = groupByDateTimeErrors.get(startDateTime);
 				addMonthColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
 				// addMonthErrorsColumn()
-				startDateTime = startDateTime.plusMonths(1);
 				break;
 			case DAY:
-				addDayColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
 				startDateTime = startDateTime.plusDays(1);
+				tr.setDateTime(startDateTime);
+				lm = groupByDateTimeMeasurings.get(startDateTime);
+				le = groupByDateTimeErrors.get(startDateTime);
+				addDayColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
 				break;
 			case HOUR:
-				addHourColumns(parameters, tr, lm);
 				startDateTime = startDateTime.plusHours(1);
+				tr.setDateTime(startDateTime);
+				lm = groupByDateTimeMeasurings.get(startDateTime);
+				le = groupByDateTimeErrors.get(startDateTime);
+				addHourColumns(parameters, tr, lm);
 				break;
 			default:
 				break;
@@ -137,29 +147,29 @@ public class OpenArchiveHandler implements EventHandler {
 				Object v1 = tr.getValues().get(Parameters.V1);
 				Object v2 = tr.getValues().get(Parameters.V2);
 				if (v1 != null && v2 != null)
-					tr.getValues().put(Parameters.V1_SUB_V2, ((Float) v1) - ((Float) v2));
+					tr.getValues().put(Parameters.V1_SUB_V2, ((Double) v1) - ((Double) v2));
 			}
 			if (parameters.contains(Parameters.V3_SUB_V4)) {
 				Object v3 = tr.getValues().get(Parameters.V3);
 				Object v4 = tr.getValues().get(Parameters.V4);
 				if (v3 != null && v4 != null)
-					tr.getValues().put(Parameters.V3_SUB_V4, ((Float) v3) - ((Float) v4));
+					tr.getValues().put(Parameters.V3_SUB_V4, ((Double) v3) - ((Double) v4));
 			}
 			if (parameters.contains(Parameters.T1_SUB_T2)) {
 				Object t1 = tr.getValues().get(Parameters.AVG_TEMP1);
 				Object t2 = tr.getValues().get(Parameters.AVG_TEMP2);
 				if (t1 != null && t2 != null)
-					tr.getValues().put(Parameters.T1_SUB_T2, ((Float) t1) - ((Float) t2));
+					tr.getValues().put(Parameters.T1_SUB_T2, ((Double) t1) - ((Double) t2));
 			}
 			if (parameters.contains(Parameters.T3_SUB_T4)) {
 				Object t1 = tr.getValues().get(Parameters.AVG_TEMP3);
 				Object t2 = tr.getValues().get(Parameters.AVG_TEMP4);
 				if (t1 != null && t2 != null)
-					tr.getValues().put(Parameters.T3_SUB_T4, ((Float) t1) - ((Float) t2));
+					tr.getValues().put(Parameters.T3_SUB_T4, ((Double) t1) - ((Double) t2));
 			}
 			addErrorColumns(tr, le);
 			listTableRow.add(tr);
-		} while (startDateTime.isBefore(endDateTime));
+		}
 		addSumRow(listTableRow, parameters);
 		addAvgRow(listTableRow, parameters);
 		result.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
@@ -169,31 +179,55 @@ public class OpenArchiveHandler implements EventHandler {
 	}
 
 	private void addAvgRow(List<TableRow> listTableRow, List<Parameters> parameters) {
-		// TODO Auto-generated method stub
+
+		TableRow trAvg = new TableRow();
+		trAvg.setDateTime("СРЕДНЕЕ:");
+		for (Parameters parameter : parameters) {
+			if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+					|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)
+					|| parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)
+					|| parameter.equals(Parameters.T1_SUB_T2) || parameter.equals(Parameters.T3_SUB_T4)) {
+				Double val = new Double(0);
+				int count = 0;
+				for (TableRow tr : listTableRow) {
+					if (tr.getValues().get(parameter) != null && tr.getValues().get(parameter) instanceof Double) {
+						val = val + (double) tr.getValues().get(parameter);
+						count++;
+					}
+				}
+				if (count != 0)
+					val = new BigDecimal(val / count + "").setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				trAvg.getValues().put(parameter, val);
+			} else {
+				trAvg.getValues().put(parameter, "");
+			}
+		}
+		if (trAvg != null)
+			listTableRow.add(trAvg);
 
 	}
 
 	private void addSumRow(List<TableRow> listTableRow, List<Parameters> parameters) {
-		TableRow trSum = null;
+		TableRow trSum = new TableRow();
+		trSum.setDateTime("ИТОГО:");
 		for (Parameters parameter : parameters) {
 			if (!parameter.equals(Parameters.AVG_TEMP1) && !parameter.equals(Parameters.AVG_TEMP2)
 					&& !parameter.equals(Parameters.AVG_TEMP3) && !parameter.equals(Parameters.AVG_TEMP4)
 					&& !parameter.equals(Parameters.AVG_P1) && !parameter.equals(Parameters.AVG_P2)
 					&& !parameter.equals(Parameters.T1_SUB_T2) && !parameter.equals(Parameters.T3_SUB_T4)
 					&& !parameter.equals(Parameters.ERROR_CODE1) && !parameter.equals(Parameters.ERROR_CODE2)) {
-				if (trSum == null) {
-					trSum = new TableRow();
-					trSum.setDateTime("ИТОГО:");
-				}
 				Double val = new Double(0);
 				for (TableRow tr : listTableRow) {
-					if(tr.getValues().get(parameter)!=null)
+					if (tr.getValues().get(parameter) != null)
 						val = val + (double) tr.getValues().get(parameter);
 				}
+				val = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 				trSum.getValues().put(parameter, val);
-			}		
+			} else {
+				trSum.getValues().put(parameter, "");
+			}
 		}
-		if(trSum!=null)
+		if (trSum != null)
 			listTableRow.add(trSum);
 
 	}
@@ -230,13 +264,13 @@ public class OpenArchiveHandler implements EventHandler {
 			Object m1 = tr.getValues().get(Parameters.M1);
 			Object m2 = tr.getValues().get(Parameters.M2);
 			if (m1 != null && m2 != null)
-				tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
+				tr.getValues().put(Parameters.M1_SUB_M2, ((Double) m1) - ((Double) m2));
 		}
 		if (parameters.contains(Parameters.M3_SUB_M4)) {
 			Object m1 = tr.getValues().get(Parameters.M3);
 			Object m2 = tr.getValues().get(Parameters.M4);
 			if (m1 != null && m2 != null)
-				tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
+				tr.getValues().put(Parameters.M3_SUB_M4, ((Double) m1) - ((Double) m2));
 		}
 	}
 
@@ -264,13 +298,13 @@ public class OpenArchiveHandler implements EventHandler {
 			Object m1 = tr.getValues().get(Parameters.M1);
 			Object m2 = tr.getValues().get(Parameters.M2);
 			if (m1 != null && m2 != null)
-				tr.getValues().put(Parameters.M1_SUB_M2, ((Float) m1) - ((Float) m2));
+				tr.getValues().put(Parameters.M1_SUB_M2, ((Double) m1) - ((Double) m2));
 		}
 		if (parameters.contains(Parameters.M3_SUB_M4)) {
 			Object m1 = tr.getValues().get(Parameters.M3);
 			Object m2 = tr.getValues().get(Parameters.M4);
 			if (m1 != null && m2 != null)
-				tr.getValues().put(Parameters.M3_SUB_M4, ((Float) m1) - ((Float) m2));
+				tr.getValues().put(Parameters.M3_SUB_M4, ((Double) m1) - ((Double) m2));
 		}
 	}
 

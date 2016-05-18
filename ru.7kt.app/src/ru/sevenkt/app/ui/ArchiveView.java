@@ -304,7 +304,7 @@ public class ArchiveView implements EventHandler {
 
 				public String getText(Object element) {
 					LocalDateTime date;
-					if (((TableRow) element).getDateTime() instanceof LocalDate) {
+					if (((TableRow) element).getDateTime() instanceof LocalDateTime) {
 						date = (LocalDateTime) ((TableRow) element).getDateTime();
 						return element == null ? "" : date.format(formatter);
 					} else

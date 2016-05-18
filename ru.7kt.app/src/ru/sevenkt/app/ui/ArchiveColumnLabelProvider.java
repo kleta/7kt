@@ -48,6 +48,8 @@ public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 				return bdVal.setScale(4, BigDecimal.ROUND_HALF_UP).toString();
 			}
 		}
+		if (val instanceof String)
+			return val.toString();
 		if (parameter.equals(Parameters.ERROR_CODE1) || parameter.equals(Parameters.ERROR_CODE2))
 			return val == null ? "" : val.toString();
 		return val == null ? "Нет данных" : val.toString();
