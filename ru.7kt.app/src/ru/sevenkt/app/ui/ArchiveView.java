@@ -77,6 +77,8 @@ public class ArchiveView implements EventHandler {
 	@Inject
 	private IEventBroker broker;
 
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+	
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 
 	private Table table;
@@ -90,8 +92,6 @@ public class ArchiveView implements EventHandler {
 	private Button requestButton;
 
 	private ArchiveTypes selectedArchiveType;
-
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 	private TableViewer tableViewer;
 	private ScrolledForm сhartsScrolledform;
@@ -303,12 +303,7 @@ public class ArchiveView implements EventHandler {
 				}
 
 				public String getText(Object element) {
-					LocalDateTime date;
-					if (((TableRow) element).getDateTime() instanceof LocalDateTime) {
-						date = (LocalDateTime) ((TableRow) element).getDateTime();
-						return element == null ? "" : date.format(formatter);
-					} else
-						return element == null ? "" : ((TableRow) element).getDateTime().toString();
+					return element == null ? "" : ((TableRow) element).getFirstColumn();
 				}
 			});
 			TableColumn dateColumn = dateViewerColumn.getColumn();
@@ -400,13 +395,13 @@ public class ArchiveView implements EventHandler {
 	}
 
 	private void createSeries(Parameters parameter, List<?> input, Chart chart, Color c) {
-		Date[] xSeries = new Date[input.size()];
-		double[] ySeries = new double[input.size()];
+		Date[] xSeries = new Date[input.size()-2];
+		double[] ySeries = new double[input.size()-2];
 		int i = 0;
 		for (Object object : input) {
 			TableRow tr = (TableRow) object;
-			if (tr.getDateTime() instanceof LocalDateTime) {
-				LocalDateTime ldt = (LocalDateTime) tr.getDateTime();
+			if (tr instanceof DateTimeTableRow) {
+				LocalDateTime ldt = LocalDateTime.parse(tr.getFirstColumn(), formatter);
 				Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
 
 				Double val = (Double) tr.getValues().get(parameter);

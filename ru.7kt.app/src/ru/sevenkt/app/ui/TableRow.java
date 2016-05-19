@@ -1,32 +1,16 @@
 package ru.sevenkt.app.ui;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import ru.sevenkt.domain.Parameters;
 
-public class TableRow {
+public interface TableRow {
 	
-	private Object firstColumn;
-	
-	private Map<Parameters, Object> values;
+	String getFirstColumn();
 
-	public Object getDateTime() {
-		return firstColumn;
-	}
+	void setFirstColumn(String text);
 
-	public void setDateTime(Object dateTime) {
-		this.firstColumn = dateTime;
-	}
+	Map<Parameters, Object> getValues();
 
-	public Map<Parameters, Object> getValues() {
-		if(values==null)
-			values=new HashMap<>();
-		return values;
-	}
-
-	public void setValues(Map<Parameters, Object> values) {
-		this.values = values;
-	}
-	
+	void setValues(Map<Parameters, Object> values);
 }

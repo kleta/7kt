@@ -35,15 +35,19 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.sevenkt.app.ui.DateTimeTableRow;
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
 
 public class ExportToExcelHandler implements EventHandler {
+	
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 	@Inject
 	private IEventBroker broker;
+	
 	private Shell parentShell;
 
 	Logger LOG = LoggerFactory.getLogger(getClass());
@@ -85,8 +89,9 @@ public class ExportToExcelHandler implements EventHandler {
 			i = 1;
 			for (TableRow tr : tableRows) {
 				row = sheet.createRow(i++);
-				if (tr.getDateTime() instanceof LocalDateTime) {
-					Instant instant = ((LocalDateTime) tr.getDateTime()).atZone(ZoneId.systemDefault()).toInstant();
+				if (tr instanceof DateTimeTableRow) {
+					LocalDateTime ldt = LocalDateTime.parse(tr.getFirstColumn(), formatter);
+					Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
 					Date date = Date.from(instant);
 					Cell cell = row.createCell(0);
 					cell.setCellValue(date);

@@ -121,12 +121,12 @@ public class MonthRecord {
 	
 	@Address(value=66)
 	@Length(value=2)
-	@Parameter(Parameters.ERROR_TIME1)
+	@Parameter(Parameters.NO_ERROR_TIME1)
 	private int timeError1;
 	
 	@Address(value=68)
 	@Length(value=4)
-	@Parameter(Parameters.ERROR_TIME2)
+	@Parameter(Parameters.NO_ERROR_TIME2)
 	private int timeError2;
 	
 	private boolean valid;

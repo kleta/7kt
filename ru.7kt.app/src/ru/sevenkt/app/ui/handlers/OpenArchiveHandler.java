@@ -4,6 +4,7 @@ package ru.sevenkt.app.ui.handlers;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,8 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+import ru.sevenkt.app.ui.DateTimeTableRow;
+import ru.sevenkt.app.ui.SumTableRow;
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Error;
@@ -42,6 +45,8 @@ import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.ParametersConst;
 
 public class OpenArchiveHandler implements EventHandler {
+	
+	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 	@Inject
 	private IEventBroker broker;
@@ -114,13 +119,13 @@ public class OpenArchiveHandler implements EventHandler {
 		}
 		List<TableRow> listTableRow = new ArrayList<>();
 		while (startDateTime.isBefore(endDateTime)) {
-			TableRow tr = new TableRow();
+			TableRow tr = new DateTimeTableRow();
 			List<Measuring> lm = null;
 			List<Error> le = null;
 			switch (archiveType) {
 			case MONTH:
 				startDateTime = startDateTime.plusMonths(1);
-				tr.setDateTime(startDateTime);
+				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
 				addMonthColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
@@ -128,14 +133,14 @@ public class OpenArchiveHandler implements EventHandler {
 				break;
 			case DAY:
 				startDateTime = startDateTime.plusDays(1);
-				tr.setDateTime(startDateTime);
+				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
 				addDayColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
 				break;
 			case HOUR:
 				startDateTime = startDateTime.plusHours(1);
-				tr.setDateTime(startDateTime);
+				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
 				addHourColumns(parameters, tr, lm);
@@ -180,8 +185,8 @@ public class OpenArchiveHandler implements EventHandler {
 
 	private void addAvgRow(List<TableRow> listTableRow, List<Parameters> parameters) {
 
-		TableRow trAvg = new TableRow();
-		trAvg.setDateTime("СРЕДНЕЕ:");
+		TableRow trAvg = new AvgTableRow();
+		trAvg.setFirstColumn("СРЕДНЕЕ:");
 		for (Parameters parameter : parameters) {
 			if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 					|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)
@@ -208,8 +213,8 @@ public class OpenArchiveHandler implements EventHandler {
 	}
 
 	private void addSumRow(List<TableRow> listTableRow, List<Parameters> parameters) {
-		TableRow trSum = new TableRow();
-		trSum.setDateTime("ИТОГО:");
+		TableRow trSum = new SumTableRow();
+		trSum.setFirstColumn("ИТОГО:");
 		for (Parameters parameter : parameters) {
 			if (!parameter.equals(Parameters.AVG_TEMP1) && !parameter.equals(Parameters.AVG_TEMP2)
 					&& !parameter.equals(Parameters.AVG_TEMP3) && !parameter.equals(Parameters.AVG_TEMP4)
@@ -309,8 +314,8 @@ public class OpenArchiveHandler implements EventHandler {
 	}
 
 	private void addErrorColumns(TableRow tr, List<Error> le) {
-		if (tr.getDateTime() instanceof LocalDateTime) {
-			LocalDateTime dateTime = (LocalDateTime) tr.getDateTime();
+		if (tr instanceof DateTimeTableRow) {
+			LocalDateTime dateTime = LocalDateTime.parse(tr.getFirstColumn(), formatter);
 			if (le != null && !le.isEmpty()) {
 				Device device = le.get(0).getDevice();
 				List<Params> params = device.getParams();

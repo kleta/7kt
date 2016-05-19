@@ -27,7 +27,8 @@ public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 	public String getText(Object element) {
 		TableRow tr = (TableRow) element;
 		Object val = tr.getValues().get(parameter);
-		if (parameter.equals(Parameters.ERROR_TIME1) || parameter.equals(Parameters.ERROR_TIME2)) {
+		if (parameter.equals(Parameters.ERROR_TIME1) || parameter.equals(Parameters.ERROR_TIME2)
+				|| parameter.equals(Parameters.NO_ERROR_TIME1) || parameter.equals(Parameters.NO_ERROR_TIME2)) {
 			if (val != null) {
 				long round = Math.round((double) val);
 				return round + "";
