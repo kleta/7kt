@@ -29,7 +29,7 @@ public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 		Object val = tr.getValues().get(parameter);
 		if (parameter.equals(Parameters.ERROR_TIME1) || parameter.equals(Parameters.ERROR_TIME2)
 				|| parameter.equals(Parameters.NO_ERROR_TIME1) || parameter.equals(Parameters.NO_ERROR_TIME2)) {
-			if (val != null) {
+			if (val != null && !val.equals("")) {
 				long round = Math.round((double) val);
 				return round + "";
 			} else

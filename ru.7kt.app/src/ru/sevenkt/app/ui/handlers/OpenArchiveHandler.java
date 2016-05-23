@@ -207,8 +207,7 @@ public class OpenArchiveHandler implements EventHandler {
 				trAvg.getValues().put(parameter, "");
 			}
 		}
-		if (trAvg != null)
-			listTableRow.add(trAvg);
+		listTableRow.add(trAvg);
 
 	}
 
@@ -226,7 +225,7 @@ public class OpenArchiveHandler implements EventHandler {
 					if (tr.getValues().get(parameter) != null)
 						val = val + (double) tr.getValues().get(parameter);
 				}
-				val = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				val = new BigDecimal(val + "").setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 				trSum.getValues().put(parameter, val);
 			} else {
 				trSum.getValues().put(parameter, "");

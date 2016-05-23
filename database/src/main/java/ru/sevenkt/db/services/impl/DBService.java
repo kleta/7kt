@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,7 @@ public class DBService implements IDBService {
 	private ParamsRepo pr;
 
 	@Autowired
-	private MeasuringRepo mr;
+	private MeasuringRepo measuringRepo;
 
 	@Autowired
 	private NodeRepo nr;
@@ -136,7 +137,7 @@ public class DBService implements IDBService {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
-			mr.save(measuring);
+			measuringRepo.save(measuring);
 		} catch (Exception ex) {
 			tx.rollback();
 			throw ex;
@@ -174,8 +175,8 @@ public class DBService implements IDBService {
 	@Override
 	public void deleteDevice(Device device) {
 		EntityTransaction tx = em.getTransaction();
-		Measuring minM = mr.findTopByDeviceOrderByDateTimeAsc(device);
-		Measuring maxM = mr.findTopByDeviceOrderByDateTimeDesc(device);
+		Measuring minM = measuringRepo.findTopByDeviceOrderByDateTimeAsc(device);
+		Measuring maxM = measuringRepo.findTopByDeviceOrderByDateTimeDesc(device);
 
 		if (minM != null && maxM != null) {
 			LocalDateTime min = minM.getDateTime();
@@ -183,7 +184,7 @@ public class DBService implements IDBService {
 			while (min.isBefore(max)) {
 				tx.begin();
 				try {
-					mr.deleteByDeviceAndDateTimeBetween(device, min, min.plusMonths(1));
+					measuringRepo.deleteByDeviceAndDateTimeBetween(device, min, min.plusMonths(1));
 					er.deleteAll();
 					min = min.plusMonths(1);
 				} catch (Exception ex) {
@@ -251,7 +252,7 @@ public class DBService implements IDBService {
 		try {
 			for (Measuring measuring : measurings) {
 				measuring.setTimestamp(LocalDateTime.now());
-				mr.save(measuring);
+				measuringRepo.save(measuring);
 			}
 		} catch (Exception ex) {
 			tx.rollback();
@@ -275,8 +276,7 @@ public class DBService implements IDBService {
 	@Override
 	public List<Measuring> findArchive(Device device, LocalDateTime startDate, LocalDateTime endDate,
 			ArchiveTypes archiveType) {
-		return mr.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate,
-				endDate);
+		return measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate, endDate);
 	}
 
 	@Override
@@ -348,17 +348,52 @@ public class DBService implements IDBService {
 						m.setDevice(device);
 						m.setParameter(field.getAnnotation(Parameter.class).value());
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
-						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
-								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+						switch (parameter) {
+						case AVG_TEMP1:
+						case AVG_TEMP2:
+						case AVG_TEMP3:
+						case AVG_TEMP4: {
 							float val = field.getInt(mr);
-							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
-						} else {
+							m.setValue((double) (val / 100 > 150 ? 0 : val / 100));
+						}
+							break;
+						case AVG_P1:
+						case AVG_P2: {
 							float val = field.getFloat(mr);
-							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
-								val = val / 10;
-							}
+							val = val / 10;
 							m.setValue(new Double(val + ""));
 						}
+							break;
+						case ERROR_BYTE1:
+						case ERROR_BYTE2:
+							m.setValue((double) field.getInt(mr));
+							break;
+						case ERROR_TIME1:
+						case ERROR_TIME2: {
+							LocalDateTime dtTo = m.getDateTime();
+							LocalDateTime dtFrom = dtTo.minusMonths(1);
+							long hours = ChronoUnit.HOURS.between(dtFrom, dtTo);
+							m.setValue(hours - (double) field.getInt(mr));
+							break;
+						}
+
+						default:
+							float val = field.getFloat(mr);
+							m.setValue(new Double(val + ""));
+							break;
+						}
+						
+//						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
+//								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+//							float val = field.getInt(mr);
+//							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
+//						} else {
+//							float val = field.getFloat(mr);
+//							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
+//								val = val / 10;
+//							}
+//							m.setValue(new Double(val + ""));
+//						}
 						measurings.add(m);
 					}
 				}
@@ -379,8 +414,8 @@ public class DBService implements IDBService {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-//			if (localDate.equals(LocalDate.of(2016, 2, 4)))
-//				System.out.println();
+			// if (localDate.equals(LocalDate.of(2016, 2, 4)))
+			// System.out.println();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
@@ -461,7 +496,7 @@ public class DBService implements IDBService {
 								monthErrorHours1.put(monthDt, countHours);
 							}
 							monthErrorHours1.put(monthDt, ++countHours);
-							mr.save(m);
+							measuringRepo.save(m);
 						}
 					if (!thisHourErrorTimeAlreadyInsert2) {
 						if (error.getErrorCode().equals(ErrorCodes.E2) || error.getErrorCode().equals(ErrorCodes.V2)
@@ -480,7 +515,7 @@ public class DBService implements IDBService {
 								monthErrorHours2.put(monthDt, countHours);
 							}
 							monthErrorHours2.put(monthDt, ++countHours);
-							mr.save(m);
+							measuringRepo.save(m);
 						}
 
 					}
@@ -496,7 +531,7 @@ public class DBService implements IDBService {
 				m.setTimestamp(LocalDateTime.now());
 				m.setValue(dayErrorHours1.get(dt) + 0.0);
 				m.setParameter(Parameters.ERROR_TIME1);
-				mr.save(m);
+				measuringRepo.save(m);
 			}
 			Set<LocalDateTime> dayKey2 = dayErrorHours2.keySet();
 			for (LocalDateTime dt : dayKey2) {
@@ -507,7 +542,7 @@ public class DBService implements IDBService {
 				m.setTimestamp(LocalDateTime.now());
 				m.setValue(dayErrorHours2.get(dt) + 0.0);
 				m.setParameter(Parameters.ERROR_TIME2);
-				mr.save(m);
+				measuringRepo.save(m);
 			}
 			Set<LocalDateTime> monthKeySet1 = monthErrorHours1.keySet();
 			for (LocalDateTime dt : monthKeySet1) {
@@ -518,7 +553,7 @@ public class DBService implements IDBService {
 				m.setTimestamp(LocalDateTime.now());
 				m.setValue(monthErrorHours1.get(dt) + 0.0);
 				m.setParameter(Parameters.ERROR_TIME1);
-				mr.save(m);
+				measuringRepo.save(m);
 			}
 			Set<LocalDateTime> monthKey2 = monthErrorHours2.keySet();
 			for (LocalDateTime dt : monthKey2) {
@@ -529,7 +564,7 @@ public class DBService implements IDBService {
 				m.setTimestamp(LocalDateTime.now());
 				m.setValue(monthErrorHours2.get(dt) + 0.0);
 				m.setParameter(Parameters.ERROR_TIME2);
-				mr.save(m);
+				measuringRepo.save(m);
 			}
 		}
 
@@ -1044,25 +1079,62 @@ public class DBService implements IDBService {
 						m.setDateTime(dr.getDate().atTime(0, 0));
 						Parameters parameter = field.getAnnotation(Parameter.class).value();
 						m.setParameter(parameter);
-						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
-								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
+						switch (parameter) {
+						case AVG_TEMP1:
+						case AVG_TEMP2:
+						case AVG_TEMP3:
+						case AVG_TEMP4: {
 							float val = field.getInt(dr);
-							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
-						} else {
-							float val = field.getFloat(dr);
-							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
-								val = val / 10;
-
-								m.setValue(new Double(val + ""));
-							} else if (parameter.equals(Parameters.ERROR_BYTE1)
-									|| parameter.equals(Parameters.ERROR_BYTE2)) {
-								m.setValue((double) field.getInt(dr));
-
-							} else {
-								BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-								m.setValue(bdVal.doubleValue());
-							}
+							m.setValue((double) (val / 100 > 150 ? 0 : val / 100));
 						}
+							break;
+						case AVG_P1:
+						case AVG_P2: {
+							float val = field.getFloat(dr);
+							val = val / 10;
+							m.setValue(new Double(val + ""));
+						}
+							break;
+						case ERROR_BYTE1:
+						case ERROR_BYTE2:
+							m.setValue((double) field.getInt(dr));
+							break;
+						case ERROR_TIME1:
+						case ERROR_TIME2: {
+							long hours = ChronoUnit.HOURS.between(m.getDateTime().minusDays(1), m.getDateTime());
+							m.setValue(hours - (double) field.getInt(dr));
+							break;
+						}
+						default:
+							float val = field.getFloat(dr);
+							BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+							m.setValue(bdVal.doubleValue());
+							break;
+						}
+						// if (parameter.equals(Parameters.AVG_TEMP1) ||
+						// parameter.equals(Parameters.AVG_TEMP2)
+						// || parameter.equals(Parameters.AVG_TEMP3) ||
+						// parameter.equals(Parameters.AVG_TEMP4)) {
+						// float val = field.getInt(dr);
+						// m.setValue((double) (val / 100 > 100 ? 0 : val /
+						// 100));
+						// } else {
+						// float val = field.getFloat(dr);
+						// if (parameter.equals(Parameters.AVG_P1) ||
+						// parameter.equals(Parameters.AVG_P2)) {
+						// val = val / 10;
+						//
+						// m.setValue(new Double(val + ""));
+						// } else if (parameter.equals(Parameters.ERROR_BYTE1)
+						// || parameter.equals(Parameters.ERROR_BYTE2)) {
+						// m.setValue((double) field.getInt(dr));
+						//
+						// } else {
+						// BigDecimal bdVal = new BigDecimal(val +
+						// "").setScale(2, BigDecimal.ROUND_HALF_UP);
+						// m.setValue(bdVal.doubleValue());
+						// }
+						// }
 						measurings.add(m);
 					}
 				}
@@ -1096,9 +1168,11 @@ public class DBService implements IDBService {
 		Field[] fields = HourRecord.class.getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-//			if (field.getName().equals("errorChannel1") || field.getName().equals("errorChannel2"))
-//				System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
-//						+ Integer.toBinaryString(field.getInt(hr)) + ":" + field.getInt(hr));
+			// if (field.getName().equals("errorChannel1") ||
+			// field.getName().equals("errorChannel2"))
+			// System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
+			// + Integer.toBinaryString(field.getInt(hr)) + ":" +
+			// field.getInt(hr));
 			if (field.isAnnotationPresent(Parameter.class)) {
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.HOUR);
@@ -1162,32 +1236,32 @@ public class DBService implements IDBService {
 				case V1:
 					bdDay = new BigDecimal(dayConsumption.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 					bdSumDay = new BigDecimal(sumDay.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
 					break;
 				case V2:
 					bdDay = new BigDecimal(dayConsumption.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 					bdSumDay = new BigDecimal(sumDay.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
 					break;
 				case V3:
 					bdDay = new BigDecimal(dayConsumption.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 					bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
 					break;
 				case V4:
 					bdDay = new BigDecimal(dayConsumption.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 					bdSumDay = new BigDecimal(sumDay.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
 					break;
 				case E1:
 					bdDay = new BigDecimal(dayConsumption.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 					bdSumDay = new BigDecimal(sumDay.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
 					break;
 				case E2:
 					bdDay = new BigDecimal(dayConsumption.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
 					bdSumDay = new BigDecimal(sumDay.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
 					break;
 				default:
 					break;

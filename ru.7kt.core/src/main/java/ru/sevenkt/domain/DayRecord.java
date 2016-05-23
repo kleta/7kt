@@ -115,12 +115,12 @@ public class DayRecord implements Cloneable {
 
 	@Address(value = 54)
 	@Length(value = 1)
-	@Parameter(Parameters.NO_ERROR_TIME1)
+	@Parameter(Parameters.ERROR_TIME1)
 	private int timeError1;
 
 	@Address(value = 55)
 	@Length(value = 1)
-	@Parameter(Parameters.NO_ERROR_TIME2)
+	@Parameter(Parameters.ERROR_TIME2)
 	private int timeError2;
 
 	private boolean valid;
