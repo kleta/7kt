@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -86,8 +84,8 @@ public class OpenArchiveHandler implements EventHandler {
 		Device device = (Device) event.getProperty(AppEventConstants.DEVICE);
 		LocalDate startDate = (LocalDate) event.getProperty(AppEventConstants.START_DATE);
 		LocalDateTime startDateTime = startDate.atStartOfDay();
-		if (archiveType.equals(ArchiveTypes.MONTH) && startDateTime.getDayOfMonth() != 1)
-			startDateTime = startDateTime.plusMonths(1).withDayOfMonth(1);
+//		if (archiveType.equals(ArchiveTypes.MONTH) && startDateTime.getDayOfMonth() != 1)
+//			startDateTime = startDateTime.plusMonths(1).withDayOfMonth(1);
 		LocalDate endDate = (LocalDate) event.getProperty(AppEventConstants.END_DATE);
 		LocalDateTime endDateTime = endDate.atStartOfDay();
 		Map<String, Object> result = new HashMap<>();

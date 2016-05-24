@@ -382,18 +382,22 @@ public class DBService implements IDBService {
 							m.setValue(new Double(val + ""));
 							break;
 						}
-						
-//						if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
-//								|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
-//							float val = field.getInt(mr);
-//							m.setValue((double) (val / 100 > 100 ? 0 : val / 100));
-//						} else {
-//							float val = field.getFloat(mr);
-//							if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
-//								val = val / 10;
-//							}
-//							m.setValue(new Double(val + ""));
-//						}
+
+						// if (parameter.equals(Parameters.AVG_TEMP1) ||
+						// parameter.equals(Parameters.AVG_TEMP2)
+						// || parameter.equals(Parameters.AVG_TEMP3) ||
+						// parameter.equals(Parameters.AVG_TEMP4)) {
+						// float val = field.getInt(mr);
+						// m.setValue((double) (val / 100 > 100 ? 0 : val /
+						// 100));
+						// } else {
+						// float val = field.getFloat(mr);
+						// if (parameter.equals(Parameters.AVG_P1) ||
+						// parameter.equals(Parameters.AVG_P2)) {
+						// val = val / 10;
+						// }
+						// m.setValue(new Double(val + ""));
+						// }
 						measurings.add(m);
 					}
 				}
@@ -414,8 +418,8 @@ public class DBService implements IDBService {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-			// if (localDate.equals(LocalDate.of(2016, 2, 4)))
-			// System.out.println();
+			if (localDate.equals(LocalDate.of(2016, 3, 1)))
+				System.out.println();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
@@ -1107,8 +1111,9 @@ public class DBService implements IDBService {
 						}
 						default:
 							float val = field.getFloat(dr);
-							BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-							m.setValue(bdVal.doubleValue());
+							BigDecimal bdVal = new BigDecimal(val + "").setScale(10, BigDecimal.ROUND_HALF_UP);
+							// m.setValue(bdVal.doubleValue());
+							m.setValue(new Double(val + ""));
 							break;
 						}
 						// if (parameter.equals(Parameters.AVG_TEMP1) ||
@@ -1226,53 +1231,67 @@ public class DBService implements IDBService {
 	}
 
 	private void smoothHourMeasurings(List<Measuring> measurings, DayRecord dayConsumption, DayRecord sumDay) {
+		Map<Parameters, BigDecimal> multitiplicands = calculateMultiplicands(dayConsumption, sumDay);
 		for (Measuring measuring : measurings) {
 			Parameters parameter = measuring.getParameter();
-			BigDecimal multiplicand = new BigDecimal("1");
-			BigDecimal bdDay = null;
-			BigDecimal bdSumDay = null;
-			if (measuring.getValue().doubleValue() > 0)
-				switch (parameter) {
-				case V1:
-					bdDay = new BigDecimal(dayConsumption.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					bdSumDay = new BigDecimal(sumDay.getVolume1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
-					break;
-				case V2:
-					bdDay = new BigDecimal(dayConsumption.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					bdSumDay = new BigDecimal(sumDay.getVolume2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
-					break;
-				case V3:
-					bdDay = new BigDecimal(dayConsumption.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
-					break;
-				case V4:
-					bdDay = new BigDecimal(dayConsumption.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					bdSumDay = new BigDecimal(sumDay.getVolume4() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
-					break;
-				case E1:
-					bdDay = new BigDecimal(dayConsumption.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					bdSumDay = new BigDecimal(sumDay.getEnergy1() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
-					break;
-				case E2:
-					bdDay = new BigDecimal(dayConsumption.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					bdSumDay = new BigDecimal(sumDay.getEnergy2() + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-					multiplicand = bdDay.divide(bdSumDay, 2, BigDecimal.ROUND_HALF_UP);
-					break;
-				default:
-					break;
-				}
 			double value = measuring.getValue();
-			BigDecimal bdValue = new BigDecimal(value + "").setScale(2, BigDecimal.ROUND_HALF_UP).multiply(multiplicand)
-					.setScale(4, BigDecimal.ROUND_HALF_UP);
-
-			measuring.setValue(bdValue.doubleValue());
+			BigDecimal multiplicand = multitiplicands.get(parameter);
+			if (multiplicand != null) {
+				BigDecimal bdValue = new BigDecimal(value + "").setScale(5, BigDecimal.ROUND_HALF_UP)
+						.multiply(multiplicand).setScale(10, BigDecimal.ROUND_HALF_UP);
+				measuring.setValue(bdValue.doubleValue());
+			}
 		}
 
+	}
+
+	private Map<Parameters, BigDecimal> calculateMultiplicands(DayRecord dayConsumption, DayRecord sumDay) {
+		Map<Parameters, BigDecimal> map = new HashMap<>();
+		BigDecimal multiplicand = new BigDecimal("1");
+		BigDecimal bdDay = null;
+		BigDecimal bdSumDay = null;
+		for (Parameters parameter : Parameters.values()) {
+			switch (parameter) {
+			case V1:
+				bdDay = new BigDecimal(dayConsumption.getVolume1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+
+				break;
+			case V2:
+				bdDay = new BigDecimal(dayConsumption.getVolume2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+
+				break;
+			case V3:
+				bdDay = new BigDecimal(dayConsumption.getVolume3() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				break;
+			case V4:
+				bdDay = new BigDecimal(dayConsumption.getVolume4() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume4() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+
+				break;
+			case E1:
+				// if(dayConsumption.getDate().equals(LocalDate.of(2016, 3, 2)))
+				// System.out.println();
+				bdDay = new BigDecimal(dayConsumption.getEnergy1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getEnergy1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+
+				break;
+			case E2:
+				bdDay = new BigDecimal(dayConsumption.getEnergy2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getEnergy2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+
+				break;
+			default:
+				break;
+			}
+			if (bdSumDay!=null && bdSumDay.doubleValue() > 0)
+				multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+			map.put(parameter, multiplicand);
+		}
+
+		return map;
 	}
 
 	@Override

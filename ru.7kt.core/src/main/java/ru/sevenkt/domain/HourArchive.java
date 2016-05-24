@@ -71,26 +71,27 @@ public class HourArchive {
 				dayRecord.setAvgTemp4(dayRecord.getAvgTemp4() + hr.getAvgTemp4());
 
 				dayRecord.setEnergy1(new BigDecimal(dayRecord.getEnergy1() + "")
-						.add(new BigDecimal(hr.getEnergy1()).setScale(2, BigDecimal.ROUND_HALF_UP)).floatValue());
+						.add(new BigDecimal(hr.getEnergy1()).setScale(5, BigDecimal.ROUND_HALF_UP)).floatValue());
 				dayRecord.setEnergy2(new BigDecimal(dayRecord.getEnergy2() + "")
-						.add(new BigDecimal(hr.getEnergy2()).setScale(2, BigDecimal.ROUND_HALF_UP)).floatValue());
+						.add(new BigDecimal(hr.getEnergy2()).setScale(5, BigDecimal.ROUND_HALF_UP)).floatValue());
 
 				float hrV1 = hr.getVolume1() * settings.getVolumeByImpulsSetting1();
 				dayRecord.setVolume1(new BigDecimal(dayRecord.getVolume1() + "")
-						.add(new BigDecimal(hrV1).setScale(2, BigDecimal.ROUND_HALF_UP)).floatValue());
+						.add(new BigDecimal(hrV1).setScale(5, BigDecimal.ROUND_HALF_UP)).floatValue());
 
 				float hrV2 = hr.getVolume2() * settings.getVolumeByImpulsSetting2();
 				dayRecord.setVolume2(new BigDecimal(dayRecord.getVolume2() + "")
-						.add(new BigDecimal(hrV2).setScale(2, BigDecimal.ROUND_HALF_UP)).floatValue());
+						.add(new BigDecimal(hrV2).setScale(5, BigDecimal.ROUND_HALF_UP)).floatValue());
 
 				float hrV3 = hr.getVolume3() * settings.getVolumeByImpulsSetting3();
 				dayRecord.setVolume3(new BigDecimal(dayRecord.getVolume3() + "")
-						.add(new BigDecimal(hrV3).setScale(2, BigDecimal.ROUND_HALF_UP)).floatValue());
+						.add(new BigDecimal(hrV3).setScale(5, BigDecimal.ROUND_HALF_UP)).floatValue());
 
 				float hrV4 = hr.getVolume4() * settings.getVolumeByImpulsSetting4();
 				dayRecord.setVolume4(new BigDecimal(dayRecord.getVolume4() + "")
-						.add(new BigDecimal(hrV4).setScale(2, BigDecimal.ROUND_HALF_UP)).floatValue());
+						.add(new BigDecimal(hrV4).setScale(5, BigDecimal.ROUND_HALF_UP)).floatValue());
 			}
+//			System.out.println(startDateTime);
 			startDateTime = startDateTime.plusHours(1);
 		}
 		dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() / 24);
