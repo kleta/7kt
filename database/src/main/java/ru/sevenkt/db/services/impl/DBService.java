@@ -418,8 +418,8 @@ public class DBService implements IDBService {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-			if (localDate.equals(LocalDate.of(2016, 3, 1)))
-				System.out.println();
+//			if (localDate.equals(LocalDate.of(2016, 3, 1)))
+//				System.out.println();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
@@ -447,7 +447,7 @@ public class DBService implements IDBService {
 		}
 		errors.forEach(e -> e.setDevice(device));
 		saveHourErrors(errors);
-		insertHourErrorTimes(errors);
+		//insertHourErrorTimes(errors, dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate(), dateTime);
 
 	}
 
@@ -464,7 +464,6 @@ public class DBService implements IDBService {
 			for (LocalDateTime localDateTime : keySet) {
 				List<Error> errorsWithoutU = groupByDateTime.get(localDateTime).stream()
 						.filter(e -> !e.getErrorCode().equals(ErrorCodes.U)).collect(Collectors.toList());
-				boolean thisHourErrorTimeAlreadyInsert1 = false, thisHourErrorTimeAlreadyInsert2 = false;
 				for (Error error : errorsWithoutU) {
 					LocalTime time = error.getDateTime().toLocalTime();
 					LocalDateTime dayDt, monthDt;
@@ -482,47 +481,52 @@ public class DBService implements IDBService {
 					m.setDateTime(localDateTime);
 					m.setDevice(error.getDevice());
 					m.setTimestamp(LocalDateTime.now());
-					m.setValue(new Double("1"));
-					if (!thisHourErrorTimeAlreadyInsert1)
-						if (error.getErrorCode().equals(ErrorCodes.E1) || error.getErrorCode().equals(ErrorCodes.V1)
-								|| error.getErrorCode().equals(ErrorCodes.T1)) {
-							m.setParameter(Parameters.ERROR_TIME1);
-							thisHourErrorTimeAlreadyInsert1 = true;
-							Integer countHours = dayErrorHours1.get(dayDt);
-							if (countHours == null) {
-								countHours = 0;
-								dayErrorHours1.put(dayDt, countHours);
-							}
-							dayErrorHours1.put(dayDt, ++countHours);
-							countHours = monthErrorHours1.get(monthDt);
-							if (countHours == null) {
-								countHours = 0;
-								monthErrorHours1.put(monthDt, countHours);
-							}
-							monthErrorHours1.put(monthDt, ++countHours);
-							measuringRepo.save(m);
+					m.setValue(new Double("0"));		
+					ErrorCodes errorCode = error.getErrorCode();
+					switch (errorCode) {
+					case E1:
+					case V1:
+					case T1:{
+						m.setParameter(Parameters.ERROR_TIME1);
+						m.setValue((double) 1);
+						Integer countHours = dayErrorHours1.get(dayDt);
+						if (countHours == null) {
+							countHours = 0;
+							dayErrorHours1.put(dayDt, countHours);
 						}
-					if (!thisHourErrorTimeAlreadyInsert2) {
-						if (error.getErrorCode().equals(ErrorCodes.E2) || error.getErrorCode().equals(ErrorCodes.V2)
-								|| error.getErrorCode().equals(ErrorCodes.T2)) {
-							m.setParameter(Parameters.ERROR_TIME2);
-							thisHourErrorTimeAlreadyInsert2 = true;
-							Integer countHours = dayErrorHours2.get(dayDt);
-							if (countHours == null) {
-								countHours = 0;
-								dayErrorHours2.put(dayDt, countHours);
-							}
-							dayErrorHours2.put(dayDt, ++countHours);
-							countHours = monthErrorHours2.get(monthDt);
-							if (countHours == null) {
-								countHours = 0;
-								monthErrorHours2.put(monthDt, countHours);
-							}
-							monthErrorHours2.put(monthDt, ++countHours);
-							measuringRepo.save(m);
+						dayErrorHours1.put(dayDt, ++countHours);
+						countHours = monthErrorHours1.get(monthDt);
+						if (countHours == null) {
+							countHours = 0;
+							monthErrorHours1.put(monthDt, countHours);
 						}
-
+						monthErrorHours1.put(monthDt, ++countHours);
 					}
+						break;
+					case E2:
+					case V2:
+					case T2:{
+						m.setParameter(Parameters.ERROR_TIME2);
+						m.setValue((double) 1);
+						Integer countHours = dayErrorHours2.get(dayDt);
+						if (countHours == null) {
+							countHours = 0;
+							dayErrorHours2.put(dayDt, countHours);
+						}
+						dayErrorHours2.put(dayDt, ++countHours);
+						countHours = monthErrorHours2.get(monthDt);
+						if (countHours == null) {
+							countHours = 0;
+							monthErrorHours2.put(monthDt, countHours);
+						}
+						monthErrorHours2.put(monthDt, ++countHours);
+					}
+						break;
+
+					default:
+						break;
+					}
+					measuringRepo.save(m);
 				}
 
 			}
@@ -1066,16 +1070,16 @@ public class DBService implements IDBService {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.getName().equals("errorChannel1")) {
-						System.out.println(
-								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
-					}
-					if (field.getName().equals("errorChannel2")) {
-						System.out.println(
-								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
-					}
+//					if (field.getName().equals("errorChannel1")) {
+//						System.out.println(
+//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
+//					}
+//					if (field.getName().equals("errorChannel2")) {
+//						System.out.println(
+//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
+//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
+//					}
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
