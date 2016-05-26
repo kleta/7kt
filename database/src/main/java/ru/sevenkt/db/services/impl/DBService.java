@@ -447,7 +447,7 @@ public class DBService implements IDBService {
 		}
 		errors.forEach(e -> e.setDevice(device));
 		saveHourErrors(errors);
-		//insertHourErrorTimes(errors, dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate(), dateTime);
+		insertHourErrorTimes(errors);
 
 	}
 
