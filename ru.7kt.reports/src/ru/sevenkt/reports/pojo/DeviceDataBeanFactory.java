@@ -1,4 +1,4 @@
-package ru.sevenkt.reports.beans1;
+package ru.sevenkt.reports.pojo;
 
 import java.util.ArrayList;
 import java.util.List;

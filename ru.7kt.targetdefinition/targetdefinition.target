@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="70">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="72">
 <locations>
 <location path="${project_loc}\gemini-blueprint" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -8,12 +8,16 @@
 <repository location="http://dist.springsource.com/release/TOOLS/update/3.7.2.RELEASE/e4.5/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.persistence.jpa.feature.group" version="2.6.1.v20150916-55dc7c3"/>
-<repository location="http://download.eclipse.org/rt/eclipselink/updates/2.6.1.v20150916-55dc7c3"/>
+<unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="2.2.102.v20160129-0947"/>
+<unit id="org.eclipse.jdt.source.feature.group" version="3.11.2.v20160212-1500"/>
+<unit id="org.eclipse.rcp.sdk.id" version="4.5.2.M20160212-1500"/>
+<unit id="org.eclipse.equinox.executable.feature.group" version="3.6.200.v20150602-1417"/>
+<unit id="org.eclipse.jubula.feature.launch.rcp.feature.group" version="3.1.0.201602041537"/>
+<repository location="http://download.eclipse.org/releases/mars/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="com.jaspersoft.studio.feature.feature.group" version="6.2.1.final"/>
-<repository location="http://jasperstudio.sourceforge.net/updates/"/>
+<unit id="org.eclipse.persistence.jpa.feature.group" version="2.6.1.v20150916-55dc7c3"/>
+<repository location="http://download.eclipse.org/rt/eclipselink/updates/2.6.1.v20150916-55dc7c3"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.apache.poi" version="3.9.0.v201405241750"/>
@@ -25,12 +29,8 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="2.2.102.v20160129-0947"/>
-<unit id="org.eclipse.jdt.source.feature.group" version="3.11.2.v20160212-1500"/>
-<unit id="org.eclipse.rcp.sdk.id" version="4.5.2.M20160212-1500"/>
-<unit id="org.eclipse.equinox.executable.feature.group" version="3.6.200.v20150602-1417"/>
-<unit id="org.eclipse.jubula.feature.launch.rcp.feature.group" version="3.1.0.201602041537"/>
-<repository location="http://download.eclipse.org/releases/mars/"/>
+<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="1.0.0.201605261840"/>
+<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
 </location>
 </locations>
 <environment>

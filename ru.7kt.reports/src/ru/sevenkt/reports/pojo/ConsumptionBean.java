@@ -1,4 +1,4 @@
-package ru.sevenkt.reports.beans1;
+package ru.sevenkt.reports.pojo;
 
 public class ConsumptionBean {
 

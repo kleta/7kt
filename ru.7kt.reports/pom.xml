@@ -68,4 +68,11 @@
   	<relativePath>../ru.7kt.parent</relativePath>
   </parent>
   <packaging>eclipse-plugin</packaging>
+  <dependencies>
+  	<dependency>
+  		<groupId>ru.7kt</groupId>
+  		<artifactId>ru.khakensb.reports.pojo</artifactId>
+  		<version>1.0.0</version>
+  	</dependency>
+  </dependencies>
 </project>
