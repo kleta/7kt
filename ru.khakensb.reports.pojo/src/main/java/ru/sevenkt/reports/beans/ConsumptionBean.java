@@ -8,6 +8,10 @@ public class ConsumptionBean {
 
 	private Double e2;
 
+	private Double p1;
+	
+	private Double p2;
+
 	private Double v1;
 
 	private Double v2;
@@ -15,10 +19,6 @@ public class ConsumptionBean {
 	private Double v3;
 
 	private Double v4;
-
-	private Double v1Subv2;
-
-	private Double v3Subv4;
 
 	private Double t1;
 
@@ -28,10 +28,6 @@ public class ConsumptionBean {
 
 	private Double t4;
 
-	private Double t1Subt2;
-
-	private Double t3Subt4;
-
 	private Double m1;
 	
 	private Double m2;
@@ -40,10 +36,6 @@ public class ConsumptionBean {
 	
 	private Double m4;
 	
-	private Double m1Subm2;
-	
-	private Double m3Subm4;
-
 	public String getDate() {
 		return date;
 	}
@@ -100,22 +92,6 @@ public class ConsumptionBean {
 		this.v4 = v4;
 	}
 
-	public Double getV1Subv2() {
-		return v1Subv2;
-	}
-
-	public void setV1Subv2(Double v1Subv2) {
-		this.v1Subv2 = v1Subv2;
-	}
-
-	public Double getV3Subv4() {
-		return v3Subv4;
-	}
-
-	public void setV3Subv4(Double v3Subv4) {
-		this.v3Subv4 = v3Subv4;
-	}
-
 	public Double getT1() {
 		return t1;
 	}
@@ -146,22 +122,6 @@ public class ConsumptionBean {
 
 	public void setT4(Double t4) {
 		this.t4 = t4;
-	}
-
-	public Double getT1Subt2() {
-		return t1Subt2;
-	}
-
-	public void setT1Subt2(Double t1Subt2) {
-		this.t1Subt2 = t1Subt2;
-	}
-
-	public Double getT3Subt4() {
-		return t3Subt4;
-	}
-
-	public void setT3Subt4(Double t3Subt4) {
-		this.t3Subt4 = t3Subt4;
 	}
 
 	public Double getM1() {
@@ -196,21 +156,20 @@ public class ConsumptionBean {
 		this.m4 = m4;
 	}
 
-	public Double getM1Subm2() {
-		return m1Subm2;
+	public Double getP1() {
+		return p1;
 	}
 
-	public void setM1Subm2(Double m1Subm2) {
-		this.m1Subm2 = m1Subm2;
+	public void setP1(Double p1) {
+		this.p1 = p1;
 	}
 
-	public Double getM3Subm4() {
-		return m3Subm4;
+	public Double getP2() {
+		return p2;
 	}
 
-	public void setM3Subm4(Double m3Subm4) {
-		this.m3Subm4 = m3Subm4;
+	public void setP2(Double p2) {
+		this.p2 = p2;
 	}
-	
 	
 }
