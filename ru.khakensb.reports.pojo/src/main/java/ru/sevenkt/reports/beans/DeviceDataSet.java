@@ -36,7 +36,7 @@ public class DeviceDataSet {
 		LocalDate dateFrom = LocalDate.parse(dateFromStr, formatter);
 		LocalDate dateTo = LocalDate.parse(dateToStr, formatter);
 		List<ConsumptionBean> list = new ArrayList<ConsumptionBean>();
-		while (dateFrom.isBefore(dateTo)) {
+		while (dateFrom.isBefore(dateTo) ) {
 			ConsumptionBean con = new ConsumptionBean();
 			con.setDate(dateFrom.format(formatter));
 			con.setE1(new Random().nextDouble());
@@ -45,10 +45,12 @@ public class DeviceDataSet {
 			con.setM2(new Random().nextDouble());
 			con.setM3(new Random().nextDouble());
 			con.setM3(new Random().nextDouble());
+			con.setM4(new Random().nextDouble());
 			con.setV1(new Random().nextDouble());
 			con.setV2(new Random().nextDouble());
 			con.setV3(new Random().nextDouble());
 			con.setV3(new Random().nextDouble());
+			con.setV4(new Random().nextDouble());
 			con.setT1(new Random().nextDouble());
 			con.setT2(new Random().nextDouble());
 			con.setT3(new Random().nextDouble());
@@ -62,8 +64,42 @@ public class DeviceDataSet {
 	}
 
 	private List<MeterBean> createMeters() {
-		// TODO Auto-generated method stub
-		return null;
+		MeterBean meter = new MeterBean();
+		LocalDate dateFrom = LocalDate.parse(dateFromStr, formatter);
+		LocalDate dateTo = LocalDate.parse(dateToStr, formatter);
+		List<MeterBean> list = new ArrayList<MeterBean>();
+		meter.setDate(dateFrom.format(formatter));
+		Random random100 = new Random(100);
+		meter.setE1(random100.nextDouble());
+		meter.setE2(random100.nextDouble());
+		meter.setM1(random100.nextDouble());
+		meter.setM2(random100.nextDouble());
+		meter.setM3(random100.nextDouble());
+		meter.setM3(random100.nextDouble());
+		meter.setM4(random100.nextDouble());
+		meter.setV1(random100.nextDouble());
+		meter.setV2(random100.nextDouble());
+		meter.setV3(random100.nextDouble());
+		meter.setV3(random100.nextDouble());
+		meter.setV4(random100.nextDouble());
+		list.add(meter);
+		meter = new MeterBean();
+		meter.setDate(dateTo.format(formatter));
+		Random random200 = new Random(200);
+		meter.setE1(random200.nextDouble());
+		meter.setE2(random200.nextDouble());
+		meter.setM1(random200.nextDouble());
+		meter.setM2(random200.nextDouble());
+		meter.setM3(random200.nextDouble());
+		meter.setM3(random200.nextDouble());
+		meter.setM4(random200.nextDouble());
+		meter.setV1(random200.nextDouble());
+		meter.setV2(random200.nextDouble());
+		meter.setV3(random200.nextDouble());
+		meter.setV3(random200.nextDouble());
+		meter.setV4(random200.nextDouble());
+		list.add(meter);
+		return list;
 	}
 
 	public void open(Object obj, Map<String, Object> map) {
@@ -79,5 +115,8 @@ public class DeviceDataSet {
 	}
 
 	public void close() {
+	}
+	public static void main(String... strings){
+		
 	}
 }
