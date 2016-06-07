@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: database
+Bundle-SymbolicName: ru.7kt.database
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/spring-data-jpa-1.7.1.RELEASE.jar,
+ lib/commons-dbcp-1.4.jar,
+ lib/commons-pool-1.5.4.jar,
+ lib/h2-1.4.185.jar,
+ lib/lombok-1.16.8.jar
+Export-Package: ru.sevenkt.db.entities,
+ ru.sevenkt.db.services
+Require-Bundle: ru.7kt.core;bundle-version="1.0.0",
+ javax.persistence;bundle-version="2.1.0",
+ org.apache.commons.dbcp;bundle-version="1.4.0",
+ org.springframework.data.jpa;bundle-version="1.9.4",
+ org.springframework.data.core;bundle-version="1.11.4",
+ org.springframework.beans;bundle-version="4.2.3",
+ org.springframework.context;bundle-version="4.2.3",
+ org.springframework.core;bundle-version="4.2.3",
+ org.springframework.jdbc;bundle-version="4.2.3",
+ org.springframework.orm;bundle-version="4.2.3",
+ slf4j.api;bundle-version="1.7.13",
+ org.h2;bundle-version="1.4.192",
+ org.eclipse.persistence.jpa;bundle-version="2.6.1"
+Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false
+
+

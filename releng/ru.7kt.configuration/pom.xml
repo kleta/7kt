@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.7kt</groupId>
+	<artifactId>ru.7kt.configuration</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tycho.version>0.25.0</tycho.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
+		<spring-repo.url>http://dist.springsource.com/release/TOOLS/update/3.7.2.RELEASE/e4.5/</spring-repo.url>
+		<eclipselink-repo.url>http://download.eclipse.org/rt/eclipselink/updates/2.6.1.v20150916-55dc7c3</eclipselink-repo.url>
+		<orbit-repo.url>http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/</orbit-repo.url>
+		<nebula-repo.url>http://download.eclipse.org/technology/nebula/snapshot</nebula-repo.url>
+		<local-repo.url>http://localhost:8080/7kt/</local-repo.url>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>mars</id>
+			<url>${mars-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>spring</id>
+			<url>${spring-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>eclipselink</id>
+			<url>${eclipselink-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>orbit</id>
+			<url>${orbit-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>nebula</id>
+			<url>${nebula-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>local</id>
+			<url>${local-repo.url}</url>
+			<layout>p2</layout>
+		</repository>
+
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<target>
+						<artifact>
+							<groupId>ru.7kt</groupId>
+							<artifactId>ru.7kt.target</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+

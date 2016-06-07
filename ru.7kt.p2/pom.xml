@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.7kt</groupId>
+	<artifactId>ru.7kt.p2</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.reficio</groupId>
+				<artifactId>p2-maven-plugin</artifactId>
+				<version>1.2.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<configuration>
+							<artifacts>
+								<!-- specify your depencies here -->
+								<!-- groupId:artifactId:version -->
+<!-- 								<artifact> -->
+<!-- 									<id>org.projectlombok:lombok:1.16.8</id> -->
+<!-- 								</artifact> -->
+<!-- 								<artifact> -->
+<!-- 									<id>org.eclipse.gemini.blueprint:gemini-blueprint-io:2.0.0.RELEASE</id> -->
+<!-- 								</artifact> -->
+<!-- 								<artifact> -->
+<!-- 									<id>org.eclipse.gemini.blueprint:gemini-blueprint-extender:2.0.0.RELEASE</id> -->
+<!-- 								</artifact> -->
+<!-- 								<artifact> -->
+<!-- 									<id>org.eclipse.gemini.blueprint:gemini-blueprint-core:2.0.0.RELEASE</id> -->
+<!-- 								</artifact> -->
+								<artifact>
+									<id>com.h2database:h2:1.4.192</id>
+								</artifact>
+								<artifact>
+									<id>org.springframework.data:spring-data-jpa:1.10.0.RELEASE</id>
+								</artifact>
+								<artifact>
+									<id>commons-dbcp:commons-dbcp:1.4</id>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.5.v20120716</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webAppSourceDirectory>${basedir}/target/repository/</webAppSourceDirectory>
+					<webApp>
+						<contextPath>/7kt</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>reficio</id>
+			<url>http://repo.reficio.org/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

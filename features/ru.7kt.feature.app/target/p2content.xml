@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='ru.7kt.feature.app.feature.group' version='1.0.0.201606070604' singleton='false'>
+    <update id='ru.7kt.feature.app.feature.group' range='[0.0.0,1.0.0.201606070604)' severity='0'/>
+    <properties size='7'>
+      <property name='org.eclipse.equinox.p2.name' value='App'/>
+      <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+      <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+      <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+      <property name='maven-groupId' value='ru.7kt'/>
+      <property name='maven-artifactId' value='ru.7kt.feature.app'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.group' version='1.0.0.201606070604'/>
+    </provides>
+    <requires size='24'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' range='1.0.0'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.core' range='1.9.1'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.orm' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.aop' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.beans' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.core' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.aopalliance' range='1.0.0'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.expression' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.jdbc' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.aspectj.runtime' range='1.8.7'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.transaction' range='4.2.3'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.slf4j.api' range='1.7.2'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.h2' range='1.3.168'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa' range='2.6.1'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.jpa' range='1.7.1'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='javax.persistence' range='2.1.0'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.dbcp' range='1.4.0'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.classic' range='1.0.7'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' range='[1.0.0.201606070604,1.0.0.201606070604]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' range='[1.0.0.201606070604,1.0.0.201606070604]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' range='[1.0.0.201606070604,1.0.0.201606070604]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.log' range='[1.0.0.201606070604,1.0.0.201606070604]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.jar' range='[1.0.0.201606070604,1.0.0.201606070604]'>
+        <filter>
+          (org.eclipse.update.install.features=true)
+        </filter>
+      </required>
+    </requires>
+    <touchpoint id='null' version='0.0.0'/>
+    <licenses size='1'>
+      <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+        [Enter License Description here.]
+      </license>
+    </licenses>
+    <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+      [Enter Copyright Description here.]
+    </copyright>
+  </unit>
+  <unit id='ru.7kt.feature.app.feature.jar' version='1.0.0.201606070604'>
+    <properties size='6'>
+      <property name='org.eclipse.equinox.p2.name' value='App'/>
+      <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+      <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+      <property name='maven-groupId' value='ru.7kt'/>
+      <property name='maven-artifactId' value='ru.7kt.feature.app'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.jar' version='1.0.0.201606070604'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+      <provided namespace='org.eclipse.update.feature' name='ru.7kt.feature.app' version='1.0.0.201606070604'/>
+    </provides>
+    <filter>
+      (org.eclipse.update.install.features=true)
+    </filter>
+    <artifacts size='1'>
+      <artifact classifier='org.eclipse.update.feature' id='ru.7kt.feature.app' version='1.0.0.201606070604'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='zipped'>
+          true
+        </instruction>
+      </instructions>
+    </touchpointData>
+    <licenses size='1'>
+      <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+        [Enter License Description here.]
+      </license>
+    </licenses>
+    <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+      [Enter Copyright Description here.]
+    </copyright>
+  </unit>
+</units>

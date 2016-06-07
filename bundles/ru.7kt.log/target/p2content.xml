@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='ru.7kt.log' version='1.0.0.201606070604' singleton='false'>
+    <update id='ru.7kt.log' range='[0.0.0,1.0.0.201606070604)' severity='0'/>
+    <properties size='4'>
+      <property name='org.eclipse.equinox.p2.name' value='Log'/>
+      <property name='maven-groupId' value='ru.7kt'/>
+      <property name='maven-artifactId' value='ru.7kt.log'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+    <provides size='4'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.log' version='1.0.0.201606070604'/>
+      <provided namespace='osgi.bundle' name='ru.7kt.log' version='1.0.0.201606070604'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      <provided namespace='osgi.fragment' name='ch.qos.logback.classic' version='1.0.0.201606070604'/>
+    </provides>
+    <requires size='1'>
+      <required namespace='osgi.bundle' name='ch.qos.logback.classic' range='1.0.7'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201606070604'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: ru.7kt.log&#xA;Bundle-Version: 1.0.0.201606070604&#xA;Fragment-Host: ch.qos.logback.classic;bundle-version=&quot;1.0.7&quot;&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

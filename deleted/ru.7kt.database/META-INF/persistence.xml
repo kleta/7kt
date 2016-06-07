@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence
+version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
+ 						http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"> 
+	<persistence-unit name="ru.7kt.db" transaction-type="RESOURCE_LOCAL">
+		<class>ru.sevenkt.db.entities.Device</class>
+		<class>ru.sevenkt.db.entities.Node</class>
+		<class>ru.sevenkt.db.entities.Measuring</class>
+		<class>ru.sevenkt.db.ArchiveTypeConverter</class>
+		<class>ru.sevenkt.db.ParameterConverter</class>
+		<class>ru.sevenkt.db.LocalDateTimeConverter</class>
+		<class>ru.sevenkt.db.EventTypeConverter</class>
+		<class>ru.sevenkt.db.entities.Journal</class>
+		<class>ru.sevenkt.db.entities.Params</class>
+		<class>ru.sevenkt.db.entities.Error</class>
+		<class>ru.sevenkt.db.ErrorCodeConverter</class>
+	</persistence-unit>
+</persistence>

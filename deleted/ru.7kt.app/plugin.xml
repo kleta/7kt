@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            name="ru.7kt.app"
+            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+         <property
+               name="lifeCycleURI"
+               value="bundleclass://ru.7kt.app/ru.sevenkt.app.E4LifeCycle">
+         </property>
+         <property
+               name="appName"
+               value="ru.7kt.app">
+         </property>
+         <property
+               name="applicationCSS"
+               value="platform:/plugin/ru.7kt.app/css/e4_classic_win7.css">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="ru.7kt.app.deviceselection">
+         <with
+               variable="org.eclipse.ui.selection">
+            <instanceof
+                  value="ru.sevenkt.db.entities.Device">
+            </instanceof>
+         </with>
+      </definition>
+   </extension>
+
+</plugin>
