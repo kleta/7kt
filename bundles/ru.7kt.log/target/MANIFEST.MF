@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
 Bundle-SymbolicName: ru.7kt.log
 Bundle-Name: Log
-Bundle-Version: 1.0.0.201606070604
+Bundle-Version: 1.0.0.201606080718
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Fragment-Host: ch.qos.logback.classic;bundle-version="1.0.7"
+Fragment-Host: ch.qos.logback.classic;bundle-version="1.0.7.v20121108-
+ 1250"
 

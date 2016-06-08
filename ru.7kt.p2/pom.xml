@@ -10,7 +10,7 @@
 			<plugin>
 				<groupId>org.reficio</groupId>
 				<artifactId>p2-maven-plugin</artifactId>
-				<version>1.2.0-SNAPSHOT</version>
+				<version>1.1.2-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<id>default-cli</id>
@@ -34,11 +34,14 @@
 									<id>com.h2database:h2:1.4.192</id>
 								</artifact>
 								<artifact>
-									<id>org.springframework.data:spring-data-jpa:1.10.0.RELEASE</id>
+									<id>ch.qos.logback:logback-classic:1.1.4</id>
 								</artifact>
-								<artifact>
-									<id>commons-dbcp:commons-dbcp:1.4</id>
-								</artifact>
+<!-- 								<artifact> -->
+<!-- 									<id>org.slf4j:slf4j-simple:1.7.21</id> -->
+<!-- 								</artifact> -->
+<!-- 								<artifact> -->
+<!-- 									<id>commons-dbcp:commons-dbcp:1.4</id> -->
+<!-- 								</artifact> -->
 							</artifacts>
 						</configuration>
 					</execution>

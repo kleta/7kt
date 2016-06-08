@@ -23,9 +23,9 @@ Require-Bundle: ru.7kt.core;bundle-version="1.0.0",
  org.springframework.core;bundle-version="4.2.3",
  org.springframework.jdbc;bundle-version="4.2.3",
  org.springframework.orm;bundle-version="4.2.3",
- slf4j.api;bundle-version="1.7.13",
  org.h2;bundle-version="1.4.192",
- org.eclipse.persistence.jpa;bundle-version="2.6.1"
+ org.eclipse.persistence.jpa;bundle-version="2.6.1",
+ ch.qos.logback.classic;bundle-version="1.0.7"
 Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false
 
 

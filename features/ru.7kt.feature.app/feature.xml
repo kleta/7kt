@@ -18,7 +18,6 @@
 
    <requires>
       <import plugin="ru.7kt.core" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.persistence.jpa" version="2.6.1" match="greaterOrEqual"/>
       <import plugin="javax.persistence" version="2.1.0" match="greaterOrEqual"/>
       <import plugin="org.apache.commons.dbcp" version="1.4.0" match="greaterOrEqual"/>
       <import plugin="org.springframework.data.jpa" version="1.9.4" match="greaterOrEqual"/>
@@ -28,9 +27,14 @@
       <import plugin="org.springframework.core" version="4.2.3" match="greaterOrEqual"/>
       <import plugin="org.springframework.jdbc" version="4.2.3" match="greaterOrEqual"/>
       <import plugin="org.springframework.orm" version="4.2.3" match="greaterOrEqual"/>
-      <import plugin="slf4j.api" version="1.7.13" match="greaterOrEqual"/>
       <import plugin="org.h2" version="1.4.192" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.persistence.jpa" version="2.6.1" match="greaterOrEqual"/>
+      <import plugin="slf4j.api" version="1.7.21" match="greaterOrEqual"/>
+      <import plugin="ch.qos.logback.core" version="1.0.7" match="perfect"/>
+      <import plugin="org.slf4j.api" version="1.7.2" match="perfect"/>
+      <import plugin="ch.qos.logback.classic" version="1.0.7" match="greaterOrEqual"/>
       <import plugin="ch.qos.logback.classic" version="1.0.7.v20121108-1250" match="greaterOrEqual"/>
+      <import plugin="ch.qos.logback.classic" version="1.0.7" match="perfect"/>
    </requires>
 
    <plugin
@@ -60,5 +64,62 @@
          install-size="0"
          version="0.0.0"
          fragment="true"/>
+
+   <plugin
+         id="javax.persistence"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.dbcp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.pool"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.springframework.data.jpa"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="ch.qos.logback.classic"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="slf4j.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="ch.qos.logback.slf4j"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="ch.qos.logback.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
