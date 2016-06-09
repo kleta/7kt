@@ -2,7 +2,7 @@
 <feature
       id="ru.7kt.gemini.blueprint"
       label="Blueprint"
-      version="1.0.0.201606080718">
+      version="1.0.0.201606090902">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -35,6 +35,41 @@
          download-size="32"
          install-size="60"
          version="2.0.0.RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.aopalliance"
+         download-size="11"
+         install-size="14"
+         version="1.0.0.v201105210816"
+         unpack="false"/>
+
+   <plugin
+         id="org.springframework.core"
+         download-size="1120"
+         install-size="2271"
+         version="4.2.4.20151218-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.springframework.aop"
+         download-size="389"
+         install-size="851"
+         version="4.2.4.20151218-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.springframework.beans"
+         download-size="753"
+         install-size="1857"
+         version="4.2.4.20151218-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.springframework.context"
+         download-size="1146"
+         install-size="2584"
+         version="4.2.4.20151218-RELEASE"
          unpack="false"/>
 
 </feature>

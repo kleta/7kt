@@ -504,7 +504,7 @@ public class DeviceDialog extends TitleAreaDialog {
 			return paramModel.getParams(2);
 	}
 	protected DataBindingContext initDataBindings() {
-		DataBindingContext bindingContext = new DataBindingContext();
+		DataBindingContext bindingContext = new DataBindingContext(); 
 		//
 		IObservableValue observeTextTextObserveWidget = WidgetProperties.text(SWT.Modify).observe(text);
 		IObservableValue deviceNameDeviceObserveValue = PojoProperties.value("deviceName").observe(device);

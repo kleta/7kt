@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='1'>
-  <unit id='201606080718.7kt' version='1.0.0.2--cDhX6h7735E3E3I3G5I'>
+  <unit id='201606090902.7kt' version='1.0.0.2--cDhX6h7735E3E3K3K37'>
     <properties size='2'>
       <property name='org.eclipse.equinox.p2.name' value='7KT'/>
       <property name='org.eclipse.equinox.p2.type.category' value='true'/>
     </properties>
     <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='201606080718.7kt' version='1.0.0.2--cDhX6h7735E3E3I3G5I'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='201606090902.7kt' version='1.0.0.2--cDhX6h7735E3E3K3K37'/>
     </provides>
     <requires size='1'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.group' range='[1.0.0.201606080718,1.0.0.201606080718]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.group' range='[1.0.0.201606090902,1.0.0.201606090902]'/>
     </requires>
     <touchpoint id='null' version='0.0.0'/>
   </unit>

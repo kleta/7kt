@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='1'>
-  <unit id='ru.7kt.database' version='1.0.0.201606080718' singleton='false'>
-    <update id='ru.7kt.database' range='[0.0.0,1.0.0.201606080718)' severity='0'/>
+  <unit id='ru.7kt.database' version='1.0.0.201606090902' singleton='false'>
+    <update id='ru.7kt.database' range='[0.0.0,1.0.0.201606090902)' severity='0'/>
     <properties size='4'>
       <property name='org.eclipse.equinox.p2.name' value='database'/>
       <property name='maven-groupId' value='ru.7kt'/>
@@ -9,35 +9,38 @@
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
     </properties>
     <provides size='5'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' version='1.0.0.201606080718'/>
-      <provided namespace='osgi.bundle' name='ru.7kt.database' version='1.0.0.201606080718'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' version='1.0.0.201606090902'/>
+      <provided namespace='osgi.bundle' name='ru.7kt.database' version='1.0.0.201606090902'/>
       <provided namespace='java.package' name='ru.sevenkt.db.entities' version='0.0.0'/>
       <provided namespace='java.package' name='ru.sevenkt.db.services' version='0.0.0'/>
       <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
     </provides>
-    <requires size='13'>
-      <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
+    <requires size='16'>
       <required namespace='osgi.bundle' name='javax.persistence' range='2.1.0'/>
-      <required namespace='osgi.bundle' name='org.apache.commons.dbcp' range='1.4.0'/>
       <required namespace='osgi.bundle' name='org.springframework.data.jpa' range='1.9.4'/>
-      <required namespace='osgi.bundle' name='org.springframework.data.core' range='1.11.4'/>
-      <required namespace='osgi.bundle' name='org.springframework.beans' range='4.2.3'/>
       <required namespace='osgi.bundle' name='org.springframework.context' range='4.2.3'/>
       <required namespace='osgi.bundle' name='org.springframework.core' range='4.2.3'/>
       <required namespace='osgi.bundle' name='org.springframework.jdbc' range='4.2.3'/>
       <required namespace='osgi.bundle' name='org.springframework.orm' range='4.2.3'/>
-      <required namespace='osgi.bundle' name='org.h2' range='1.4.192'/>
-      <required namespace='osgi.bundle' name='org.eclipse.persistence.jpa' range='2.6.1'/>
-      <required namespace='osgi.bundle' name='org.slf4j.api' range='1.7.2'/>
+      <required namespace='osgi.bundle' name='slf4j.api' range='1.7.16'/>
+      <required namespace='osgi.bundle' name='org.springframework.data.core' range='1.11.4'/>
+      <required namespace='osgi.bundle' name='org.springframework.beans' range='4.2.3'/>
+      <required namespace='osgi.bundle' name='org.apache.commons.dbcp' range='1.4.0'/>
+      <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.persistence.jpa' range='2.6.3'/>
+      <required namespace='osgi.bundle' name='org.h2' range='1.3.168'/>
+      <required namespace='java.package' name='org.aopalliance.aop' range='1.0.0'/>
+      <required namespace='java.package' name='org.springframework.aop' range='4.2.4.20151218-RELEASE'/>
+      <required namespace='java.package' name='org.springframework.aop.framework' range='4.2.4.20151218-RELEASE'/>
     </requires>
     <artifacts size='1'>
-      <artifact classifier='osgi.bundle' id='ru.7kt.database' version='1.0.0.201606080718'/>
+      <artifact classifier='osgi.bundle' id='ru.7kt.database' version='1.0.0.201606090902'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-SymbolicName: ru.7kt.database&#xA;Bundle-Version: 1.0.0.201606080718&#xA;
+          Bundle-SymbolicName: ru.7kt.database&#xA;Bundle-Version: 1.0.0.201606090902&#xA;
         </instruction>
       </instructions>
     </touchpointData>

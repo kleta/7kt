@@ -1,8 +1,0 @@
-eclipse.preferences.version=1
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/enabled=true
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/isSystem=false
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/name=TychoTargetPlatform
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/suffix=content.xml
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/type=org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/uri=file\:/C\:/Users/askue/git/7kt/releng/ru.7kt.product/target/targetPlatformRepository/
-repositories/file\:_C\:_Users_askue_git_7kt_releng_ru.7kt.product_target_targetPlatformRepository/version=0.0.1

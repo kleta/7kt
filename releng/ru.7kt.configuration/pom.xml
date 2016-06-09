@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mars-repo.url>http://download.eclipse.org/releases/mars</mars-repo.url>
 		<spring-repo.url>http://dist.springsource.com/release/TOOLS/update/3.7.2.RELEASE/e4.5/</spring-repo.url>
-		<eclipselink-repo.url>http://download.eclipse.org/rt/eclipselink/updates/2.6.1.v20150916-55dc7c3</eclipselink-repo.url>
+		<eclipselink-repo.url>http://download.eclipse.org/rt/eclipselink/updates/</eclipselink-repo.url>
 		<orbit-repo.url>http://download.eclipse.org/tools/orbit/downloads/drops/R20150124073747/repository/</orbit-repo.url>
 		<nebula-repo.url>http://download.eclipse.org/technology/nebula/snapshot</nebula-repo.url>
 		<local-repo.url>http://localhost:8080/7kt/</local-repo.url>
@@ -45,7 +45,7 @@
 			<layout>p2</layout>
 		</repository>
 		<repository>
-			<id>local</id>
+			<id>localhost</id>
 			<url>${local-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
@@ -110,31 +110,31 @@
 						</artifact>
 					</target>
 					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
+<!-- 						<environment> -->
+<!-- 							<os>linux</os> -->
+<!-- 							<ws>gtk</ws> -->
+<!-- 							<arch>x86</arch> -->
+<!-- 						</environment> -->
+<!-- 						<environment> -->
+<!-- 							<os>linux</os> -->
+<!-- 							<ws>gtk</ws> -->
+<!-- 							<arch>x86_64</arch> -->
+<!-- 						</environment> -->
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
-							<arch>x86_64</arch>
+							<arch>x86</arch>
 						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
+<!-- 						<environment> -->
+<!-- 							<os>win32</os> -->
+<!-- 							<ws>win32</ws> -->
+<!-- 							<arch>x86_64</arch> -->
+<!-- 						</environment> -->
+<!-- 						<environment> -->
+<!-- 							<os>macosx</os> -->
+<!-- 							<ws>cocoa</ws> -->
+<!-- 							<arch>x86_64</arch> -->
+<!-- 						</environment> -->
 					</environments>
 				</configuration>
 			</plugin>
