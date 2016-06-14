@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201606090902'>
+  <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201606100307'>
     <properties size='5'>
       <property name='artifact.size' value='2280'/>
       <property name='download.size' value='2280'/>

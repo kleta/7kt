@@ -30,14 +30,18 @@ import ru.sevenkt.reports.services.IReportService;
 public class E4LifeCycle {
 
 	@PostContextCreate
-	void postContextCreate(IEclipseContext eclipseContext) {
+	void postContextCreate(IEclipseContext eclipseContext) throws InterruptedException {
 		IDBService dbService=null;
 		IArchiveService archiveService=null;
 		IReportService reportService=null;
-		while (dbService==null || archiveService==null || reportService==null) {
+		int time = 0;
+		while ((dbService==null || archiveService==null || reportService==null) && time<20) {
 			dbService= eclipseContext.get(IDBService.class);
 			archiveService= eclipseContext.get(IArchiveService.class);
 			reportService= eclipseContext.get(IReportService.class);
+			System.out.println(dbService+" "+archiveService+" "+reportService+" time="+time);
+			Thread.sleep(1000);
+			time++;
 		}	
 	}
 

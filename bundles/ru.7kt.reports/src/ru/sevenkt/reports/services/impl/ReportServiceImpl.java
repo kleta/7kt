@@ -44,7 +44,7 @@ public class ReportServiceImpl implements IReportService {
 		// start enginee
 		EngineConfig config = new EngineConfig();
 		config.setEngineHome(System.getProperty("java.io.tmpdir"));
-		config.setLogConfig("logs\birt.log", Level.FINEST);
+		config.setLogConfig("logs", Level.FINEST);
 		try {
 			Platform.startup(config);
 			IReportEngineFactory factory = (IReportEngineFactory) Platform
@@ -58,6 +58,7 @@ public class ReportServiceImpl implements IReportService {
 			RenderOption renderOption = null;
 			renderOption = new HTMLRenderOption();
 			renderOption.setOutputFormat("html");
+			renderOption.setOutputFileName("templates/test.html");
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			renderOption.setOutputStream(out);
 
