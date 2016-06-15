@@ -17,14 +17,14 @@
             <list-property name="privateDriverProperties">
                 <ex-property>
                     <name>SynchronizeClassPath</name>
-                    <value>false</value>
+                    <value>true</value>
                 </ex-property>
                 <ex-property>
                     <name>pojoClassPath</name>
-                    <value>lib/ru.khakensb.reports.pojo-1.0.0.jar;</value>
+                    <value>D:\ide\eclipse-rcp-mars-1-win32\eclipse\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
                 </ex-property>
             </list-property>
-            <property name="pojoDataSetClassPath">lib/ru.khakensb.reports.pojo-1.0.0.jar;</property>
+            <property name="pojoDataSetClassPath">D:\ide\eclipse-rcp-mars-1-win32\eclipse\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -34,31 +34,37 @@
                 <structure>
                     <property name="columnName">DateFrom</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">DateFrom</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">DateTo</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">DateTo</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Name</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">Name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">SerialNum</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">SerialNum</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">TempColdWater</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">TempColdWater</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">WorkHour</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">WorkHour</text-property>
                 </structure>
             </list-property>
@@ -143,7 +149,7 @@
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<PojoQuery appContextKey="APP_CONTEXT_KEY_DEVICE" dataSetClass="ru.sevenkt.reports.beans.DeviceDataSet" version="1.0">
+<PojoQuery appContextKey="APP_CONTEXT_KEY_DEVICE" dataSetClass="ru.sevenkt.reports.pojo.MockDeviceDataSet" version="1.0">
     <ColumnMapping index="1" name="DateFrom" odaDataType="String">
         <Method name="getDateFrom"/>
     </ColumnMapping>
@@ -429,56 +435,67 @@ row["M4"]-lastValueToReturn;</expression>
                 <structure>
                     <property name="columnName">Date</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">Date</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">E1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">E1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">E2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">E2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M3</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M3</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M4</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M4</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V3</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V3</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V4</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V4</text-property>
                 </structure>
             </list-property>
@@ -673,7 +690,7 @@ row["M4"]-lastValueToReturn;</expression>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<PojoQuery appContextKey="APP_CONTEXT_KEY_METERS" dataSetClass="ru.sevenkt.reports.beans.DeviceDataSet" version="1.0">
+<PojoQuery appContextKey="APP_CONTEXT_KEY_METERS" dataSetClass="ru.sevenkt.reports.pojo.MockDeviceDataSet" version="1.0">
     <ClassColumnMappings>
         <ColumnMapping index="1" name="Date" odaDataType="String">
             <Method name="getDate"/>
@@ -948,81 +965,97 @@ row["M4"]-lastValueToReturn;</expression>
                 <structure>
                     <property name="columnName">Name</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">Name</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">Date</property>
                     <property name="analysis">dimension</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">Date</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">E1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">E1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">E2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">E2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M3</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M3</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">M4</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">M4</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T3</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T3</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T4</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T4</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V1</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V2</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V3</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V3</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">V4</property>
                     <property name="analysis">measure</property>
+                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">V4</text-property>
                 </structure>
             </list-property>
@@ -1257,7 +1290,7 @@ row["M4"]-lastValueToReturn;</expression>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<PojoQuery appContextKey="APP_CONTEXT_KEY_CONSUMPTION" dataSetClass="ru.sevenkt.reports.beans.DeviceDataSet" version="1.0">
+<PojoQuery appContextKey="APP_CONTEXT_KEY_CONSUMPTION" dataSetClass="ru.sevenkt.reports.pojo.MockDeviceDataSet" version="1.0">
     <ColumnMapping index="1" name="Name" odaDataType="String">
         <Method name="getName"/>
     </ColumnMapping>

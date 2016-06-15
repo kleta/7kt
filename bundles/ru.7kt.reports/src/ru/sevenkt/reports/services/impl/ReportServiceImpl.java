@@ -23,6 +23,7 @@ import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
 import org.eclipse.birt.report.engine.api.RenderOption;
 
 import ru.sevenkt.db.entities.Measuring;
+import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.reports.Helper;
 import ru.sevenkt.reports.services.IReportService;
 
@@ -35,11 +36,11 @@ public class ReportServiceImpl implements IReportService {
 	}
 
 	@Override
-	public void showReportAsHTML(List<Measuring> measurings, LocalDate dateFrom, LocalDate dateTo, String reportName)
+	public void showReportAsHTML(List<Measuring> measurings, LocalDate dateFrom, LocalDate dateTo, String reportName, ArchiveTypes archiveType)
 			throws FileNotFoundException {
 		InputStream is = new FileInputStream(new File("templates/" + reportName));
 		HashMap datasets = new HashMap();
-		datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo));
+		datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo, archiveType).iterator());
 
 		// start enginee
 		EngineConfig config = new EngineConfig();

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="122">
+<?pde version="3.8"?><target name="targetdifinition" sequenceNumber="123">
 <locations>
 <location path="C:\Users\askue\git\7kt\gemini-2.0.0.REALEASE" type="Directory"/>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="1.0.0.201606072003"/>
-<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.p2.user.ui.feature.group" version="2.2.102.v20160129-0947"/>
 <unit id="org.eclipse.birt.chart.cshelp.feature.group" version="4.5.0.v201506092134"/>
@@ -41,6 +37,10 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.persistence.jpa.feature.group" version="2.6.3.v20160428-59c81c5"/>
 <repository location="http://download.eclipse.org/rt/eclipselink/updates/2.6.3.v20160428-59c81c5"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.cdatetime.feature.feature.group" version="1.0.0.201606130657"/>
+<repository location="http://download.eclipse.org/technology/nebula/snapshot"/>
 </location>
 </locations>
 <environment>

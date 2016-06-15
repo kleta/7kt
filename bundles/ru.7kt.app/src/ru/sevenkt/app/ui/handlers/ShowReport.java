@@ -34,7 +34,7 @@ public class ShowReport {
 		LocalDate endDate=LocalDate.parse("20160217", DateTimeFormatter.ofPattern("yyyyMMdd"));;
 		List<Measuring> m = dbService.findArchive(device, startDate.atStartOfDay(), endDate.atStartOfDay(), ArchiveTypes.DAY);		
 		try {
-			reportService.showReportAsHTML(m, startDate, endDate, "7кт-240_дневной.rptdesign");
+			reportService.showReportAsHTML(m, startDate, endDate, "7кт-240_дневной.rptdesign", ArchiveTypes.DAY);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

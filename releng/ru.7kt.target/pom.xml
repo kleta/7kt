@@ -6,9 +6,7 @@
 		<artifactId>ru.7kt.releng</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<groupId>ru.7kt</groupId>
 	<artifactId>ru.7kt.target</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
 	<packaging>eclipse-target-definition</packaging>
 </project>
 
