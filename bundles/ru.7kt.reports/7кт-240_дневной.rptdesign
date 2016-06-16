@@ -690,43 +690,40 @@ row["M4"]-lastValueToReturn;</expression>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<PojoQuery appContextKey="APP_CONTEXT_KEY_METERS" dataSetClass="ru.sevenkt.reports.pojo.MockDeviceDataSet" version="1.0">
-    <ClassColumnMappings>
-        <ColumnMapping index="1" name="Date" odaDataType="String">
-            <Method name="getDate"/>
-        </ColumnMapping>
-        <ColumnMapping index="2" name="E1" odaDataType="Double">
-            <Method name="getE1"/>
-        </ColumnMapping>
-        <ColumnMapping index="3" name="E2" odaDataType="Double">
-            <Method name="getE2"/>
-        </ColumnMapping>
-        <ColumnMapping index="4" name="M1" odaDataType="Double">
-            <Method name="getM1"/>
-        </ColumnMapping>
-        <ColumnMapping index="5" name="M2" odaDataType="Double">
-            <Method name="getM2"/>
-        </ColumnMapping>
-        <ColumnMapping index="6" name="M3" odaDataType="Double">
-            <Method name="getM3"/>
-        </ColumnMapping>
-        <ColumnMapping index="7" name="M4" odaDataType="Double">
-            <Method name="getM4"/>
-        </ColumnMapping>
-        <ColumnMapping index="8" name="V1" odaDataType="Double">
-            <Method name="getV1"/>
-        </ColumnMapping>
-        <ColumnMapping index="9" name="V2" odaDataType="Double">
-            <Method name="getV2"/>
-        </ColumnMapping>
-        <ColumnMapping index="10" name="V3" odaDataType="Double">
-            <Method name="getV3"/>
-        </ColumnMapping>
-        <ColumnMapping index="11" name="V4" odaDataType="Double">
-            <Method name="getV4"/>
-        </ColumnMapping>
-        <Method name="getMeters"/>
-    </ClassColumnMappings>
+<PojoQuery appContextKey="APP_CONTEXT_KEY_METERS" dataSetClass="ru.sevenkt.reports.pojo.MockMetersDataSet" version="1.0">
+    <ColumnMapping index="1" name="Date" odaDataType="String">
+        <Method name="getDate"/>
+    </ColumnMapping>
+    <ColumnMapping index="2" name="E1" odaDataType="Double">
+        <Method name="getE1"/>
+    </ColumnMapping>
+    <ColumnMapping index="3" name="E2" odaDataType="Double">
+        <Method name="getE2"/>
+    </ColumnMapping>
+    <ColumnMapping index="4" name="M1" odaDataType="Double">
+        <Method name="getM1"/>
+    </ColumnMapping>
+    <ColumnMapping index="5" name="M2" odaDataType="Double">
+        <Method name="getM2"/>
+    </ColumnMapping>
+    <ColumnMapping index="6" name="M3" odaDataType="Double">
+        <Method name="getM3"/>
+    </ColumnMapping>
+    <ColumnMapping index="7" name="M4" odaDataType="Double">
+        <Method name="getM4"/>
+    </ColumnMapping>
+    <ColumnMapping index="8" name="V1" odaDataType="Double">
+        <Method name="getV1"/>
+    </ColumnMapping>
+    <ColumnMapping index="9" name="V2" odaDataType="Double">
+        <Method name="getV2"/>
+    </ColumnMapping>
+    <ColumnMapping index="10" name="V3" odaDataType="Double">
+        <Method name="getV3"/>
+    </ColumnMapping>
+    <ColumnMapping index="11" name="V4" odaDataType="Double">
+        <Method name="getV4"/>
+    </ColumnMapping>
 </PojoQuery>
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -923,7 +920,7 @@ row["M4"]-lastValueToReturn;</expression>
                 </ex-property>
                 <ex-property>
                     <name>pojoClass</name>
-                    <value>ru.sevenkt.reports.beans.DeviceDataBean</value>
+                    <value>ru.sevenkt.reports.pojo.MeterBean</value>
                 </ex-property>
             </list-property>
         </oda-data-set>
@@ -962,12 +959,6 @@ row["M4"]-lastValueToReturn;</expression>
                 </structure>
             </list-property>
             <list-property name="columnHints">
-                <structure>
-                    <property name="columnName">Name</property>
-                    <property name="analysis">dimension</property>
-                    <property name="onColumnLayout">false</property>
-                    <text-property name="heading">Name</text-property>
-                </structure>
                 <structure>
                     <property name="columnName">Date</property>
                     <property name="analysis">dimension</property>
@@ -1013,25 +1004,21 @@ row["M4"]-lastValueToReturn;</expression>
                 <structure>
                     <property name="columnName">T1</property>
                     <property name="analysis">measure</property>
-                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T1</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T2</property>
                     <property name="analysis">measure</property>
-                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T2</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T3</property>
                     <property name="analysis">measure</property>
-                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T3</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">T4</property>
                     <property name="analysis">measure</property>
-                    <property name="onColumnLayout">false</property>
                     <text-property name="heading">T4</text-property>
                 </structure>
                 <structure>
@@ -1064,111 +1051,106 @@ row["M4"]-lastValueToReturn;</expression>
                 <list-property name="resultSet">
                     <structure>
                         <property name="position">1</property>
-                        <property name="name">Name</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">2</property>
                         <property name="name">Date</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">3</property>
+                        <property name="position">2</property>
                         <property name="name">E1</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">4</property>
+                        <property name="position">3</property>
                         <property name="name">E2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">5</property>
+                        <property name="position">4</property>
                         <property name="name">M1</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">6</property>
+                        <property name="position">5</property>
                         <property name="name">M2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">7</property>
+                        <property name="position">6</property>
                         <property name="name">M3</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">8</property>
+                        <property name="position">7</property>
                         <property name="name">M4</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">9</property>
+                        <property name="position">8</property>
                         <property name="name">T1</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">10</property>
+                        <property name="position">9</property>
                         <property name="name">T2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">11</property>
+                        <property name="position">10</property>
                         <property name="name">T3</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">12</property>
+                        <property name="position">11</property>
                         <property name="name">T4</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">13</property>
+                        <property name="position">12</property>
                         <property name="name">V1</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">14</property>
+                        <property name="position">13</property>
                         <property name="name">V2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">15</property>
+                        <property name="position">14</property>
                         <property name="name">V3</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">16</property>
+                        <property name="position">15</property>
                         <property name="name">V4</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">17</property>
+                        <property name="position">16</property>
                         <property name="name">М1-М2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">18</property>
+                        <property name="position">17</property>
                         <property name="name">М3-М4</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">19</property>
+                        <property name="position">18</property>
                         <property name="name">V1-V2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">20</property>
+                        <property name="position">19</property>
                         <property name="name">V3-V4</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">21</property>
+                        <property name="position">20</property>
                         <property name="name">Т1-Т2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
-                        <property name="position">22</property>
+                        <property name="position">21</property>
                         <property name="name">Т3-Т4</property>
                         <property name="dataType">float</property>
                     </structure>
@@ -1178,111 +1160,104 @@ row["M4"]-lastValueToReturn;</expression>
             <list-property name="resultSet">
                 <structure>
                     <property name="position">1</property>
-                    <property name="name">Name</property>
-                    <property name="nativeName">Name</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1</property>
-                </structure>
-                <structure>
-                    <property name="position">2</property>
                     <property name="name">Date</property>
                     <property name="nativeName">Date</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">1</property>
                 </structure>
                 <structure>
-                    <property name="position">3</property>
+                    <property name="position">2</property>
                     <property name="name">E1</property>
                     <property name="nativeName">E1</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">4</property>
+                    <property name="position">3</property>
                     <property name="name">E2</property>
                     <property name="nativeName">E2</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">5</property>
+                    <property name="position">4</property>
                     <property name="name">M1</property>
                     <property name="nativeName">M1</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">6</property>
+                    <property name="position">5</property>
                     <property name="name">M2</property>
                     <property name="nativeName">M2</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">7</property>
+                    <property name="position">6</property>
                     <property name="name">M3</property>
                     <property name="nativeName">M3</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">8</property>
+                    <property name="position">7</property>
                     <property name="name">M4</property>
                     <property name="nativeName">M4</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">9</property>
+                    <property name="position">8</property>
                     <property name="name">T1</property>
                     <property name="nativeName">T1</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">10</property>
+                    <property name="position">9</property>
                     <property name="name">T2</property>
                     <property name="nativeName">T2</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">11</property>
+                    <property name="position">10</property>
                     <property name="name">T3</property>
                     <property name="nativeName">T3</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">12</property>
+                    <property name="position">11</property>
                     <property name="name">T4</property>
                     <property name="nativeName">T4</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">13</property>
+                    <property name="position">12</property>
                     <property name="name">V1</property>
                     <property name="nativeName">V1</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">14</property>
+                    <property name="position">13</property>
                     <property name="name">V2</property>
                     <property name="nativeName">V2</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">15</property>
+                    <property name="position">14</property>
                     <property name="name">V3</property>
                     <property name="nativeName">V3</property>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
                 <structure>
-                    <property name="position">16</property>
+                    <property name="position">15</property>
                     <property name="name">V4</property>
                     <property name="nativeName">V4</property>
                     <property name="dataType">float</property>
@@ -1290,58 +1265,52 @@ row["M4"]-lastValueToReturn;</expression>
                 </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<PojoQuery appContextKey="APP_CONTEXT_KEY_CONSUMPTION" dataSetClass="ru.sevenkt.reports.pojo.MockDeviceDataSet" version="1.0">
-    <ColumnMapping index="1" name="Name" odaDataType="String">
-        <Method name="getName"/>
+<PojoQuery appContextKey="APP_CONTEXT_KEY_CONSUMPTION" dataSetClass="ru.sevenkt.reports.pojo.MockConsumptionsDataSet" version="1.0">
+    <ColumnMapping index="1" name="Date" odaDataType="String">
+        <Method name="getDate"/>
     </ColumnMapping>
-    <ClassColumnMappings>
-        <ColumnMapping index="2" name="Date" odaDataType="String">
-            <Method name="getDate"/>
-        </ColumnMapping>
-        <ColumnMapping index="3" name="E1" odaDataType="Double">
-            <Method name="getE1"/>
-        </ColumnMapping>
-        <ColumnMapping index="4" name="E2" odaDataType="Double">
-            <Method name="getE2"/>
-        </ColumnMapping>
-        <ColumnMapping index="5" name="M1" odaDataType="Double">
-            <Method name="getM1"/>
-        </ColumnMapping>
-        <ColumnMapping index="6" name="M2" odaDataType="Double">
-            <Method name="getM2"/>
-        </ColumnMapping>
-        <ColumnMapping index="7" name="M3" odaDataType="Double">
-            <Method name="getM3"/>
-        </ColumnMapping>
-        <ColumnMapping index="8" name="M4" odaDataType="Double">
-            <Method name="getM4"/>
-        </ColumnMapping>
-        <ColumnMapping index="9" name="T1" odaDataType="Double">
-            <Method name="getT1"/>
-        </ColumnMapping>
-        <ColumnMapping index="10" name="T2" odaDataType="Double">
-            <Method name="getT2"/>
-        </ColumnMapping>
-        <ColumnMapping index="11" name="T3" odaDataType="Double">
-            <Method name="getT3"/>
-        </ColumnMapping>
-        <ColumnMapping index="12" name="T4" odaDataType="Double">
-            <Method name="getT4"/>
-        </ColumnMapping>
-        <ColumnMapping index="13" name="V1" odaDataType="Double">
-            <Method name="getV1"/>
-        </ColumnMapping>
-        <ColumnMapping index="14" name="V2" odaDataType="Double">
-            <Method name="getV2"/>
-        </ColumnMapping>
-        <ColumnMapping index="15" name="V3" odaDataType="Double">
-            <Method name="getV3"/>
-        </ColumnMapping>
-        <ColumnMapping index="16" name="V4" odaDataType="Double">
-            <Method name="getV4"/>
-        </ColumnMapping>
-        <Method name="getConsumptions"/>
-    </ClassColumnMappings>
+    <ColumnMapping index="2" name="E1" odaDataType="Double">
+        <Method name="getE1"/>
+    </ColumnMapping>
+    <ColumnMapping index="3" name="E2" odaDataType="Double">
+        <Method name="getE2"/>
+    </ColumnMapping>
+    <ColumnMapping index="4" name="M1" odaDataType="Double">
+        <Method name="getM1"/>
+    </ColumnMapping>
+    <ColumnMapping index="5" name="M2" odaDataType="Double">
+        <Method name="getM2"/>
+    </ColumnMapping>
+    <ColumnMapping index="6" name="M3" odaDataType="Double">
+        <Method name="getM3"/>
+    </ColumnMapping>
+    <ColumnMapping index="7" name="M4" odaDataType="Double">
+        <Method name="getM4"/>
+    </ColumnMapping>
+    <ColumnMapping index="8" name="T1" odaDataType="Double">
+        <Method name="getT1"/>
+    </ColumnMapping>
+    <ColumnMapping index="9" name="T2" odaDataType="Double">
+        <Method name="getT2"/>
+    </ColumnMapping>
+    <ColumnMapping index="10" name="T3" odaDataType="Double">
+        <Method name="getT3"/>
+    </ColumnMapping>
+    <ColumnMapping index="11" name="T4" odaDataType="Double">
+        <Method name="getT4"/>
+    </ColumnMapping>
+    <ColumnMapping index="12" name="V1" odaDataType="Double">
+        <Method name="getV1"/>
+    </ColumnMapping>
+    <ColumnMapping index="13" name="V2" odaDataType="Double">
+        <Method name="getV2"/>
+    </ColumnMapping>
+    <ColumnMapping index="14" name="V3" odaDataType="Double">
+        <Method name="getV3"/>
+    </ColumnMapping>
+    <ColumnMapping index="15" name="V4" odaDataType="Double">
+        <Method name="getV4"/>
+    </ColumnMapping>
 </PojoQuery>
 ]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -1746,7 +1715,7 @@ row["M4"]-lastValueToReturn;</expression>
                 </ex-property>
                 <ex-property>
                     <name>pojoClass</name>
-                    <value>ru.sevenkt.reports.beans.DeviceDataBean</value>
+                    <value>ru.sevenkt.reports.pojo.ConsumptionBean</value>
                 </ex-property>
             </list-property>
         </oda-data-set>
@@ -5014,12 +4983,6 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
-                    <property name="name">Name</property>
-                    <text-property name="displayName">Name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Date"]</expression>
@@ -6569,12 +6532,6 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="width">572.25pt</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
-                <structure>
-                    <property name="name">Name</property>
-                    <text-property name="displayName">Name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
-                    <property name="dataType">string</property>
-                </structure>
                 <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
@@ -8690,12 +8647,6 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
-                    <property name="name">Name</property>
-                    <text-property name="displayName">Name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
-                    <property name="dataType">string</property>
-                </structure>
-                <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Date"]</expression>
@@ -10809,12 +10760,6 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="width">572.25pt</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
-                <structure>
-                    <property name="name">Name</property>
-                    <text-property name="displayName">Name</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["Name"]</expression>
-                    <property name="dataType">string</property>
-                </structure>
                 <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>

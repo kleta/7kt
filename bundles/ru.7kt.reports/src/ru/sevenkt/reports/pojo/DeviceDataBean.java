@@ -12,10 +12,6 @@ public class DeviceDataBean {
 	
 	private String dateTo;
 	
-	private List<MeterBean> meters;
-	
-	private List<ConsumptionBean> consumptions;
-	
 	private String  tempColdWater;
 	
 	private String workHour;
@@ -50,22 +46,6 @@ public class DeviceDataBean {
 
 	public void setDateTo(String dateTo) {
 		this.dateTo = dateTo;
-	}
-
-	public List<MeterBean> getMeters() {
-		return meters;
-	}
-
-	public void setMeters(List<MeterBean> meters) {
-		this.meters = meters;
-	}
-
-	public List<ConsumptionBean> getConsumptions() {
-		return consumptions;
-	}
-
-	public void setConsumptions(List<ConsumptionBean> consumptions) {
-		this.consumptions = consumptions;
 	}
 
 	public String getTempColdWater() {

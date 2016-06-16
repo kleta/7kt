@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-SymbolicName: ru.7kt.archivedata
 Export-Package: ru.sevenkt.archive.services
 Bundle-Name: Archivedata
-Bundle-Version: 1.0.0.201606150430
+Bundle-Version: 1.0.0.201606160415
 Require-Bundle: ru.7kt.core;bundle-version="1.0.0",org.springframework
  .context;bundle-version="4.2.4"
 Bundle-ManifestVersion: 2

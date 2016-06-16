@@ -3,6 +3,6 @@ Bundle-SymbolicName: ru.7kt.core
 Export-Package: ru.sevenkt.annotations,ru.sevenkt.domain,ru.sevenkt.ex
  ceptions,ru.sevenkt.utils
 Bundle-Name: Core
-Bundle-Version: 1.0.0.201606150430
+Bundle-Version: 1.0.0.201606160415
 Bundle-ManifestVersion: 2
 

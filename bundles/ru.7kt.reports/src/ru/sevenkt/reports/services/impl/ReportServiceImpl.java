@@ -1,10 +1,12 @@
 package ru.sevenkt.reports.services.impl;
 
+import java.awt.Desktop;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,7 +42,9 @@ public class ReportServiceImpl implements IReportService {
 			throws FileNotFoundException {
 		InputStream is = new FileInputStream(new File("templates/" + reportName));
 		HashMap datasets = new HashMap();
-		datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo, archiveType).iterator());
+		datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo, archiveType));
+		datasets.put("APP_CONTEXT_KEY_CONSUMPTION", Helper.mapToConsumption(measurings, dateFrom, dateTo, archiveType));
+		datasets.put("APP_CONTEXT_KEY_METERS", Helper.mapToMeters(measurings, dateFrom, dateTo, archiveType));
 
 		// start enginee
 		EngineConfig config = new EngineConfig();
@@ -67,7 +71,12 @@ public class ReportServiceImpl implements IReportService {
 			task.setAppContext(datasets);
 			task.setRenderOption(renderOption);
 			task.run();
+			File htmlFile = new File("templates/test.html");
+			Desktop.getDesktop().browse(htmlFile.toURI());
 		} catch (BirtException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

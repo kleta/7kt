@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201606150430'>
+  <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201606160415'>
     <properties size='5'>
-      <property name='artifact.size' value='2280'/>
-      <property name='download.size' value='2280'/>
+      <property name='artifact.size' value='2283'/>
+      <property name='download.size' value='2283'/>
       <property name='maven-groupId' value='ru.7kt'/>
       <property name='maven-artifactId' value='ru.7kt.log'/>
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
