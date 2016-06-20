@@ -1,8 +1,11 @@
 package ru.sevenkt.reports.pojo;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +37,9 @@ public class MockConsumptionsDataSet {
 		List<ConsumptionBean> list=new ArrayList<>();
 		while(ld.isBefore(LocalDate.parse("01.02.2016", formatter))){
 			ConsumptionBean cb=new ConsumptionBean();
-			cb.setDate(ld.format(formatter));
+			Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+			Date res = Date.from(instant);
+			cb.setDate(res);
 			Random rnd = new Random();
 			cb.setE1(rnd.nextDouble()*1000);
 			cb.setE2(rnd.nextDouble()*1000);

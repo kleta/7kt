@@ -40,7 +40,7 @@ public class ReportServiceImpl implements IReportService {
 	@Override
 	public void showReportAsHTML(List<Measuring> measurings, LocalDate dateFrom, LocalDate dateTo, String reportName, ArchiveTypes archiveType)
 			throws FileNotFoundException {
-		InputStream is = new FileInputStream(new File("templates/" + reportName));
+		InputStream is = new FileInputStream(new File("reports/templates/" + reportName));
 		HashMap datasets = new HashMap();
 		datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo, archiveType));
 		datasets.put("APP_CONTEXT_KEY_CONSUMPTION", Helper.mapToConsumption(measurings, dateFrom, dateTo, archiveType));
@@ -63,7 +63,8 @@ public class ReportServiceImpl implements IReportService {
 			RenderOption renderOption = null;
 			renderOption = new HTMLRenderOption();
 			renderOption.setOutputFormat("html");
-			renderOption.setOutputFileName("templates/test.html");
+			String outputFileName = "reports/test.html";
+			renderOption.setOutputFileName(outputFileName);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			renderOption.setOutputStream(out);
 
@@ -71,7 +72,7 @@ public class ReportServiceImpl implements IReportService {
 			task.setAppContext(datasets);
 			task.setRenderOption(renderOption);
 			task.run();
-			File htmlFile = new File("templates/test.html");
+			File htmlFile = new File(outputFileName);
 			Desktop.getDesktop().browse(htmlFile.toURI());
 		} catch (BirtException e) {
 			// TODO Auto-generated catch block

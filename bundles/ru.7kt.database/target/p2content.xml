@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='1'>
-  <unit id='ru.7kt.database' version='1.0.0.201606160415' singleton='false'>
-    <update id='ru.7kt.database' range='[0.0.0,1.0.0.201606160415)' severity='0'/>
+  <unit id='ru.7kt.database' version='1.0.0.201606170625' singleton='false'>
+    <update id='ru.7kt.database' range='[0.0.0,1.0.0.201606170625)' severity='0'/>
     <properties size='4'>
       <property name='org.eclipse.equinox.p2.name' value='database'/>
       <property name='maven-groupId' value='ru.7kt'/>
@@ -9,8 +9,8 @@
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
     </properties>
     <provides size='5'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' version='1.0.0.201606160415'/>
-      <provided namespace='osgi.bundle' name='ru.7kt.database' version='1.0.0.201606160415'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' version='1.0.0.201606170625'/>
+      <provided namespace='osgi.bundle' name='ru.7kt.database' version='1.0.0.201606170625'/>
       <provided namespace='java.package' name='ru.sevenkt.db.entities' version='0.0.0'/>
       <provided namespace='java.package' name='ru.sevenkt.db.services' version='0.0.0'/>
       <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
@@ -34,13 +34,13 @@
       <required namespace='java.package' name='org.springframework.aop.framework' range='4.2.4.20151218-RELEASE'/>
     </requires>
     <artifacts size='1'>
-      <artifact classifier='osgi.bundle' id='ru.7kt.database' version='1.0.0.201606160415'/>
+      <artifact classifier='osgi.bundle' id='ru.7kt.database' version='1.0.0.201606170625'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>
       <instructions size='1'>
         <instruction key='manifest'>
-          Bundle-SymbolicName: ru.7kt.database&#xA;Bundle-Version: 1.0.0.201606160415&#xA;
+          Bundle-SymbolicName: ru.7kt.database&#xA;Bundle-Version: 1.0.0.201606170625&#xA;
         </instruction>
       </instructions>
     </touchpointData>

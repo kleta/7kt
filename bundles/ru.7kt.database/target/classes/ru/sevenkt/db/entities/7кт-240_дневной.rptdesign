@@ -6,6 +6,10 @@
             <property name="name">queryText</property>
             <property name="id">8</property>
         </structure>
+        <structure>
+            <property name="name">queryText</property>
+            <property name="id">274</property>
+        </structure>
     </list-property>
     <property name="units">in</property>
     <property name="iconFile">/templates/blank_report.gif</property>
@@ -21,10 +25,12 @@
                 </ex-property>
                 <ex-property>
                     <name>pojoClassPath</name>
-                    <value>D:\ide\eclipse-rcp-mars-1-win32\eclipse\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
+                    <value>C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
                 </ex-property>
             </list-property>
-            <property name="pojoDataSetClassPath">D:\ide\eclipse-rcp-mars-1-win32\eclipse\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
+            <property name="pojoDataSetClassPath">C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
+            <property name="OdaConnProfileName">7KT BIRT POJO Data Source</property>
+            <property name="OdaConnProfileStorePath">test</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -957,6 +963,150 @@ row["M4"]-lastValueToReturn;</expression>
                     <expression name="expression">row["T3"]-row["T4"]</expression>
                     <property name="dataType">float</property>
                 </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ E1</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevE1") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevE1");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevE1", row["E1"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+row["E1"]-lastValueToReturn;&#13;
+else&#13;
+-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V1</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevV1") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevV1");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevV1", row["V1"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["V1"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V2</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevV2") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevV2");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevV2", row["V2"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["V2"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V3</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevV3") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevV3");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevV3", row["V3"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["V3"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M1</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevM1") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevM1");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevM1", row["M1"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["M1"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M2</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevM2") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevM2");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevM2", row["M2"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["M2"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M3</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevM3") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevM3");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevM3", row["M3"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["M3"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M4</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevM4") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevM4");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevM4", row["M4"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["M4"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V4</property>
+                    <expression name="expression">var lastValueToReturn = -1;&#13;
+if (reportContext.getGlobalVariable("prevV4") != null)&#13;
+{&#13;
+   lastValueToReturn = reportContext.getGlobalVariable("prevV4");&#13;
+}&#13;
+&#13;
+reportContext.setGlobalVariable("prevV4", row["V4"]);&#13;
+&#13;
+if(lastValueToReturn!=-1)&#13;
+	row["V4"]-lastValueToReturn;&#13;
+else&#13;
+	-1</expression>
+                    <property name="dataType">float</property>
+                </structure>
             </list-property>
             <list-property name="columnHints">
                 <structure>
@@ -1045,6 +1195,25 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="onColumnLayout">false</property>
                     <text-property name="heading">V4</text-property>
                 </structure>
+                <structure>
+                    <property name="columnName">P1</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="heading">P1</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">P2</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="heading">P2</text-property>
+                </structure>
+            </list-property>
+            <list-property name="filter">
+                <structure>
+                    <property name="operator">ge</property>
+                    <expression name="expr" type="javascript">row["ПРИРАЩЕНИЕ E1"]</expression>
+                    <simple-property-list name="value1">
+                        <value>0</value>
+                    </simple-property-list>
+                </structure>
             </list-property>
             <list-property name="parameters"/>
             <structure name="cachedMetaData">
@@ -1052,7 +1221,7 @@ row["M4"]-lastValueToReturn;</expression>
                     <structure>
                         <property name="position">1</property>
                         <property name="name">Date</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">date</property>
                     </structure>
                     <structure>
                         <property name="position">2</property>
@@ -1126,32 +1295,87 @@ row["M4"]-lastValueToReturn;</expression>
                     </structure>
                     <structure>
                         <property name="position">16</property>
-                        <property name="name">М1-М2</property>
+                        <property name="name">P1</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">17</property>
-                        <property name="name">М3-М4</property>
+                        <property name="name">P2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">18</property>
-                        <property name="name">V1-V2</property>
+                        <property name="name">М1-М2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">19</property>
-                        <property name="name">V3-V4</property>
+                        <property name="name">М3-М4</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">20</property>
-                        <property name="name">Т1-Т2</property>
+                        <property name="name">V1-V2</property>
                         <property name="dataType">float</property>
                     </structure>
                     <structure>
                         <property name="position">21</property>
+                        <property name="name">V3-V4</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">Т1-Т2</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
                         <property name="name">Т3-Т4</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">ПРИРАЩЕНИЕ E1</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">ПРИРАЩЕНИЕ V1</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">ПРИРАЩЕНИЕ V2</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">ПРИРАЩЕНИЕ V3</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">ПРИРАЩЕНИЕ M1</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">ПРИРАЩЕНИЕ M2</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">ПРИРАЩЕНИЕ M3</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">ПРИРАЩЕНИЕ M4</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">32</property>
+                        <property name="name">ПРИРАЩЕНИЕ V4</property>
                         <property name="dataType">float</property>
                     </structure>
                 </list-property>
@@ -1162,8 +1386,8 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="position">1</property>
                     <property name="name">Date</property>
                     <property name="nativeName">Date</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">1</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
                 </structure>
                 <structure>
                     <property name="position">2</property>
@@ -1263,10 +1487,24 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="dataType">float</property>
                     <property name="nativeDataType">8</property>
                 </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">P1</property>
+                    <property name="nativeName">P1</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">P2</property>
+                    <property name="nativeName">P2</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <PojoQuery appContextKey="APP_CONTEXT_KEY_CONSUMPTION" dataSetClass="ru.sevenkt.reports.pojo.MockConsumptionsDataSet" version="1.0">
-    <ColumnMapping index="1" name="Date" odaDataType="String">
+    <ColumnMapping index="1" name="Date" odaDataType="Date">
         <Method name="getDate"/>
     </ColumnMapping>
     <ColumnMapping index="2" name="E1" odaDataType="Double">
@@ -1310,6 +1548,12 @@ row["M4"]-lastValueToReturn;</expression>
     </ColumnMapping>
     <ColumnMapping index="15" name="V4" odaDataType="Double">
         <Method name="getV4"/>
+    </ColumnMapping>
+    <ColumnMapping index="16" name="P1" odaDataType="Double">
+        <Method name="getP1"/>
+    </ColumnMapping>
+    <ColumnMapping index="17" name="P2" odaDataType="Double">
+        <Method name="getP2"/>
     </ColumnMapping>
 </PojoQuery>
 ]]></xml-property>
@@ -1729,7 +1973,9 @@ row["M4"]-lastValueToReturn;</expression>
         </style>
     </styles>
     <page-setup>
-        <simple-master-page name="Simple MasterPage" id="2"/>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="orientation">landscape</property>
+        </simple-master-page>
     </page-setup>
     <body>
         <label id="49">
@@ -2348,6 +2594,10 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
                         <data id="263">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
                             <property name="resultSetColumn">Date</property>
                         </data>
                     </cell>
@@ -2686,14 +2936,16 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="borderLeftStyle">none</property>
             <property name="borderRightStyle">none</property>
             <property name="borderTopStyle">none</property>
-            <property name="width">7.989583333333333in</property>
+            <property name="textAlign">center</property>
+            <property name="width">100%</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Date"]</expression>
-                    <property name="dataType">string</property>
+                    <property name="dataType">date</property>
+                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">E1</property>
@@ -2780,7 +3032,7 @@ row["M4"]-lastValueToReturn;</expression>
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
-                            <expression name="value" type="javascript">dataSetRow["E1"]</expression>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ E1"]</expression>
                         </structure>
                     </list-property>
                     <property name="allowExport">true</property>
@@ -2917,6 +3169,199 @@ row["M4"]-lastValueToReturn;</expression>
                     </list-property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">P1</property>
+                    <text-property name="displayName">P1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">P2</property>
+                    <text-property name="displayName">P2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_12</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">AVE</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["P2"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_13</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">AVE</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["P1"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ E1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ E1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ E1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V2</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V3</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V4</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M2</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M3</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M4</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_14</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ V1"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_15</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ V2"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_16</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">STDDEV</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ V3"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_17</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ V4"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_18</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M1"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_19</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M2"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_20</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M3"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_21</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M4"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <list-property name="sort">
+                <structure>
+                    <expression name="key" type="javascript">row["Date"]</expression>
+                    <property name="direction">asc</property>
+                    <property name="strength">-1</property>
+                </structure>
             </list-property>
             <column id="350">
                 <property name="width">0.7395833333333334in</property>
@@ -2955,6 +3400,14 @@ row["M4"]-lastValueToReturn;</expression>
                 <property name="width">0.6041666666666666in</property>
             </column>
             <column id="356">
+                <property name="repeat">1</property>
+                <property name="width">0.5208333333333334in</property>
+            </column>
+            <column id="461">
+                <property name="repeat">1</property>
+                <property name="width">0.5208333333333334in</property>
+            </column>
+            <column id="455">
                 <property name="repeat">1</property>
                 <property name="width">0.5208333333333334in</property>
             </column>
@@ -3119,6 +3572,32 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderTopWidth">medium</property>
                         <label id="291">
                             <text-property name="text">M4</text-property>
+                        </label>
+                    </cell>
+                    <cell id="456">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="464">
+                            <text-property name="text">Р1</text-property>
+                        </label>
+                    </cell>
+                    <cell id="450">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="465">
+                            <text-property name="text">Р2</text-property>
                         </label>
                     </cell>
                 </row>
@@ -3287,6 +3766,32 @@ row["M4"]-lastValueToReturn;</expression>
                             <text-property name="text">т</text-property>
                         </label>
                     </cell>
+                    <cell id="457">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="462">
+                            <text-property name="text">кг/см2</text-property>
+                        </label>
+                    </cell>
+                    <cell id="451">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="463">
+                            <text-property name="text">кг/см2</text-property>
+                        </label>
+                    </cell>
                 </row>
             </header>
             <detail>
@@ -3309,6 +3814,11 @@ row["M4"]-lastValueToReturn;</expression>
                             <property name="borderLeftStyle">none</property>
                             <property name="borderRightStyle">none</property>
                             <property name="borderTopStyle">none</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Custom</property>
+                                <property name="pattern">dd.MM.yyyy</property>
+                                <property name="locale">ru</property>
+                            </structure>
                             <property name="resultSetColumn">Date</property>
                         </data>
                     </cell>
@@ -3321,12 +3831,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="310">
+                        <data id="471">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">E1</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ E1</property>
                         </data>
                     </cell>
                     <cell id="321">
@@ -3372,12 +3882,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="326">
+                        <data id="472">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">V1</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ V1</property>
                         </data>
                     </cell>
                     <cell id="327">
@@ -3389,12 +3899,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="328">
+                        <data id="473">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">V2</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ V2</property>
                         </data>
                     </cell>
                     <cell id="329">
@@ -3406,12 +3916,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="330">
+                        <data id="474">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">V3</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ V3</property>
                         </data>
                     </cell>
                     <cell id="331">
@@ -3423,12 +3933,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="332">
+                        <data id="475">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">V4</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ V4</property>
                         </data>
                     </cell>
                     <cell id="313">
@@ -3440,12 +3950,8 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="314">
-                            <structure name="numberFormat">
-                                <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
-                            </structure>
-                            <property name="resultSetColumn">M1</property>
+                        <data id="476">
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ M1</property>
                         </data>
                     </cell>
                     <cell id="315">
@@ -3457,12 +3963,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="316">
+                        <data id="477">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">M2</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ M2</property>
                         </data>
                     </cell>
                     <cell id="317">
@@ -3474,12 +3980,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="318">
+                        <data id="478">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">M3</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ M3</property>
                         </data>
                     </cell>
                     <cell id="319">
@@ -3491,12 +3997,38 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="320">
+                        <data id="479">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">M4</property>
+                            <property name="resultSetColumn">ПРИРАЩЕНИЕ M4</property>
+                        </data>
+                    </cell>
+                    <cell id="458">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="466">
+                            <property name="resultSetColumn">P1</property>
+                        </data>
+                    </cell>
+                    <cell id="452">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="467">
+                            <property name="resultSetColumn">P2</property>
                         </data>
                     </cell>
                 </row>
@@ -3566,12 +4098,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="378">
+                        <data id="480">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_2</property>
+                            <property name="resultSetColumn">Aggregation_14</property>
                         </data>
                     </cell>
                     <cell id="346">
@@ -3583,12 +4115,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="379">
+                        <data id="481">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_3</property>
+                            <property name="resultSetColumn">Aggregation_15</property>
                         </data>
                     </cell>
                     <cell id="347">
@@ -3600,12 +4132,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="380">
+                        <data id="482">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_4</property>
+                            <property name="resultSetColumn">Aggregation_16</property>
                         </data>
                     </cell>
                     <cell id="348">
@@ -3617,12 +4149,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="381">
+                        <data id="483">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_5</property>
+                            <property name="resultSetColumn">Aggregation_17</property>
                         </data>
                     </cell>
                     <cell id="339">
@@ -3634,12 +4166,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="382">
+                        <data id="484">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_6</property>
+                            <property name="resultSetColumn">Aggregation_18</property>
                         </data>
                     </cell>
                     <cell id="340">
@@ -3651,12 +4183,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="383">
+                        <data id="485">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_7</property>
+                            <property name="resultSetColumn">Aggregation_19</property>
                         </data>
                     </cell>
                     <cell id="341">
@@ -3668,12 +4200,12 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="384">
+                        <data id="486">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_8</property>
+                            <property name="resultSetColumn">Aggregation_20</property>
                         </data>
                     </cell>
                     <cell id="342">
@@ -3685,13 +4217,33 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
-                        <data id="385">
+                        <data id="487">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
                                 <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
                             </structure>
-                            <property name="resultSetColumn">Aggregation_9</property>
+                            <property name="resultSetColumn">Aggregation_21</property>
                         </data>
+                    </cell>
+                    <cell id="459">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                    </cell>
+                    <cell id="453">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
                     </cell>
                 </row>
                 <row id="387">
@@ -3838,6 +4390,40 @@ row["M4"]-lastValueToReturn;</expression>
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                    </cell>
+                    <cell id="460">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="469">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">Aggregation_13</property>
+                        </data>
+                    </cell>
+                    <cell id="454">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="468">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">Aggregation_12</property>
+                        </data>
                     </cell>
                 </row>
             </footer>
@@ -4107,7 +4693,7 @@ row["M4"]-lastValueToReturn;</expression>
   </ExtendedProperties>
   <SampleData>
     <BaseSampleData>
-      <DataSetRepresentation>'A','B','C','D','E'</DataSetRepresentation>
+      <DataSetRepresentation>01/05/2000,02/01/2000,04/12/2000,03/12/2000,02/29/2000</DataSetRepresentation>
     </BaseSampleData>
     <OrthogonalSampleData>
       <DataSetRepresentation>6,4,12,8,10</DataSetRepresentation>
@@ -4151,7 +4737,7 @@ row["M4"]-lastValueToReturn;</expression>
     <Visible>false</Visible>
   </EmptyMessage>
   <Axes>
-    <Type>Text</Type>
+    <Type>DateTime</Type>
     <Title>
       <Caption>
         <Value>X-Axis Title</Value>
@@ -4455,7 +5041,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;E1&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ E1&quot;]</Definition>
             <Grouping>
               <GroupType>Text</GroupType>
               <AggregateExpression>Sum</AggregateExpression>
@@ -4979,14 +5565,14 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="outputFormat">SVG</property>
             <property name="inheritColumns">false</property>
             <property name="height">2.5833333333333335in</property>
-            <property name="width">572.25pt</property>
+            <property name="width">10.458333333333334in</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Date"]</expression>
-                    <property name="dataType">string</property>
+                    <property name="dataType">date</property>
                 </structure>
                 <structure>
                     <property name="name">E1</property>
@@ -5073,6 +5659,18 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="dataType">float</property>
                 </structure>
                 <structure>
+                    <property name="name">P1</property>
+                    <text-property name="displayName">P1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">P2</property>
+                    <text-property name="displayName">P2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
                     <property name="name">М1-М2</property>
                     <text-property name="displayName">М1-М2</text-property>
                     <expression name="expression" type="javascript">dataSetRow["М1-М2"]</expression>
@@ -5106,6 +5704,12 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="name">Т3-Т4</property>
                     <text-property name="displayName">Т3-Т4</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Т3-Т4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ E1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ E1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ E1"]</expression>
                     <property name="dataType">float</property>
                 </structure>
             </list-property>
@@ -6529,7 +7133,7 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="outputFormat">SVG</property>
             <property name="inheritColumns">false</property>
             <property name="height">2.7604166666666665in</property>
-            <property name="width">572.25pt</property>
+            <property name="width">10.458333333333334in</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -7282,7 +7886,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;V1&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ V1&quot;]</Definition>
             <Grouping>
               <GroupType>Text</GroupType>
               <AggregateExpression>Sum</AggregateExpression>
@@ -7560,7 +8164,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;V2&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ V2&quot;]</Definition>
             <Grouping>
               <Enabled>false</Enabled>
               <GroupType>Text</GroupType>
@@ -7839,7 +8443,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;V3&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ V3&quot;]</Definition>
             <Grouping>
               <Enabled>false</Enabled>
               <GroupType>Text</GroupType>
@@ -8118,7 +8722,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;V4&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ V4&quot;]</Definition>
             <Grouping>
               <Enabled>false</Enabled>
               <GroupType>Text</GroupType>
@@ -8643,14 +9247,14 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="outputFormat">SVG</property>
             <property name="inheritColumns">false</property>
             <property name="height">2.8229166666666665in</property>
-            <property name="width">572.25pt</property>
+            <property name="width">10.447916666666666in</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Date"]</expression>
-                    <property name="dataType">string</property>
+                    <property name="dataType">date</property>
                 </structure>
                 <structure>
                     <property name="name">E1</property>
@@ -8737,6 +9341,18 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="dataType">float</property>
                 </structure>
                 <structure>
+                    <property name="name">P1</property>
+                    <text-property name="displayName">P1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">P2</property>
+                    <text-property name="displayName">P2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
                     <property name="name">М1-М2</property>
                     <text-property name="displayName">М1-М2</text-property>
                     <expression name="expression" type="javascript">dataSetRow["М1-М2"]</expression>
@@ -8770,6 +9386,60 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="name">Т3-Т4</property>
                     <text-property name="displayName">Т3-Т4</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Т3-Т4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ E1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ E1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ E1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V2</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V3</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M2</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M3</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M4</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V4</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V4"]</expression>
                     <property name="dataType">float</property>
                 </structure>
             </list-property>
@@ -9396,7 +10066,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;M1&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ M1&quot;]</Definition>
             <Grouping>
               <GroupType>Text</GroupType>
               <AggregateExpression>Sum</AggregateExpression>
@@ -9674,7 +10344,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;M2&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ M2&quot;]</Definition>
             <Grouping>
               <Enabled>false</Enabled>
               <GroupType>Text</GroupType>
@@ -9953,7 +10623,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;M3&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ M3&quot;]</Definition>
             <Grouping>
               <Enabled>false</Enabled>
               <GroupType>Text</GroupType>
@@ -10232,7 +10902,7 @@ row["M4"]-lastValueToReturn;</expression>
             <Visible>false</Visible>
           </Label>
           <DataDefinition>
-            <Definition>row[&quot;M4&quot;]</Definition>
+            <Definition>row[&quot;ПРИРАЩЕНИЕ M4&quot;]</Definition>
             <Grouping>
               <Enabled>false</Enabled>
               <GroupType>Text</GroupType>
@@ -10757,14 +11427,14 @@ row["M4"]-lastValueToReturn;</expression>
             <property name="outputFormat">SVG</property>
             <property name="inheritColumns">false</property>
             <property name="height">2.7083333333333335in</property>
-            <property name="width">572.25pt</property>
+            <property name="width">10.447916666666666in</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">Date</property>
                     <text-property name="displayName">Date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Date"]</expression>
-                    <property name="dataType">string</property>
+                    <property name="dataType">date</property>
                 </structure>
                 <structure>
                     <property name="name">E1</property>
@@ -10851,6 +11521,18 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="dataType">float</property>
                 </structure>
                 <structure>
+                    <property name="name">P1</property>
+                    <text-property name="displayName">P1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">P2</property>
+                    <text-property name="displayName">P2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["P2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
                     <property name="name">М1-М2</property>
                     <text-property name="displayName">М1-М2</text-property>
                     <expression name="expression" type="javascript">dataSetRow["М1-М2"]</expression>
@@ -10884,6 +11566,60 @@ row["M4"]-lastValueToReturn;</expression>
                     <property name="name">Т3-Т4</property>
                     <text-property name="displayName">Т3-Т4</text-property>
                     <expression name="expression" type="javascript">dataSetRow["Т3-Т4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ E1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ E1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ E1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V2</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V3</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M1</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M1"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M2</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M2"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M3</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ M4</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ M4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ M4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">ПРИРАЩЕНИЕ V4</property>
+                    <text-property name="displayName">ПРИРАЩЕНИЕ V4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ПРИРАЩЕНИЕ V4"]</expression>
                     <property name="dataType">float</property>
                 </structure>
             </list-property>
