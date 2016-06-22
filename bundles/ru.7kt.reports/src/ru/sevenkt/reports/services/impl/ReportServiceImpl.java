@@ -8,8 +8,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,6 +25,9 @@ import org.eclipse.birt.report.engine.api.IReportEngineFactory;
 import org.eclipse.birt.report.engine.api.IReportRunnable;
 import org.eclipse.birt.report.engine.api.IRunAndRenderTask;
 import org.eclipse.birt.report.engine.api.RenderOption;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.osgi.framework.Bundle;
 
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.domain.ArchiveTypes;
@@ -34,23 +39,38 @@ public class ReportServiceImpl implements IReportService {
 	@Override
 	public List<String> getAvailabelTemplates() {
 		List<String> templates = new ArrayList<String>();
+		Bundle bundle = org.eclipse.core.runtime.Platform.getBundle("ru.7kt.reports.templates");
+		Enumeration<URL> urls = bundle.findEntries("/", "*.rptdesign", false);
+		while(urls.hasMoreElements()){
+			URL url = urls.nextElement();
+			String path = url.getPath();
+			templates.add(path.replace("/", ""));
+		}	
 		return templates;
 	}
 
 	@Override
-	public void showReportAsHTML(List<Measuring> measurings, LocalDate dateFrom, LocalDate dateTo, String reportName, ArchiveTypes archiveType)
-			throws FileNotFoundException {
-		InputStream is = new FileInputStream(new File("reports/templates/" + reportName));
-		HashMap datasets = new HashMap();
-		datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo, archiveType));
-		datasets.put("APP_CONTEXT_KEY_CONSUMPTION", Helper.mapToConsumption(measurings, dateFrom, dateTo, archiveType));
-		datasets.put("APP_CONTEXT_KEY_METERS", Helper.mapToMeters(measurings, dateFrom, dateTo, archiveType));
-
-		// start enginee
-		EngineConfig config = new EngineConfig();
-		config.setEngineHome(System.getProperty("java.io.tmpdir"));
-		config.setLogConfig("logs", Level.FINEST);
+	public void showReportAsHTML(List<Measuring> measurings, LocalDate dateFrom, LocalDate dateTo, String reportName,
+			ArchiveTypes archiveType) throws FileNotFoundException {
+		// InputStream is = new FileInputStream(new File("reports/templates/" +
+		// reportName));
+		Bundle bundle = org.eclipse.core.runtime.Platform.getBundle("ru.7kt.reports.templates");
+		Path path = new Path(reportName);
+		URL fileURL = FileLocator.find(bundle, path, null);
+		InputStream is = null;
 		try {
+			is = fileURL.openStream();
+			HashMap<String, Object> datasets = new HashMap<>();
+			datasets.put("APP_CONTEXT_KEY_DEVICE", Helper.mapToDeviceData(measurings, dateFrom, dateTo, archiveType));
+			datasets.put("APP_CONTEXT_KEY_CONSUMPTION",
+					Helper.mapToConsumption(measurings, dateFrom, dateTo, archiveType));
+			datasets.put("APP_CONTEXT_KEY_METERS", Helper.mapToMeters(measurings, dateFrom, dateTo, archiveType));
+
+			// start enginee
+			EngineConfig config = new EngineConfig();
+			config.setEngineHome(System.getProperty("java.io.tmpdir"));
+			config.setLogConfig("logs", Level.FINEST);
+
 			Platform.startup(config);
 			IReportEngineFactory factory = (IReportEngineFactory) Platform
 					.createFactoryObject(IReportEngineFactory.EXTENSION_REPORT_ENGINE_FACTORY);
@@ -84,7 +104,7 @@ public class ReportServiceImpl implements IReportService {
 
 		// load report
 		// logger.debug(String.format("Loading report %s...", name));
-		
+
 		// return new ByteArrayInputStream(out.toByteArray());
 	}
 

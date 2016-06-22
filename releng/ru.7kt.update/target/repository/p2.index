@@ -1,4 +1,4 @@
-#Fri Jun 17 13:25:50 KRAT 2016
+#Wed Jun 22 13:48:18 KRAT 2016
 version=1
 metadata.repository.factory.order=content.xml.xz,content.xml,\!
 artifact.repository.factory.order=artifacts.xml.xz,artifacts.xml,\!

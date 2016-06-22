@@ -16,6 +16,7 @@
 		<module>ru.7kt.database</module>
 		<module>ru.7kt.app</module>
 		<module>ru.7kt.reports</module>
+		<module>ru.7kt.reports.templates</module>
 		<module>ru.7kt.log</module>
 	</modules>
 </project>
