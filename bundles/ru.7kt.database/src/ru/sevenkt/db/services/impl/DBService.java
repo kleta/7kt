@@ -30,6 +30,7 @@ import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
 import ru.sevenkt.db.entities.Params;
+import ru.sevenkt.db.entities.Report;
 import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.ErrorRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
@@ -1301,5 +1302,13 @@ public class DBService implements IDBService {
 		return er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0, 0),
 				endDate.atTime(0, 0));
 	}
+
+	@Override
+	public List<Report> getReports(Device device) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

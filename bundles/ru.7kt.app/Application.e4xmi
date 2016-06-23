@@ -23,6 +23,8 @@
             <children xsi:type="menu:Menu" xmi:id="_jM-zIDhQEeaKRb4sC0uwYQ" elementId="ru.7kt.app.menu." label="Отчёты">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_41KDMDhVEeaKRb4sC0uwYQ" coreExpressionId="ru.7kt.app.deviceselection"/>
               <children xsi:type="menu:DynamicMenuContribution" xmi:id="_tLu7QDhQEeaKRb4sC0uwYQ" elementId="ru.7kt.app.dynamicmenucontribution.0" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.AvailableReportItems"/>
+              <children xsi:type="menu:MenuSeparator" xmi:id="_PeBQwDj2EeaqTrRJaOcMZw" elementId="ru.7kt.app.menuseparator.3"/>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_UkUcMDj2EeaqTrRJaOcMZw" elementId="ru.7kt.app.handledmenuitem.assigntemplate" label="Назначить шаблон" command="_k1BqkDj2EeaqTrRJaOcMZw"/>
             </children>
           </menus>
           <toolbar xmi:id="_zZIPkNeCEeWLJqbY6SbmKw" elementId="ru.7kt.app.toolbar.0">
@@ -88,6 +90,7 @@
   <handlers xmi:id="_gPWVMPblEeWNeMUtWF3r6w" elementId="ru.7kt.app.handler.2" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.EditDeviceHandler" command="_Kb450Mr8EeW_Qf64bg1C_g"/>
   <handlers xmi:id="_l6NjIPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.handler.3" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.JournalSettingsHandler" command="_TnxGgPr_EeWTE_9cDLU1ZQ"/>
   <handlers xmi:id="_Yqm74Ch-EeanwviKTomwkA" elementId="ru.7kt.app.handler.4" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ShowReport" command="_R4S6kCh-EeanwviKTomwkA"/>
+  <handlers xmi:id="_xggesDj2EeaqTrRJaOcMZw" elementId="ru.7kt.app.handler.5" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.AssignTemplateHandler" command="_k1BqkDj2EeaqTrRJaOcMZw"/>
   <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
@@ -107,6 +110,7 @@
   <commands xmi:id="_tgtxsPSBEeW0rYQ9NpWXnQ" elementId="ru.7kt.app.command.about" commandName="О программе"/>
   <commands xmi:id="_TnxGgPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.command.journalsettings" commandName="Журнал настроек"/>
   <commands xmi:id="_R4S6kCh-EeanwviKTomwkA" elementId="ru.7kt.app.command.report" commandName="Отчёт"/>
+  <commands xmi:id="_k1BqkDj2EeaqTrRJaOcMZw" elementId="ru.7kt.app.command.assigntemplate" commandName="Назначить шаблон"/>
   <addons xmi:id="_DrjJAjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_DrjJAzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_DrjJBDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

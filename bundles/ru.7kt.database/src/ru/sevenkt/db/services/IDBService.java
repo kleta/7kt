@@ -8,6 +8,7 @@ import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
+import ru.sevenkt.db.entities.Report;
 import ru.sevenkt.domain.Archive;
 import ru.sevenkt.domain.ArchiveTypes;
 
@@ -62,6 +63,13 @@ public interface IDBService {
 
 
 	List<ru.sevenkt.db.entities.Error> findErrors(Device device, LocalDate startDate, LocalDate endDate, ArchiveTypes archiveType);
+
+
+	List<Report> getReports(Device device);
+
+
+
+	
 
 	
 	
