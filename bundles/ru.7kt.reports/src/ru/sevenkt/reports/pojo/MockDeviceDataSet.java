@@ -21,7 +21,17 @@ public class MockDeviceDataSet {
 		device.setDateTo("01.02.2016");
 		device.setSerialNum("3522");
 		device.setTempColdWater("0");
-		device.setWorkHour("10");
+		device.setTotalWorkHour("10");
+		device.setErrorFuncTime1(10);
+		device.setErrorFuncTime2(10);
+		device.setErrorPowerTime1(100);
+		device.setErrorPowerTime2(100);
+		device.setErrorTempTime1(163);
+		device.setErrorTempTime2(163);
+		device.setNormalWorkTime1(700);
+		device.setWrongWorkTime1(44);
+		device.setNormalWorkTime2(700);
+		device.setWrongWorkTime2(44);
 		return device;	
 		
 	}

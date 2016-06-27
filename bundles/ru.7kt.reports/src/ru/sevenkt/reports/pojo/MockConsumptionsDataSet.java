@@ -49,6 +49,8 @@ public class MockConsumptionsDataSet {
 			cb.setM4(rnd.nextDouble()*1000);
 			cb.setT1(rnd.nextDouble()*10);
 			cb.setT2(rnd.nextDouble()*10);
+			cb.setP1(rnd.nextDouble()*10);
+			cb.setP2(rnd.nextDouble()*10);
 			cb.setT3(rnd.nextDouble()*10);
 			cb.setT4(rnd.nextDouble()*10);
 			cb.setV1(rnd.nextDouble()*100);

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='org.eclipse.update.feature' id='ru.7kt.gemini.blueprint' version='1.0.0.201606220647'>
+  <artifact classifier='org.eclipse.update.feature' id='ru.7kt.gemini.blueprint' version='1.0.0.201606240714'>
     <properties size='6'>
       <property name='artifact.size' value='924'/>
       <property name='download.size' value='924'/>

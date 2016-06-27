@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-SymbolicName: ru.7kt.database
 Export-Package: ru.sevenkt.db.entities,ru.sevenkt.db.services
 Bundle-Name: database
-Bundle-Version: 1.0.0.201606220647
+Bundle-Version: 1.0.0.201606240714
 Bundle-ClassPath: .
 Require-Bundle: javax.persistence;bundle-version="2.1.0",org.springfra
  mework.data.jpa;bundle-version="1.9.4",org.springframework.context;bu

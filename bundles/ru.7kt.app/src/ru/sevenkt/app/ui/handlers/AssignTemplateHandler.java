@@ -6,11 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.slf4j.Logger;
