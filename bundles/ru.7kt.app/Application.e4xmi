@@ -109,7 +109,9 @@
   <commands xmi:id="_Eh4NUO_6EeW3JpRafYy2Ig" elementId="ru.7kt.app.command.exit" commandName="Выход"/>
   <commands xmi:id="_tgtxsPSBEeW0rYQ9NpWXnQ" elementId="ru.7kt.app.command.about" commandName="О программе"/>
   <commands xmi:id="_TnxGgPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.command.journalsettings" commandName="Журнал настроек"/>
-  <commands xmi:id="_R4S6kCh-EeanwviKTomwkA" elementId="ru.7kt.app.command.report" commandName="Отчёт"/>
+  <commands xmi:id="_R4S6kCh-EeanwviKTomwkA" elementId="ru.7kt.app.command.report" commandName="Отчёт">
+    <parameters xmi:id="_YNVW4Dz_EeaHR6hAvU82Xg" elementId="ru.7kt.app.commandparameter.report" name="Отчёт" optional="false"/>
+  </commands>
   <commands xmi:id="_k1BqkDj2EeaqTrRJaOcMZw" elementId="ru.7kt.app.command.assigntemplate" commandName="Назначить шаблон"/>
   <addons xmi:id="_DrjJAjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_DrjJAzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>

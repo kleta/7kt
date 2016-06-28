@@ -15,13 +15,91 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 import ru.sevenkt.annotations.Prop;
 
 @Entity
 @Table(name="Devices")
 public class Device implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2048945841888190110L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
+	@Prop(name = "Наименование")
+	private String deviceName;
+
+	@Column(unique = true)
+	@Prop(name = "Серийный номер")
+	private String serialNum;
+
+	@Prop(name = "Версия устройства")
+	private int deviceVersion;
+
+	private int wMin0;
+
+	private int wMin1;
+
+	private int wMax12;
+
+	private int wMax34;
+	
+	private boolean controlPower;
+
+	@Prop(name = "Сетевой адрес")
+	private int netAddress;
+
+	@Prop(name = "Схема")
+	private int formulaNum;
+
+	@Prop(name = "Температура хол. воды(°C)")
+	private float tempColdWaterSetting;
+
+	@Prop(name = "Вес импульса V1(л/имп)")
+	private float volumeByImpulsSetting1;
+
+	@Prop(name = "Вес импульса V2(л/имп)")
+	private float volumeByImpulsSetting2;
+
+	@Prop(name = "Вес импульса V3(л/имп)")
+	private float volumeByImpulsSetting3;
+
+	@Prop(name = "Вес импульса V4(л/имп)")
+	private float volumeByImpulsSetting4;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "NodeToDevice", joinColumns = {
+			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "idNode", referencedColumnName = "id") })
+	private List<Node> nodes;
+	
+	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinTable(name = "DeviceToParams", joinColumns = {
+			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "idParam", referencedColumnName = "id") })
+	private List<Params> params;
+	
+	@OneToMany(mappedBy="device", cascade=CascadeType.ALL)
+	@PrivateOwned
+	private List<Report> reports;
+	
+	public List<Report> getReports() {
+		if(reports==null)
+			reports=new ArrayList<>();
+		return reports;
+	}
+
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
+	}
 
 	public Integer getId() {
 		return id;
@@ -171,67 +249,7 @@ public class Device implements Serializable{
 		return serialVersionUID;
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2048945841888190110L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
-	@Prop(name = "Наименование")
-	private String deviceName;
-
-	@Column(unique = true)
-	@Prop(name = "Серийный номер")
-	private String serialNum;
-
-	@Prop(name = "Версия устройства")
-	private int deviceVersion;
-
-	private int wMin0;
-
-	private int wMin1;
-
-	private int wMax12;
-
-	private int wMax34;
 	
-	private boolean controlPower;
-
-	@Prop(name = "Сетевой адрес")
-	private int netAddress;
-
-	@Prop(name = "Схема")
-	private int formulaNum;
-
-	@Prop(name = "Температура хол. воды(°C)")
-	private float tempColdWaterSetting;
-
-	@Prop(name = "Вес импульса V1(л/имп)")
-	private float volumeByImpulsSetting1;
-
-	@Prop(name = "Вес импульса V2(л/имп)")
-	private float volumeByImpulsSetting2;
-
-	@Prop(name = "Вес импульса V3(л/имп)")
-	private float volumeByImpulsSetting3;
-
-	@Prop(name = "Вес импульса V4(л/имп)")
-	private float volumeByImpulsSetting4;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "NodeToDevice", joinColumns = {
-			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "idNode", referencedColumnName = "id") })
-	private List<Node> nodes;
-	
-	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinTable(name = "DeviceToParams", joinColumns = {
-			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "idParam", referencedColumnName = "id") })
-	private List<Params> params;
 
 	public List<Properties> getProperies() throws IllegalArgumentException, IllegalAccessException {
 		List<Properties> list=new ArrayList<>();

@@ -21,10 +21,10 @@
                 </ex-property>
                 <ex-property>
                     <name>pojoClassPath</name>
-                    <value>C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
+                    <value></value>
                 </ex-property>
             </list-property>
-            <property name="pojoDataSetClassPath">C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
+            <property name="pojoDataSetClassPath"></property>
         </oda-data-source>
     </data-sources>
     <data-sets>

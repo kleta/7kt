@@ -35,8 +35,7 @@ public class Helper {
 		dataBean.setSerialNum(dev.getSerialNum());
 		dataBean.setTempColdWater(dev.getTempColdWaterSetting() + "");
 		dataBean.setDateTo(dateTo.format(formatterDay));
-		// dataBean.setWorkHour(dev.g);
-
+		List<Measuring> work = measurings.stream().filter(m->m.getParameter().equals(Parameters.WORK)).collect(Collectors.toList());
 		arrayList.add(dataBean);
 
 		return arrayList;

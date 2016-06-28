@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
+    <property name="createdBy">Проектировщик BIRT Eclipse - версия 4.5.0.v201506092134, компоновка &lt;20060608-0632></property>
     <list-property name="propertyBindings">
         <structure>
             <property name="name">queryText</property>
@@ -21,10 +21,9 @@
                 </ex-property>
                 <ex-property>
                     <name>pojoClassPath</name>
-                    <value>C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
+                    <value></value>
                 </ex-property>
             </list-property>
-            <property name="pojoDataSetClassPath">C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -3330,7 +3329,7 @@ else&#13;
                 <structure>
                     <property name="name">Aggregation_16</property>
                     <property name="dataType">float</property>
-                    <property name="aggregateFunction">STDDEV</property>
+                    <property name="aggregateFunction">SUM</property>
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
@@ -3450,8 +3449,6 @@ else&#13;
             <header>
                 <row id="277">
                     <property name="fontFamily">"Times New Roman"</property>
-                    <property name="borderBottomStyle">solid</property>
-                    <property name="borderBottomWidth">medium</property>
                     <property name="borderLeftStyle">solid</property>
                     <property name="borderLeftWidth">medium</property>
                     <property name="borderRightStyle">solid</property>
@@ -3475,8 +3472,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="280">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3488,8 +3483,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="292">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3501,8 +3494,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="294">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3514,8 +3505,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="296">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3527,8 +3516,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="298">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3540,8 +3527,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="300">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3553,8 +3538,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="302">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3566,8 +3549,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="284">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3579,8 +3560,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="286">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3592,8 +3571,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="288">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3605,8 +3582,6 @@ else&#13;
                         </label>
                     </cell>
                     <cell id="290">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">medium</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
@@ -3626,8 +3601,6 @@ else&#13;
                     <property name="borderLeftWidth">medium</property>
                     <property name="borderRightStyle">solid</property>
                     <property name="borderRightWidth">medium</property>
-                    <property name="borderTopStyle">solid</property>
-                    <property name="borderTopWidth">medium</property>
                     <cell id="409">
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">medium</property>
@@ -3635,8 +3608,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="421">
                             <text-property name="text">Гкал</text-property>
                         </label>
@@ -3648,8 +3619,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="431">
                             <text-property name="text">°C</text-property>
                         </label>
@@ -3661,8 +3630,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="432">
                             <text-property name="text">°C</text-property>
                         </label>
@@ -3674,8 +3641,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="423">
                             <text-property name="text">м3</text-property>
                         </label>
@@ -3687,8 +3652,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="424">
                             <text-property name="text">м3</text-property>
                         </label>
@@ -3700,8 +3663,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="425">
                             <text-property name="text">м3</text-property>
                         </label>
@@ -3713,8 +3674,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="426">
                             <text-property name="text">м3</text-property>
                         </label>
@@ -3726,8 +3685,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="427">
                             <text-property name="text">т</text-property>
                         </label>
@@ -3739,8 +3696,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="428">
                             <text-property name="text">т</text-property>
                         </label>
@@ -3752,8 +3707,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="429">
                             <text-property name="text">т</text-property>
                         </label>
@@ -3765,8 +3718,6 @@ else&#13;
                         <property name="borderLeftWidth">medium</property>
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">medium</property>
                         <label id="430">
                             <text-property name="text">т</text-property>
                         </label>

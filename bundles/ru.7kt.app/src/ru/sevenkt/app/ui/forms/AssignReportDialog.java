@@ -22,10 +22,13 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class AssignReportDialog extends TitleAreaDialog {
 	private static class ViewerLabelProvider extends LabelProvider {
@@ -39,6 +42,9 @@ public class AssignReportDialog extends TitleAreaDialog {
 	private Table table;
 	private List<Report> reports;
 	private List<String> templates;
+	private TableViewer tableViewer;
+	private org.eclipse.swt.widgets.List list;
+	private ListViewer listViewer;
 
 	/**
 	 * Create the dialog.
@@ -64,15 +70,15 @@ public class AssignReportDialog extends TitleAreaDialog {
 		container.setLayout(new FormLayout());
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
-		ListViewer listViewer = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL);
-		org.eclipse.swt.widgets.List list = listViewer.getList();
+		listViewer = new ListViewer(container, SWT.BORDER | SWT.V_SCROLL);
+		list = listViewer.getList();
 		FormData fd_list = new FormData();
 		fd_list.bottom = new FormAttachment(100, -10);
 		fd_list.left = new FormAttachment(0, 10);
 		fd_list.right = new FormAttachment(0, 199);
 		list.setLayoutData(fd_list);
 		
-		TableViewer tableViewer = new TableViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
+		tableViewer = new TableViewer(container, SWT.BORDER | SWT.FULL_SELECTION);
 		table = tableViewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -98,6 +104,20 @@ public class AssignReportDialog extends TitleAreaDialog {
 		label_1.setText("Назначенные шаблоны");
 		
 		Button btnNewButton = new Button(container, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ReportDialog dialog = new ReportDialog(getShell());
+				int retOpen = dialog.open();
+				if (retOpen == Window.OK) {
+					Report report = dialog.getReport();
+					Object s = listViewer.getStructuredSelection().getFirstElement();
+					report.setTemplateName(s.toString());
+					reports.add(report);
+					tableViewer.setInput(reports);
+				}
+			}
+		});
 		fd_table.left = new FormAttachment(btnNewButton, 6);
 		
 		TableViewerColumn nameTableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
@@ -107,8 +127,8 @@ public class AssignReportDialog extends TitleAreaDialog {
 				return null;
 			}
 			public String getText(Object element) {
-				// TODO Auto-generated method stub
-				return element == null ? "" : element.toString();
+				Report report = (Report)element;
+				return element == null ? "" : report.getName();
 			}
 		});
 		TableColumn tableColumn = nameTableViewerColumn.getColumn();
@@ -122,8 +142,8 @@ public class AssignReportDialog extends TitleAreaDialog {
 				return null;
 			}
 			public String getText(Object element) {
-				// TODO Auto-generated method stub
-				return element == null ? "" : element.toString();
+				Report report = (Report)element;
+				return element == null ? "" : report.getType().getName();
 			}
 		});
 		TableColumn tableColumn_1 = typeTableViewerColumn.getColumn();
@@ -137,8 +157,8 @@ public class AssignReportDialog extends TitleAreaDialog {
 				return null;
 			}
 			public String getText(Object element) {
-				// TODO Auto-generated method stub
-				return element == null ? "" : element.toString();
+				Report report = (Report)element;
+				return element == null ? "" : report.getTemplateName();
 			}
 		});
 		TableColumn tableColumn_2 = templateTableViewerColumn.getColumn();
@@ -153,6 +173,14 @@ public class AssignReportDialog extends TitleAreaDialog {
 		btnNewButton.setText("Назначить >>");
 		
 		Button button = new Button(container, SWT.NONE);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Object s = tableViewer.getStructuredSelection().getFirstElement();
+				reports.remove(s);
+				tableViewer.setInput(reports);
+			}
+		});
 		FormData fd_button = new FormData();
 		fd_button.right = new FormAttachment(btnNewButton, 0, SWT.RIGHT);
 		fd_button.top = new FormAttachment(btnNewButton, 6);
@@ -160,6 +188,7 @@ public class AssignReportDialog extends TitleAreaDialog {
 		listViewer.setLabelProvider(new ViewerLabelProvider());
 		listViewer.setContentProvider(listProvider);
 		listViewer.setInput(templates);
+		tableViewer.setInput(reports);
 		button.setLayoutData(fd_button);
 		button.setText("<< Удалить");
 		return area;

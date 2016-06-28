@@ -27,6 +27,7 @@ import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
+import ru.sevenkt.db.repositories.ReportRepo;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.db.services.impl.DBService;
 
@@ -156,6 +157,11 @@ public class Config {
 	public  ErrorRepo errorRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
 		return jpaRepositoryFactory.getRepository(ErrorRepo.class);
+	}
+	@Bean
+	public  ReportRepo reportRepo(EntityManager em){
+		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
+		return jpaRepositoryFactory.getRepository(ReportRepo.class);
 	}
 	
 	@Bean

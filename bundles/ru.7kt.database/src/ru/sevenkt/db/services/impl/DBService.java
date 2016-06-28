@@ -37,6 +37,7 @@ import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
+import ru.sevenkt.db.repositories.ReportRepo;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.Archive;
 import ru.sevenkt.domain.ArchiveTypes;
@@ -76,6 +77,9 @@ public class DBService implements IDBService {
 
 	@Autowired
 	private EntityManager em;
+	
+	@Autowired
+	private ReportRepo rr;
 
 	private Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -1062,23 +1066,11 @@ public class DBService implements IDBService {
 		LocalDate startArchiveDate = dateTime.minusMonths(DayArchive.MAX_MONTH_COUNT).toLocalDate();
 		List<Measuring> measurings = new ArrayList<>();
 		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
-			// if (startArchiveDate.equals(LocalDate.of(2015, 12, 31)))
-			// System.out.println();
 			DayRecord dr = da.getDayRecord(startArchiveDate, dateTime);
 			if (dr.isValid()) {
 				Field[] fields = DayRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-//					if (field.getName().equals("errorChannel1")) {
-//						System.out.println(
-//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError1());
-//					}
-//					if (field.getName().equals("errorChannel2")) {
-//						System.out.println(
-//								dr.getDate() + ":" + field.getName() + ":" + Integer.toBinaryString(field.getInt(dr))
-//										+ ":" + field.getInt(dr) + ":" + dr.getTimeError2());
-//					}
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.DAY);
@@ -1115,34 +1107,10 @@ public class DBService implements IDBService {
 						default:
 							float val = field.getFloat(dr);
 							BigDecimal bdVal = new BigDecimal(val + "").setScale(10, BigDecimal.ROUND_HALF_UP);
-							// m.setValue(bdVal.doubleValue());
 							m.setValue(new Double(val + ""));
 							break;
 						}
-						// if (parameter.equals(Parameters.AVG_TEMP1) ||
-						// parameter.equals(Parameters.AVG_TEMP2)
-						// || parameter.equals(Parameters.AVG_TEMP3) ||
-						// parameter.equals(Parameters.AVG_TEMP4)) {
-						// float val = field.getInt(dr);
-						// m.setValue((double) (val / 100 > 100 ? 0 : val /
-						// 100));
-						// } else {
-						// float val = field.getFloat(dr);
-						// if (parameter.equals(Parameters.AVG_P1) ||
-						// parameter.equals(Parameters.AVG_P2)) {
-						// val = val / 10;
-						//
-						// m.setValue(new Double(val + ""));
-						// } else if (parameter.equals(Parameters.ERROR_BYTE1)
-						// || parameter.equals(Parameters.ERROR_BYTE2)) {
-						// m.setValue((double) field.getInt(dr));
-						//
-						// } else {
-						// BigDecimal bdVal = new BigDecimal(val +
-						// "").setScale(2, BigDecimal.ROUND_HALF_UP);
-						// m.setValue(bdVal.doubleValue());
-						// }
-						// }
+						
 						measurings.add(m);
 					}
 				}
@@ -1305,8 +1273,12 @@ public class DBService implements IDBService {
 
 	@Override
 	public List<Report> getReports(Device device) {
-		// TODO Auto-generated method stub
-		return null;
+		return rr.findByDevice(device);
+	}
+
+	@Override
+	public Report findReport(Integer reportId) {
+		return rr.findOne(reportId);
 	}
 
 	

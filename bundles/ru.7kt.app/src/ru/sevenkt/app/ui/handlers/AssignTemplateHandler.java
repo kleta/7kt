@@ -31,14 +31,17 @@ public class AssignTemplateHandler {
 	private Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell parentShell, @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell parentShell, @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object) throws Exception {
 		List<String> templates = rs.getAvailabelTemplates();
 		Device device=(Device)object;
 		List<Report> reports = dbs.getReports(device);
-		AssignReportDialog dialog=new AssignReportDialog(parentShell, templates, reports);
+		
+		AssignReportDialog dialog=new AssignReportDialog(parentShell, templates, reports); 
 		int retOpen = dialog.open();
 		if (retOpen == Window.OK) {
-			System.out.println();
+			reports.forEach(r->r.setDevice(device));
+			device.setReports(reports);
+			dbs.saveDevice(device);
 		}
 		
 	}

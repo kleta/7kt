@@ -68,10 +68,6 @@ public interface IDBService {
 	List<Report> getReports(Device device);
 
 
-
-	
-
-	
-	
+	Report findReport(Integer reportId);
 	
 }
