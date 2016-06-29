@@ -11,5 +11,5 @@
                         http://www.eclipse.org/gemini/blueprint/schema/blueprint/gemini-blueprint.xsd">
 	<context:annotation-config />
 	<bean id="config" class="ru.sevenkt.db.Config"/>
-	<osgi:service  id="dbServiceOsgi" ref="dbService" interface="ru.sevenkt.db.services.IDBService"/>
+	<osgi:service  id="dbServiceOsgi" ref="dbService" interface="ru.sevenkt.db.services.IDBService"/> 
 </beans>

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -15,59 +16,59 @@ import java.util.stream.Collectors;
 
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Measuring;
+import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.reports.pojo.ConsumptionBean;
 import ru.sevenkt.reports.pojo.DeviceDataBean;
 import ru.sevenkt.reports.pojo.MeterBean;
+import ru.sevenkt.reports.services.IReportService;
 
 public class Helper {
 	private static final DateTimeFormatter formatterDay = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 	private static final DateTimeFormatter formatterHour = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-	public static Collection<DeviceDataBean> mapToDeviceData(List<Measuring> measurings, LocalDate dateFrom,
+	public static Collection<DeviceDataBean> mapToDeviceData(Map<String, Object> map, LocalDate dateFrom,
 			LocalDate dateTo, ArchiveTypes archiveType) {
 		ArrayList<DeviceDataBean> arrayList = new ArrayList<>();
 		DeviceDataBean dataBean = new DeviceDataBean();
-		Device dev = measurings.get(0).getDevice();
+		Device dev = (Device) map.get(IReportService.DEVICE);
 		dataBean.setName(dev.getDeviceName());
 		dataBean.setDateFrom(dateFrom.format(formatterDay));
 		dataBean.setSerialNum(dev.getSerialNum());
 		dataBean.setTempColdWater(dev.getTempColdWaterSetting() + "");
 		dataBean.setDateTo(dateTo.format(formatterDay));
-		List<Measuring> work = measurings.stream().filter(m->m.getParameter().equals(Parameters.WORK)).collect(Collectors.toList());
 		arrayList.add(dataBean);
 
 		return arrayList;
 
 	}
 
-	public static Collection<ConsumptionBean> mapToConsumption(List<Measuring> measurings, LocalDate dateFrom,
+	public static Collection<ConsumptionBean> mapToConsumption(Map<String, Object> map, LocalDate dateFrom,
 			LocalDate dateTo, ArchiveTypes archiveType) {
 		LocalDateTime ldtFrom = dateFrom.atStartOfDay();
 		Double e1, e2, t1, t2, t3, t4, v1, v2, v3, v4, m1, m2, m3, m4, p1, p2;
 		e1 = e2 = t1 = t2 = t3 = t4 = v1 = v2 = v3 = v4 = m1 = m2 = m3 = m4 = p1 = p2 = null;
 		List<ConsumptionBean> list = new ArrayList<>();
+		Collection<Measuring> measurings = null;
+		switch(archiveType){
+		case HOUR:
+			measurings=(Collection<Measuring>) map.get(IReportService.HOUR_MEASURINGS);
+			//dtf=formatterHour;
+			break;
+		case DAY:
+			measurings=(Collection<Measuring>) map.get(IReportService.DAY_MEASURINGS);
+			break;
+		case MONTH:
+			measurings=(Collection<Measuring>) map.get(IReportService.MONTH_MEASURINGS);
+			break;
+		}
+		
 		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
 		while (ldtFrom.isBefore(dateTo.atStartOfDay()) || ldtFrom.equals(dateTo.atStartOfDay())) {
 			List<Measuring> val;
 			ConsumptionBean cb = new ConsumptionBean();
-//			DateTimeFormatter dtf = null;
-//			switch (archiveType) {
-//			case HOUR:
-//				//ldtFrom = ldtFrom.plusHours(1);
-//				dtf=formatterHour;
-//				break;
-//			case DAY:
-//				//ldtFrom = ldtFrom.plusDays(1);
-//				dtf=formatterDay;
-//				break;
-//			case MONTH:
-//				//ldtFrom = ldtFrom.plusMonths(1).withDayOfMonth(1);
-//				dtf=formatterDay;
-//				break;
-//			}
 			List<Measuring> values = groupByDateTime.get(ldtFrom);
 			// List<Measuring> prevValues = groupByDateTime.get(prevDt);
 			Instant instant = ldtFrom.atZone(ZoneId.systemDefault()).toInstant();
@@ -190,9 +191,10 @@ public class Helper {
 		return list;
 	}
 
-	public static Collection<MeterBean> mapToMeters(List<Measuring> measurings, LocalDate dateFrom, LocalDate dateTo,
+	public static Collection<MeterBean> mapToMeters( Map<String, Object> map, LocalDate dateFrom, LocalDate dateTo,
 			ArchiveTypes archiveType) {
 		List<MeterBean> list = new ArrayList<>();
+		Collection<Measuring> measurings = (Collection<Measuring>) map.get(IReportService.DAY_MEASURINGS);
 		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
 		List<Measuring> val;
@@ -285,5 +287,80 @@ public class Helper {
 		mb.setV4(12312.0211003 + 2324.232);
 		list.add(mb);
 		return list;
+	}
+
+	public static Map mapToParameters(Map<String, Object> map) {
+		Map<String, Boolean> parameters=new HashMap<>();
+		parameters.put("e1", true);
+		parameters.put("e2", true);
+		parameters.put("t1", true);
+		parameters.put("t2", true);
+		parameters.put("t3", true);
+		parameters.put("t4", true);
+		parameters.put("v1", true);
+		parameters.put("v2", true);
+		parameters.put("v3", true);
+		parameters.put("v4", true);
+		parameters.put("m1", true);
+		parameters.put("m2", true);
+		parameters.put("m3", true);
+		parameters.put("m4", true);
+		parameters.put("p1", true);
+		parameters.put("p2", true);
+		List<Params> params=(List<Params>) map.get(IReportService.PARAMS);
+		for (Params param : params) {
+			switch(param.getId()){
+			case E1:
+				parameters.put("e1", false);
+				break;
+			case E2:
+				parameters.put("e2", false);
+				break;
+			case AVG_TEMP1:
+				parameters.put("t1", false);
+				break;
+			case AVG_TEMP2:
+				parameters.put("t2", false);
+				break;
+			case AVG_TEMP3:
+				parameters.put("t3", false);
+				break;
+			case AVG_TEMP4:
+				parameters.put("t4", false);
+				break;
+			case V1:
+				parameters.put("v1", false);
+				break;
+			case V2:
+				parameters.put("v2", false);
+				break;
+			case V3:
+				parameters.put("v3", false);
+				break;
+			case V4:
+				parameters.put("v4", false);
+				break;
+			case M1:
+				parameters.put("m1", false);
+				break;
+			case M2:
+				parameters.put("m2", false);
+				break;
+			case M3:
+				parameters.put("m3", false);
+				break;
+			case M4:
+				parameters.put("m4", false);
+				break;
+			case AVG_P1:
+				parameters.put("p1", false);
+				break;
+			case AVG_P2:
+				parameters.put("p2", false);
+				break;
+			}
+			
+		}
+		return parameters;
 	}
 }

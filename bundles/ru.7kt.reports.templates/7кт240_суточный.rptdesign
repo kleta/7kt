@@ -12,6 +12,38 @@
     <property name="layoutPreference">fixed layout</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="e1" id="1267">
+            <property name="hidden">false</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="v4" id="1268">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList">
+                <structure>
+                    <property name="value">true</property>
+                </structure>
+                <structure>
+                    <property name="value">false</property>
+                </structure>
+            </list-property>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+    </parameters>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.birt.data.oda.pojo" name="deviceData" id="7">
             <list-property name="privateDriverProperties">
@@ -21,9 +53,10 @@
                 </ex-property>
                 <ex-property>
                     <name>pojoClassPath</name>
-                    <value></value>
+                    <value>C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
                 </ex-property>
             </list-property>
+            <property name="pojoDataSetClassPath">C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -3428,6 +3461,12 @@ else&#13;
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="362">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v4"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="353">

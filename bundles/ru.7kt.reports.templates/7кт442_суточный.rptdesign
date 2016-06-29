@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
+    <property name="createdBy">Проектировщик BIRT Eclipse - версия 4.5.0.v201506092134, компоновка &lt;20060608-0632></property>
     <list-property name="propertyBindings">
         <structure>
             <property name="name">queryText</property>
@@ -12,6 +12,184 @@
     <property name="layoutPreference">fixed layout</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="e1" id="1341">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="e2" id="1342">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="v1" id="1343">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="v2" id="1344">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="v3" id="1345">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="v4" id="1346">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="t1" id="1348">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="t2" id="1349">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="t3" id="1350">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="t4" id="1351">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="m4" id="1355">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="m3" id="1354">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="m2" id="1353">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="m1" id="1352">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="p1" id="1356">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+        <scalar-parameter name="p2" id="1357">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">boolean</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">radio-button</property>
+            <property name="fixedOrder">true</property>
+            <structure name="format"/>
+        </scalar-parameter>
+    </parameters>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.birt.data.oda.pojo" name="deviceData" id="7">
             <list-property name="privateDriverProperties">
@@ -24,7 +202,6 @@
                     <value></value>
                 </ex-property>
             </list-property>
-            <property name="pojoDataSetClassPath"></property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -2613,33 +2790,93 @@ else&#13;
                 <property name="width">0.71875in</property>
             </column>
             <column id="1179">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["e1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.71875in</property>
             </column>
             <column id="1309">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["e2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.71875in</property>
             </column>
             <column id="1195">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.71875in</property>
             </column>
             <column id="1199">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.71875in</property>
             </column>
             <column id="1203">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v3"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.71875in</property>
             </column>
             <column id="1207">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v4"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.71875in</property>
             </column>
             <column id="1180">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.7083333333333334in</property>
             </column>
             <column id="1181">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.7083333333333334in</property>
             </column>
             <column id="1182">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m3"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.7083333333333334in</property>
             </column>
             <column id="1183">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m4"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.7083333333333334in</property>
             </column>
             <header>
@@ -2671,7 +2908,7 @@ else&#13;
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
                         <label id="1310">
-                            <text-property name="text">E1</text-property>
+                            <text-property name="text">E2</text-property>
                         </label>
                     </cell>
                     <cell id="1192">
@@ -3510,6 +3747,42 @@ else&#13;
                     </list-property>
                     <property name="allowExport">true</property>
                 </structure>
+                <structure>
+                    <property name="name">T3</property>
+                    <text-property name="displayName">T3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["T3"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">T4</property>
+                    <text-property name="displayName">T4</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["T4"]</expression>
+                    <property name="dataType">float</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_25</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">AVE</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["T4"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_26</property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">AVE</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["T3"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <list-property name="sort">
                 <structure>
@@ -3522,51 +3795,156 @@ else&#13;
                 <property name="width">0.7395833333333334in</property>
             </column>
             <column id="351">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["e1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.615in</property>
             </column>
             <column id="1299">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["e2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.615in</property>
             </column>
             <column id="357">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["t1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="358">
+                <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["t2"]</expression>
+                    </structure>
+                </list-property>
+                <property name="width">0.6145833333333334in</property>
+            </column>
+            <column id="1364">
+                <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["t3"]</expression>
+                    </structure>
+                </list-property>
+                <property name="width">0.6145833333333334in</property>
+            </column>
+            <column id="1380">
+                <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["t4"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="359">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="360">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="361">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v3"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="362">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["v4"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6145833333333334in</property>
             </column>
             <column id="353">
                 <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6041666666666666in</property>
             </column>
             <column id="354">
                 <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6041666666666666in</property>
             </column>
             <column id="355">
                 <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m3"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.5729166666666666in</property>
             </column>
             <column id="356">
                 <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["m4"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6354166666666666in</property>
             </column>
             <column id="1283">
                 <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["p1"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6354166666666666in</property>
             </column>
             <column id="1289">
                 <property name="repeat">1</property>
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">params["p2"]</expression>
+                    </structure>
+                </list-property>
                 <property name="width">0.6354166666666666in</property>
             </column>
             <header>
@@ -3634,6 +4012,28 @@ else&#13;
                         <property name="borderTopWidth">medium</property>
                         <label id="295">
                             <text-property name="text">T2</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1365">
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="1366">
+                            <text-property name="text">T3</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1381">
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <label id="1382">
+                            <text-property name="text">T4</text-property>
                         </label>
                     </cell>
                     <cell id="296">
@@ -3796,6 +4196,28 @@ else&#13;
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
                         <label id="432">
+                            <text-property name="text">°C</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1367">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <label id="1368">
+                            <text-property name="text">°C</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1383">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <label id="1384">
                             <text-property name="text">°C</text-property>
                         </label>
                     </cell>
@@ -4006,6 +4428,40 @@ else&#13;
                                 <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">T2</property>
+                        </data>
+                    </cell>
+                    <cell id="1369">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="1390">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">T3</property>
+                        </data>
+                    </cell>
+                    <cell id="1385">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="1391">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">T4</property>
                         </data>
                     </cell>
                     <cell id="325">
@@ -4250,6 +4706,26 @@ else&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
                     </cell>
+                    <cell id="1371">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                    </cell>
+                    <cell id="1387">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                    </cell>
                     <cell id="345">
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">medium</property>
@@ -4481,6 +4957,32 @@ else&#13;
                                 <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_11</property>
+                        </data>
+                    </cell>
+                    <cell id="1372">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="1393">
+                            <property name="resultSetColumn">Aggregation_26</property>
+                        </data>
+                    </cell>
+                    <cell id="1388">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <data id="1392">
+                            <property name="resultSetColumn">Aggregation_25</property>
                         </data>
                     </cell>
                     <cell id="393">
