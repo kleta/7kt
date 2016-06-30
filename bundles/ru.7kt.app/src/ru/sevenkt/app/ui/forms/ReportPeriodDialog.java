@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class ReportPeriodDialog extends Dialog {
 
@@ -27,7 +28,7 @@ public class ReportPeriodDialog extends Dialog {
 
 	private Date dateTo;
 
-	private String reportFormatt;
+	private String reportFormatt="pdf";
 
 	/**
 	 * Create the dialog.
@@ -95,7 +96,7 @@ public class ReportPeriodDialog extends Dialog {
 		label_2.setText("Формат отчёта:");
 
 		Combo combo = new Combo(container, SWT.READ_ONLY);
-		combo.setItems(new String[] { "pdf", "html", "docx", "xlsx" });
+		combo.setItems(new String[] { "pdf", "html", "docx", "xls" });
 
 		FormData fd_combo = new FormData();
 		fd_combo.right = new FormAttachment(cDateTimeFrom, 0, SWT.RIGHT);
@@ -116,6 +117,7 @@ public class ReportPeriodDialog extends Dialog {
 
 	@Override
 	protected void configureShell(Shell newShell) {
+		newShell.setImage(ResourceManager.getPluginImage("ru.7kt.app", "icons/report.png"));
 		super.configureShell(newShell);
 		newShell.setText("Параметры отчёта");
 	}

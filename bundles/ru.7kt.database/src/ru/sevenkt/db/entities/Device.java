@@ -287,7 +287,8 @@ public class Device implements Serializable{
 		this.controlPower=device.controlPower;
 		
 		params=new ArrayList<>();
-		params.addAll(device.getParams());	
+		params.addAll(device.getParams());		
+		this.setReports(device.getReports());
 	}
 
 	public Device() {

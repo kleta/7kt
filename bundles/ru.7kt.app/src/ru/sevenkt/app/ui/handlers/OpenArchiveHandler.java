@@ -105,7 +105,7 @@ public class OpenArchiveHandler implements EventHandler {
 			break;
 		}
 		List<Measuring> measurings = dbService.findArchive(device, startDateTime, endDateTime, archiveType);
-		List<Error> errors = dbService.findErrors(device, startDate, endDate, archiveType);
+		List<Error> errors = dbService.findErrors(device, startDate.atStartOfDay(), endDate.atStartOfDay(), archiveType);
 		Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
 		Map<LocalDateTime, List<Error>> groupByDateTimeErrors = errors.stream()

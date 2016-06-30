@@ -467,6 +467,7 @@ public class DBService implements IDBService {
 			for (LocalDateTime localDateTime : keySet) {
 				List<Error> errorsWithoutU = groupByDateTime.get(localDateTime).stream()
 						.filter(e -> !e.getErrorCode().equals(ErrorCodes.U)).collect(Collectors.toList());
+				errorsWithoutU.sort((e1,e2)->e1.getDateTime().compareTo(e2.getDateTime()));
 				for (Error error : errorsWithoutU) {
 					LocalTime time = error.getDateTime().toLocalTime();
 					LocalDateTime dayDt, monthDt;
@@ -1266,9 +1267,9 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public List<Error> findErrors(Device device, LocalDate startDate, LocalDate endDate, ArchiveTypes archiveType) {
-		return er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate.atTime(0, 0),
-				endDate.atTime(0, 0));
+	public List<Error> findErrors(Device device, LocalDateTime startDate, LocalDateTime endDate, ArchiveTypes archiveType) {
+		return er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate,
+				endDate);
 	}
 
 	@Override

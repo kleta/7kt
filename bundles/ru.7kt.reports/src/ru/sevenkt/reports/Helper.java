@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.domain.ArchiveTypes;
@@ -38,6 +40,40 @@ public class Helper {
 		dataBean.setSerialNum(dev.getSerialNum());
 		dataBean.setTempColdWater(dev.getTempColdWaterSetting() + "");
 		dataBean.setDateTo(dateTo.format(formatterDay));
+		List<Measuring> ms=(List<Measuring>) map.get(IReportService.MONTH_MEASURINGS);
+		ms.sort((m1, m2)->m1.getDateTime().compareTo(m2.getDateTime()));
+		ms=ms.stream().filter(m->m.getParameter().equals(Parameters.WORK)).collect(Collectors.toList());
+		if(!ms.isEmpty()){
+			Measuring m = ms.get(ms.size()-1);
+			long hours = ChronoUnit.HOURS.between(m.getDateTime(), dateTo.atStartOfDay());
+			dataBean.setTotalWorkHour(new Integer((int) (m.getValue()+hours))+"");			
+		}
+		List<Error> errors=(List<Error>) map.get(IReportService.ERRORS);
+		if(errors.isEmpty()){
+			dataBean.setErrorFuncTime1(0);
+			dataBean.setErrorFuncTime2(0);
+			dataBean.setErrorPowerTime1(0);
+			dataBean.setErrorPowerTime2(0);
+			dataBean.setErrorTempTime1(0);
+			dataBean.setErrorTempTime2(0);
+			dataBean.setErrorVolTime1(0);
+			dataBean.setErrorVolTime2(0);
+		}
+			
+		switch(archiveType){
+		case DAY:
+			long hours = ChronoUnit.HOURS.between(dateFrom.atStartOfDay(), dateTo.atStartOfDay());
+			ms=(List<Measuring>) map.get(IReportService.DAY_MEASURINGS);
+			//ms=ms.stream().filter(m->m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
+			List<Measuring> errorTimes1 = ms.stream().filter(m->m.getParameter().equals(Parameters.ERROR_TIME1)).collect(Collectors.toList());
+			List<Measuring> errorTimes2 = ms.stream().filter(m->m.getParameter().equals(Parameters.ERROR_TIME2)).collect(Collectors.toList());
+			int et1 = errorTimes1.stream().mapToInt(m->m.getValue().intValue()).sum();
+			int et2 = errorTimes2.stream().mapToInt(m->m.getValue().intValue()).sum();
+			dataBean.setWrongWorkTime1(et1);
+			dataBean.setWrongWorkTime2(et2);
+			dataBean.setNormalWorkTime1((int) (hours-et1));
+			dataBean.setNormalWorkTime2((int) (hours-et2));
+		}
 		arrayList.add(dataBean);
 
 		return arrayList;

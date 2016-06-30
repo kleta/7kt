@@ -62,7 +62,7 @@ public interface IDBService {
 	void insertJournalSettings(Archive archive, Device device) throws Exception;
 
 
-	List<ru.sevenkt.db.entities.Error> findErrors(Device device, LocalDate startDate, LocalDate endDate, ArchiveTypes archiveType);
+	List<ru.sevenkt.db.entities.Error> findErrors(Device device, LocalDateTime startDate, LocalDateTime endDate, ArchiveTypes archiveType);
 
 
 	List<Report> getReports(Device device);

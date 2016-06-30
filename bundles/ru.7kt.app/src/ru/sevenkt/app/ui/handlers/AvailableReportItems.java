@@ -55,6 +55,7 @@ public class AvailableReportItems {
 			dynamicItem.setContributorURI("platform:/plugin/ru.7kt.app");
 			dynamicItem.setCommand(command);
 			MParameter parameter = MCommandsFactory.INSTANCE.createParameter(); 
+			dynamicItem.setIconURI("platform:/plugin/ru.7kt.app/icons/report.png");
 		    parameter.setName(COMMAND_PARAMETER_ID); 
 		    parameter.setValue(report.getId()+"");	
 		    List<MParameter> parameters = dynamicItem.getParameters();

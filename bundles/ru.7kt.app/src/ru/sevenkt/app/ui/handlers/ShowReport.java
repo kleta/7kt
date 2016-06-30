@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 import ru.sevenkt.app.ui.forms.AssignReportDialog;
 import ru.sevenkt.app.ui.forms.ReportPeriodDialog;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.entities.Report;
@@ -54,7 +55,13 @@ public class ShowReport {
 			List<Measuring> dayList = dbService.findArchive(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
 					ArchiveTypes.DAY);
 			List<Measuring> monthList = dbService.findArchive(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
-					ArchiveTypes.DAY);
+					ArchiveTypes.MONTH);
+			List<Error> errors = dbService.findErrors(device,  dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
+					ArchiveTypes.HOUR);
+			errors.addAll(dbService.findErrors(device,  dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
+					ArchiveTypes.DAY));
+			errors.addAll(dbService.findErrors(device,  dateFrom.atStartOfDay().minusMonths(1), dateTo.atStartOfDay(),
+					ArchiveTypes.MONTH));
 			List<Params> params = device.getParams();
 			reportParameters.put(IReportService.DAY_MEASURINGS, dayList);
 			reportParameters.put(IReportService.DEVICE, device);
@@ -62,6 +69,7 @@ public class ShowReport {
 			reportParameters.put(IReportService.MONTH_MEASURINGS, monthList);
 			reportParameters.put(IReportService.PARAMS, params);
 			reportParameters.put(IReportService.REPORT_TYPE, reportType);
+			reportParameters.put(IReportService.ERRORS, errors);
 			try {
 				reportService.showReport(reportParameters, dateFrom, dateTo, report.getTemplateName(), report.getType());
 			} catch (FileNotFoundException e) {

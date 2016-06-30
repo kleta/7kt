@@ -17,6 +17,8 @@ import ru.sevenkt.domain.Parameters;
 @Table(name="Measurings")
 public class Measuring {
 
+	
+
 	public MeasuringPK getId() {
 		return id;
 	}
@@ -103,6 +105,11 @@ public class Measuring {
 			id = new MeasuringPK();
 		this.device = device;
 		id.setIdDevice(device.getId());
+	}
+	@Override
+	public String toString() {
+		return "Measuring [dateTime=" + dateTime + ", parameter=" + parameter + ", archiveType=" + archiveType
+				+ ", value=" + value + "]";
 	}
 
 }

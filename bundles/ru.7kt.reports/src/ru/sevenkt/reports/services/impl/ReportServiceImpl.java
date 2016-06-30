@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -146,7 +147,7 @@ public class ReportServiceImpl implements IReportService {
 			RenderOption renderOption = null;
 			renderOption = new HTMLRenderOption();
 			renderOption.setOutputFormat(reportType);
-			String outputFileName = "reports/report"+LocalDateTime.now()+"."+reportType;
+			String outputFileName = "reports/report"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))+"."+reportType;
 			renderOption.setOutputFileName(outputFileName);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			renderOption.setOutputStream(out);
