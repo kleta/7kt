@@ -121,4 +121,9 @@ public class Error {
 	public ArchiveTypes getArchiveType() {
 		return archiveType;
 	}
+
+	@Override
+	public String toString() {
+		return "Error [dateTime=" + dateTime + ", errorCode=" + errorCode + ", archiveType=" + archiveType + "]";
+	}
 }

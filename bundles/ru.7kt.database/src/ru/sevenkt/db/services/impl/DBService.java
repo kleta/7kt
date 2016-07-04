@@ -77,7 +77,7 @@ public class DBService implements IDBService {
 
 	@Autowired
 	private EntityManager em;
-	
+
 	@Autowired
 	private ReportRepo rr;
 
@@ -333,17 +333,6 @@ public class DBService implements IDBService {
 				Field[] fields = MonthRecord.class.getDeclaredFields();
 				for (Field field : fields) {
 					field.setAccessible(true);
-					if (field.getName().equals("errorChannel1")) {
-						System.out.println(
-								mr.getDate() + "-" + field.getName() + ":" + Integer.toBinaryString(field.getInt(mr))
-										+ ":" + field.getInt(mr) + ":" + mr.getTimeError1());
-					}
-					if (field.getName().equals("errorChannel2")) {
-						System.out.println(
-								mr.getDate() + "-" + field.getName() + ":" + Integer.toBinaryString(field.getInt(mr))
-										+ ":" + field.getInt(mr) + ":" + mr.getTimeError2());
-					}
-
 					if (field.isAnnotationPresent(Parameter.class)) {
 						Measuring m = new Measuring();
 						m.setArchiveType(ArchiveTypes.MONTH);
@@ -386,29 +375,30 @@ public class DBService implements IDBService {
 							break;
 						}
 
-						// if (parameter.equals(Parameters.AVG_TEMP1) ||
-						// parameter.equals(Parameters.AVG_TEMP2)
-						// || parameter.equals(Parameters.AVG_TEMP3) ||
-						// parameter.equals(Parameters.AVG_TEMP4)) {
-						// float val = field.getInt(mr);
-						// m.setValue((double) (val / 100 > 100 ? 0 : val /
-						// 100));
-						// } else {
-						// float val = field.getFloat(mr);
-						// if (parameter.equals(Parameters.AVG_P1) ||
-						// parameter.equals(Parameters.AVG_P2)) {
-						// val = val / 10;
-						// }
-						// m.setValue(new Double(val + ""));
-						// }
-						measurings.add(m);
+						if (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
+								&& (parameter.equals(Parameters.ERROR_TIME1)
+										|| parameter.equals(Parameters.ERROR_TIME2))))
+							measurings.add(m);
 					}
 				}
+				if (startArchiveDate.isBefore(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate()))
+					saveMonthErrors(mr, device);
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
 		saveMeasurings(measurings);
 
+	}
+
+	private void saveMonthErrors(MonthRecord mr, Device device) {
+		int e1 = mr.getErrorChannel1();
+		int e2 = mr.getErrorChannel2();
+		LocalDate date = mr.getDate();
+		// if(date.isAfter(LocalDate.of(2015,10,1)))
+		// System.out.println();
+		List<Error> errors = parseErrors(e1, e2, ArchiveTypes.MONTH, date, device);
+		if (!errors.isEmpty())
+			saveErrors(errors);
 	}
 
 	@Override
@@ -421,8 +411,8 @@ public class DBService implements IDBService {
 		while (!startArchiveDate.isAfter(dateTime)) {
 			List<Measuring> measurings = new ArrayList<>();
 			LocalDate localDate = startArchiveDate.toLocalDate();
-//			if (localDate.equals(LocalDate.of(2016, 3, 1)))
-//				System.out.println();
+			// if (localDate.equals(LocalDate.of(2016, 3, 1)))
+			// System.out.println();
 			DayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
 			DayRecord dr2 = da.getDayRecord(localDate.plusDays(1), dateTime);
 			DayRecord dr1 = da.getDayRecord(localDate, dateTime);
@@ -460,82 +450,89 @@ public class DBService implements IDBService {
 			Map<LocalDateTime, List<Error>> groupByDateTime = errors.stream()
 					.collect(Collectors.groupingBy(Error::getDateTime));
 			Set<LocalDateTime> keySet = groupByDateTime.keySet();
+			List<LocalDateTime> keyList = keySet.stream().sorted((d1, d2) -> d1.compareTo(d2))
+					.collect(Collectors.toList());
 			Map<LocalDateTime, Integer> dayErrorHours1 = new HashMap<>();
 			Map<LocalDateTime, Integer> monthErrorHours1 = new HashMap<>();
 			Map<LocalDateTime, Integer> dayErrorHours2 = new HashMap<>();
 			Map<LocalDateTime, Integer> monthErrorHours2 = new HashMap<>();
-			for (LocalDateTime localDateTime : keySet) {
+			for (LocalDateTime localDateTime : keyList) {
 				List<Error> errorsWithoutU = groupByDateTime.get(localDateTime).stream()
 						.filter(e -> !e.getErrorCode().equals(ErrorCodes.U)).collect(Collectors.toList());
-				errorsWithoutU.sort((e1,e2)->e1.getDateTime().compareTo(e2.getDateTime()));
-				for (Error error : errorsWithoutU) {
-					LocalTime time = error.getDateTime().toLocalTime();
-					LocalDateTime dayDt, monthDt;
-					if (time.equals(LocalTime.of(0, 0))) {
-						dayDt = localDateTime.withHour(0).withMinute(0);
-					} else
-						dayDt = localDateTime.plusDays(1).withHour(0).withMinute(0);
-					if (localDateTime.getDayOfMonth() == 1 && time.equals(LocalTime.of(0, 0)))
-						monthDt = localDateTime.withHour(0).withMinute(0);
-					else
-						monthDt = localDateTime.withDayOfMonth(1).plusMonths(1).withHour(0).withMinute(0);
-
+				List<Error> e1v1t1Errors = errorsWithoutU
+						.stream().filter(e -> e.getErrorCode().equals(ErrorCodes.E1)
+								|| e.getErrorCode().equals(ErrorCodes.T1) || e.getErrorCode().equals(ErrorCodes.V1))
+						.collect(Collectors.toList());
+				List<Error> e2v2t2Errors = errorsWithoutU
+						.stream().filter(e -> e.getErrorCode().equals(ErrorCodes.E2)
+								|| e.getErrorCode().equals(ErrorCodes.T2) || e.getErrorCode().equals(ErrorCodes.V2))
+						.collect(Collectors.toList());
+				LocalTime time = localDateTime.toLocalTime();
+				LocalDateTime dayDt, monthDt;
+				if (time.equals(LocalTime.of(0, 0))) {
+					dayDt = localDateTime.withHour(0).withMinute(0);
+				} else
+					dayDt = localDateTime.plusDays(1).withHour(0).withMinute(0);
+				if (localDateTime.getDayOfMonth() == 1 && time.equals(LocalTime.of(0, 0)))
+					monthDt = localDateTime.withHour(0).withMinute(0);
+				else
+					monthDt = localDateTime.withDayOfMonth(1).plusMonths(1).withHour(0).withMinute(0);
+				if (!e1v1t1Errors.isEmpty()) {
 					Measuring m = new Measuring();
 					m.setArchiveType(ArchiveTypes.HOUR);
 					m.setDateTime(localDateTime);
-					m.setDevice(error.getDevice());
+					m.setDevice(e1v1t1Errors.get(0).getDevice());
 					m.setTimestamp(LocalDateTime.now());
-					m.setValue(new Double("0"));		
-					ErrorCodes errorCode = error.getErrorCode();
-					switch (errorCode) {
-					case E1:
-					case V1:
-					case T1:{
-						m.setParameter(Parameters.ERROR_TIME1);
-						m.setValue((double) 1);
-						Integer countHours = dayErrorHours1.get(dayDt);
-						if (countHours == null) {
-							countHours = 0;
-							dayErrorHours1.put(dayDt, countHours);
-						}
-						dayErrorHours1.put(dayDt, ++countHours);
-						countHours = monthErrorHours1.get(monthDt);
-						if (countHours == null) {
-							countHours = 0;
-							monthErrorHours1.put(monthDt, countHours);
-						}
-						monthErrorHours1.put(monthDt, ++countHours);
-					}
-						break;
-					case E2:
-					case V2:
-					case T2:{
-						m.setParameter(Parameters.ERROR_TIME2);
-						m.setValue((double) 1);
-						Integer countHours = dayErrorHours2.get(dayDt);
-						if (countHours == null) {
-							countHours = 0;
-							dayErrorHours2.put(dayDt, countHours);
-						}
-						dayErrorHours2.put(dayDt, ++countHours);
-						countHours = monthErrorHours2.get(monthDt);
-						if (countHours == null) {
-							countHours = 0;
-							monthErrorHours2.put(monthDt, countHours);
-						}
-						monthErrorHours2.put(monthDt, ++countHours);
-					}
-						break;
+					m.setValue(new Double("0"));
+					// ErrorCodes errorCode = error.getErrorCode();
 
-					default:
-						break;
+					m.setParameter(Parameters.ERROR_TIME1);
+					m.setValue((double) 1);
+					Integer countHours = dayErrorHours1.get(dayDt);
+					if (countHours == null) {
+						countHours = 0;
+						dayErrorHours1.put(dayDt, countHours);
 					}
+					dayErrorHours1.put(dayDt, ++countHours);
+					countHours = monthErrorHours1.get(monthDt);
+					if (countHours == null) {
+						countHours = 0;
+						monthErrorHours1.put(monthDt, countHours);
+					}
+					monthErrorHours1.put(monthDt, ++countHours);
+					measuringRepo.save(m);
+				}
+				if (!e2v2t2Errors.isEmpty()) {
+					Measuring m = new Measuring();
+					m.setArchiveType(ArchiveTypes.HOUR);
+					m.setDateTime(localDateTime);
+					m.setDevice(e2v2t2Errors.get(0).getDevice());
+					m.setTimestamp(LocalDateTime.now());
+					m.setValue(new Double("0"));
+					// ErrorCodes errorCode = error.getErrorCode();
+					m.setParameter(Parameters.ERROR_TIME2);
+					m.setValue((double) 1);
+					Integer countHours = dayErrorHours2.get(dayDt);
+					if (countHours == null) {
+						countHours = 0;
+						dayErrorHours2.put(dayDt, countHours);
+					}
+					dayErrorHours2.put(dayDt, ++countHours);
+					countHours = monthErrorHours2.get(monthDt);
+					if (countHours == null) {
+						countHours = 0;
+						monthErrorHours2.put(monthDt, countHours);
+					}
+					monthErrorHours2.put(monthDt, ++countHours);
 					measuringRepo.save(m);
 				}
 
 			}
+
 			Set<LocalDateTime> dayKeySet1 = dayErrorHours1.keySet();
-			for (LocalDateTime dt : dayKeySet1) {
+			for (LocalDateTime dt : dayKeySet1)
+
+			{
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.DAY);
 				m.setDateTime(dt);
@@ -545,8 +542,11 @@ public class DBService implements IDBService {
 				m.setParameter(Parameters.ERROR_TIME1);
 				measuringRepo.save(m);
 			}
+
 			Set<LocalDateTime> dayKey2 = dayErrorHours2.keySet();
-			for (LocalDateTime dt : dayKey2) {
+			for (LocalDateTime dt : dayKey2)
+
+			{
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.DAY);
 				m.setDateTime(dt);
@@ -556,8 +556,11 @@ public class DBService implements IDBService {
 				m.setParameter(Parameters.ERROR_TIME2);
 				measuringRepo.save(m);
 			}
+
 			Set<LocalDateTime> monthKeySet1 = monthErrorHours1.keySet();
-			for (LocalDateTime dt : monthKeySet1) {
+			for (LocalDateTime dt : monthKeySet1)
+
+			{
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.MONTH);
 				m.setDateTime(dt);
@@ -567,8 +570,11 @@ public class DBService implements IDBService {
 				m.setParameter(Parameters.ERROR_TIME1);
 				measuringRepo.save(m);
 			}
+
 			Set<LocalDateTime> monthKey2 = monthErrorHours2.keySet();
-			for (LocalDateTime dt : monthKey2) {
+			for (LocalDateTime dt : monthKey2)
+
+			{
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.MONTH);
 				m.setDateTime(dt);
@@ -578,6 +584,7 @@ public class DBService implements IDBService {
 				m.setParameter(Parameters.ERROR_TIME2);
 				measuringRepo.save(m);
 			}
+
 		}
 
 	}
@@ -1101,8 +1108,7 @@ public class DBService implements IDBService {
 							break;
 						case ERROR_TIME1:
 						case ERROR_TIME2: {
-							long hours = ChronoUnit.HOURS.between(m.getDateTime().minusDays(1), m.getDateTime());
-							m.setValue(hours - (double) field.getInt(dr));
+							m.setValue((double) field.getInt(dr));
 							break;
 						}
 						default:
@@ -1111,16 +1117,85 @@ public class DBService implements IDBService {
 							m.setValue(new Double(val + ""));
 							break;
 						}
-						
-						measurings.add(m);
+						if (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
+								&& (parameter.equals(Parameters.ERROR_TIME1)
+										|| parameter.equals(Parameters.ERROR_TIME2))))
+							measurings.add(m);
 					}
 				}
+				if (startArchiveDate.isBefore(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate()))
+					saveDayErrors(dr, device);
+				else
+					System.out.println();
 			}
+
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
 
 		saveMeasurings(measurings);
+	}
 
+	private void saveDayErrors(DayRecord dr, Device device) {
+		int e1 = dr.getErrorChannel1();
+		int e2 = dr.getErrorChannel2();
+		LocalDate date = dr.getDate();
+		if (date.isAfter(LocalDate.of(2016, 1, 16)))
+			System.out.println();
+		List<Error> errors = parseErrors(e1, e2, ArchiveTypes.DAY, date, device);
+		if (!errors.isEmpty())
+			saveErrors(errors);
+	}
+
+	private List<Error> parseErrors(int e1, int e2, ArchiveTypes aType, LocalDate localDate, Device device) {
+		List<Error> errors = new ArrayList<>();
+		if (e1 == 0 && e2 == 0)
+			return errors;
+		if ((e1 & 3) != 0) {
+			Error error = new Error();
+			error.setArchiveType(aType);
+			error.setDateTime(localDate.atStartOfDay());
+			error.setDevice(device);
+			error.setErrorCode(ErrorCodes.T1);
+			error.setTimestamp(LocalDateTime.now());
+			errors.add(error);
+		}
+		if ((e2 & 3) != 0) {
+			Error error = new Error();
+			error.setArchiveType(aType);
+			error.setDateTime(localDate.atStartOfDay());
+			error.setDevice(device);
+			error.setErrorCode(ErrorCodes.T2);
+			error.setTimestamp(LocalDateTime.now());
+			errors.add(error);
+		}
+		if ((e1 & 12) != 0) {
+			Error error = new Error();
+			error.setArchiveType(aType);
+			error.setDateTime(localDate.atStartOfDay());
+			error.setDevice(device);
+			error.setErrorCode(ErrorCodes.V1);
+			error.setTimestamp(LocalDateTime.now());
+			errors.add(error);
+		}
+		if ((e2 & 12) != 0) {
+			Error error = new Error();
+			error.setArchiveType(aType);
+			error.setDateTime(localDate.atStartOfDay());
+			error.setDevice(device);
+			error.setErrorCode(ErrorCodes.V2);
+			error.setTimestamp(LocalDateTime.now());
+			errors.add(error);
+		}
+		if ((e1 & 128) != 0) {
+			Error error = new Error();
+			error.setArchiveType(aType);
+			error.setDateTime(localDate.atStartOfDay());
+			error.setDevice(device);
+			error.setErrorCode(ErrorCodes.U);
+			error.setTimestamp(LocalDateTime.now());
+			errors.add(error);
+		}
+		return errors;
 	}
 
 	@Override
@@ -1258,7 +1333,7 @@ public class DBService implements IDBService {
 			default:
 				break;
 			}
-			if (bdSumDay!=null && bdSumDay.doubleValue() > 0)
+			if (bdSumDay != null && bdSumDay.doubleValue() > 0)
 				multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
 			map.put(parameter, multiplicand);
 		}
@@ -1267,9 +1342,9 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public List<Error> findErrors(Device device, LocalDateTime startDate, LocalDateTime endDate, ArchiveTypes archiveType) {
-		return er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate,
-				endDate);
+	public List<Error> findErrors(Device device, LocalDateTime startDate, LocalDateTime endDate,
+			ArchiveTypes archiveType) {
+		return er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate, endDate);
 	}
 
 	@Override
@@ -1281,7 +1356,5 @@ public class DBService implements IDBService {
 	public Report findReport(Integer reportId) {
 		return rr.findOne(reportId);
 	}
-
-	
 
 }
