@@ -24,7 +24,7 @@ public class DayArchive {
 		int month = requestDate.getMonthValue();
 		int day = requestDate.getDayOfMonth();
 		
-		int mt = month<6?month:month-6;
+		int mt = month<=6?month:month-6;
 		int address=(day-1)*size+(mt-1)*31*size;
 		
 		byte[] dayRecordData = new byte[size];
