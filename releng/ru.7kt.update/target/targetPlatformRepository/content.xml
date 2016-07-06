@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?metadataRepository version='1.1.0'?>
 <repository name='TychoTargetPlatform' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='0.0.1'>
-  <units size='111'>
+  <units size='114'>
     <unit id='org.eclipse.equinox.preferences' version='3.5.300.v20150408-1437'>
       <update id='org.eclipse.equinox.preferences' range='[0.0.0,3.5.300.v20150408-1437)' severity='0'/>
       <properties size='8'>
@@ -230,75 +230,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.h2' version='1.4.192' singleton='false'>
-      <update id='org.h2' range='[0.0.0,1.4.192)' severity='0'/>
-      <properties size='2'>
-        <property name='org.eclipse.equinox.p2.name' value='H2 Database Engine'/>
-        <property name='org.eclipse.equinox.p2.provider' value='H2 Group'/>
-      </properties>
-      <provides size='17'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.h2' version='1.4.192'/>
-        <provided namespace='osgi.bundle' name='org.h2' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.api' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.constant' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.fulltext' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.jdbc' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.jdbcx' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.tools' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.util' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.value' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.bnf' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.bnf.context' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.mvstore' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.mvstore.type' version='1.4.192'/>
-        <provided namespace='java.package' name='org.h2.mvstore.rtree' version='1.4.192'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='30'>
-        <required namespace='java.package' name='javax.management' range='0.0.0'/>
-        <required namespace='java.package' name='javax.naming' range='0.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='javax.naming.spi' range='0.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='javax.net' range='0.0.0'/>
-        <required namespace='java.package' name='javax.net.ssl' range='0.0.0'/>
-        <required namespace='java.package' name='javax.servlet' range='0.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='javax.servlet.http' range='0.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='javax.sql' range='0.0.0'/>
-        <required namespace='java.package' name='javax.tools' range='0.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='javax.transaction.xa' range='0.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.analysis' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.analysis.standard' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.document' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.index' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.queryParser' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.search' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.store' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.apache.lucene.util' range='[3.6.2,4.0.0)' optional='true' greedy='false'/>
-        <required namespace='java.package' name='com.vividsolutions.jts.geom' range='1.14.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='com.vividsolutions.jts.io' range='1.14.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.h2' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.h2.api' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.h2.fulltext' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.h2.jdbcx' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.h2.tools' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.h2.util' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.h2.value' range='[1.4.192,1.5.0)'/>
-        <required namespace='java.package' name='org.osgi.framework' range='1.5.0'/>
-        <required namespace='java.package' name='org.osgi.service.jdbc' range='1.0.0' optional='true' greedy='false'/>
-        <required namespace='java.package' name='org.slf4j' range='[1.6.0,1.7.0)' optional='true' greedy='false'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.h2' version='1.4.192'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.h2&#xA;Bundle-Version: 1.4.192
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.e4.ui.workbench' version='1.3.1.v20160203-0951'>
       <update id='org.eclipse.e4.ui.workbench' range='[0.0.0,1.3.1.v20160203-0951)' severity='0'/>
       <properties size='8'>
@@ -453,8 +384,8 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.apache.batik.ext.awt' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.ext.awt' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
+    <unit id='org.apache.batik.ext.awt' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.ext.awt' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
       <properties size='5'>
         <property name='df_LT.providerName' value='Eclipse.org'/>
         <property name='df_LT.pluginName' value='Apache Batik AWT Utilities'/>
@@ -462,48 +393,78 @@
         <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
         <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
       </properties>
-      <provides size='22'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.ext.awt' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.ext.awt' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.color' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.font' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.g2d' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.geom' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec.jpeg' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec.png' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec.tiff' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec.util' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.renderable' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.rendered' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.spi' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.spi.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.swing' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.ext.swing.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='META-INF.services' version='0.0.0'/>
+      <provides size='16'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.ext.awt' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.ext.awt' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.color' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.font' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.g2d' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.geom' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.image' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.codec.tiff' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.renderable' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.rendered' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.awt.image.spi' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.ext.swing' version='1.6.0'/>
         <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
         <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
       </provides>
       <requires size='2'>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util.gui' range='[1.7.0,1.8.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util.gui' range='[1.6.0,1.7.0)'/>
       </requires>
       <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.ext.awt' version='1.7.0.v201011041433'/>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.ext.awt' version='1.6.0.v201011041432'/>
       </artifacts>
       <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
       <touchpointData size='1'>
         <instructions size='1'>
           <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.ext.awt&#xA;Bundle-Version: 1.7.0.v201011041433
+            Bundle-SymbolicName: org.apache.batik.ext.awt&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.apache.batik.xml' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.xml' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
+    <unit id='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606281412' singleton='false'>
+      <update id='org.eclipse.nebula.widgets.cdatetime' range='[0.0.0,1.0.0.201606281412)' severity='0'/>
+      <properties size='8'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.pluginName' value='Nebula CDatetime widget (Incubation)'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+        <property name='maven-groupId' value='org.eclipse.nebula'/>
+        <property name='maven-artifactId' value='org.eclipse.nebula.widgets.cdatetime'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='5'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606281412'/>
+        <provided namespace='osgi.bundle' name='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606281412'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.widgets.cdatetime' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='3'>
+        <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.swt' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.nebula.cwt' range='0.9.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606281412'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.eclipse.nebula.widgets.cdatetime&#xA;Bundle-Version: 1.0.0.201606281412
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.batik.xml' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.xml' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
       <properties size='5'>
         <property name='df_LT.providerName' value='Eclipse.org'/>
         <property name='df_LT.pluginName' value='Apache Batik XML'/>
@@ -511,25 +472,24 @@
         <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
         <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
       </properties>
-      <provides size='6'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.xml' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.xml' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.xml' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.xml.scanner.resources' version='1.7.0'/>
+      <provides size='5'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.xml' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.xml' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.xml' version='1.6.0'/>
         <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
         <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
       </provides>
       <requires size='1'>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
       </requires>
       <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.xml' version='1.7.0.v201011041433'/>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.xml' version='1.6.0.v201011041432'/>
       </artifacts>
       <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
       <touchpointData size='1'>
         <instructions size='1'>
           <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.xml&#xA;Bundle-Version: 1.7.0.v201011041433
+            Bundle-SymbolicName: org.apache.batik.xml&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
@@ -686,8 +646,8 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.apache.batik.svggen' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.svggen' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
+    <unit id='org.apache.batik.svggen' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.svggen' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
       <properties size='5'>
         <property name='df_LT.providerName' value='Eclipse.org'/>
         <property name='df_LT.pluginName' value='Apache Batik SVG Generation'/>
@@ -695,28 +655,72 @@
         <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
         <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
       </properties>
-      <provides size='8'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.svggen' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.svggen' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.svggen' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.svggen.font' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.svggen.font.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.svggen.font.table' version='1.7.0'/>
+      <provides size='7'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.svggen' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.svggen' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.svggen' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.svggen.font' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.svggen.font.table' version='1.6.0'/>
         <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
         <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
       </provides>
       <requires size='2'>
-        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
       </requires>
       <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.svggen' version='1.7.0.v201011041433'/>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.svggen' version='1.6.0.v201011041432'/>
       </artifacts>
       <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
       <touchpointData size='1'>
         <instructions size='1'>
           <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.svggen&#xA;Bundle-Version: 1.7.0.v201011041433
+            Bundle-SymbolicName: org.apache.batik.svggen&#xA;Bundle-Version: 1.6.0.v201011041432
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='ru.7kt.database' version='1.0.0.201607060305' singleton='false'>
+      <update id='ru.7kt.database' range='[0.0.0,1.0.0.201607060305)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='database'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.database'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='5'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' version='1.0.0.201607060305'/>
+        <provided namespace='osgi.bundle' name='ru.7kt.database' version='1.0.0.201607060305'/>
+        <provided namespace='java.package' name='ru.sevenkt.db.entities' version='0.0.0'/>
+        <provided namespace='java.package' name='ru.sevenkt.db.services' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='16'>
+        <required namespace='osgi.bundle' name='javax.persistence' range='2.1.0'/>
+        <required namespace='osgi.bundle' name='org.springframework.data.jpa' range='1.9.4'/>
+        <required namespace='osgi.bundle' name='org.springframework.context' range='4.2.3'/>
+        <required namespace='osgi.bundle' name='org.springframework.core' range='4.2.3'/>
+        <required namespace='osgi.bundle' name='org.springframework.jdbc' range='4.2.3'/>
+        <required namespace='osgi.bundle' name='org.springframework.orm' range='4.2.3'/>
+        <required namespace='osgi.bundle' name='slf4j.api' range='1.7.16'/>
+        <required namespace='osgi.bundle' name='org.springframework.data.core' range='1.11.4'/>
+        <required namespace='osgi.bundle' name='org.springframework.beans' range='4.2.3'/>
+        <required namespace='osgi.bundle' name='org.apache.commons.dbcp' range='1.4.0'/>
+        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.persistence.jpa' range='2.6.3'/>
+        <required namespace='osgi.bundle' name='org.h2' range='1.3.168'/>
+        <required namespace='java.package' name='org.aopalliance.aop' range='1.0.0'/>
+        <required namespace='java.package' name='org.springframework.aop' range='4.2.4.20151218-RELEASE'/>
+        <required namespace='java.package' name='org.springframework.aop.framework' range='4.2.4.20151218-RELEASE'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='ru.7kt.database' version='1.0.0.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: ru.7kt.database&#xA;Bundle-Version: 1.0.0.201607060305
           </instruction>
         </instructions>
       </touchpointData>
@@ -749,47 +753,6 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.w3c.dom.svg&#xA;Bundle-Version: 1.1.0.v201011041433
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='org.eclipse.nebula.cwt' version='1.0.0.201606130657' singleton='false'>
-      <update id='org.eclipse.nebula.cwt' range='[0.0.0,1.0.0.201606130657)' severity='0'/>
-      <properties size='6'>
-        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
-        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
-        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
-        <property name='maven-groupId' value='org.eclipse.nebula'/>
-        <property name='maven-artifactId' value='org.eclipse.nebula.cwt'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='9'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.cwt' version='1.0.0.201606130657'/>
-        <provided namespace='osgi.bundle' name='org.eclipse.nebula.cwt' version='1.0.0.201606130657'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.cwt.animation' version='0.0.0'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.cwt.animation.effects' version='0.0.0'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.cwt.animation.movement' version='0.0.0'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.cwt.base' version='0.0.0'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.cwt.svg' version='0.0.0'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.cwt.v' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='6'>
-        <required namespace='java.package' name='org.eclipse.swt' range='0.0.0'/>
-        <required namespace='java.package' name='org.eclipse.swt.events' range='0.0.0'/>
-        <required namespace='java.package' name='org.eclipse.swt.graphics' range='0.0.0'/>
-        <required namespace='java.package' name='org.eclipse.swt.internal.theme' range='0.0.0'/>
-        <required namespace='java.package' name='org.eclipse.swt.layout' range='0.0.0'/>
-        <required namespace='java.package' name='org.eclipse.swt.widgets' range='0.0.0'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.eclipse.nebula.cwt' version='1.0.0.201606130657'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.eclipse.nebula.cwt&#xA;Bundle-Version: 1.0.0.201606130657
           </instruction>
         </instructions>
       </touchpointData>
@@ -830,6 +793,35 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.eclipse.core.jobs; singleton:=true&#xA;Bundle-Version: 3.7.0.v20150330-2103
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='ru.7kt.log' version='1.0.0.201607060305' singleton='false'>
+      <update id='ru.7kt.log' range='[0.0.0,1.0.0.201607060305)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Log'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.log'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='4'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.log' version='1.0.0.201607060305'/>
+        <provided namespace='osgi.bundle' name='ru.7kt.log' version='1.0.0.201607060305'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='osgi.fragment' name='ch.qos.logback.classic' version='1.0.0.201607060305'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='osgi.bundle' name='ch.qos.logback.classic' range='1.1.4'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: ru.7kt.log&#xA;Bundle-Version: 1.0.0.201607060305&#xA;Fragment-Host: ch.qos.logback.classic;bundle-version=&quot;1.1.4&quot;
           </instruction>
         </instructions>
       </touchpointData>
@@ -971,116 +963,6 @@
           </instruction>
         </instructions>
       </touchpointData>
-    </unit>
-    <unit id='ru.7kt.feature.app.feature.group' version='1.0.0.201606281016' singleton='false'>
-      <update id='ru.7kt.feature.app.feature.group' range='[0.0.0,1.0.0.201606281016)' severity='0'/>
-      <properties size='7'>
-        <property name='org.eclipse.equinox.p2.name' value='App'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.feature.app'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.group' version='1.0.0.201606281016'/>
-      </provides>
-      <requires size='80'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='javax.persistence' range='2.1.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.jpa' range='1.9.4'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='4.2.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.core' range='4.2.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.jdbc' range='4.2.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.orm' range='4.2.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='slf4j.api' range='1.7.16'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.core' range='1.11.4'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.beans' range='4.2.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.dbcp' range='1.4.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' range='1.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa' range='2.6.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.h2' range='1.3.168'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.classic' range='1.1.4'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jface' range='3.11.1'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.core.di' range='1.5.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.core.services' range='2.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.runtime' range='3.11.1'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.services' range='1.2.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.osgi.services' range='3.5.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' range='1.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.workbench' range='1.3.1'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.core.contexts' range='1.4.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.model.workbench' range='1.1.100'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.widgets.cdatetime' range='1.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.forms' range='3.6.200'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.swtchart' range='0.7.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.poi' range='3.9.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' range='1.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.databinding' range='1.5.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jface.databinding' range='1.7.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.databinding.beans' range='1.3.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.databinding.property' range='1.5.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.reports' range='1.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='javax.inject' range='0.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='4.2.4'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt' range='0.0.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.cwt' range='0.9.0'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.runtime' range='[3.6.0,4.0.0)'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jface' range='[3.6.0,4.0.0)'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.css.core' range='0.10.100'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.css.swt' range='0.11.100'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.core' range='2.6.3'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' range='[1.0.0.201606281016,1.0.0.201606281016]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' range='[1.0.0.201606281016,1.0.0.201606281016]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.log' range='[1.0.0.201606281016,1.0.0.201606281016]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='javax.persistence' range='[2.1.1.v201509150925,2.1.1.v201509150925]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.classic' range='[1.1.4,1.1.4]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.jpa' range='[1.9.4.RELEASE,1.9.4.RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='slf4j.api' range='[1.7.16,1.7.16]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.core' range='[1.1.4,1.1.4]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.aop' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.beans' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.core' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.core' range='[1.11.4.RELEASE,1.11.4.RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.jdbc' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.orm' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.transaction' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.expression' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.dbcp' range='[1.4.0.v201204271417,1.4.0.v201204271417]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.pool' range='[1.6.0.v201204271246,1.6.0.v201204271246]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.app' range='[1.1.3.201606281016,1.1.3.201606281016]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' range='[1.0.0.201606281016,1.0.0.201606281016]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.widgets.cdatetime' range='[1.0.0.201606130657,1.0.0.201606130657]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.cwt' range='[1.0.0.201606130657,1.0.0.201606130657]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.forms' range='[3.6.200.v20150506-2029,3.6.200.v20150506-2029]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.swtchart' range='[0.7.0.v201201201914,0.7.0.v201201201914]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.poi' range='[3.9.0.v201405241750,3.9.0.v201405241750]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.antlr' range='[3.2.0.v201302191141,3.2.0.v201302191141]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.asm' range='[5.0.1.v201405080102,5.0.1.v201405080102]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.core' range='[2.6.3.v20160428-59c81c5,2.6.3.v20160428-59c81c5]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa' range='[2.6.3.v20160428-59c81c5,2.6.3.v20160428-59c81c5]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa.jpql' range='[2.6.3.v20160428-59c81c5,2.6.3.v20160428-59c81c5]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.oracle' range='[2.6.3.v20160319-fe724e6,2.6.3.v20160319-fe724e6]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.h2' range='[1.4.192,1.4.192]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.aopalliance' range='[1.0.0.v201105210816,1.0.0.v201105210816]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' range='[1.1.1.v201101211721,1.1.1.v201101211721]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.codec' range='[1.6.0.v201305230611,1.6.0.v201305230611]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.jar' range='[1.0.0.201606281016,1.0.0.201606281016]'>
-          <filter>
-            (org.eclipse.update.install.features=true)
-          </filter>
-        </required>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
     </unit>
     <unit id='org.springframework.data.core' version='1.11.4.RELEASE' singleton='false'>
       <update id='org.springframework.data.core' range='[0.0.0,1.11.4.RELEASE)' severity='0'/>
@@ -1463,6 +1345,72 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='ru.7kt.core' version='1.0.0.201607060305' singleton='false'>
+      <update id='ru.7kt.core' range='[0.0.0,1.0.0.201607060305)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Core'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.core'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='7'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' version='1.0.0.201607060305'/>
+        <provided namespace='osgi.bundle' name='ru.7kt.core' version='1.0.0.201607060305'/>
+        <provided namespace='java.package' name='ru.sevenkt.annotations' version='0.0.0'/>
+        <provided namespace='java.package' name='ru.sevenkt.domain' version='0.0.0'/>
+        <provided namespace='java.package' name='ru.sevenkt.exceptions' version='0.0.0'/>
+        <provided namespace='java.package' name='ru.sevenkt.utils' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='ru.7kt.core' version='1.0.0.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: ru.7kt.core&#xA;Bundle-Version: 1.0.0.201607060305
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='ru.7kt.feature.app.feature.jar' version='1.0.0.201607060305'>
+      <properties size='6'>
+        <property name='org.eclipse.equinox.p2.name' value='App'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.feature.app'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.jar' version='1.0.0.201607060305'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='ru.7kt.feature.app' version='1.0.0.201607060305'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='ru.7kt.feature.app' version='1.0.0.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
     <unit id='org.eclipse.core.commands' version='3.7.0.v20150422-0725' singleton='false'>
       <update id='org.eclipse.core.commands' range='[0.0.0,3.7.0.v20150422-0725)' severity='0'/>
       <properties size='8'>
@@ -1732,6 +1680,41 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: ch.qos.logback.core&#xA;Bundle-Version: 1.1.4
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.batik.util' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.util' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.pluginName' value='Apache Batik Utilities'/>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='9'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.util' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.util' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.i18n' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.util' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.util.io' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.util.resources' version='1.6.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='osgi.bundle' name='org.apache.batik.util.gui' range='[1.6.0,1.7.0)'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.util' version='1.6.0.v201011041432'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.util&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
@@ -2026,6 +2009,46 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='org.apache.batik.css' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.css' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.pluginName' value='Apache Batik CSS'/>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='12'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.css' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.css' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.css.dom' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.engine' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.engine.sac' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.engine.value' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.engine.value.css2' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.engine.value.svg' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.engine.value.svg12' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.css.parser' version='1.6.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='3'>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.css.sac' range='[1.3.0,1.4.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.css' version='1.6.0.v201011041432'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.css&#xA;Bundle-Version: 1.6.0.v201011041432
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
     <unit id='org.apache.batik.css' version='1.7.0.v201011041433' singleton='false'>
       <update id='org.apache.batik.css' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
       <properties size='5'>
@@ -2171,83 +2194,6 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.mozilla.javascript&#xA;Bundle-Version: 1.7.5.v201504281450
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='ru.7kt.feature.app.feature.jar' version='1.0.0.201606281016'>
-      <properties size='6'>
-        <property name='org.eclipse.equinox.p2.name' value='App'/>
-        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
-        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.feature.app'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.jar' version='1.0.0.201606281016'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-        <provided namespace='org.eclipse.update.feature' name='ru.7kt.feature.app' version='1.0.0.201606281016'/>
-      </provides>
-      <filter>
-        (org.eclipse.update.install.features=true)
-      </filter>
-      <artifacts size='1'>
-        <artifact classifier='org.eclipse.update.feature' id='ru.7kt.feature.app' version='1.0.0.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='zipped'>
-            true
-          </instruction>
-        </instructions>
-      </touchpointData>
-      <licenses size='1'>
-        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
-          [Enter License Description here.]
-        </license>
-      </licenses>
-      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
-        [Enter Copyright Description here.]
-      </copyright>
-    </unit>
-    <unit id='org.apache.batik.dom' version='1.7.1.v201505191845' singleton='false'>
-      <update id='org.apache.batik.dom' range='[0.0.0,1.7.1.v201505191845)' severity='0'/>
-      <properties size='5'>
-        <property name='df_LT.providerName' value='Eclipse.org'/>
-        <property name='df_LT.pluginName' value='Apache Batik DOM'/>
-        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
-        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
-        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
-      </properties>
-      <provides size='11'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.dom' version='1.7.1.v201505191845'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.dom' version='1.7.1.v201505191845'/>
-        <provided namespace='java.package' name='org.apache.batik.dom' version='1.7.1'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.events' version='1.7.1'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.resources' version='1.7.1'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.traversal' version='1.7.1'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.util' version='1.7.1'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.xbl' version='1.7.1'/>
-        <provided namespace='java.package' name='org.w3c.dom' version='3.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
-      </provides>
-      <requires size='4'>
-        <required namespace='osgi.bundle' name='org.apache.batik.css' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.eclipse.osgi' range='0.0.0'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.dom' version='1.7.1.v201505191845'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.dom&#xA;Bundle-Version: 1.7.1.v201505191845
           </instruction>
         </instructions>
       </touchpointData>
@@ -2573,6 +2519,116 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='ru.7kt.feature.app.feature.group' version='1.0.0.201607060305' singleton='false'>
+      <update id='ru.7kt.feature.app.feature.group' range='[0.0.0,1.0.0.201607060305)' severity='0'/>
+      <properties size='7'>
+        <property name='org.eclipse.equinox.p2.name' value='App'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.feature.app'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.group' version='1.0.0.201607060305'/>
+      </provides>
+      <requires size='80'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='javax.persistence' range='2.1.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.jpa' range='1.9.4'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='4.2.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.core' range='4.2.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.jdbc' range='4.2.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.orm' range='4.2.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='slf4j.api' range='1.7.16'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.core' range='1.11.4'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.beans' range='4.2.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.dbcp' range='1.4.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' range='1.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa' range='2.6.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.h2' range='1.3.168'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.classic' range='1.1.4'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jface' range='3.11.1'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.core.di' range='1.5.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.core.services' range='2.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.runtime' range='3.11.1'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.services' range='1.2.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.osgi.services' range='3.5.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' range='1.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.workbench' range='1.3.1'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.core.contexts' range='1.4.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.model.workbench' range='1.1.100'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.widgets.cdatetime' range='1.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.forms' range='3.6.200'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.swtchart' range='0.7.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.poi' range='3.9.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' range='1.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.databinding' range='1.5.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jface.databinding' range='1.7.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.databinding.beans' range='1.3.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.databinding.property' range='1.5.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.reports' range='1.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='javax.inject' range='0.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='4.2.4'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt' range='0.0.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.cwt' range='0.9.0'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.core.runtime' range='[3.6.0,4.0.0)'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.jface' range='[3.6.0,4.0.0)'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.css.core' range='0.10.100'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.e4.ui.css.swt' range='0.11.100'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.core' range='2.6.3'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' range='[1.0.0.201607060305,1.0.0.201607060305]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' range='[1.0.0.201607060305,1.0.0.201607060305]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.log' range='[1.0.0.201607060305,1.0.0.201607060305]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='javax.persistence' range='[2.1.1.v201509150925,2.1.1.v201509150925]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.classic' range='[1.1.4,1.1.4]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.jpa' range='[1.9.4.RELEASE,1.9.4.RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='slf4j.api' range='[1.7.16,1.7.16]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ch.qos.logback.core' range='[1.1.4,1.1.4]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.aop' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.beans' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.context' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.core' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.data.core' range='[1.11.4.RELEASE,1.11.4.RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.jdbc' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.orm' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.transaction' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.springframework.expression' range='[4.2.4.20151218-RELEASE,4.2.4.20151218-RELEASE]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.dbcp' range='[1.4.0.v201204271417,1.4.0.v201204271417]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.pool' range='[1.6.0.v201204271246,1.6.0.v201204271246]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.app' range='[1.1.3.201607060305,1.1.3.201607060305]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' range='[1.0.0.201607060305,1.0.0.201607060305]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.widgets.cdatetime' range='[1.0.0.201606281412,1.0.0.201606281412]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.cwt' range='[1.0.0.201606281412,1.0.0.201606281412]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ui.forms' range='[3.6.200.v20150506-2029,3.6.200.v20150506-2029]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.swtchart' range='[0.7.0.v201201201914,0.7.0.v201201201914]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.poi' range='[3.9.0.v201405241750,3.9.0.v201405241750]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.antlr' range='[3.2.0.v201302191141,3.2.0.v201302191141]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.asm' range='[5.0.1.v201405080102,5.0.1.v201405080102]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.core' range='[2.6.3.v20160428-59c81c5,2.6.3.v20160428-59c81c5]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa' range='[2.6.3.v20160428-59c81c5,2.6.3.v20160428-59c81c5]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.jpa.jpql' range='[2.6.3.v20160428-59c81c5,2.6.3.v20160428-59c81c5]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.persistence.oracle' range='[2.6.3.v20160319-fe724e6,2.6.3.v20160319-fe724e6]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.h2' range='[1.3.168.v201212121212,1.3.168.v201212121212]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.aopalliance' range='[1.0.0.v201105210816,1.0.0.v201105210816]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' range='[1.1.1.v201101211721,1.1.1.v201101211721]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.codec' range='[1.6.0.v201305230611,1.6.0.v201305230611]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.feature.app.feature.jar' range='[1.0.0.201607060305,1.0.0.201607060305]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
     <unit id='org.eclipse.e4.ui.css.core' version='0.11.0.v20150511-1937'>
       <update id='org.eclipse.e4.ui.css.core' range='[0.0.0,0.11.0.v20150511-1937)' severity='0'/>
       <properties size='8'>
@@ -2836,6 +2892,64 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='org.h2' version='1.3.168.v201212121212' singleton='false'>
+      <update id='org.h2' range='[0.0.0,1.3.168.v201212121212)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.pluginName' value='H2 Database Engine'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='35'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.h2' version='1.3.168.v201212121212'/>
+        <provided namespace='osgi.bundle' name='org.h2' version='1.3.168.v201212121212'/>
+        <provided namespace='java.package' name='org.h2' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.api' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.bnf' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.command' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.command.ddl' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.command.dml' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.compress' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.constant' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.constraint' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.engine' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.expression' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.fulltext' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.index' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.jdbc' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.jdbcx' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.jmx' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.log' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.message' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.result' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.schema' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.security' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.server' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.server.pg' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.server.web' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.store' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.store.fs' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.table' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.tools' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.upgrade' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.util' version='1.3.168'/>
+        <provided namespace='java.package' name='org.h2.value' version='1.3.168'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.h2' version='1.3.168.v201212121212'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.h2&#xA;Bundle-Version: 1.3.168.v201212121212
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
     <unit id='org.apache.commons.jxpath' version='1.3.0.v200911051830' singleton='false'>
       <update id='org.apache.commons.jxpath' range='[0.0.0,1.3.0.v200911051830)' severity='0'/>
       <properties size='5'>
@@ -2879,38 +2993,77 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.apache.batik.parser' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.parser' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
-      <properties size='5'>
-        <property name='df_LT.pluginName' value='Apache Batik Parser'/>
-        <property name='df_LT.providerName' value='Eclipse.org'/>
+    <unit id='org.eclipse.nebula.cwt' version='1.0.0.201606281412' singleton='false'>
+      <update id='org.eclipse.nebula.cwt' range='[0.0.0,1.0.0.201606281412)' severity='0'/>
+      <properties size='6'>
         <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
         <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
         <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+        <property name='maven-groupId' value='org.eclipse.nebula'/>
+        <property name='maven-artifactId' value='org.eclipse.nebula.cwt'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
       </properties>
-      <provides size='7'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.parser' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.parser' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.parser' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.parser.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.parser.style.resources' version='1.7.0'/>
+      <provides size='9'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.cwt' version='1.0.0.201606281412'/>
+        <provided namespace='osgi.bundle' name='org.eclipse.nebula.cwt' version='1.0.0.201606281412'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.cwt.animation' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.cwt.animation.effects' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.cwt.animation.movement' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.cwt.base' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.cwt.svg' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.nebula.cwt.v' version='0.0.0'/>
         <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
       </provides>
-      <requires size='4'>
-        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.7.0,1.8.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
+      <requires size='6'>
+        <required namespace='java.package' name='org.eclipse.swt' range='0.0.0'/>
+        <required namespace='java.package' name='org.eclipse.swt.events' range='0.0.0'/>
+        <required namespace='java.package' name='org.eclipse.swt.graphics' range='0.0.0'/>
+        <required namespace='java.package' name='org.eclipse.swt.internal.theme' range='0.0.0'/>
+        <required namespace='java.package' name='org.eclipse.swt.layout' range='0.0.0'/>
+        <required namespace='java.package' name='org.eclipse.swt.widgets' range='0.0.0'/>
       </requires>
       <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.parser' version='1.7.0.v201011041433'/>
+        <artifact classifier='osgi.bundle' id='org.eclipse.nebula.cwt' version='1.0.0.201606281412'/>
       </artifacts>
       <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
       <touchpointData size='1'>
         <instructions size='1'>
           <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.parser&#xA;Bundle-Version: 1.7.0.v201011041433
+            Bundle-SymbolicName: org.eclipse.nebula.cwt&#xA;Bundle-Version: 1.0.0.201606281412
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.batik.parser' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.parser' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.pluginName' value='Apache Batik Parser'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='5'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.parser' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.parser' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.parser' version='1.6.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='4'>
+        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.parser' version='1.6.0.v201011041432'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.parser&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
@@ -3341,126 +3494,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606130657' singleton='false'>
-      <update id='org.eclipse.nebula.widgets.cdatetime' range='[0.0.0,1.0.0.201606130657)' severity='0'/>
-      <properties size='8'>
-        <property name='df_LT.providerName' value='Eclipse.org'/>
-        <property name='df_LT.pluginName' value='Nebula CDatetime widget (Incubation)'/>
-        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
-        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
-        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
-        <property name='maven-groupId' value='org.eclipse.nebula'/>
-        <property name='maven-artifactId' value='org.eclipse.nebula.widgets.cdatetime'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='5'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606130657'/>
-        <provided namespace='osgi.bundle' name='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606130657'/>
-        <provided namespace='java.package' name='org.eclipse.nebula.widgets.cdatetime' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
-      </provides>
-      <requires size='3'>
-        <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.swt' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.nebula.cwt' range='0.9.0'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.eclipse.nebula.widgets.cdatetime' version='1.0.0.201606130657'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.eclipse.nebula.widgets.cdatetime&#xA;Bundle-Version: 1.0.0.201606130657
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='ru.7kt.log' version='1.0.0.201606281016' singleton='false'>
-      <update id='ru.7kt.log' range='[0.0.0,1.0.0.201606281016)' severity='0'/>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='Log'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.log'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='4'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.log' version='1.0.0.201606281016'/>
-        <provided namespace='osgi.bundle' name='ru.7kt.log' version='1.0.0.201606281016'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='osgi.fragment' name='ch.qos.logback.classic' version='1.0.0.201606281016'/>
-      </provides>
-      <requires size='1'>
-        <required namespace='osgi.bundle' name='ch.qos.logback.classic' range='1.1.4'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='ru.7kt.log' version='1.0.0.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: ru.7kt.log&#xA;Bundle-Version: 1.0.0.201606281016&#xA;Fragment-Host: ch.qos.logback.classic;bundle-version=&quot;1.1.4&quot;
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='org.apache.batik.bridge' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.bridge' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
-      <properties size='5'>
-        <property name='df_LT.pluginName' value='Apache Batik Bridge/GVT/Scripting'/>
-        <property name='df_LT.providerName' value='Eclipse.org'/>
-        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
-        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
-        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
-      </properties>
-      <provides size='20'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.bridge' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.bridge' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.bridge' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.bridge.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.bridge.svg12' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.event' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.filter' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.flow' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.font' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.renderer' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.svg12' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.gvt.text' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.script' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.script.rhino' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.script.rhino.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.script.rhino.svg12' version='1.7.0'/>
-        <provided namespace='java.package' name='META-INF.services' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
-      </provides>
-      <requires size='10'>
-        <required namespace='osgi.bundle' name='org.apache.batik.css' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.dom' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.dom.svg' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.parser' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util.gui' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.7.0,1.8.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.events' range='[3.0.0,4.0.0)'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.bridge' version='1.7.0.v201011041433'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.bridge&#xA;Bundle-Version: 1.7.0.v201011041433
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.e4.ui.services' version='1.2.0.v20150422-0725'>
       <update id='org.eclipse.e4.ui.services' range='[0.0.0,1.2.0.v20150422-0725)' severity='0'/>
       <properties size='8'>
@@ -3536,6 +3569,57 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: slf4j.api&#xA;Bundle-Version: 1.7.16
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.batik.bridge' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.bridge' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.pluginName' value='Apache Batik Bridge/GVT/Scripting'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='17'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.bridge' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.bridge' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.bridge' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.bridge.svg12' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.event' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.filter' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.flow' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.font' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.renderer' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.svg12' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.gvt.text' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.script' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.script.rhino' version='1.6.0'/>
+        <provided namespace='java.package' name='META-INF.services' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='9'>
+        <required namespace='osgi.bundle' name='org.apache.batik.css' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.dom' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.dom.svg' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.parser' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util.gui' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.bridge' version='1.6.0.v201011041432'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.bridge&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
@@ -3867,6 +3951,35 @@
         </instructions>
       </touchpointData>
     </unit>
+    <unit id='org.apache.batik.util.gui' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.util.gui' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.pluginName' value='Apache Batik GUI Utilities'/>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='6'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.util.gui' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.util.gui' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.util.gui' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.util.gui.resource' version='1.6.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.util.gui' version='1.6.0.v201011041432'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.util.gui&#xA;Bundle-Version: 1.6.0.v201011041432
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
     <unit id='org.eclipse.e4.ui.model.workbench' version='1.1.100.v20150407-1430'>
       <update id='org.eclipse.e4.ui.model.workbench' range='[0.0.0,1.1.100.v20150407-1430)' severity='0'/>
       <properties size='8'>
@@ -4091,51 +4204,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='ru.7kt.database' version='1.0.0.201606281016' singleton='false'>
-      <update id='ru.7kt.database' range='[0.0.0,1.0.0.201606281016)' severity='0'/>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='database'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.database'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='5'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.database' version='1.0.0.201606281016'/>
-        <provided namespace='osgi.bundle' name='ru.7kt.database' version='1.0.0.201606281016'/>
-        <provided namespace='java.package' name='ru.sevenkt.db.entities' version='0.0.0'/>
-        <provided namespace='java.package' name='ru.sevenkt.db.services' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='16'>
-        <required namespace='osgi.bundle' name='javax.persistence' range='2.1.0'/>
-        <required namespace='osgi.bundle' name='org.springframework.data.jpa' range='1.9.4'/>
-        <required namespace='osgi.bundle' name='org.springframework.context' range='4.2.3'/>
-        <required namespace='osgi.bundle' name='org.springframework.core' range='4.2.3'/>
-        <required namespace='osgi.bundle' name='org.springframework.jdbc' range='4.2.3'/>
-        <required namespace='osgi.bundle' name='org.springframework.orm' range='4.2.3'/>
-        <required namespace='osgi.bundle' name='slf4j.api' range='1.7.16'/>
-        <required namespace='osgi.bundle' name='org.springframework.data.core' range='1.11.4'/>
-        <required namespace='osgi.bundle' name='org.springframework.beans' range='4.2.3'/>
-        <required namespace='osgi.bundle' name='org.apache.commons.dbcp' range='1.4.0'/>
-        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.persistence.jpa' range='2.6.3'/>
-        <required namespace='osgi.bundle' name='org.h2' range='1.3.168'/>
-        <required namespace='java.package' name='org.aopalliance.aop' range='1.0.0'/>
-        <required namespace='java.package' name='org.springframework.aop' range='4.2.4.20151218-RELEASE'/>
-        <required namespace='java.package' name='org.springframework.aop.framework' range='4.2.4.20151218-RELEASE'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='ru.7kt.database' version='1.0.0.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: ru.7kt.database&#xA;Bundle-Version: 1.0.0.201606281016
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.osgi.services' version='3.5.0.v20150519-2006' singleton='false'>
       <update id='org.eclipse.osgi.services' range='[0.0.0,3.5.0.v20150519-2006)' severity='0'/>
       <properties size='12'>
@@ -4201,6 +4269,43 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.eclipse.osgi.services&#xA;Bundle-Version: 3.5.0.v20150519-2006
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='ru.7kt.reports' version='1.0.0.201607060305' singleton='false'>
+      <update id='ru.7kt.reports' range='[0.0.0,1.0.0.201607060305)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Reports'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.reports'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='5'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.reports' version='1.0.0.201607060305'/>
+        <provided namespace='osgi.bundle' name='ru.7kt.reports' version='1.0.0.201607060305'/>
+        <provided namespace='java.package' name='ru.sevenkt.reports.pojo' version='0.0.0'/>
+        <provided namespace='java.package' name='ru.sevenkt.reports.services' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='8'>
+        <required namespace='osgi.bundle' name='org.springframework.core' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='ru.7kt.database' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.birt.report.engine' range='4.5.0'/>
+        <required namespace='osgi.bundle' name='org.springframework.beans' range='4.2.4'/>
+        <required namespace='java.package' name='org.osgi.framework' range='1.3.0'/>
+        <required namespace='java.package' name='org.springframework.beans.factory.annotation' range='4.2.3.20151116-RELEASE'/>
+        <required namespace='java.package' name='org.springframework.context.annotation' range='4.2.3.20151116-RELEASE'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='ru.7kt.reports' version='1.0.0.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: ru.7kt.reports&#xA;Bundle-Version: 1.0.0.201607060305
           </instruction>
         </instructions>
       </touchpointData>
@@ -4298,47 +4403,47 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='org.apache.batik.transcoder' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.transcoder' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
+    <unit id='org.apache.batik.transcoder' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.transcoder' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
       <properties size='5'>
-        <property name='df_LT.pluginName' value='Apache Batik Transcoder'/>
         <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.pluginName' value='Apache Batik Transcoder'/>
         <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
         <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
         <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
       </properties>
       <provides size='12'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.transcoder' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.transcoder' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.image' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.image.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.keys' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.print' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.svg2svg' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.wmf' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.transcoder.wmf.tosvg' version='1.7.0'/>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.transcoder' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.transcoder' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.image' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.image.resources' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.keys' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.print' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.svg2svg' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.wmf' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.transcoder.wmf.tosvg' version='1.6.0'/>
         <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
         <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
       </provides>
       <requires size='8'>
-        <required namespace='osgi.bundle' name='org.apache.batik.bridge' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.dom' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.dom.svg' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.svggen' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.7.0,1.8.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.bridge' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.dom' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.dom.svg' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.ext.awt' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.svggen' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
       </requires>
       <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.transcoder' version='1.7.0.v201011041433'/>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.transcoder' version='1.6.0.v201011041432'/>
       </artifacts>
       <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
       <touchpointData size='1'>
         <instructions size='1'>
           <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.transcoder&#xA;Bundle-Version: 1.7.0.v201011041433
+            Bundle-SymbolicName: org.apache.batik.transcoder&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
@@ -4378,35 +4483,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='ru.7kt.core' version='1.0.0.201606281016' singleton='false'>
-      <update id='ru.7kt.core' range='[0.0.0,1.0.0.201606281016)' severity='0'/>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='Core'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.core'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='7'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.core' version='1.0.0.201606281016'/>
-        <provided namespace='osgi.bundle' name='ru.7kt.core' version='1.0.0.201606281016'/>
-        <provided namespace='java.package' name='ru.sevenkt.annotations' version='0.0.0'/>
-        <provided namespace='java.package' name='ru.sevenkt.domain' version='0.0.0'/>
-        <provided namespace='java.package' name='ru.sevenkt.exceptions' version='0.0.0'/>
-        <provided namespace='java.package' name='ru.sevenkt.utils' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='ru.7kt.core' version='1.0.0.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: ru.7kt.core&#xA;Bundle-Version: 1.0.0.201606281016
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.aopalliance' version='1.0.0.v201105210816' singleton='false'>
       <update id='org.aopalliance' range='[0.0.0,1.0.0.v201105210816)' severity='0'/>
       <properties size='4'>
@@ -4431,50 +4507,6 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.aopalliance&#xA;Bundle-Version: 1.0.0.v201105210816
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='org.apache.batik.dom.svg' version='1.7.0.v201011041433' singleton='false'>
-      <update id='org.apache.batik.dom.svg' range='[0.0.0,1.7.0.v201011041433)' severity='0'/>
-      <properties size='5'>
-        <property name='df_LT.pluginName' value='Apache Batik SVG DOM'/>
-        <property name='df_LT.providerName' value='Eclipse.org'/>
-        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
-        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
-        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
-      </properties>
-      <provides size='11'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.dom.svg' version='1.7.0.v201011041433'/>
-        <provided namespace='osgi.bundle' name='org.apache.batik.dom.svg' version='1.7.0.v201011041433'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.anim' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.svg' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.svg.resources' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.dom.svg12' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.anim' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.anim.timing' version='1.7.0'/>
-        <provided namespace='java.package' name='org.apache.batik.anim.values' version='1.7.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
-      </provides>
-      <requires size='8'>
-        <required namespace='osgi.bundle' name='org.apache.batik.css' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.dom' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.parser' range='[1.7.0,1.8.0)'/>
-        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.7.0,1.8.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.events' range='[3.0.0,4.0.0)'/>
-        <required namespace='java.package' name='org.w3c.css.sac' range='[1.3.0,1.4.0)'/>
-        <required namespace='java.package' name='org.w3c.dom.smil' range='[1.0.0,1.1.0)'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='org.apache.batik.dom.svg' version='1.7.0.v201011041433'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: org.apache.batik.dom.svg&#xA;Bundle-Version: 1.7.0.v201011041433
           </instruction>
         </instructions>
       </touchpointData>
@@ -4513,6 +4545,75 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.eclipse.core.expressions; singleton:=true&#xA;Bundle-Version: 3.5.0.v20150421-2214
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='ru.7kt.archivedata' version='1.0.0.201607060305' singleton='false'>
+      <update id='ru.7kt.archivedata' range='[0.0.0,1.0.0.201607060305)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Archivedata'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.archivedata'/>
+        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+      </properties>
+      <provides size='4'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' version='1.0.0.201607060305'/>
+        <provided namespace='osgi.bundle' name='ru.7kt.archivedata' version='1.0.0.201607060305'/>
+        <provided namespace='java.package' name='ru.sevenkt.archive.services' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='2'>
+        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.springframework.context' range='4.2.4'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='ru.7kt.archivedata' version='1.0.0.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: ru.7kt.archivedata&#xA;Bundle-Version: 1.0.0.201607060305
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.batik.dom' version='1.6.1.v201505192100' singleton='false'>
+      <update id='org.apache.batik.dom' range='[0.0.0,1.6.1.v201505192100)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse Orbit'/>
+        <property name='df_LT.pluginName' value='Apache Batik DOM'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='8'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.dom' version='1.6.1.v201505192100'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.dom' version='1.6.1.v201505192100'/>
+        <provided namespace='java.package' name='org.apache.batik.dom' version='1.6.1'/>
+        <provided namespace='java.package' name='org.apache.batik.dom.events' version='1.6.1'/>
+        <provided namespace='java.package' name='org.apache.batik.dom.traversal' version='1.6.1'/>
+        <provided namespace='java.package' name='org.apache.batik.dom.util' version='1.6.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='6'>
+        <required namespace='osgi.bundle' name='org.apache.batik.css' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.xml' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.css.sac' range='[1.3.0,1.4.0)'/>
+        <required namespace='java.package' name='org.w3c.dom' range='0.0.0'/>
+        <required namespace='java.package' name='org.apache.xerces.parsers' range='0.0.0' optional='true' greedy='false'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.dom' version='1.6.1.v201505192100'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.dom&#xA;Bundle-Version: 1.6.1.v201505192100
           </instruction>
         </instructions>
       </touchpointData>
@@ -4824,58 +4925,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='ru.7kt.app' version='1.1.3.201606281016'>
-      <update id='ru.7kt.app' range='[0.0.0,1.1.3.201606281016)' severity='0'/>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='App'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.app'/>
-        <property name='maven-version' value='1.1.3-SNAPSHOT'/>
-      </properties>
-      <provides size='3'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.app' version='1.1.3.201606281016'/>
-        <provided namespace='osgi.bundle' name='ru.7kt.app' version='1.1.3.201606281016'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='25'>
-        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.jface' range='3.11.1'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.core.di' range='1.5.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.core.services' range='2.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='3.11.1'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.services' range='1.2.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.5.0'/>
-        <required namespace='osgi.bundle' name='slf4j.api' range='1.7.16'/>
-        <required namespace='osgi.bundle' name='ru.7kt.database' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.workbench' range='1.3.1'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.core.contexts' range='1.4.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.model.workbench' range='1.1.100'/>
-        <required namespace='osgi.bundle' name='org.eclipse.nebula.widgets.cdatetime' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.ui.forms' range='3.6.200'/>
-        <required namespace='osgi.bundle' name='org.swtchart' range='0.7.0'/>
-        <required namespace='osgi.bundle' name='org.apache.poi' range='3.9.0'/>
-        <required namespace='osgi.bundle' name='ru.7kt.archivedata' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.core.databinding' range='1.5.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.jface.databinding' range='1.7.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.core.databinding.beans' range='1.3.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.core.databinding.property' range='1.5.0'/>
-        <required namespace='osgi.bundle' name='ru.7kt.reports' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.di' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.e4.core.commands' range='0.11.0'/>
-        <required namespace='java.package' name='javax.inject' range='1.0.0'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='ru.7kt.app' version='1.1.3.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: ru.7kt.app;singleton:=true&#xA;Bundle-Version: 1.1.3.201606281016
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.persistence.jpa' version='2.6.3.v20160428-59c81c5' singleton='false'>
       <update id='org.eclipse.persistence.jpa' range='[0.0.0,2.6.3.v20160428-59c81c5)' severity='0'/>
       <properties size='2'>
@@ -5013,6 +5062,58 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.eclipse.persistence.jpa&#xA;Bundle-Version: 2.6.3.v20160428-59c81c5
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='ru.7kt.app' version='1.1.3.201607060305'>
+      <update id='ru.7kt.app' range='[0.0.0,1.1.3.201607060305)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='App'/>
+        <property name='maven-groupId' value='ru.7kt'/>
+        <property name='maven-artifactId' value='ru.7kt.app'/>
+        <property name='maven-version' value='1.1.3-SNAPSHOT'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.app' version='1.1.3.201607060305'/>
+        <provided namespace='osgi.bundle' name='ru.7kt.app' version='1.1.3.201607060305'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='25'>
+        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.jface' range='3.11.1'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.core.di' range='1.5.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.core.services' range='2.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='3.11.1'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.services' range='1.2.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.osgi.services' range='3.5.0'/>
+        <required namespace='osgi.bundle' name='slf4j.api' range='1.7.16'/>
+        <required namespace='osgi.bundle' name='ru.7kt.database' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.workbench' range='1.3.1'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.core.contexts' range='1.4.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.model.workbench' range='1.1.100'/>
+        <required namespace='osgi.bundle' name='org.eclipse.nebula.widgets.cdatetime' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.ui.forms' range='3.6.200'/>
+        <required namespace='osgi.bundle' name='org.swtchart' range='0.7.0'/>
+        <required namespace='osgi.bundle' name='org.apache.poi' range='3.9.0'/>
+        <required namespace='osgi.bundle' name='ru.7kt.archivedata' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.core.databinding' range='1.5.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.jface.databinding' range='1.7.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.core.databinding.beans' range='1.3.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.core.databinding.property' range='1.5.0'/>
+        <required namespace='osgi.bundle' name='ru.7kt.reports' range='1.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.ui.di' range='0.0.0'/>
+        <required namespace='osgi.bundle' name='org.eclipse.e4.core.commands' range='0.11.0'/>
+        <required namespace='java.package' name='javax.inject' range='1.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='ru.7kt.app' version='1.1.3.201607060305'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: ru.7kt.app;singleton:=true&#xA;Bundle-Version: 1.1.3.201607060305
           </instruction>
         </instructions>
       </touchpointData>
@@ -5387,6 +5488,45 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: org.eclipse.birt.report.engine; singleton:=true&#xA;Bundle-Version: 4.5.0.v201506092134
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.batik.dom.svg' version='1.6.0.v201011041432' singleton='false'>
+      <update id='org.apache.batik.dom.svg' range='[0.0.0,1.6.0.v201011041432)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.pluginName' value='Apache Batik SVG DOM'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='6'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.batik.dom.svg' version='1.6.0.v201011041432'/>
+        <provided namespace='osgi.bundle' name='org.apache.batik.dom.svg' version='1.6.0.v201011041432'/>
+        <provided namespace='java.package' name='org.apache.batik.dom.svg' version='1.6.0'/>
+        <provided namespace='java.package' name='org.apache.batik.dom.svg12' version='1.6.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='8'>
+        <required namespace='osgi.bundle' name='org.apache.batik.css' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.dom' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.parser' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.apache.batik.util' range='[1.6.0,1.7.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.css.sac' range='[1.3.0,1.4.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.dom.smil' range='[1.0.0,1.1.0)'/>
+        <required namespace='osgi.bundle' name='org.w3c.dom.svg' range='[1.1.0,1.3.0)'/>
+        <required namespace='java.package' name='org.w3c.dom' range='0.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.batik.dom.svg' version='1.6.0.v201011041432'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.batik.dom.svg&#xA;Bundle-Version: 1.6.0.v201011041432
           </instruction>
         </instructions>
       </touchpointData>
@@ -6026,43 +6166,6 @@
         </instructions>
       </touchpointData>
     </unit>
-    <unit id='ru.7kt.reports' version='1.0.0.201606281016' singleton='false'>
-      <update id='ru.7kt.reports' range='[0.0.0,1.0.0.201606281016)' severity='0'/>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='Reports'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.reports'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='5'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.reports' version='1.0.0.201606281016'/>
-        <provided namespace='osgi.bundle' name='ru.7kt.reports' version='1.0.0.201606281016'/>
-        <provided namespace='java.package' name='ru.sevenkt.reports.pojo' version='0.0.0'/>
-        <provided namespace='java.package' name='ru.sevenkt.reports.services' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='8'>
-        <required namespace='osgi.bundle' name='org.springframework.core' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='ru.7kt.database' range='0.0.0'/>
-        <required namespace='osgi.bundle' name='org.eclipse.birt.report.engine' range='4.5.0'/>
-        <required namespace='osgi.bundle' name='org.springframework.beans' range='4.2.4'/>
-        <required namespace='java.package' name='org.osgi.framework' range='1.3.0'/>
-        <required namespace='java.package' name='org.springframework.beans.factory.annotation' range='4.2.3.20151116-RELEASE'/>
-        <required namespace='java.package' name='org.springframework.context.annotation' range='4.2.3.20151116-RELEASE'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='ru.7kt.reports' version='1.0.0.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: ru.7kt.reports&#xA;Bundle-Version: 1.0.0.201606281016
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
     <unit id='org.eclipse.jface' version='3.11.1.v20160128-1644'>
       <update id='org.eclipse.jface' range='[0.0.0,3.11.1.v20160128-1644)' severity='0'/>
       <properties size='8'>
@@ -6203,36 +6306,6 @@
         <instructions size='1'>
           <instruction key='manifest'>
             Bundle-SymbolicName: javax.persistence&#xA;Bundle-Version: 2.1.1.v201509150925
-          </instruction>
-        </instructions>
-      </touchpointData>
-    </unit>
-    <unit id='ru.7kt.archivedata' version='1.0.0.201606281016' singleton='false'>
-      <update id='ru.7kt.archivedata' range='[0.0.0,1.0.0.201606281016)' severity='0'/>
-      <properties size='4'>
-        <property name='org.eclipse.equinox.p2.name' value='Archivedata'/>
-        <property name='maven-groupId' value='ru.7kt'/>
-        <property name='maven-artifactId' value='ru.7kt.archivedata'/>
-        <property name='maven-version' value='1.0.0-SNAPSHOT'/>
-      </properties>
-      <provides size='4'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='ru.7kt.archivedata' version='1.0.0.201606281016'/>
-        <provided namespace='osgi.bundle' name='ru.7kt.archivedata' version='1.0.0.201606281016'/>
-        <provided namespace='java.package' name='ru.sevenkt.archive.services' version='0.0.0'/>
-        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
-      </provides>
-      <requires size='2'>
-        <required namespace='osgi.bundle' name='ru.7kt.core' range='1.0.0'/>
-        <required namespace='osgi.bundle' name='org.springframework.context' range='4.2.4'/>
-      </requires>
-      <artifacts size='1'>
-        <artifact classifier='osgi.bundle' id='ru.7kt.archivedata' version='1.0.0.201606281016'/>
-      </artifacts>
-      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
-      <touchpointData size='1'>
-        <instructions size='1'>
-          <instruction key='manifest'>
-            Bundle-SymbolicName: ru.7kt.archivedata&#xA;Bundle-Version: 1.0.0.201606281016
           </instruction>
         </instructions>
       </touchpointData>

@@ -49,18 +49,19 @@ public class ShowReport {
 			LocalDate dateFrom = dialog.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			LocalDate dateTo = dialog.getDateTo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			String reportType = dialog.getReportFormatt();
-			Map<String, Object> reportParameters=new HashMap<>();
+			Map<String, Object> reportParameters = new HashMap<>();
+
 			List<Measuring> hourList = dbService.findArchive(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
 					ArchiveTypes.HOUR);
 			List<Measuring> dayList = dbService.findArchive(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
 					ArchiveTypes.DAY);
 			List<Measuring> monthList = dbService.findArchive(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
 					ArchiveTypes.MONTH);
-			List<Error> errors = dbService.findErrors(device,  dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
+			List<Error> errors = dbService.findErrors(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
 					ArchiveTypes.HOUR);
-			errors.addAll(dbService.findErrors(device,  dateFrom.atStartOfDay(), dateTo.atStartOfDay(),
-					ArchiveTypes.DAY));
-			errors.addAll(dbService.findErrors(device,  dateFrom.atStartOfDay().minusMonths(1), dateTo.atStartOfDay(),
+			errors.addAll(
+					dbService.findErrors(device, dateFrom.atStartOfDay(), dateTo.atStartOfDay(), ArchiveTypes.DAY));
+			errors.addAll(dbService.findErrors(device, dateFrom.atStartOfDay().minusMonths(1), dateTo.atStartOfDay(),
 					ArchiveTypes.MONTH));
 			List<Params> params = device.getParams();
 			reportParameters.put(IReportService.DAY_MEASURINGS, dayList);
@@ -71,7 +72,8 @@ public class ShowReport {
 			reportParameters.put(IReportService.REPORT_TYPE, reportType);
 			reportParameters.put(IReportService.ERRORS, errors);
 			try {
-				reportService.showReport(reportParameters, dateFrom, dateTo, report.getTemplateName(), report.getType());
+				reportService.showReport(reportParameters, dateFrom, dateTo, report.getTemplateName(),
+						report.getType());
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

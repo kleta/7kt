@@ -3748,7 +3748,7 @@ else&#13;
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
-                            <expression name="value" type="javascript">row["E2"]</expression>
+                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ E2"]</expression>
                         </structure>
                     </list-property>
                     <property name="allowExport">true</property>

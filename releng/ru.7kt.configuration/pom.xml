@@ -18,39 +18,39 @@
 		<local-repo.url>http://localhost:8080/7kt/</local-repo.url>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>mars</id>
-			<url>${mars-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>spring</id>
-			<url>${spring-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>eclipselink</id>
-			<url>${eclipselink-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>orbit</id>
-			<url>${orbit-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>nebula</id>
-			<url>${nebula-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>localhost</id>
-			<url>${local-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
+<!-- 	<repositories> -->
+<!-- 		<repository> -->
+<!-- 			<id>mars</id> -->
+<!-- 			<url>${mars-repo.url}</url> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>spring</id> -->
+<!-- 			<url>${spring-repo.url}</url> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>eclipselink</id> -->
+<!-- 			<url>${eclipselink-repo.url}</url> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>orbit</id> -->
+<!-- 			<url>${orbit-repo.url}</url> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>nebula</id> -->
+<!-- 			<url>${nebula-repo.url}</url> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 		</repository> -->
+<!-- 		<repository> -->
+<!-- 			<id>localhost</id> -->
+<!-- 			<url>${local-repo.url}</url> -->
+<!-- 			<layout>p2</layout> -->
+<!-- 		</repository> -->
 
-	</repositories>
+<!-- 	</repositories> -->
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.gemini.blueprint</groupId>

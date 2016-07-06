@@ -182,15 +182,12 @@ public class Helper {
 			switch (archiveType) {
 			case HOUR:
 				ldtFrom = ldtFrom.plusHours(1);
-				//dtf=formatterHour;
 				break;
 			case DAY:
 				ldtFrom = ldtFrom.plusDays(1);
-				//dtf=formatterDay;
 				break;
 			case MONTH:
 				ldtFrom = ldtFrom.plusMonths(1).withDayOfMonth(1);
-				//dtf=formatterDay;
 				break;
 			}
 
