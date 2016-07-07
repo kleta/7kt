@@ -394,7 +394,7 @@
                     <structure>
                         <property name="position">15</property>
                         <property name="name">Тхв</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
@@ -517,7 +517,7 @@
                     <property name="position">15</property>
                     <property name="name">TempColdWater</property>
                     <property name="nativeName">TempColdWater</property>
-                    <property name="dataType">string</property>
+                    <property name="dataType">integer</property>
                     <property name="nativeDataType">1</property>
                 </structure>
                 <structure>

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.ParametersConst;
 
 public class OpenArchiveHandler implements EventHandler {
-	
+
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
 	@Inject
@@ -84,8 +85,9 @@ public class OpenArchiveHandler implements EventHandler {
 		Device device = (Device) event.getProperty(AppEventConstants.DEVICE);
 		LocalDate startDate = (LocalDate) event.getProperty(AppEventConstants.START_DATE);
 		LocalDateTime startDateTime = startDate.atStartOfDay();
-//		if (archiveType.equals(ArchiveTypes.MONTH) && startDateTime.getDayOfMonth() != 1)
-//			startDateTime = startDateTime.plusMonths(1).withDayOfMonth(1);
+		// if (archiveType.equals(ArchiveTypes.MONTH) &&
+		// startDateTime.getDayOfMonth() != 1)
+		// startDateTime = startDateTime.plusMonths(1).withDayOfMonth(1);
 		LocalDate endDate = (LocalDate) event.getProperty(AppEventConstants.END_DATE);
 		LocalDateTime endDateTime = endDate.atStartOfDay();
 		Map<String, Object> result = new HashMap<>();
@@ -105,7 +107,8 @@ public class OpenArchiveHandler implements EventHandler {
 			break;
 		}
 		List<Measuring> measurings = dbService.findArchive(device, startDateTime, endDateTime, archiveType);
-		List<Error> errors = dbService.findErrors(device, startDate.atStartOfDay(), endDate.atStartOfDay(), archiveType);
+		List<Error> errors = dbService.findErrors(device, startDate.atStartOfDay(), endDate.atStartOfDay(),
+				archiveType);
 		Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
 		Map<LocalDateTime, List<Error>> groupByDateTimeErrors = errors.stream()
@@ -120,8 +123,10 @@ public class OpenArchiveHandler implements EventHandler {
 			TableRow tr = new DateTimeTableRow();
 			List<Measuring> lm = null;
 			List<Error> le = null;
+			int hoursInArchivePeriod = 1;
 			switch (archiveType) {
 			case MONTH:
+				hoursInArchivePeriod = (int) ChronoUnit.HOURS.between(startDateTime, startDateTime.plusMonths(1));
 				startDateTime = startDateTime.plusMonths(1);
 				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
@@ -130,6 +135,7 @@ public class OpenArchiveHandler implements EventHandler {
 				// addMonthErrorsColumn()
 				break;
 			case DAY:
+				hoursInArchivePeriod = (int) ChronoUnit.HOURS.between(startDateTime, startDateTime.plusDays(1));
 				startDateTime = startDateTime.plusDays(1);
 				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
@@ -169,6 +175,14 @@ public class OpenArchiveHandler implements EventHandler {
 				Object t2 = tr.getValues().get(Parameters.AVG_TEMP4);
 				if (t1 != null && t2 != null)
 					tr.getValues().put(Parameters.T3_SUB_T4, ((Double) t1) - ((Double) t2));
+			}
+			if (parameters.contains(Parameters.NO_ERROR_TIME1)) {
+				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME1);
+				tr.getValues().put(Parameters.NO_ERROR_TIME1, (hoursInArchivePeriod - t1.intValue())+0.0);
+			}
+			if (parameters.contains(Parameters.NO_ERROR_TIME2)) {
+				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME2);
+				tr.getValues().put(Parameters.NO_ERROR_TIME2, (hoursInArchivePeriod - t1.intValue())+0.0);
 			}
 			addErrorColumns(tr, le);
 			listTableRow.add(tr);
