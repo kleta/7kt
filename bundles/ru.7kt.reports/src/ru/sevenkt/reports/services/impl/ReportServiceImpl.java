@@ -128,7 +128,7 @@ public class ReportServiceImpl implements IReportService {
 			datasets.put(APP_CONTEXT_KEY_DEVICE, Helper.mapToDeviceData(map, dateFrom, dateTo, archiveType));
 			datasets.put(APP_CONTEXT_KEY_CONSUMPTION,
 					Helper.mapToConsumption(map, dateFrom, dateTo, archiveType));
-			datasets.put(APP_CONTEXT_KEY_METERS, Helper.mapToMeters(map, dateFrom, dateTo, archiveType));
+			datasets.put(APP_CONTEXT_KEY_METERS, Helper.mapToMeters(map, archiveType));
 
 			// start enginee
 			EngineConfig config = new EngineConfig();

@@ -178,11 +178,13 @@ public class OpenArchiveHandler implements EventHandler {
 			}
 			if (parameters.contains(Parameters.NO_ERROR_TIME1)) {
 				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME1);
-				tr.getValues().put(Parameters.NO_ERROR_TIME1, (hoursInArchivePeriod - t1.intValue())+0.0);
+				if (t1 != null)
+					tr.getValues().put(Parameters.NO_ERROR_TIME1, (hoursInArchivePeriod - t1.intValue()) + 0.0);
 			}
 			if (parameters.contains(Parameters.NO_ERROR_TIME2)) {
 				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME2);
-				tr.getValues().put(Parameters.NO_ERROR_TIME2, (hoursInArchivePeriod - t1.intValue())+0.0);
+				if (t1 != null)
+					tr.getValues().put(Parameters.NO_ERROR_TIME2, (hoursInArchivePeriod - t1.intValue()) + 0.0);
 			}
 			addErrorColumns(tr, le);
 			listTableRow.add(tr);

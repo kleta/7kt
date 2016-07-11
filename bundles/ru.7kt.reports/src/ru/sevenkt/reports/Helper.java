@@ -20,7 +20,9 @@ import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.domain.ArchiveTypes;
+import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.Parameters;
+import ru.sevenkt.domain.ParametersConst;
 import ru.sevenkt.reports.pojo.ConsumptionBean;
 import ru.sevenkt.reports.pojo.DeviceDataBean;
 import ru.sevenkt.reports.pojo.MeterBean;
@@ -38,18 +40,18 @@ public class Helper {
 		dataBean.setName(dev.getDeviceName());
 		dataBean.setDateFrom(dateFrom.format(formatterDay));
 		dataBean.setSerialNum(dev.getSerialNum());
-		dataBean.setTempColdWater(dev.getTempColdWaterSetting() + "");
+		dataBean.setTempColdWater(new Float(dev.getTempColdWaterSetting()).intValue() + "");
 		dataBean.setDateTo(dateTo.format(formatterDay));
-		List<Measuring> ms=(List<Measuring>) map.get(IReportService.MONTH_MEASURINGS);
-		ms.sort((m1, m2)->m1.getDateTime().compareTo(m2.getDateTime()));
-		ms=ms.stream().filter(m->m.getParameter().equals(Parameters.WORK)).collect(Collectors.toList());
-		if(!ms.isEmpty()){
-			Measuring m = ms.get(ms.size()-1);
+		List<Measuring> ms = (List<Measuring>) map.get(IReportService.MONTH_MEASURINGS);
+		ms.sort((m1, m2) -> m1.getDateTime().compareTo(m2.getDateTime()));
+		ms = ms.stream().filter(m -> m.getParameter().equals(Parameters.WORK)).collect(Collectors.toList());
+		if (!ms.isEmpty()) {
+			Measuring m = ms.get(ms.size() - 1);
 			long hours = ChronoUnit.HOURS.between(m.getDateTime(), dateTo.atStartOfDay());
-			dataBean.setTotalWorkHour(new Integer((int) (m.getValue()+hours))+"");			
+			dataBean.setTotalWorkHour(new Integer((int) (m.getValue() + hours)) + "");
 		}
-		List<Error> errors=(List<Error>) map.get(IReportService.ERRORS);
-		if(errors.isEmpty()){
+		List<Error> errors = (List<Error>) map.get(IReportService.ERRORS);
+		if (errors.isEmpty()) {
 			dataBean.setErrorFuncTime1(0);
 			dataBean.setErrorFuncTime2(0);
 			dataBean.setErrorPowerTime1(0);
@@ -59,25 +61,51 @@ public class Helper {
 			dataBean.setErrorVolTime1(0);
 			dataBean.setErrorVolTime2(0);
 		}
-			
-		switch(archiveType){
+
+		switch (archiveType) {
 		case DAY:
 			long hours = ChronoUnit.HOURS.between(dateFrom.atStartOfDay(), dateTo.atStartOfDay());
-			ms=(List<Measuring>) map.get(IReportService.DAY_MEASURINGS);
-			//ms=ms.stream().filter(m->m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
-			List<Measuring> errorTimes1 = ms.stream().filter(m->m.getParameter().equals(Parameters.ERROR_TIME1)).collect(Collectors.toList());
-			List<Measuring> errorTimes2 = ms.stream().filter(m->m.getParameter().equals(Parameters.ERROR_TIME2)).collect(Collectors.toList());
-			int et1 = errorTimes1.stream().mapToInt(m->m.getValue().intValue()).sum();
-			int et2 = errorTimes2.stream().mapToInt(m->m.getValue().intValue()).sum();
+			ms = (List<Measuring>) map.get(IReportService.DAY_MEASURINGS);
+			// ms=ms.stream().filter(m->m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
+			List<Measuring> errorTimes1 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1))
+					.collect(Collectors.toList());
+			List<Measuring> errorTimes2 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME2))
+					.collect(Collectors.toList());
+			int et1 = errorTimes1.stream().mapToInt(m -> m.getValue().intValue()).sum();
+			int et2 = errorTimes2.stream().mapToInt(m -> m.getValue().intValue()).sum();
 			dataBean.setWrongWorkTime1(et1);
 			dataBean.setWrongWorkTime2(et2);
-			dataBean.setNormalWorkTime1((int) (hours-et1));
-			dataBean.setNormalWorkTime2((int) (hours-et2));
+			dataBean.setNormalWorkTime1((int) (hours - et1));
+			dataBean.setNormalWorkTime2((int) (hours - et2));
+			List<Error> dayErrors = errors.stream().filter(e -> e.getArchiveType().equals(ArchiveTypes.DAY))
+					.collect(Collectors.toList());
+			dataBean.setErrorFuncTime1(getErrorTimes(ErrorCodes.E1, dayErrors, errorTimes1));
+			dataBean.setErrorFuncTime2(getErrorTimes(ErrorCodes.E2, dayErrors, errorTimes2));
+			dataBean.setErrorTempTime1(getErrorTimes(ErrorCodes.T1, dayErrors, errorTimes1));
+			dataBean.setErrorTempTime2(getErrorTimes(ErrorCodes.T2, dayErrors, errorTimes2));
+			dataBean.setErrorVolTime1(getErrorTimes(ErrorCodes.V1, dayErrors, errorTimes1));
+			dataBean.setErrorVolTime2(getErrorTimes(ErrorCodes.V2, dayErrors, errorTimes2));
+			dataBean.setErrorPowerTime1(getErrorTimes(ErrorCodes.U, dayErrors, errorTimes1));
+			dataBean.setErrorPowerTime2(getErrorTimes(ErrorCodes.U, dayErrors, errorTimes1));
 		}
 		arrayList.add(dataBean);
 
 		return arrayList;
 
+	}
+
+	private static Integer getErrorTimes(ErrorCodes e1, List<Error> errors, List<Measuring> errorTimes1) {
+		Map<LocalDateTime, List<Measuring>> groupingByDateTime = errorTimes1.stream()
+				.collect(Collectors.groupingBy(Measuring::getDateTime));
+		List<Error> filterErrors = errors.stream().filter(e -> e.getErrorCode().equals(e1))
+				.collect(Collectors.toList());
+		Integer sum = 0;
+		for (Error error : filterErrors) {
+			List<Measuring> time = groupingByDateTime.get(error.getDateTime());
+			if (!time.isEmpty())
+				sum = sum + time.get(0).getValue().intValue();
+		}
+		return sum;
 	}
 
 	public static Collection<ConsumptionBean> mapToConsumption(Map<String, Object> map, LocalDate dateFrom,
@@ -87,19 +115,19 @@ public class Helper {
 		e1 = e2 = t1 = t2 = t3 = t4 = v1 = v2 = v3 = v4 = m1 = m2 = m3 = m4 = p1 = p2 = null;
 		List<ConsumptionBean> list = new ArrayList<>();
 		Collection<Measuring> measurings = null;
-		switch(archiveType){
+		switch (archiveType) {
 		case HOUR:
-			measurings=(Collection<Measuring>) map.get(IReportService.HOUR_MEASURINGS);
-			//dtf=formatterHour;
+			measurings = (Collection<Measuring>) map.get(IReportService.HOUR_MEASURINGS);
+			// dtf=formatterHour;
 			break;
 		case DAY:
-			measurings=(Collection<Measuring>) map.get(IReportService.DAY_MEASURINGS);
+			measurings = (Collection<Measuring>) map.get(IReportService.DAY_MEASURINGS);
 			break;
 		case MONTH:
-			measurings=(Collection<Measuring>) map.get(IReportService.MONTH_MEASURINGS);
+			measurings = (Collection<Measuring>) map.get(IReportService.MONTH_MEASURINGS);
 			break;
 		}
-		
+
 		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
 				.collect(Collectors.groupingBy(Measuring::getDateTime));
 		while (ldtFrom.isBefore(dateTo.atStartOfDay()) || ldtFrom.equals(dateTo.atStartOfDay())) {
@@ -110,75 +138,105 @@ public class Helper {
 			Instant instant = ldtFrom.atZone(ZoneId.systemDefault()).toInstant();
 			Date res = Date.from(instant);
 			cb.setDate(res);
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			e1 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.E2))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+			if (values != null) {
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					e1 = val.get(0).getValue();
 
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP1))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			t1 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP2))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			t2 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP3))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			t3 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP4))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			t4 = val.get(0).getValue();
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.E2))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					e2 = val.get(0).getValue();
 
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V1))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			v1 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V2))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			v2 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V3))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			v3 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V4))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			v4 = val.get(0).getValue();
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP1))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					t1 = val.get(0).getValue();
 
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M1))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			m1 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M2))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			m2 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M3))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			m3 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M4))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			m4 = val.get(0).getValue();
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP2))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					t2 = val.get(0).getValue();
 
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_P1))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			p1 = val.get(0).getValue();
-			val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_P2))
-					.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
-			p2 = val.get(0).getValue();
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP3))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					t3 = val.get(0).getValue();
 
-			cb.setE1(e1);
-			cb.setE2(e2);
-			cb.setM1(m1);
-			cb.setM2(m2);
-			cb.setM3(m3);
-			cb.setM4(m4);
-			cb.setT1(t1);
-			cb.setT2(t2);
-			cb.setT3(t3);
-			cb.setT4(t4);
-			cb.setP1(p1);
-			cb.setP2(p2);
-			cb.setV1(v1);
-			cb.setV2(v2);
-			cb.setV3(v3);
-			cb.setV4(v4);
-			list.add(cb);
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_TEMP4))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					t4 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.V1))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					v1 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.V2))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					v2 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.V3))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					v3 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.V4))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					v4 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.M1))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					m1 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.M2))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					m2 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.M3))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					m3 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.M4))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					m4 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_P1))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					p1 = val.get(0).getValue();
+
+				val = values.stream().filter(m -> m.getParameter().equals(Parameters.AVG_P2))
+						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
+				if (!val.isEmpty())
+					p2 = val.get(0).getValue();
+
+				cb.setE1(e1);
+				cb.setE2(e2);
+				cb.setM1(m1);
+				cb.setM2(m2);
+				cb.setM3(m3);
+				cb.setM4(m4);
+				cb.setT1(t1);
+				cb.setT2(t2);
+				cb.setT3(t3);
+				cb.setT4(t4);
+				cb.setP1(p1);
+				cb.setP2(p2);
+				cb.setV1(v1);
+				cb.setV2(v2);
+				cb.setV3(v3);
+				cb.setV4(v4);
+				list.add(cb);
+			}
 			switch (archiveType) {
 			case HOUR:
 				ldtFrom = ldtFrom.plusHours(1);
@@ -224,70 +282,73 @@ public class Helper {
 		return list;
 	}
 
-	public static Collection<MeterBean> mapToMeters( Map<String, Object> map, LocalDate dateFrom, LocalDate dateTo,
-			ArchiveTypes archiveType) {
+	public static Collection<MeterBean> mapToMeters(Map<String, Object> map, ArchiveTypes archiveType) {
 		List<MeterBean> list = new ArrayList<>();
 		Collection<Measuring> measurings = (Collection<Measuring>) map.get(IReportService.DAY_MEASURINGS);
-		Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
-				.collect(Collectors.groupingBy(Measuring::getDateTime));
-		List<Measuring> val;
+		if (!measurings.isEmpty()) {
+			Map<LocalDateTime, List<Measuring>> groupByDateTime = measurings.stream()
+					.collect(Collectors.groupingBy(Measuring::getDateTime));
+			List<Measuring> val;
+			LocalDateTime minDate = measurings.stream().map(m -> m.getDateTime()).min(LocalDateTime::compareTo).get();
+			LocalDateTime maxDate = measurings.stream()
+					.filter(m -> !m.getParameter().getCategory().equals(ParametersConst.TIME)).map(m -> m.getDateTime())
+					.max(LocalDateTime::compareTo).get();
+			MeterBean mb = new MeterBean();
+			mb.setDate(minDate.format(formatterDay));
+			List<Measuring> values = groupByDateTime.get(minDate);
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
+					.filter(m -> m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
+			mb.setE1(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.E2)).collect(Collectors.toList());
+			mb.setE2(val.get(0).getValue());
 
-		MeterBean mb = new MeterBean();
-		mb.setDate(dateFrom.format(formatterDay));
-		List<Measuring> values = groupByDateTime.get(dateFrom.atStartOfDay());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
-				.filter(m -> m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
-		mb.setE1(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.E2)).collect(Collectors.toList());
-		mb.setE2(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M1)).collect(Collectors.toList());
+			mb.setM1(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M2)).collect(Collectors.toList());
+			mb.setM2(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M3)).collect(Collectors.toList());
+			mb.setM3(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M4)).collect(Collectors.toList());
+			mb.setM4(val.get(0).getValue());
 
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M1)).collect(Collectors.toList());
-		mb.setM1(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M2)).collect(Collectors.toList());
-		mb.setM2(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M3)).collect(Collectors.toList());
-		mb.setM3(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M4)).collect(Collectors.toList());
-		mb.setM4(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V1)).collect(Collectors.toList());
+			mb.setV1(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V2)).collect(Collectors.toList());
+			mb.setV2(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V3)).collect(Collectors.toList());
+			mb.setV3(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V4)).collect(Collectors.toList());
+			mb.setV4(val.get(0).getValue());
+			list.add(mb);
 
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V1)).collect(Collectors.toList());
-		mb.setV1(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V2)).collect(Collectors.toList());
-		mb.setV2(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V3)).collect(Collectors.toList());
-		mb.setV3(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V4)).collect(Collectors.toList());
-		mb.setV4(val.get(0).getValue());
-		list.add(mb);
+			mb = new MeterBean();
+			mb.setDate(maxDate.format(formatterDay));
+			values = groupByDateTime.get(maxDate);
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
+					.filter(m -> m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
+			mb.setE1(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.E2)).collect(Collectors.toList());
+			mb.setE2(val.get(0).getValue());
 
-		mb = new MeterBean();
-		mb.setDate(dateTo.format(formatterDay));
-		values = groupByDateTime.get(dateTo.atStartOfDay());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
-				.filter(m -> m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
-		mb.setE1(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.E2)).collect(Collectors.toList());
-		mb.setE2(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M1)).collect(Collectors.toList());
+			mb.setM1(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M2)).collect(Collectors.toList());
+			mb.setM2(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M3)).collect(Collectors.toList());
+			mb.setM3(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.M4)).collect(Collectors.toList());
+			mb.setM4(val.get(0).getValue());
 
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M1)).collect(Collectors.toList());
-		mb.setM1(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M2)).collect(Collectors.toList());
-		mb.setM2(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M3)).collect(Collectors.toList());
-		mb.setM3(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.M4)).collect(Collectors.toList());
-		mb.setM4(val.get(0).getValue());
-
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V1)).collect(Collectors.toList());
-		mb.setV1(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V2)).collect(Collectors.toList());
-		mb.setV2(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V3)).collect(Collectors.toList());
-		mb.setV3(val.get(0).getValue());
-		val = values.stream().filter(m -> m.getParameter().equals(Parameters.V4)).collect(Collectors.toList());
-		mb.setV4(val.get(0).getValue());
-		list.add(mb);
-
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V1)).collect(Collectors.toList());
+			mb.setV1(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V2)).collect(Collectors.toList());
+			mb.setV2(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V3)).collect(Collectors.toList());
+			mb.setV3(val.get(0).getValue());
+			val = values.stream().filter(m -> m.getParameter().equals(Parameters.V4)).collect(Collectors.toList());
+			mb.setV4(val.get(0).getValue());
+			list.add(mb);
+		}
 		return list;
 	}
 
@@ -323,7 +384,7 @@ public class Helper {
 	}
 
 	public static Map mapToParameters(Map<String, Object> map) {
-		Map<String, Boolean> parameters=new HashMap<>();
+		Map<String, Boolean> parameters = new HashMap<>();
 		parameters.put("e1", true);
 		parameters.put("e2", true);
 		parameters.put("t1", true);
@@ -340,9 +401,9 @@ public class Helper {
 		parameters.put("m4", true);
 		parameters.put("p1", true);
 		parameters.put("p2", true);
-		List<Params> params=(List<Params>) map.get(IReportService.PARAMS);
+		List<Params> params = (List<Params>) map.get(IReportService.PARAMS);
 		for (Params param : params) {
-			switch(param.getId()){
+			switch (param.getId()) {
 			case E1:
 				parameters.put("e1", false);
 				break;
@@ -392,7 +453,7 @@ public class Helper {
 				parameters.put("p2", false);
 				break;
 			}
-			
+
 		}
 		return parameters;
 	}
