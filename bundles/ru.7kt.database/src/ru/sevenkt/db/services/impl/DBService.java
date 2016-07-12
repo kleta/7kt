@@ -355,6 +355,7 @@ public class DBService implements IDBService {
 						case AVG_TEMP4: {
 							float val = field.getInt(mr);
 							m.setValue((double) (val / 100 > 150 ? 0 : val / 100));
+							measurings.add(m);
 						}
 							break;
 						case AVG_P1:
@@ -362,11 +363,13 @@ public class DBService implements IDBService {
 							float val = field.getFloat(mr);
 							val = val / 10;
 							m.setValue(new Double(val + ""));
+							measurings.add(m);
 						}
 							break;
 						case ERROR_BYTE1:
 						case ERROR_BYTE2:
 							m.setValue((double) field.getInt(mr));
+							measurings.add(m);
 							break;
 						case ERROR_TIME1:
 						case ERROR_TIME2: {
@@ -384,13 +387,14 @@ public class DBService implements IDBService {
 						default:
 							float val = field.getFloat(mr);
 							m.setValue(new Double(val + ""));
+							measurings.add(m);
 							break;
 						}
 
-						if (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
-								&& (parameter.equals(Parameters.ERROR_TIME1)
-										|| parameter.equals(Parameters.ERROR_TIME2))))
-							measurings.add(m);
+//						if (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
+//								&& (parameter.equals(Parameters.ERROR_TIME1)
+//										|| parameter.equals(Parameters.ERROR_TIME2))))
+//							
 					}
 				}
 				if (startArchiveDate.isBefore(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate()))
@@ -1571,6 +1575,7 @@ public class DBService implements IDBService {
 						case AVG_TEMP4: {
 							float val = field.getInt(dr);
 							m.setValue((double) (val / 100 > 150 ? 0 : val / 100));
+							measurings.add(m);
 						}
 							break;
 						case AVG_P1:
@@ -1578,6 +1583,7 @@ public class DBService implements IDBService {
 							float val = field.getFloat(dr);
 							val = val / 10;
 							m.setValue(new Double(val + ""));
+							measurings.add(m);
 						}
 							break;
 						case ERROR_BYTE1:
@@ -1586,6 +1592,7 @@ public class DBService implements IDBService {
 							// if(val1!=129 && val1!=1)
 							// System.out.println();
 							m.setValue((double) field.getInt(dr));
+							measurings.add(m);
 							break;
 						case ERROR_TIME1:
 						case ERROR_TIME2: {
@@ -1599,13 +1606,14 @@ public class DBService implements IDBService {
 							float val = field.getFloat(dr);
 							BigDecimal bdVal = new BigDecimal(val + "").setScale(10, BigDecimal.ROUND_HALF_UP);
 							m.setValue(new Double(val + ""));
+							measurings.add(m);
 							break;
 						}
 						// if
 						// (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
 						// && (parameter.equals(Parameters.ERROR_TIME1)
 						// || parameter.equals(Parameters.ERROR_TIME2))))
-						measurings.add(m);
+						
 					}
 				}
 				List<Error> dayErrors;
