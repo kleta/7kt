@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,7 +62,8 @@ public class ReportDialog extends Dialog {
 	public ReportDialog(Shell parentShell) {
 		super(parentShell);
 		report=new Report();
-		types = Arrays.asList(ArchiveTypes.values());
+		types= new ArrayList<>(); 
+		types.addAll(Arrays.asList(ArchiveTypes.values()));
 		
 	}
 
@@ -93,13 +95,6 @@ public class ReportDialog extends Dialog {
 		fd_text.left = new FormAttachment(label, 6);
 		text.setLayoutData(fd_text);
 
-		Label label_1 = new Label(container, SWT.NONE);
-		FormData fd_label_1 = new FormData();
-		fd_label_1.top = new FormAttachment(label, 6);
-		fd_label_1.left = new FormAttachment(0, 10);
-		label_1.setLayoutData(fd_label_1);
-		label_1.setText("Тип отчёта:");
-
 		comboViewer = new ComboViewer(container, SWT.READ_ONLY);
 		Combo combo = comboViewer.getCombo();
 		FormData fd_combo = new FormData();
@@ -110,7 +105,15 @@ public class ReportDialog extends Dialog {
 		comboViewer.setLabelProvider(new ViewerLabelProvider());
 		comboViewer.setContentProvider(new ArrayContentProvider());
 		comboViewer.setInput(types);
-		comboViewer.setSelection(new StructuredSelection(types.get(0)));
+		ISelection selection = new StructuredSelection(types.get(0));
+		comboViewer.setSelection(selection);
+		
+				Label label_1 = new Label(container, SWT.NONE);
+				FormData fd_label_1 = new FormData();
+				fd_label_1.top = new FormAttachment(label, 6);
+				fd_label_1.left = new FormAttachment(0, 10);
+				label_1.setLayoutData(fd_label_1);
+				label_1.setText("Тип отчёта:");
 		return container;
 	}
 

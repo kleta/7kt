@@ -373,14 +373,23 @@ public class DBService implements IDBService {
 							break;
 						case ERROR_TIME1:
 						case ERROR_TIME2: {
-							// if
+							// // if
+							// //
 							// (m.getDateTime().isAfter(LocalDateTime.of(2015,
-							// 12, 17, 0, 0)))
-							// System.out.println();
-							LocalDateTime dtTo = m.getDateTime();
-							LocalDateTime dtFrom = dtTo.minusMonths(1);
-							long hours = ChronoUnit.HOURS.between(dtFrom, dtTo);
-							m.setValue((double) field.getInt(mr));
+							// // 12, 17, 0, 0)))
+							// // System.out.println();
+							// LocalDateTime dtTo = m.getDateTime();
+							// LocalDateTime dtFrom = dtTo.minusMonths(1);
+							// long hours = ChronoUnit.HOURS.between(dtFrom,
+							// dtTo);
+							// m.setValue((double) field.getInt(mr));
+							List<Measuring> hourMeasuring = measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(
+									device, ArchiveTypes.HOUR, m.getDateTime().minusMonths(1).plusHours(1),
+									m.getDateTime());
+							if (hourMeasuring.isEmpty()) {
+								m.setValue(0.0);
+								measurings.add(m);
+							}
 							break;
 						}
 
@@ -391,14 +400,16 @@ public class DBService implements IDBService {
 							break;
 						}
 
-//						if (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
-//								&& (parameter.equals(Parameters.ERROR_TIME1)
-//										|| parameter.equals(Parameters.ERROR_TIME2))))
-//							
+						// if
+						// (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
+						// && (parameter.equals(Parameters.ERROR_TIME1)
+						// || parameter.equals(Parameters.ERROR_TIME2))))
+						//
 					}
 				}
-				if (startArchiveDate.isBefore(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate()))
-					saveMonthErrors(mr, device);
+				// if
+				// (startArchiveDate.isBefore(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate()))
+				// saveMonthErrors(mr, device);
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
@@ -907,12 +918,14 @@ public class DBService implements IDBService {
 		}
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод calculateHourErrors() время " + ChronoUnit.MILLIS.between(from, to));
+		if (!errors.isEmpty())
+			System.out.println();
 		return errors;
 	}
 
 	private void insertHourErrorTimes(List<Error> errors) {
 		LocalDateTime from = LocalDateTime.now();
-		errors = errors.stream().filter(e->e.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
+		errors = errors.stream().filter(e -> e.getArchiveType().equals(ArchiveTypes.HOUR)).collect(Collectors.toList());
 		if (!errors.isEmpty()) {
 			Device device = errors.get(0).getDevice();
 			Map<LocalDateTime, List<Error>> groupByDateTime = errors.stream()
@@ -925,6 +938,8 @@ public class DBService implements IDBService {
 			Map<LocalDateTime, Integer> dayErrorHours2 = new HashMap<>();
 			Map<LocalDateTime, Integer> monthErrorHours2 = new HashMap<>();
 			for (LocalDateTime localDateTime : keyList) {
+				if (localDateTime.isAfter(LocalDateTime.of(2016, 5, 14, 13, 0)))
+					System.out.println();
 				List<Error> errorsWithoutU = groupByDateTime.get(localDateTime).stream()
 						.filter(e -> !e.getErrorCode().equals(ErrorCodes.U)).collect(Collectors.toList());
 				List<Error> e1v1t1Errors = errorsWithoutU
@@ -1596,10 +1611,15 @@ public class DBService implements IDBService {
 							break;
 						case ERROR_TIME1:
 						case ERROR_TIME2: {
-							int val2 = field.getInt(dr);
-							if (val2 != 24)
-								System.out.println();
-							m.setValue((double) field.getInt(dr));
+							// int val2 = field.getInt(dr);
+							List<Measuring> hourMeasuring = measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(
+									device, ArchiveTypes.HOUR, m.getDateTime().minusDays(1).plusHours(1),
+									m.getDateTime());
+							if (hourMeasuring.isEmpty()) {
+								m.setValue(0.0);
+								measurings.add(m);
+							}
+							// m.setValue((double) field.getInt(dr));
 							break;
 						}
 						default:
@@ -1613,7 +1633,7 @@ public class DBService implements IDBService {
 						// (!(startArchiveDate.isAfter(dateTime.minusDays(HourArchive.MAX_DAY_COUNT).toLocalDate())
 						// && (parameter.equals(Parameters.ERROR_TIME1)
 						// || parameter.equals(Parameters.ERROR_TIME2))))
-						
+
 					}
 				}
 				List<Error> dayErrors;
@@ -1627,7 +1647,7 @@ public class DBService implements IDBService {
 
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
-		saveErrors(errors);
+		// saveErrors(errors);
 		saveMeasurings(measurings);
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод insertDayArchive() время " + ChronoUnit.MILLIS.between(from, to));

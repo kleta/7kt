@@ -103,7 +103,7 @@ public class ReportPeriodDialog extends Dialog {
 		fd_combo.top = new FormAttachment(cDateTimeTo, 4);
 		fd_combo.left = new FormAttachment(label_2, 6);
 		combo.setLayoutData(fd_combo);
-		combo.select(0);
+		combo.select(1);
 		combo.addSelectionListener(new SelectionAdapter() {
 
 			@Override
