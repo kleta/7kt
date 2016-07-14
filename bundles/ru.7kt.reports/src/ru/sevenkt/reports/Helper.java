@@ -67,9 +67,9 @@ public class Helper {
 			long hours = ChronoUnit.HOURS.between(dateFrom.atStartOfDay(), dateTo.atStartOfDay());
 			ms = (List<Measuring>) map.get(IReportService.DAY_MEASURINGS);
 			// ms=ms.stream().filter(m->m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
-			List<Measuring> errorTimes1 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1))
+			List<Measuring> errorTimes1 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)&&m.getDateTime().isAfter(dateFrom.atStartOfDay()))
 					.collect(Collectors.toList());
-			List<Measuring> errorTimes2 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME2))
+			List<Measuring> errorTimes2 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME2)&&m.getDateTime().isAfter(dateFrom.atStartOfDay()))
 					.collect(Collectors.toList());
 			int et1 = errorTimes1.stream().mapToInt(m -> m.getValue().intValue()).sum();
 			int et2 = errorTimes2.stream().mapToInt(m -> m.getValue().intValue()).sum();
@@ -102,7 +102,7 @@ public class Helper {
 		Integer sum = 0;
 		for (Error error : filterErrors) {
 			List<Measuring> time = groupingByDateTime.get(error.getDateTime());
-			if (!time.isEmpty())
+			if (time!=null&&!time.isEmpty())
 				sum = sum + time.get(0).getValue().intValue();
 		}
 		return sum;

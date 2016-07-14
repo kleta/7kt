@@ -98,6 +98,7 @@ public class OpenArchiveHandler implements EventHandler {
 		// break;
 		case MONTH:
 			startDateTime = startDateTime.withDayOfMonth(1);
+			endDateTime=endDateTime.minusDays(1);
 			break;
 		// case DAY:
 		// startDateTime = startDateTime.withHour(0);
@@ -128,6 +129,8 @@ public class OpenArchiveHandler implements EventHandler {
 			case MONTH:
 				hoursInArchivePeriod = (int) ChronoUnit.HOURS.between(startDateTime, startDateTime.plusMonths(1));
 				startDateTime = startDateTime.plusMonths(1);
+				if (startDateTime.isAfter(endDateTime))
+					break;
 				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
@@ -185,9 +188,11 @@ public class OpenArchiveHandler implements EventHandler {
 				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME2);
 				if (t1 != null)
 					tr.getValues().put(Parameters.NO_ERROR_TIME2, (hoursInArchivePeriod - t1.intValue()) + 0.0);
+			}	
+			if (tr.getFirstColumn() != null){
+				addErrorColumns(tr, le);
+				listTableRow.add(tr);
 			}
-			addErrorColumns(tr, le);
-			listTableRow.add(tr);
 		}
 		addSumRow(listTableRow, parameters);
 		addAvgRow(listTableRow, parameters);

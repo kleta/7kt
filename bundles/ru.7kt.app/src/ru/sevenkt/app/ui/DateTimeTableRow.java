@@ -16,6 +16,8 @@ public class DateTimeTableRow implements TableRow{
 	private Map<Parameters, Object> values;
 
 	public String getFirstColumn() {
+		if(firstColumn==null)
+			return null;
 		return firstColumn.format(formatter);
 	}
 
