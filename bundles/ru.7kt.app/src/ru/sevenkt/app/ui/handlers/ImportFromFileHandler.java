@@ -86,7 +86,7 @@ public class ImportFromFileHandler {
 								monitor.subTask("Импорт часового архива");
 								dbService.insertHourArchive(archive, device);
 								monitor.worked(3);
-								
+																
 								monitor.subTask("Импорт журнала настроек");
 								dbService.insertJournalSettings(archive, device);
 								monitor.worked(4);

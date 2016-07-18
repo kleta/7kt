@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Проектировщик BIRT Eclipse - версия 4.5.0.v201506092134, компоновка &lt;20060608-0632></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
     <list-property name="propertyBindings">
         <structure>
             <property name="name">queryText</property>
@@ -394,7 +394,7 @@
                     <structure>
                         <property name="position">15</property>
                         <property name="name">Тхв</property>
-                        <property name="dataType">string</property>
+                        <property name="dataType">integer</property>
                     </structure>
                     <structure>
                         <property name="position">16</property>
@@ -517,7 +517,7 @@
                     <property name="position">15</property>
                     <property name="name">TempColdWater</property>
                     <property name="nativeName">TempColdWater</property>
-                    <property name="dataType">string</property>
+                    <property name="dataType">integer</property>
                     <property name="nativeDataType">1</property>
                 </structure>
                 <structure>
@@ -2419,7 +2419,7 @@ else&#13;
     </styles>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
-            <property name="orientation">landscape</property>
+            <property name="orientation">portrait</property>
         </simple-master-page>
     </page-setup>
     <body>
@@ -3670,7 +3670,7 @@ else&#13;
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
-                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M1"]</expression>
+                            <expression name="value" type="javascript">row["M1"]</expression>
                         </structure>
                     </list-property>
                     <property name="allowExport">true</property>
@@ -3682,7 +3682,7 @@ else&#13;
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
-                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M2"]</expression>
+                            <expression name="value" type="javascript">row["M2"]</expression>
                         </structure>
                     </list-property>
                     <property name="allowExport">true</property>
@@ -3694,7 +3694,7 @@ else&#13;
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
-                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M3"]</expression>
+                            <expression name="value" type="javascript">row["M3"]</expression>
                         </structure>
                     </list-property>
                     <property name="allowExport">true</property>
@@ -3706,7 +3706,7 @@ else&#13;
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
-                            <expression name="value" type="javascript">row["ПРИРАЩЕНИЕ M4"]</expression>
+                            <expression name="value" type="javascript">row["M4"]</expression>
                         </structure>
                     </list-property>
                     <property name="allowExport">true</property>
@@ -4234,7 +4234,7 @@ else&#13;
                             <property name="borderTopStyle">none</property>
                             <structure name="dateTimeFormat">
                                 <property name="category">Custom</property>
-                                <property name="pattern">dd.MM.yyyy</property>
+                                <property name="pattern">dd.MM.yyyy HH:mm</property>
                                 <property name="locale">ru</property>
                             </structure>
                             <property name="resultSetColumn">Date</property>
@@ -4249,6 +4249,13 @@ else&#13;
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                        <data id="1394">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">E1</property>
+                        </data>
                     </cell>
                     <cell id="1296">
                         <property name="borderBottomStyle">solid</property>
@@ -4259,6 +4266,13 @@ else&#13;
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                        <data id="1395">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">E2</property>
+                        </data>
                     </cell>
                     <cell id="321">
                         <property name="borderBottomStyle">solid</property>
@@ -4337,6 +4351,13 @@ else&#13;
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                        <data id="1396">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">V1</property>
+                        </data>
                     </cell>
                     <cell id="327">
                         <property name="borderBottomStyle">solid</property>
@@ -4347,6 +4368,13 @@ else&#13;
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                        <data id="1397">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">V2</property>
+                        </data>
                     </cell>
                     <cell id="329">
                         <property name="borderBottomStyle">solid</property>
@@ -4357,6 +4385,13 @@ else&#13;
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                        <data id="1398">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">V3</property>
+                        </data>
                     </cell>
                     <cell id="331">
                         <property name="borderBottomStyle">solid</property>
@@ -4367,6 +4402,13 @@ else&#13;
                         <property name="borderRightWidth">medium</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
+                        <data id="1399">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">V4</property>
+                        </data>
                     </cell>
                     <cell id="1280">
                         <property name="borderBottomStyle">solid</property>

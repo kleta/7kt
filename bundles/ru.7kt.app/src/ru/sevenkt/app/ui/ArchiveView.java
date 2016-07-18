@@ -202,7 +202,7 @@ public class ArchiveView implements EventHandler {
 		formToolkit.adapt(endPeriodDateTime);
 		formToolkit.paintBordersFor(endPeriodDateTime);
 
-		ComboViewer comboViewer = new ComboViewer(composite, SWT.NONE);
+		ComboViewer comboViewer = new ComboViewer(composite, SWT.READ_ONLY);
 		comboViewer.addSelectionChangedListener(listener -> {
 			IStructuredSelection selection = comboViewer.getStructuredSelection();
 			selectedArchiveType = (ArchiveTypes) selection.getFirstElement();
