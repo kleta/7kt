@@ -1,5 +1,6 @@
 package ru.sevenkt.reports;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -61,16 +62,15 @@ public class Helper {
 			dataBean.setErrorVolTime1(0);
 			dataBean.setErrorVolTime2(0);
 		}
-
+		long hours = ChronoUnit.HOURS.between(dateFrom.atStartOfDay(), dateTo.atStartOfDay());
 		switch (archiveType) {
 		case DAY:
-			long hours = ChronoUnit.HOURS.between(dateFrom.atStartOfDay(), dateTo.atStartOfDay());
 			ms = (List<Measuring>) map.get(IReportService.DAY_MEASURINGS);
-			// ms=ms.stream().filter(m->m.getArchiveType().equals(ArchiveTypes.DAY)).collect(Collectors.toList());
-			List<Measuring> errorTimes1 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)&&m.getDateTime().isAfter(dateFrom.atStartOfDay()))
-					.collect(Collectors.toList());
-			List<Measuring> errorTimes2 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME2)&&m.getDateTime().isAfter(dateFrom.atStartOfDay()))
-					.collect(Collectors.toList());
+
+			List<Measuring> errorTimes1 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)
+					&& m.getDateTime().isAfter(dateFrom.atStartOfDay())).collect(Collectors.toList());
+			List<Measuring> errorTimes2 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME2)
+					&& m.getDateTime().isAfter(dateFrom.atStartOfDay())).collect(Collectors.toList());
 			int et1 = errorTimes1.stream().mapToInt(m -> m.getValue().intValue()).sum();
 			int et2 = errorTimes2.stream().mapToInt(m -> m.getValue().intValue()).sum();
 			dataBean.setWrongWorkTime1(et1);
@@ -87,7 +87,32 @@ public class Helper {
 			dataBean.setErrorVolTime2(getErrorTimes(ErrorCodes.V2, dayErrors, errorTimes2));
 			dataBean.setErrorPowerTime1(getErrorTimes(ErrorCodes.U, dayErrors, errorTimes1));
 			dataBean.setErrorPowerTime2(getErrorTimes(ErrorCodes.U, dayErrors, errorTimes1));
+			break;
+		case HOUR:
+			ms = (List<Measuring>) map.get(IReportService.HOUR_MEASURINGS);
+			errorTimes1 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)
+					&& m.getDateTime().isAfter(dateFrom.atStartOfDay())).collect(Collectors.toList());
+			errorTimes2 = ms.stream().filter(m -> m.getParameter().equals(Parameters.ERROR_TIME2)
+					&& m.getDateTime().isAfter(dateFrom.atStartOfDay())).collect(Collectors.toList());
+			et1 = errorTimes1.stream().mapToInt(m -> m.getValue().intValue()).sum();
+			et2 = errorTimes2.stream().mapToInt(m -> m.getValue().intValue()).sum();
+			dataBean.setWrongWorkTime1(et1);
+			dataBean.setWrongWorkTime2(et2);
+			dataBean.setNormalWorkTime1((int) (hours - et1));
+			dataBean.setNormalWorkTime2((int) (hours - et2));
+			List<Error> hourErrors = errors.stream().filter(e -> e.getArchiveType().equals(ArchiveTypes.HOUR))
+					.collect(Collectors.toList());
+			dataBean.setErrorFuncTime1(getErrorTimes(ErrorCodes.E1, hourErrors, errorTimes1));
+			dataBean.setErrorFuncTime2(getErrorTimes(ErrorCodes.E2, hourErrors, errorTimes2));
+			dataBean.setErrorTempTime1(getErrorTimes(ErrorCodes.T1, hourErrors, errorTimes1));
+			dataBean.setErrorTempTime2(getErrorTimes(ErrorCodes.T2, hourErrors, errorTimes2));
+			dataBean.setErrorVolTime1(getErrorTimes(ErrorCodes.V1, hourErrors, errorTimes1));
+			dataBean.setErrorVolTime2(getErrorTimes(ErrorCodes.V2, hourErrors, errorTimes2));
+			dataBean.setErrorPowerTime1(getErrorTimes(ErrorCodes.U, hourErrors, errorTimes1));
+			dataBean.setErrorPowerTime2(getErrorTimes(ErrorCodes.U, hourErrors, errorTimes1));
+			break;
 		}
+
 		arrayList.add(dataBean);
 
 		return arrayList;
@@ -102,7 +127,7 @@ public class Helper {
 		Integer sum = 0;
 		for (Error error : filterErrors) {
 			List<Measuring> time = groupingByDateTime.get(error.getDateTime());
-			if (time!=null&&!time.isEmpty())
+			if (time != null && !time.isEmpty())
 				sum = sum + time.get(0).getValue().intValue();
 		}
 		return sum;
@@ -118,7 +143,7 @@ public class Helper {
 		switch (archiveType) {
 		case HOUR:
 			measurings = (Collection<Measuring>) map.get(IReportService.HOUR_MEASURINGS);
-			// dtf=formatterHour;
+			ldtFrom = dateFrom.atTime(1, 0);
 			break;
 		case DAY:
 			measurings = (Collection<Measuring>) map.get(IReportService.DAY_MEASURINGS);
@@ -134,10 +159,9 @@ public class Helper {
 			List<Measuring> val;
 			ConsumptionBean cb = new ConsumptionBean();
 			List<Measuring> values = groupByDateTime.get(ldtFrom);
-			// List<Measuring> prevValues = groupByDateTime.get(prevDt);
-			Instant instant = ldtFrom.atZone(ZoneId.systemDefault()).toInstant();
-			Date res = Date.from(instant);
-			cb.setDate(res);
+			if (ldtFrom.equals(LocalDateTime.of(2016, 01, 28, 8, 0)))
+				System.out.println();
+			cb.setDate(Timestamp.valueOf(ldtFrom));
 			if (values != null) {
 				val = values.stream().filter(m -> m.getParameter().equals(Parameters.E1))
 						.filter(m -> m.getArchiveType().equals(archiveType)).collect(Collectors.toList());
@@ -254,13 +278,12 @@ public class Helper {
 	}
 
 	private static Collection<ConsumptionBean> mockConsumptionData() {
-		LocalDate ld = LocalDate.parse("01.01.2016", formatterDay);
+		LocalDateTime ld = LocalDateTime.parse("01.01.2016 00:00", formatterHour);
 		List<ConsumptionBean> list = new ArrayList<>();
-		while (ld.isBefore(LocalDate.parse("17.02.2016", formatterDay))) {
+		while (ld.isBefore(LocalDateTime.parse("17.02.2016 00:00", formatterHour))) {
 			ConsumptionBean cb = new ConsumptionBean();
-			Instant instant = ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
-			Date res = Date.from(instant);
-			cb.setDate(res);
+
+			cb.setDate(Timestamp.valueOf(ld));
 			Random rnd = new Random();
 			cb.setE1(rnd.nextDouble() * 1000);
 			cb.setE2(rnd.nextDouble() * 1000);
@@ -277,7 +300,7 @@ public class Helper {
 			cb.setV3(rnd.nextDouble() * 100);
 			cb.setV4(rnd.nextDouble() * 100);
 			list.add(cb);
-			ld = ld.plusDays(1);
+			ld = ld.plusDays(1).plusHours(1);
 		}
 		return list;
 	}

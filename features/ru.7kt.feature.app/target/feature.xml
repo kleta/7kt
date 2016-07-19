@@ -2,7 +2,7 @@
 <feature
       id="ru.7kt.feature.app"
       label="App"
-      version="1.0.0.201607060305">
+      version="1.0.0.201607190905">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -66,21 +66,21 @@
          id="ru.7kt.core"
          download-size="37"
          install-size="73"
-         version="1.0.0.201607060305"
+         version="1.0.0.201607190905"
          unpack="false"/>
 
    <plugin
          id="ru.7kt.database"
-         download-size="50"
-         install-size="108"
-         version="1.0.0.201607060305"
+         download-size="49"
+         install-size="103"
+         version="1.0.0.201607190905"
          unpack="false"/>
 
    <plugin
          id="ru.7kt.log"
          download-size="2"
          install-size="2"
-         version="1.0.0.201607060305"
+         version="1.0.0.201607190905"
          fragment="true"/>
 
    <plugin
@@ -198,15 +198,15 @@
    <plugin
          id="ru.7kt.app"
          download-size="232"
-         install-size="678"
-         version="1.1.3.201607060305"
+         install-size="680"
+         version="1.1.3.201607190905"
          unpack="false"/>
 
    <plugin
          id="ru.7kt.archivedata"
          download-size="4"
          install-size="3"
-         version="1.0.0.201607060305"
+         version="1.0.0.201607190905"
          unpack="false"/>
 
    <plugin

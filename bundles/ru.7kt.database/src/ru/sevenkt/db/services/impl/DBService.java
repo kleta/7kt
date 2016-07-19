@@ -2,6 +2,7 @@ package ru.sevenkt.db.services.impl;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -1632,8 +1633,8 @@ public class DBService implements IDBService {
 						}
 						default:
 							float val = field.getFloat(dr);
-							BigDecimal bdVal = new BigDecimal(val + "").setScale(10, BigDecimal.ROUND_HALF_UP);
-							m.setValue(new Double(val + ""));
+							BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
+							m.setValue(bdVal.doubleValue());
 							measurings.add(m);
 							break;
 						}
@@ -1747,16 +1748,10 @@ public class DBService implements IDBService {
 		Field[] fields = HourRecord.class.getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
-			// if (field.getName().equals("errorChannel1") ||
-			// field.getName().equals("errorChannel2"))
-			// System.out.println(hr.getDateTime() + ":" + field.getName() + ":"
-			// + Integer.toBinaryString(field.getInt(hr)) + ":" +
-			// field.getInt(hr));
 			if (field.isAnnotationPresent(Parameter.class)) {
 				Measuring m = new Measuring();
 				m.setArchiveType(ArchiveTypes.HOUR);
 				m.setDateTime(hr.getDateTime());
-				// m.setDevice(device);
 				Parameters parameter = field.getAnnotation(Parameter.class).value();
 				m.setParameter(parameter);
 				if (parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)) {
@@ -1817,8 +1812,9 @@ public class DBService implements IDBService {
 			double value = measuring.getValue();
 			BigDecimal multiplicand = multitiplicands.get(parameter);
 			if (multiplicand != null) {
-				BigDecimal bdValue = new BigDecimal(value + "").setScale(5, BigDecimal.ROUND_HALF_UP)
-						.multiply(multiplicand).setScale(10, BigDecimal.ROUND_HALF_UP);
+				BigDecimal bdValue = new BigDecimal(value + "")// .setScale(10,
+																// BigDecimal.ROUND_HALF_UP)
+						.multiply(multiplicand).setScale(5, BigDecimal.ROUND_HALF_UP);
 				measuring.setValue(bdValue.doubleValue());
 			}
 		}
@@ -1835,41 +1831,58 @@ public class DBService implements IDBService {
 		for (Parameters parameter : Parameters.values()) {
 			switch (parameter) {
 			case V1:
-				bdDay = new BigDecimal(dayConsumption.getVolume1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
-				bdSumDay = new BigDecimal(sumDay.getVolume1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdDay = new BigDecimal(dayConsumption.getVolume1() + "");// .setScale(32,
+																			// BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume1() + "");// .setScale(32,
+																	// BigDecimal.ROUND_HALF_UP);
 
 				break;
 			case V2:
-				bdDay = new BigDecimal(dayConsumption.getVolume2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
-				bdSumDay = new BigDecimal(sumDay.getVolume2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdDay = new BigDecimal(dayConsumption.getVolume2() + "");// .setScale(5,
+																			// BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume2() + "");// .setScale(32,
+																	// BigDecimal.ROUND_HALF_UP);
 
 				break;
 			case V3:
-				bdDay = new BigDecimal(dayConsumption.getVolume3() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
-				bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdDay = new BigDecimal(dayConsumption.getVolume3() + "");// .setScale(32,
+																			// BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume3() + "").setScale(32, BigDecimal.ROUND_HALF_UP);
 				break;
 			case V4:
-				bdDay = new BigDecimal(dayConsumption.getVolume4() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
-				bdSumDay = new BigDecimal(sumDay.getVolume4() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdDay = new BigDecimal(dayConsumption.getVolume4() + "");// .setScale(5,
+																			// BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getVolume4() + "");// .setScale(32,
+																	// BigDecimal.ROUND_HALF_UP);
 
 				break;
 			case E1:
 				// if(dayConsumption.getDate().equals(LocalDate.of(2016, 3, 2)))
 				// System.out.println();
-				bdDay = new BigDecimal(dayConsumption.getEnergy1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
-				bdSumDay = new BigDecimal(sumDay.getEnergy1() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdDay = new BigDecimal(dayConsumption.getEnergy1() + "");// .setScale(32,
+																			// BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getEnergy1() + "");// .setScale(32,
+																	// BigDecimal.ROUND_HALF_UP);
 
 				break;
 			case E2:
-				bdDay = new BigDecimal(dayConsumption.getEnergy2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
-				bdSumDay = new BigDecimal(sumDay.getEnergy2() + "").setScale(5, BigDecimal.ROUND_HALF_UP);
+				bdDay = new BigDecimal(dayConsumption.getEnergy2() + "");// .setScale(32,
+																			// BigDecimal.ROUND_HALF_UP);
+				bdSumDay = new BigDecimal(sumDay.getEnergy2() + "");// .setScale(32,
+																	// BigDecimal.ROUND_HALF_UP);
 
 				break;
 			default:
 				break;
 			}
-			if (bdSumDay != null && bdSumDay.doubleValue() > 0)
-				multiplicand = bdDay.divide(bdSumDay, 10, BigDecimal.ROUND_HALF_UP);
+			if (bdSumDay != null && bdSumDay.doubleValue() > 0) {
+				try {
+					multiplicand = bdDay.divide(bdSumDay, MathContext.DECIMAL128);// 32,
+															//BigDecimal.ROUND_HALF_UP);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}
 			map.put(parameter, multiplicand);
 		}
 		LocalDateTime to = LocalDateTime.now();

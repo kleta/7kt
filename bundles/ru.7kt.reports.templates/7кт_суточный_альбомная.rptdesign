@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Проектировщик BIRT Eclipse - версия 4.5.0.v201506092134, компоновка &lt;20060608-0632></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
     <list-property name="propertyBindings">
         <structure>
             <property name="name">queryText</property>
@@ -199,10 +199,9 @@
                 </ex-property>
                 <ex-property>
                     <name>pojoClassPath</name>
-                    <value>C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</value>
+                    <value></value>
                 </ex-property>
             </list-property>
-            <property name="pojoDataSetClassPath">C:\Users\askue\git\7kt\bundles\ru.7kt.reports\target\ru.7kt.reports-1.0.0-SNAPSHOT.jar;</property>
         </oda-data-source>
     </data-sources>
     <data-sets>
@@ -3062,7 +3061,7 @@ else&#13;
                         <data id="1253">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">E1</property>
                         </data>
@@ -3071,6 +3070,10 @@ else&#13;
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
                         <data id="1313">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="resultSetColumn">E2</property>
                         </data>
                     </cell>
@@ -3080,7 +3083,7 @@ else&#13;
                         <data id="1254">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">V1</property>
                         </data>
@@ -3091,7 +3094,7 @@ else&#13;
                         <data id="1255">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">V2</property>
                         </data>
@@ -3102,7 +3105,7 @@ else&#13;
                         <data id="1256">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">V3</property>
                         </data>
@@ -3113,7 +3116,7 @@ else&#13;
                         <data id="1257">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">V4</property>
                         </data>
@@ -3124,7 +3127,7 @@ else&#13;
                         <data id="1258">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">M1</property>
                         </data>
@@ -3135,7 +3138,7 @@ else&#13;
                         <data id="1262">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">M2</property>
                         </data>
@@ -3146,7 +3149,7 @@ else&#13;
                         <data id="1265">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">M3</property>
                         </data>
@@ -3157,7 +3160,7 @@ else&#13;
                         <data id="1264">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">M4</property>
                         </data>
@@ -3179,7 +3182,7 @@ else&#13;
                         <data id="1212">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_E1</property>
                         </data>
@@ -3188,6 +3191,10 @@ else&#13;
                         <property name="borderRightStyle">solid</property>
                         <property name="borderRightWidth">medium</property>
                         <data id="1312">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="resultSetColumn">SUBTRACT_E2</property>
                         </data>
                     </cell>
@@ -3197,7 +3204,7 @@ else&#13;
                         <data id="1213">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_V1</property>
                         </data>
@@ -3208,7 +3215,7 @@ else&#13;
                         <data id="1214">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_V2</property>
                         </data>
@@ -3219,7 +3226,7 @@ else&#13;
                         <data id="1215">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_V3</property>
                         </data>
@@ -3230,7 +3237,7 @@ else&#13;
                         <data id="1216">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_V4</property>
                         </data>
@@ -3241,7 +3248,7 @@ else&#13;
                         <data id="1249">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRACT_M1</property>
                         </data>
@@ -3252,7 +3259,7 @@ else&#13;
                         <data id="1218">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_M2</property>
                         </data>
@@ -3263,7 +3270,7 @@ else&#13;
                         <data id="1219">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_M3</property>
                         </data>
@@ -3274,7 +3281,7 @@ else&#13;
                         <data id="1220">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">SUBTRUCT_M4</property>
                         </data>
@@ -3293,7 +3300,7 @@ else&#13;
             <property name="borderRightStyle">none</property>
             <property name="borderTopStyle">none</property>
             <property name="textAlign">center</property>
-            <property name="width">100%</property>
+            <property name="width">10.427083333333334in</property>
             <property name="dataSet">consumption</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -3642,7 +3649,7 @@ else&#13;
                 <structure>
                     <property name="name">Aggregation_16</property>
                     <property name="dataType">float</property>
-                    <property name="aggregateFunction">STDDEV</property>
+                    <property name="aggregateFunction">SUM</property>
                     <list-property name="arguments">
                         <structure>
                             <property name="name">Expression</property>
@@ -3941,7 +3948,7 @@ else&#13;
                         <expression name="valueExpr" type="javascript">params["p1"]</expression>
                     </structure>
                 </list-property>
-                <property name="width">0.6354166666666666in</property>
+                <property name="width">0.5625in</property>
             </column>
             <column id="1289">
                 <property name="repeat">1</property>
@@ -3951,7 +3958,7 @@ else&#13;
                         <expression name="valueExpr" type="javascript">params["p2"]</expression>
                     </structure>
                 </list-property>
-                <property name="width">0.6354166666666666in</property>
+                <property name="width">0.5625in</property>
             </column>
             <header>
                 <row id="277">
@@ -4380,7 +4387,7 @@ else&#13;
                         <data id="471">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ E1</property>
                         </data>
@@ -4397,7 +4404,7 @@ else&#13;
                         <data id="1302">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ E2</property>
                         </data>
@@ -4482,7 +4489,7 @@ else&#13;
                         <data id="472">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ V1</property>
                         </data>
@@ -4499,7 +4506,7 @@ else&#13;
                         <data id="473">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ V2</property>
                         </data>
@@ -4516,7 +4523,7 @@ else&#13;
                         <data id="474">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ V3</property>
                         </data>
@@ -4533,7 +4540,7 @@ else&#13;
                         <data id="475">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ V4</property>
                         </data>
@@ -4550,7 +4557,7 @@ else&#13;
                         <data id="476">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ M1</property>
                         </data>
@@ -4567,7 +4574,7 @@ else&#13;
                         <data id="477">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ M2</property>
                         </data>
@@ -4584,7 +4591,7 @@ else&#13;
                         <data id="478">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ M3</property>
                         </data>
@@ -4601,7 +4608,7 @@ else&#13;
                         <data id="479">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">ПРИРАЩЕНИЕ M4</property>
                         </data>
@@ -4674,7 +4681,7 @@ else&#13;
                         <data id="376">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation</property>
                         </data>
@@ -4689,6 +4696,10 @@ else&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
                         <data id="1340">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="resultSetColumn">Aggregation_24</property>
                         </data>
                     </cell>
@@ -4744,7 +4755,7 @@ else&#13;
                         <data id="480">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_14</property>
                         </data>
@@ -4761,7 +4772,7 @@ else&#13;
                         <data id="481">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_15</property>
                         </data>
@@ -4778,7 +4789,7 @@ else&#13;
                         <data id="482">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_16</property>
                         </data>
@@ -4795,7 +4806,7 @@ else&#13;
                         <data id="483">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_17</property>
                         </data>
@@ -4812,7 +4823,7 @@ else&#13;
                         <data id="484">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_18</property>
                         </data>
@@ -4829,7 +4840,7 @@ else&#13;
                         <data id="485">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_19</property>
                         </data>
@@ -4846,7 +4857,7 @@ else&#13;
                         <data id="486">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_20</property>
                         </data>
@@ -4863,7 +4874,7 @@ else&#13;
                         <data id="487">
                             <structure name="numberFormat">
                                 <property name="category">Fixed</property>
-                                <property name="pattern">###0.0000{RoundingMode=HALF_UP}</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
                             </structure>
                             <property name="resultSetColumn">Aggregation_21</property>
                         </data>
@@ -4975,6 +4986,10 @@ else&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
                         <data id="1393">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="resultSetColumn">Aggregation_26</property>
                         </data>
                     </cell>
@@ -4988,6 +5003,10 @@ else&#13;
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">medium</property>
                         <data id="1392">
+                            <structure name="numberFormat">
+                                <property name="category">Fixed</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
                             <property name="resultSetColumn">Aggregation_25</property>
                         </data>
                     </cell>

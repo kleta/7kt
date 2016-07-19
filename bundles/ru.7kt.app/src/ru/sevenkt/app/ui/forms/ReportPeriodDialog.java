@@ -28,7 +28,7 @@ public class ReportPeriodDialog extends Dialog {
 
 	private Date dateTo;
 
-	private String reportFormatt="pdf";
+	private String reportFormatt="html";
 
 	/**
 	 * Create the dialog.
@@ -96,14 +96,14 @@ public class ReportPeriodDialog extends Dialog {
 		label_2.setText("Формат отчёта:");
 
 		Combo combo = new Combo(container, SWT.READ_ONLY);
-		combo.setItems(new String[] { "pdf", "html", "docx", "xls" });
+		combo.setItems(new String[] { "html", "pdf",  "docx", "xls" });
 
 		FormData fd_combo = new FormData();
 		fd_combo.right = new FormAttachment(cDateTimeFrom, 0, SWT.RIGHT);
 		fd_combo.top = new FormAttachment(cDateTimeTo, 4);
 		fd_combo.left = new FormAttachment(label_2, 6);
 		combo.setLayoutData(fd_combo);
-		combo.select(1);
+		combo.select(0);
 		combo.addSelectionListener(new SelectionAdapter() {
 
 			@Override

@@ -1,10 +1,11 @@
 package ru.sevenkt.reports.pojo;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ConsumptionBean {
 
-	private Date date;
+	private Timestamp date;
 
 	private Double e1;
 
@@ -42,11 +43,11 @@ public class ConsumptionBean {
 	
 	private Double p2;
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 
