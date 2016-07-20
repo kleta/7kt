@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/ru.7kt.feature.app_1.0.0.qualifier.jar" id="ru.7kt.feature.app" version="1.0.0.qualifier">
-      <category name="7kt"/>
-   </feature>
-   <category-def name="7kt" label="7KT"/>
-</site>
