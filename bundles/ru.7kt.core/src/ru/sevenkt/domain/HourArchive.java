@@ -9,7 +9,7 @@ import ru.sevenkt.annotations.Length;
 
 @Length(value = 41664)
 public class HourArchive {
-	public static int MAX_DAY_COUNT = 60;
+	public static int MAX_DAY_COUNT = 59;
 
 	private byte[] data;
 

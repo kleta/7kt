@@ -7,6 +7,7 @@ import org.eclipse.swt.graphics.Image;
 
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;
+import ru.sevenkt.domain.ParametersConst;
 
 public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 
@@ -35,6 +36,10 @@ public class ArchiveColumnLabelProvider extends ColumnLabelProvider {
 			} else
 				return "";
 		}
+//		if(parameter.getCategory().equals(ParametersConst.TEMP)){
+//			if((double)val<-60 || (double)val>150)
+//				return "err";
+//		}
 		if (val instanceof Double) {
 			BigDecimal bdVal;
 			switch (at) {

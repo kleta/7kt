@@ -361,7 +361,7 @@ public class DBService implements IDBService {
 						case AVG_TEMP3:
 						case AVG_TEMP4: {
 							float val = field.getInt(mr);
-							m.setValue((double) (val / 100 > 150 ? 0 : val / 100));
+							m.setValue((double) (val / 100));
 							measurings.add(m);
 						}
 							break;
@@ -392,7 +392,7 @@ public class DBService implements IDBService {
 							//
 							// if (hourMeasuring.isEmpty() ||
 							// hourMeasuring.size() != hours) {
-							m.setValue((double) field.getInt(mr));
+							m.setValue((double) 0);
 							measurings.add(m);
 							// }
 							break;
@@ -406,8 +406,8 @@ public class DBService implements IDBService {
 						}
 					}
 				}
-				if (hourMeasuring.isEmpty() || hourMeasuring.size() != hours)
-					saveMonthErrors(mr, device);
+				// if (hourMeasuring.isEmpty() || hourMeasuring.size() != hours)
+				// saveMonthErrors(mr, device);
 			}
 			startArchiveDate = startArchiveDate.plusMonths(1);
 		}
@@ -481,8 +481,8 @@ public class DBService implements IDBService {
 					m.setValue(new Double("0"));
 					m.setParameter(Parameters.ERROR_TIME2);
 					measurings.add(m);
-					hourErrors = getHourErrors(hr, device);
-					errors.addAll(hourErrors);
+					// hourErrors = getHourErrors(hr, device);
+					// errors.addAll(hourErrors);
 				}
 			}
 			if (!measurings.isEmpty()) {
@@ -544,14 +544,14 @@ public class DBService implements IDBService {
 			if (formula.length() > 1) {
 				switch (formula.charAt(1) + "") {
 				case "1":
-					// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12() || v2 == 0
 							|| v2 < device.getwMin1() || v2 > device.getwMax34()) {
 						Error error = new Error();
@@ -561,7 +561,7 @@ public class DBService implements IDBService {
 						error.setTimestamp(LocalDateTime.now());
 						errors.add(error);
 					}
-					if (v1 * 1.2 < v2) {// || t1 < t2) {
+					if (v1 * 1.2 < v2 || t1 < t2) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
 						error.setDateTime(dt);
@@ -571,14 +571,14 @@ public class DBService implements IDBService {
 					}
 					break;
 				case "2":
-					//// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
-					//// Error error = new Error();
-					//// error.setArchiveType(ArchiveTypes.HOUR);
-					//// error.setDateTime(dt);
-					//// error.setErrorCode(ErrorCodes.T1);
-					//// error.setTimestamp(LocalDateTime.now());
-					//// errors.add(error);
-					//// }
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
@@ -587,24 +587,24 @@ public class DBService implements IDBService {
 						error.setTimestamp(LocalDateTime.now());
 						errors.add(error);
 					}
-					// if (t1 < t2) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.E1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 < t2) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.E1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					break;
 				case "3":
-					// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v2 == 0 || v2 < device.getwMin1() || v2 > device.getwMax34()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
@@ -613,24 +613,24 @@ public class DBService implements IDBService {
 						error.setTimestamp(LocalDateTime.now());
 						errors.add(error);
 					}
-					// if (t1 < t2) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.E1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 < t2) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.E1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					break;
 				case "5":
-					// if (t1 > 150 || t1 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 > 150 || t1 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
@@ -649,26 +649,26 @@ public class DBService implements IDBService {
 					}
 					break;
 				case "6":
-					// if (t1 > 150 || t1 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 > 150 || t1 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					break;
 				}
 				switch (formula.charAt(0) + "") {
 				case "1":
-					// if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v3 == 0 || v3 < device.getwMin0() || v3 > device.getwMax12() || v4 == 0
 							|| v4 < device.getwMin1() || v4 > device.getwMax34()) {
 						Error error = new Error();
@@ -688,14 +688,14 @@ public class DBService implements IDBService {
 					}
 					break;
 				case "2":
-					// if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v3 == 0 || v3 < device.getwMin0() || v3 > device.getwMax12()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
@@ -704,24 +704,24 @@ public class DBService implements IDBService {
 						error.setTimestamp(LocalDateTime.now());
 						errors.add(error);
 					}
-					// if (t3 < t4) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.E2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 < t4) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.E2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					break;
 				case "3":
-					// if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 > 150 || t3 < -60 || t4 > 150 || t4 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v4 == 0 || v4 < device.getwMin0() || v4 > device.getwMax12()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
@@ -730,24 +730,24 @@ public class DBService implements IDBService {
 						error.setTimestamp(LocalDateTime.now());
 						errors.add(error);
 					}
-					// if (t3 < t4) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.E2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 < t4) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.E2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					break;
 				case "5":
-					// if (t3 > 150 || t3 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 > 150 || t3 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v3 == 0 || v3 < device.getwMin0() || v3 > device.getwMax12()) {
 						Error error = new Error();
 						error.setArchiveType(ArchiveTypes.HOUR);
@@ -766,27 +766,26 @@ public class DBService implements IDBService {
 					}
 					break;
 				case "6":
-					// if (t3 > 150 || t3 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T2);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t3 > 150 || t3 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T2);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					break;
 				}
 			} else {
 				if (formula.equals("41")) {
-					// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60 || t3 >
-					// 150 || t3 < -60) {
-					// Error error = new Error();
-					// error.setArchiveType(ArchiveTypes.HOUR);
-					// error.setDateTime(dt);
-					// error.setErrorCode(ErrorCodes.T1);
-					// error.setTimestamp(LocalDateTime.now());
-					// errors.add(error);
-					// }
+					if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60 || t3 > 150 || t3 < -60) {
+						Error error = new Error();
+						error.setArchiveType(ArchiveTypes.HOUR);
+						error.setDateTime(dt);
+						error.setErrorCode(ErrorCodes.T1);
+						error.setTimestamp(LocalDateTime.now());
+						errors.add(error);
+					}
 					if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12() || v2 == 0
 							|| v2 < device.getwMin1() || v2 > device.getwMax34()) {
 						Error error = new Error();
@@ -799,14 +798,14 @@ public class DBService implements IDBService {
 				} else {
 					switch (formula.charAt(0) + "") {
 					case "1":
-						// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.T1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.T1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12() || v2 == 0
 								|| v2 < device.getwMin1() || v2 > device.getwMax34()) {
 							Error error = new Error();
@@ -826,14 +825,14 @@ public class DBService implements IDBService {
 						}
 						break;
 					case "2":
-						// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.T1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.T1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12()) {
 							Error error = new Error();
 							error.setArchiveType(ArchiveTypes.HOUR);
@@ -842,24 +841,24 @@ public class DBService implements IDBService {
 							error.setTimestamp(LocalDateTime.now());
 							errors.add(error);
 						}
-						// if (t1 < t2) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.E1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 < t2) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.E1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						break;
 					case "3":
-						// if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.T1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 > 150 || t1 < -60 || t2 > 150 || t2 < -60) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.T1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						if (v2 == 0 || v2 < device.getwMin1() || v2 > device.getwMax34()) {
 							Error error = new Error();
 							error.setArchiveType(ArchiveTypes.HOUR);
@@ -868,24 +867,24 @@ public class DBService implements IDBService {
 							error.setTimestamp(LocalDateTime.now());
 							errors.add(error);
 						}
-						// if (t1 < t2) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.E1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 < t2) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.E1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						break;
 					case "5":
-						// if (t1 > 150 || t1 < -60) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.T1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 > 150 || t1 < -60) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.T1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						if (v1 == 0 || v1 < device.getwMin0() || v1 > device.getwMax12()) {
 							Error error = new Error();
 							error.setArchiveType(ArchiveTypes.HOUR);
@@ -904,14 +903,14 @@ public class DBService implements IDBService {
 						}
 						break;
 					case "6":
-						// if (t1 > 150 || t1 < -60) {
-						// Error error = new Error();
-						// error.setArchiveType(ArchiveTypes.HOUR);
-						// error.setDateTime(dt);
-						// error.setErrorCode(ErrorCodes.T1);
-						// error.setTimestamp(LocalDateTime.now());
-						// errors.add(error);
-						// }
+						if (t1 > 150 || t1 < -60) {
+							Error error = new Error();
+							error.setArchiveType(ArchiveTypes.HOUR);
+							error.setDateTime(dt);
+							error.setErrorCode(ErrorCodes.T1);
+							error.setTimestamp(LocalDateTime.now());
+							errors.add(error);
+						}
 						break;
 					}
 				}
@@ -1602,7 +1601,7 @@ public class DBService implements IDBService {
 						case AVG_TEMP3:
 						case AVG_TEMP4: {
 							float val = field.getInt(dr);
-							m.setValue((double) (val / 100 > 150 ? 0 : val / 100));
+							m.setValue((double) (val / 100));
 							measurings.add(m);
 						}
 							break;
@@ -1626,7 +1625,7 @@ public class DBService implements IDBService {
 						case ERROR_TIME2: {
 							int val2 = field.getInt(dr);
 							// if (hourMeasuring.isEmpty()) {
-							m.setValue((double) val2);
+							m.setValue(0.0);
 							measurings.add(m);
 							// }
 							break;
@@ -1641,16 +1640,16 @@ public class DBService implements IDBService {
 
 					}
 				}
-				List<Error> dayErrors;
-				if (hourMeasuring.isEmpty()) {
-					dayErrors = getDayErrors(dr, device);
-					errors.addAll(dayErrors);
-				}
+				// List<Error> dayErrors;
+				// if (hourMeasuring.isEmpty()) {
+				// dayErrors = getDayErrors(dr, device);
+				// errors.addAll(dayErrors);
+				// }
 			}
 
 			startArchiveDate = startArchiveDate.plusDays(1);
 		}
-		saveErrors(errors);
+		// saveErrors(errors);
 		saveMeasurings(measurings);
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод insertDayArchive() время " + ChronoUnit.MILLIS.between(from, to));
@@ -1761,7 +1760,7 @@ public class DBService implements IDBService {
 				if (parameter.equals(Parameters.AVG_TEMP1) || parameter.equals(Parameters.AVG_TEMP2)
 						|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)) {
 					float val = field.getInt(hr);
-					m.setValue((double) ((val / 100 > 150 || val / 100 < -60) ? 0 : val / 100));
+					m.setValue((double) (val / 100));
 				}
 
 				if (parameter.equals(Parameters.E1) || parameter.equals(Parameters.E2)) {
@@ -1878,7 +1877,7 @@ public class DBService implements IDBService {
 			if (bdSumDay != null && bdSumDay.doubleValue() > 0) {
 				try {
 					multiplicand = bdDay.divide(bdSumDay, MathContext.DECIMAL128);// 32,
-															//BigDecimal.ROUND_HALF_UP);
+					// BigDecimal.ROUND_HALF_UP);
 				} catch (Exception e) {
 					System.out.println(e);
 				}

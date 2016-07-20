@@ -214,8 +214,9 @@ public class OpenArchiveHandler implements EventHandler {
 				Double val = new Double(0);
 				int count = 0;
 				for (TableRow tr : listTableRow) {
-					if (tr.getValues().get(parameter) != null && tr.getValues().get(parameter) instanceof Double) {
-						val = val + (double) tr.getValues().get(parameter);
+					Object value = tr.getValues().get(parameter);
+					if (value != null && value instanceof Double && (Double)value>-60 && (Double)value<150) {
+						val = val + (double) value;
 						count++;
 					}
 				}
