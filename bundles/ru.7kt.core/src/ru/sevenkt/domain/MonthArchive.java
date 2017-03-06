@@ -1,45 +1,43 @@
 package ru.sevenkt.domain;
 
+import java.lang.reflect.Constructor;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import ru.sevenkt.annotations.Length;
 
-@Length(value = 2964)
-public class MonthArchive {
-	
-	public static int MAX_YEAR_COUNT=3;
-	
+public abstract class MonthArchive {
+
 	private byte[] data;
-	
-	
+
+	private Map<LocalDate, IMonthRecord> records;
+
+	public abstract long getMaxYearsDeep();
+
 	public MonthArchive(byte[] data) {
 		this.data = data;
 	}
 
-
-	public MonthRecord getMonthRecord(int year, int month) throws Exception{
-		Length annotationLength = MonthRecord.class.getAnnotation(Length.class);
-		int size=annotationLength.value();
-		int yt = year-15;
-		while(yt>2)
-			yt-=3;
-		int address = (month-1)* size+yt*12*size;
-		
-		
-		byte[] monthRecordData=new byte[size];
-		for (int i = 0; i < size; i++) {
-			monthRecordData[i]=data[address+i];
+	protected void parseData(Class<? extends IMonthRecord> class1) throws Exception {
+		Length annotationLength = class1.getAnnotation(Length.class);
+		int size = annotationLength.value();
+		records = new HashMap<>();
+		for (int i = 0; i < data.length; i += size) {
+			byte[] monthRecordData = Arrays.copyOfRange(data, i, i + size);
+			Constructor<? extends IMonthRecord> cons = class1.getConstructor(byte[].class);
+			IMonthRecord mr = cons.newInstance(monthRecordData);
+			LocalDate date = mr.getDate();
+			if (date != null) {
+				records.put(date, mr);
+				System.out.println("adr=" + (i + 300) + " " + date + "=" + mr);
+			}
 		}
-		MonthRecord mr = new MonthRecord(monthRecordData);
-		LocalDate reqDate=LocalDate.of(year+2000, month, 1);
-		if (year == 16)
-			System.out.println();
-		if(reqDate.equals(mr.getDate())){
-			mr.setValid(true);
-		}
-		else{
-			mr.setValid(false);
-		}
-		return mr;		
 	}
+
+	public IMonthRecord getMonthRecord(LocalDate date) throws Exception {
+		return records.get(date);
+	}
+
 }

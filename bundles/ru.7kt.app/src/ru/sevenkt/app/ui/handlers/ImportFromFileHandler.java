@@ -20,6 +20,7 @@ import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
+import org.eclipse.osgi.container.Module.Settings;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
@@ -33,9 +34,9 @@ import ru.sevenkt.archive.services.IArchiveService;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.services.IDBService;
-import ru.sevenkt.domain.Archive;
+import ru.sevenkt.domain.IArchive;
+import ru.sevenkt.domain.ISettings;
 import ru.sevenkt.domain.Parameters;
-import ru.sevenkt.domain.Settings;
 
 public class ImportFromFileHandler {
 
@@ -64,7 +65,7 @@ public class ImportFromFileHandler {
 		LOG.info("Импорт архива "+selected);
 		if (selected != null)
 			try {
-				Archive archive = archiveService.readArchiveFromFile(new File(selected));
+				IArchive archive = archiveService.readArchiveFromFile(new File(selected));
 				Device device = insertOrUpdateDeviceSettings(archive.getSettings());
 				if (device != null) {
 					IRunnableWithProgress op = new IRunnableWithProgress() {
@@ -115,7 +116,7 @@ public class ImportFromFileHandler {
 	}
 
 
-	private Device insertOrUpdateDeviceSettings(Settings settings)
+	private Device insertOrUpdateDeviceSettings(ISettings settings)
 			throws Exception {
 		Device device = dbService.findDeviceBySerialNum(settings.getSerialNumber());
 		if (device == null) {

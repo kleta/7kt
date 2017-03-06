@@ -25,17 +25,19 @@ public enum Parameters {
 	T1_SUB_T2(22, "T1-T2", ParametersConst.CALCULATED, "°C", 5),
 	T3_SUB_T4(23, "T3-T4", ParametersConst.CALCULATED, "°C", 8),
 	ERROR_CODE1(24, "ОШ1",ParametersConst.ERROR,"код", 27),
-	V5(25,"V5", ParametersConst.VOLUME, "м3", 23),
-	V6(26,"V6", ParametersConst.VOLUME, "м3", 24),
-	V7(27,"V7", ParametersConst.VOLUME, "м3", 25),
-	V8(28,"V8", ParametersConst.VOLUME, "м3", 26),
-	ERROR_TIME1(29, "ВОС1",ParametersConst.TIME,"час", 30),
+	V5(25,"V5", ParametersConst.VOLUME, "м3", 33),
+	V6(26,"V6", ParametersConst.VOLUME, "м3", 34),
+	V7(27,"V7", ParametersConst.VOLUME, "м3", 35),
+	V8(28,"V8", ParametersConst.VOLUME, "м3", 36),
+	ERROR_TIME1(29, "ВОС1",ParametersConst.TIME,"час", 40),
 	ERROR_CODE2(30, "ОШ2",ParametersConst.ERROR,"код", 28),
-	NO_ERROR_TIME2(31, "ВНР1", ParametersConst.TIME, "час", 31), 
-	ERROR_TIME2(32, "ВОС2",ParametersConst.TIME,"час", 32),
-	WORK(33,"Время работы",ParametersConst.TIME, "час", 33),
-	ERROR_BYTE1(34,"Байт ошибки1",ParametersConst.ERROR, "час", 34),
-	ERROR_BYTE2(35,"Байт ошибки2",ParametersConst.ERROR, "час", 35);
+	NO_ERROR_TIME2(31, "ВНР1", ParametersConst.TIME, "час", 41), 
+	ERROR_TIME2(32, "ВОС2",ParametersConst.TIME,"час", 42),
+	WORK(33,"Время работы",ParametersConst.TIME, "час", 43),
+	ERROR_BYTE1(34,"Байт ошибки1",ParametersConst.ERROR, "час", 44),
+	ERROR_BYTE2(35,"Байт ошибки2",ParametersConst.ERROR, "час", 45),
+	AVG_P3(36, "P1", ParametersConst.PRESSURE, "кг/см2", 23),
+	AVG_P4(37, "P2", ParametersConst.PRESSURE, "кг/см2", 24);
 	
 	
 

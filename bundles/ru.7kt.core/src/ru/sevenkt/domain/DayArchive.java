@@ -1,43 +1,49 @@
 package ru.sevenkt.domain;
 
+import java.lang.reflect.Constructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import ru.sevenkt.annotations.Length;
+import ru.sevenkt.domain.version3.DayRecordV3;
 
-@Length(value = 13416)
-public class DayArchive {
-	public static int MAX_MONTH_COUNT=6;
-	
+public abstract class DayArchive {
+
 	private byte[] data;
 
-	public DayArchive(byte[] dayData) {
-		this.data = dayData;
+	private Map<LocalDate, IDayRecord> records;
+
+	protected DayArchive(byte[] data) {
+		this.data = data;
 	}
 
-	public DayRecord getDayRecord(LocalDate requestDate, LocalDateTime archiveCurrentDateTime) throws Exception {
-		if (requestDate.isBefore(archiveCurrentDateTime.minusMonths(MAX_MONTH_COUNT).toLocalDate()))
-			throw new Exception("Глубина дневного архива " +MAX_MONTH_COUNT + " месяцев. Данные запрашиваемые за дату " + requestDate
-					+ " превышают глубину хранения");
-		Length annotationLength = DayRecord.class.getAnnotation(Length.class);
-		int size = annotationLength.value();
-		int month = requestDate.getMonthValue();
-		int day = requestDate.getDayOfMonth();
-		
-		int mt = month<=6?month:month-6;
-		int address=(day-1)*size+(mt-1)*31*size;
-		
-		byte[] dayRecordData = new byte[size];
-		for (int i = 0; i < size; i++) {
-			dayRecordData[i] = data[address + i];
-		}
-		DayRecord dr = new DayRecord(dayRecordData);
-		if(requestDate.equals(dr.getDate())){
-			dr.setValid(true);
-		}
-		else
-			dr.setValid(false);
-		return dr;
+	public IDayRecord getDayRecord(LocalDate day) {
+		return records.get(day);
 	}
-	
+
+	public abstract long getMaxMonthDeep();
+
+	protected void parseData(Class<? extends IDayRecord> class1) throws Exception {
+		Length annotationLength = class1.getAnnotation(Length.class);
+		int size = annotationLength.value();
+		records = new HashMap<>();
+		for (int i = 0; i < data.length; i += size) {
+			byte[] dayRecordData = Arrays.copyOfRange(data, i, i + size);
+			// DayRecordV3 dr = new DayRecordV3(dayRecordData);
+			Constructor<? extends IDayRecord> cons = class1.getConstructor(byte[].class);
+			IDayRecord dr = cons.newInstance(dayRecordData);
+			LocalDate date = dr.getDate();
+			if (date != null) {
+				dr.setPrevDayRecord(records.get(date.minusDays(1)));
+				records.put(date, dr);
+				System.out.println("adr=" + (i + 3000) + " " + date + "=" + dr);
+			}
+		}
+	}
+
 }

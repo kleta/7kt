@@ -9,8 +9,8 @@ import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.entities.Node;
 import ru.sevenkt.db.entities.Report;
-import ru.sevenkt.domain.Archive;
 import ru.sevenkt.domain.ArchiveTypes;
+import ru.sevenkt.domain.IArchive;
 
 public interface IDBService {
 	
@@ -47,19 +47,19 @@ public interface IDBService {
 	List<Journal> findJournal(Device device);
 
 
-	void insertMonthArchive(Archive archive, Device device) throws Exception;
+	void insertMonthArchive(IArchive archive, Device device) throws Exception;
 
 
 
-	void insertHourArchive(Archive archive, Device device) throws Exception;
+	void insertHourArchive(IArchive archive, Device device) throws Exception;
 
 
 
-	void insertDayArchive(Archive archive, Device device) throws Exception;
+	void insertDayArchive(IArchive archive, Device device) throws Exception;
 
 
 
-	void insertJournalSettings(Archive archive, Device device) throws Exception;
+	void insertJournalSettings(IArchive archive, Device device) throws Exception;
 
 
 	List<ru.sevenkt.db.entities.Error> findErrors(Device device, LocalDateTime startDate, LocalDateTime endDate, ArchiveTypes archiveType);

@@ -7,3 +7,4 @@ Export-Package: ru.sevenkt.annotations,
  ru.sevenkt.domain,
  ru.sevenkt.exceptions,
  ru.sevenkt.utils
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

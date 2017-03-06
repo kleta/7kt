@@ -18,6 +18,7 @@
 		<module>ru.7kt.reports</module>
 		<module>ru.7kt.reports.templates</module>
 		<module>ru.7kt.log</module>
+		<module>ru.7kt.reader</module>
 	</modules>
 </project>
 

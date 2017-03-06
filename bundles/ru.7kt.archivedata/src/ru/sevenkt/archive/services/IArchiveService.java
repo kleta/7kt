@@ -2,9 +2,11 @@ package ru.sevenkt.archive.services;
 
 import java.io.File;
 
-import ru.sevenkt.domain.Archive;;;
+import ru.sevenkt.domain.IArchive;;;
 
 public interface IArchiveService {
 	
-	Archive readArchiveFromFile(File file) throws Exception;
+	IArchive readArchiveFromFile(File file) throws Exception;
+	
+	
 }

@@ -278,8 +278,8 @@ public class OpenArchiveHandler implements EventHandler {
 						&& !category.equals(ParametersConst.TIME)) {
 					Measuring prevDayMeasuring = lmPrevDay.get(i);
 					if (parameter.equals(prevDayMeasuring.getParameter())
-							&& prevDayMeasuring.getValue() <= measuring.getValue())
-						tr.getValues().put(parameter, measuring.getValue() - prevDayMeasuring.getValue());
+							&& prevDayMeasuring.getValue().doubleValue() <= measuring.getValue().doubleValue())
+						tr.getValues().put(parameter, measuring.getValue().doubleValue() - prevDayMeasuring.getValue().doubleValue());
 				} else if (!parameter.equals(Parameters.ERROR_BYTE1) && !parameter.equals(Parameters.ERROR_BYTE2))
 					tr.getValues().put(parameter, measuring.getValue());
 			}
@@ -311,9 +311,9 @@ public class OpenArchiveHandler implements EventHandler {
 						&& !category.equals(ParametersConst.TIME)) {
 					Measuring prevMonthMeasuring = lmPrevMonth.get(i);
 					if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
-							&& prevMonthMeasuring.getValue() <= measuring.getValue())
+							&& prevMonthMeasuring.getValue().doubleValue() <= measuring.getValue().doubleValue())
 						tr.getValues().put(measuring.getParameter(),
-								measuring.getValue() - prevMonthMeasuring.getValue());
+								measuring.getValue().doubleValue() - prevMonthMeasuring.getValue().doubleValue());
 				} else if (!parameters.equals(Parameters.ERROR_BYTE1) && !parameters.equals(Parameters.ERROR_BYTE2))
 					tr.getValues().put(measuring.getParameter(), measuring.getValue());
 			}

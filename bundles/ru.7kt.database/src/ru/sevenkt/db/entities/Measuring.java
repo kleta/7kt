@@ -1,5 +1,6 @@
 package ru.sevenkt.db.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -27,11 +28,11 @@ public class Measuring {
 		this.id = id;
 	}
 
-	public Double getValue() {
+	public BigDecimal getValue() {
 		return value;
 	}
 
-	public void setValue(Double value) {
+	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
 
@@ -75,7 +76,7 @@ public class Measuring {
 	@Column(insertable = false, updatable = false)
 	private ArchiveTypes archiveType;
 
-	private Double value;
+	private BigDecimal value;
 	
 	private LocalDateTime timestamp;
 

@@ -18,66 +18,34 @@
 		<local-repo.url>http://localhost:8080/7kt/</local-repo.url>
 	</properties>
 
-<!-- 	<repositories> -->
-<!-- 		<repository> -->
-<!-- 			<id>mars</id> -->
-<!-- 			<url>${mars-repo.url}</url> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>spring</id> -->
-<!-- 			<url>${spring-repo.url}</url> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>eclipselink</id> -->
-<!-- 			<url>${eclipselink-repo.url}</url> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>orbit</id> -->
-<!-- 			<url>${orbit-repo.url}</url> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>nebula</id> -->
-<!-- 			<url>${nebula-repo.url}</url> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>localhost</id> -->
-<!-- 			<url>${local-repo.url}</url> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 		</repository> -->
 
-<!-- 	</repositories> -->
-	<dependencies>
-		<dependency>
-			<groupId>org.eclipse.gemini.blueprint</groupId>
-			<artifactId>gemini-blueprint-io</artifactId>
-			<version>2.0.0.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.gemini.blueprint</groupId>
-			<artifactId>gemini-blueprint-extender</artifactId>
-			<version>2.0.0.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.gemini.blueprint</groupId>
-			<artifactId>gemini-blueprint-core</artifactId>
-			<version>2.0.0.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>1.9.4.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-commons</artifactId>
-			<version>1.11.4.RELEASE</version>
-		</dependency>
-	</dependencies>
+	<!-- <dependencies> -->
+	<!-- <dependency> -->
+	<!-- <groupId>org.eclipse.gemini.blueprint</groupId> -->
+	<!-- <artifactId>gemini-blueprint-io</artifactId> -->
+	<!-- <version>2.0.0.RELEASE</version> -->
+	<!-- </dependency> -->
+	<!-- <dependency> -->
+	<!-- <groupId>org.eclipse.gemini.blueprint</groupId> -->
+	<!-- <artifactId>gemini-blueprint-extender</artifactId> -->
+	<!-- <version>2.0.0.RELEASE</version> -->
+	<!-- </dependency> -->
+	<!-- <dependency> -->
+	<!-- <groupId>org.eclipse.gemini.blueprint</groupId> -->
+	<!-- <artifactId>gemini-blueprint-core</artifactId> -->
+	<!-- <version>2.0.0.RELEASE</version> -->
+	<!-- </dependency> -->
+	<!-- <dependency> -->
+	<!-- <groupId>org.springframework.data</groupId> -->
+	<!-- <artifactId>spring-data-jpa</artifactId> -->
+	<!-- <version>1.9.4.RELEASE</version> -->
+	<!-- </dependency> -->
+	<!-- <dependency> -->
+	<!-- <groupId>org.springframework.data</groupId> -->
+	<!-- <artifactId>spring-data-commons</artifactId> -->
+	<!-- <version>1.11.4.RELEASE</version> -->
+	<!-- </dependency> -->
+	<!-- </dependencies> -->
 	<build>
 		<plugins>
 			<plugin>
@@ -101,7 +69,7 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<pomDependencies>consider</pomDependencies>
+					<!-- <pomDependencies>consider</pomDependencies> -->
 					<target>
 						<artifact>
 							<groupId>ru.7kt</groupId>
@@ -109,32 +77,41 @@
 							<version>1.0.0-SNAPSHOT</version>
 						</artifact>
 					</target>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-plugin</type>
+								<id>org.eclipse.equinox.event</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 					<environments>
-<!-- 						<environment> -->
-<!-- 							<os>linux</os> -->
-<!-- 							<ws>gtk</ws> -->
-<!-- 							<arch>x86</arch> -->
-<!-- 						</environment> -->
-<!-- 						<environment> -->
-<!-- 							<os>linux</os> -->
-<!-- 							<ws>gtk</ws> -->
-<!-- 							<arch>x86_64</arch> -->
-<!-- 						</environment> -->
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
 							<arch>x86</arch>
 						</environment>
-<!-- 						<environment> -->
-<!-- 							<os>win32</os> -->
-<!-- 							<ws>win32</ws> -->
-<!-- 							<arch>x86_64</arch> -->
-<!-- 						</environment> -->
-<!-- 						<environment> -->
-<!-- 							<os>macosx</os> -->
-<!-- 							<ws>cocoa</ws> -->
-<!-- 							<arch>x86_64</arch> -->
-<!-- 						</environment> -->
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
 					</environments>
 				</configuration>
 			</plugin>

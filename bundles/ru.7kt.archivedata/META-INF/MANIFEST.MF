@@ -6,4 +6,5 @@ Bundle-Version: 1.0.0.qualifier
 Export-Package: ru.sevenkt.archive.services
 Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false
 Require-Bundle: ru.7kt.core;bundle-version="1.0.0",
- org.springframework.context;bundle-version="4.2.4"
+ org.springframework.context;bundle-version="4.2.4",
+ org.apache.commons.io;bundle-version="2.2.0"
