@@ -4,8 +4,11 @@ Bundle-Name: Reader
 Bundle-SymbolicName: ru.7kt.reader
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: com.neuronrobotics.nrjavaserial;bundle-version="3.12.1",
- slf4j.api;bundle-version="1.7.16",
+Require-Bundle: slf4j.api;bundle-version="1.7.16",
  ch.qos.logback.classic;bundle-version="1.1.4",
  ch.qos.logback.core;bundle-version="1.1.4",
- ru.7kt.core;bundle-version="1.0.0"
+ ru.7kt.core;bundle-version="1.0.0",
+ ru.7kt.database;bundle-version="1.0.0",
+ com.neuronrobotics.nrjavaserial;bundle-version="3.12.1"
+Export-Package: ru.sevenkt.reader.services
+Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false

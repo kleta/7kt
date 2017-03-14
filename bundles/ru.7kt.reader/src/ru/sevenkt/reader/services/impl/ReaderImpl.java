@@ -7,12 +7,18 @@ import java.io.IOException;
 import java.util.Set;
 
 import gnu.io.NRSerialPort;
+import ru.sevenkt.db.entities.Connection;
+import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.domain.ArchiveFactory;
+import ru.sevenkt.domain.IArchive;
+import ru.sevenkt.domain.ICurrentData;
+import ru.sevenkt.domain.ISettings;
+
 import ru.sevenkt.reader.services.IReaderService;
 
 public class ReaderImpl implements IReaderService {
 
-	private static final byte[] COMMAND_SET_BOUD_RATE_19200 = null;
-	private static final byte[] COMMAND_SET_BOUD_RATE_2400 = null;
+	private Reader reader;
 
 	@Override
 	public Set<String> getAvailableSerialPorts() {
@@ -20,39 +26,27 @@ public class ReaderImpl implements IReaderService {
 	}
 
 	@Override
-	public File readFullArchive(String port) throws InterruptedException {
+	public IArchive readFullArchive(Connection con) throws Exception {
+		reader = new Reader(con.getPort(), 2400);
+		if (reader.connect()) {
+			byte[] data = reader.readEEPROM(0, 256);
+			reader.disconnect();
+			return ArchiveFactory.createArhive(data);
+		}
+		return null;
+		
+	}
 
-//		while(!device.connect()){
-//			Thread.sleep(1000);
-//		}
-//		byte[] eeprom=device.readEEPROM();
-//		byte[] curData=device.readCurrentData();
+	@Override
+	public ISettings readCurrentSettings(Device device) throws Exception {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-//	private void initConnection(String port) throws IOException {
-//		int baudRate = 2400;
-//		NRSerialPort serial = new NRSerialPort(port, baudRate);
-//		serial.connect();
-//		DataInputStream ins = new DataInputStream(serial.getInputStream());
-//		DataOutputStream outs = new DataOutputStream(serial.getOutputStream());
-//		outs.write(COMMAND_SET_BOUD_RATE_19200);
-//		ins.read();
-//	}
-//
-//	private void AddCRC(byte Byte) {
-//		int i, Carry;
-//		for (i = 0; i < 8; i++) {
-//			Carry = 0;
-//			if (CRC & 0x8000)
-//				Carry = 1;
-//			CRC <<= 1;
-//			if (0x80 & Byte)
-//				CRC |= 0x01; // задвинем бит
-//			Byte <<= 1;
-//			if (Carry == 1)
-//				CRC ^= 0x1021;
-//		}
-//	}
+	@Override
+	public ICurrentData readCurrentData(Device device) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

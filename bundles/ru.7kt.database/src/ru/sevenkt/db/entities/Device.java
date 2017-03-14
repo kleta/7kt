@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.eclipse.persistence.annotations.PrivateOwned;
@@ -90,7 +91,22 @@ public class Device implements Serializable{
 	@OneToMany(mappedBy="device", cascade=CascadeType.ALL)
 	@PrivateOwned
 	private List<Report> reports;
+
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrivateOwned
+	private Connection connection;
 	
+	public Connection getConnection(){
+		return connection;	
+	}
+	
+	
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+
+
 	public List<Report> getReports() {
 		if(reports==null)
 			reports=new ArrayList<>();

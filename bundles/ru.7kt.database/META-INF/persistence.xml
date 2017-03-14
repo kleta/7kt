@@ -20,5 +20,6 @@ version="2.1"
 		<class>ru.sevenkt.db.entities.JournalPK</class>
 		<class>ru.sevenkt.db.entities.MeasuringPK</class>
 		<class>ru.sevenkt.db.entities.Report</class>
+		<class>ru.sevenkt.db.entities.Connection</class>
 	</persistence-unit>
 </persistence>

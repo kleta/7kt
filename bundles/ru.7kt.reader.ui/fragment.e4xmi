@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_9TS88ARtEeeGnqSqNy8EQw">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_zqy8MARuEeeGnqSqNy8EQw" featurename="children" parentElementId="ru.7kt.app.menu" positionInList="after:ru.7kt.app.menu.file">
+    <elements xsi:type="menu:Menu" xmi:id="_eRqmAARvEeeGnqSqNy8EQw" elementId="ru.7kt.reader.ui.menu.connection" label="&#x421;&#x432;&#x44f;&#x437;&#x44c;">
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_muW2sAU5EeepUoKxGFr-9w" coreExpressionId="ru.7kt.app.deviceselection"/>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_w0Le8ARvEeeGnqSqNy8EQw" elementId="ru.7kt.reader.ui.handledmenuitem.connection" label="&#x41d;&#x430;&#x441;&#x442;&#x440;&#x43e;&#x438;&#x442;&#x44c; &#x441;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x435;" command="_2nNecAR4EeeTJNz3A2iYag">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_gOlsEAR3EeeTJNz3A2iYag" coreExpressionId="ru.7kt.app.deviceselection"/>
+      </children>
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_5CeDIAR8EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handledmenuitem.0" command="_cA2HAAR8EeeTJNz3A2iYag">
+        <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_5lZxEAR8EeeTJNz3A2iYag" coreExpressionId="ru.7kt.app.deviceselection"/>
+      </children>
+    </elements>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_Ey6PgAR2EeeTJNz3A2iYag" featurename="children" parentElementId="ru.7kt.app.menu.file" positionInList="first">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_uHnG0AR2EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handledmenuitem.7" label="&#x418;&#x43c;&#x43f;&#x43e;&#x440;&#x442; &#x438;&#x437; 7&#x41a;&#x422;&#x421;" command="_B4e-YAR5EeeTJNz3A2iYag"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8QYi4AR3EeeTJNz3A2iYag" featurename="handlers" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="commands:Handler" xmi:id="_a3U3AAR4EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handler.connectionsettings" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.handlers.ConnectionSettingHandler" command="_2nNecAR4EeeTJNz3A2iYag"/>
+    <elements xsi:type="commands:Handler" xmi:id="_Q5th4AR5EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handler.readdata" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.handlers.ReadData" command="_cA2HAAR8EeeTJNz3A2iYag"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_v_hYwAR4EeeTJNz3A2iYag" featurename="commands" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="commands:Command" xmi:id="_2nNecAR4EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.command.connectionsettings" commandName="&#x41d;&#x430;&#x441;&#x442;&#x440;&#x43e;&#x438;&#x442;&#x44c; &#x441;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x435;"/>
+    <elements xsi:type="commands:Command" xmi:id="_B4e-YAR5EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.command.read7ktc" commandName="&#x418;&#x43c;&#x43f;&#x43e;&#x440;&#x442; &#x438;&#x437; 7&#x41a;&#x422;&#x421;"/>
+    <elements xsi:type="commands:Command" xmi:id="_cA2HAAR8EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.command.readarchive" commandName="&#x421;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c; &#x430;&#x440;&#x445;&#x438;&#x432;"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_G0mWQAR9EeeTJNz3A2iYag" featurename="descriptors" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KeOvYAR9EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.partdescriptor.comlog" label="&#x416;&#x443;&#x440;&#x43d;&#x430;&#x43b; &#x440;&#x430;&#x431;&#x43e;&#x442;&#x44b; &#x43f;&#x43e;&#x440;&#x442;&#x430;" closeable="true" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.views.ComPortLogView"/>
+  </fragments>
+</fragment:ModelFragments>

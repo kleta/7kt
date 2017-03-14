@@ -49,19 +49,14 @@
         </children>
         <children xsi:type="basic:PartStack" xmi:id="_98ufsE35EeSRPKdhyBjzXA" elementId="7kt.partstack.bottom" containerData="20">
           <tags>NoAutoCollapse</tags>
-          <children xsi:type="basic:Part" xmi:id="_A173YOzWEeWkP5iWQZC8YA" elementId="ru.7kt.app.part.outputview" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.OutputView" label="Журнал" iconURI="platform:/plugin/ru.7kt.app/icons/application--pencil.png"/>
         </children>
       </children>
     </children>
-    <mainMenu xmi:id="_6NS9gDGSEeSVeK7-4q31bA" elementId="power-quality-ui.menu.0">
-      <children xsi:type="menu:Menu" xmi:id="_tm0bwMomEeWgFZI886Y61g" elementId="ru.7kt.app.menu." label="Файл">
+    <mainMenu xmi:id="_6NS9gDGSEeSVeK7-4q31bA" elementId="ru.7kt.app.menu">
+      <children xsi:type="menu:Menu" xmi:id="_tm0bwMomEeWgFZI886Y61g" elementId="ru.7kt.app.menu.file" label="Файл">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_Pl9lUMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.importfile" label="Импорт данных из файла" iconURI="platform:/plugin/ru.7kt.app/icons/document-import.png" command="_x-oFUMotEeWgFZI886Y61g"/>
         <children xsi:type="menu:MenuSeparator" xmi:id="_kCes0MooEeWgFZI886Y61g" elementId="ru.7kt.app.menuseparator.0"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_mWNqAMooEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.exit" label="Выход" command="_Eh4NUO_6EeW3JpRafYy2Ig"/>
-      </children>
-      <children xsi:type="menu:Menu" xmi:id="_UbjwYMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.connection" label="Связь">
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_8ruBgMoqEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.requestdevice" label="Опросить устройство" enabled="false"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_FgPyMMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.reader" label="Загрузить из считывателя" enabled="false"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_ZJiicMoqEeWgFZI886Y61g" elementId="ru.7kt.app.menu.service" label="Сервис">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_MVLCoMorEeWgFZI886Y61g" elementId="ru.7kt.app.handledmenuitem.preferences" label="Настройки" enabled="false"/>

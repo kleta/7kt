@@ -15,7 +15,7 @@ public class ArchiveFactory {
 		return null;
 	}
 	
-	public Class<? extends IArchive> getArchiveClass(byte[] data){
+	public static Class<? extends IArchive> getArchiveClass(byte[] data){
 		byte lengthArchive = data[0];
 		byte versionArchive = data[1];
 		if (lengthArchive == 8 && versionArchive == 3)

@@ -1,5 +1,6 @@
 package ru.sevenkt.domain.version3;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
@@ -29,7 +30,6 @@ public class ArchiveV3 implements IArchive{
 
 	@Address(value = 3000)
 	private DayArchiveV3 dayArchive;
-
 	@Address(value = 13500)
 	private HourArchiveV3 hourArchive;
 
@@ -117,5 +117,11 @@ public class ArchiveV3 implements IArchive{
 
 	public void setJournalSettings(JournalSettingsV3 journalSettings) {
 		this.journalSettings = journalSettings;
+	}
+
+	@Override
+	public File toFile() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

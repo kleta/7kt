@@ -23,7 +23,6 @@
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 
-
 		<encoder>
 			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
 			</pattern>
@@ -39,5 +38,6 @@
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="ROLLING" />
+<!-- 		<appender-ref ref="COMPORT" /> -->
 	</root>
 </configuration>

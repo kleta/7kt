@@ -1,5 +1,6 @@
 package ru.sevenkt.domain.version1;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
@@ -116,5 +117,11 @@ public class ArchiveV1 implements IArchive{
 
 	public void setJournalSettings(JournalSettingsV1 journalSettings) {
 		this.journalSettings = journalSettings;
+	}
+
+	@Override
+	public File toFile() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

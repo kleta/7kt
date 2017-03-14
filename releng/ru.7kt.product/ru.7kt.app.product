@@ -47,6 +47,7 @@
       <feature id="org.eclipse.ecf.filetransfer.feature"/>
       <feature id="org.eclipse.ecf.core.ssl.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
+      <feature id="ru.7kt.feature.reader" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
@@ -58,6 +59,7 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.gemini.blueprint.extender" autoStart="true" startLevel="4" />
       <plugin id="ru.7kt.archivedata" autoStart="true" startLevel="0" />
+      <plugin id="ru.7kt.reader" autoStart="true" startLevel="0" />
    </configurations>
 
    <preferencesInfo>

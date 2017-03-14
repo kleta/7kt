@@ -39,4 +39,13 @@ public class Commands {
 		cmd[6]=crcL;
 		cmd[7]=crcH;
 	}
+	public static byte[] getReadEEPROMCommand(int devAddr, long addr, int blockSize) {
+		command[1]=(byte) devAddr;
+		command[2]=1;
+		command[3]=(byte) (addr&0xFF);
+		command[4]=(byte) (addr>>8);
+		command[5]=(byte) blockSize;
+		addCrc(command);
+		return command;
+	}
 }

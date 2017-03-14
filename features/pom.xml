@@ -15,6 +15,7 @@
         <module>ru.7kt.feature.app</module>
         <module>ru.7kt.gemini.blueprint</module>
         <module>ru.7kt.feature.reports</module>
+        <module>ru.7kt.feature.reader</module>
     </modules>
 </project>
 
