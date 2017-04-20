@@ -40,8 +40,10 @@ public abstract class DayArchive {
 			LocalDate date = dr.getDate();
 			if (date != null) {
 				dr.setPrevDayRecord(records.get(date.minusDays(1)));
+				dr.setValid(true);
 				records.put(date, dr);
-				System.out.println("adr=" + (i + 3000) + " " + date + "=" + dr);
+				
+//				System.out.println("adr=" + (i + 3000) + " " + date + "=" + dr);
 			}
 		}
 	}

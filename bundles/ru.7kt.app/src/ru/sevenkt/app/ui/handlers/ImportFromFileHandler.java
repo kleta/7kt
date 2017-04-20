@@ -66,45 +66,45 @@ public class ImportFromFileHandler {
 		if (selected != null)
 			try {
 				IArchive archive = archiveService.readArchiveFromFile(new File(selected));
-				Device device = insertOrUpdateDeviceSettings(archive.getSettings());
-				if (device != null) {
-					IRunnableWithProgress op = new IRunnableWithProgress() {
+//				Device device = insertOrUpdateDeviceSettings(archive.getSettings());
+//				if (device != null) {
+//					IRunnableWithProgress op = new IRunnableWithProgress() {
+//
+//						@Override
+//						public void run(IProgressMonitor monitor)
+//								throws InvocationTargetException, InterruptedException {
+//							try {
+//								monitor.beginTask("Импорт данных", 4);
+//								
+//								monitor.subTask("Импорт месячного архива");
+//								dbService.insertMonthArchive(archive, device);
+//								monitor.worked(1);
+//								
+//								monitor.subTask("Импорт дневного архива");
+//								dbService.insertDayArchive(archive, device);
+//								monitor.worked(2);
+//								
+//								monitor.subTask("Импорт часового архива");
+//								dbService.insertHourArchive(archive, device);
+//								monitor.worked(3);
+//																
+//								monitor.subTask("Импорт журнала настроек");
+//								dbService.insertJournalSettings(archive, device);
+//								monitor.worked(4);
+//								Thread.sleep(1000);
+//								monitor.done();
+//							} catch (Exception e) {
+//								MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
+//								ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
+//								LOG.error(e.getMessage(), e);
+//							}
+//
+//						}
+//					};
+//					ProgressMonitorDialog progressDialog = new TitledProgressMonitorDialog(parentShell, "Выполняется задача");
+//					progressDialog.run(true, true, op);
 
-						@Override
-						public void run(IProgressMonitor monitor)
-								throws InvocationTargetException, InterruptedException {
-							try {
-								monitor.beginTask("Импорт данных", 4);
-								
-								monitor.subTask("Импорт месячного архива");
-								dbService.insertMonthArchive(archive, device);
-								monitor.worked(1);
-								
-								monitor.subTask("Импорт дневного архива");
-								dbService.insertDayArchive(archive, device);
-								monitor.worked(2);
-								
-								monitor.subTask("Импорт часового архива");
-								dbService.insertHourArchive(archive, device);
-								monitor.worked(3);
-																
-								monitor.subTask("Импорт журнала настроек");
-								dbService.insertJournalSettings(archive, device);
-								monitor.worked(4);
-								Thread.sleep(1000);
-								monitor.done();
-							} catch (Exception e) {
-								MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
-								ErrorDialog.openError(parentShell, "Ошибка", "Произошла ошибка", status);
-								LOG.error(e.getMessage(), e);
-							}
-
-						}
-					};
-					ProgressMonitorDialog progressDialog = new TitledProgressMonitorDialog(parentShell, "Выполняется задача");
-					progressDialog.run(true, true, op);
-
-				}
+				//}
 			} catch (Exception e) {
 
 				MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);

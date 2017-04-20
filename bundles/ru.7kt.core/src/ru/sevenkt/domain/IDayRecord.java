@@ -7,8 +7,6 @@ public interface IDayRecord {
 
 	boolean isValid();
 
-	IDayRecord minus(IDayRecord dr1);
-
 	LocalDate getDate();
 
 	Float getVolume1();
@@ -32,5 +30,7 @@ public interface IDayRecord {
 	int getErrorTime2();
 	
 	void setPrevDayRecord(IDayRecord record);
+
+	void setValid(boolean b);
 
 }

@@ -8,3 +8,4 @@ Export-Package: ru.sevenkt.annotations,
  ru.sevenkt.exceptions,
  ru.sevenkt.utils
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.apache.commons.io;bundle-version="2.2.0"

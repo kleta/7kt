@@ -16,6 +16,7 @@
         <module>ru.7kt.gemini.blueprint</module>
         <module>ru.7kt.feature.reports</module>
         <module>ru.7kt.feature.reader</module>
+        <module>org.eclipse.e4.ui.progress.feature</module>
     </modules>
 </project>
 

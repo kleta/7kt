@@ -18,5 +18,6 @@
         <module>ru.7kt.app.it.tests</module>
         <module>ru.7kt.reder.tests</module>
         <module>ru.7kt.core.tests</module>
+		<module>ru.7kt.database.tests</module>
     </modules>
 </project>

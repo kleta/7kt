@@ -39,6 +39,7 @@ import ru.sevenkt.db.repositories.MeasuringRepo;
 import ru.sevenkt.db.repositories.NodeRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.repositories.ReportRepo;
+import ru.sevenkt.db.services.ArchiveConverter;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.ErrorCodes;
@@ -325,96 +326,12 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public void insertMonthArchive(IArchive archive, Device device) throws Exception {
-//		LocalDateTime from = LocalDateTime.now();
-//		MonthArchive ma = archive.getMonthArchive();
-//		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withDayOfMonth(1);
-//		LocalDate startArchiveDate = dateTime.minusYears(ma.getMaxYearsDeep()).toLocalDate();
-//		List<Measuring> measurings = new ArrayList<>();
-//		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
-//			int year = startArchiveDate.getYear() - 2000;
-//			if (year < 15) {
-//				startArchiveDate = startArchiveDate.plusMonths(1);
-//				continue;
-//			}
-//			IMonthRecord mr = ma.getMonthRecord(startArchiveDate);
-//			if (mr.isValid()) {
-//				List<Measuring> hourMeasuring = measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(device,
-//						ArchiveTypes.HOUR, mr.getDate().atTime(0, 0).minusMonths(1).plusHours(1),
-//						mr.getDate().atTime(0, 0));
-//				LocalDateTime dtTo = mr.getDate().atTime(0, 0);
-//				LocalDateTime dtFrom = dtTo.minusMonths(1);
-//				long hours = ChronoUnit.HOURS.between(dtFrom, dtTo);
-//				Field[] fields = mr.getClass().getDeclaredFields();
-//				for (Field field : fields) {
-//					field.setAccessible(true);
-//					if (field.isAnnotationPresent(Parameter.class)) {
-//						Measuring m = new Measuring();
-//						m.setArchiveType(ArchiveTypes.MONTH);
-//						m.setDateTime(mr.getDate().atTime(0, 0));
-//						m.setDevice(device);
-//						Parameters parameter = field.getAnnotation(Parameter.class).value();
-//						m.setParameter(parameter);
-//						switch (parameter) {
-//						case AVG_TEMP1:
-//						case AVG_TEMP2:
-//						case AVG_TEMP3:
-//						case AVG_TEMP4: {
-//							float val = field.getInt(mr);
-//							m.setValue((double) (val / 100));
-//							measurings.add(m);
-//						}
-//							break;
-//						case AVG_P1:
-//						case AVG_P2: {
-//							float val = field.getFloat(mr);
-//							val = val / 10;
-//							m.setValue(new Double(val + ""));
-//							measurings.add(m);
-//						}
-//							break;
-//						case ERROR_BYTE1:
-//						case ERROR_BYTE2:
-//							m.setValue((double) field.getInt(mr));
-//							measurings.add(m);
-//							break;
-//						case ERROR_TIME1:
-//						case ERROR_TIME2: {
-//							// // if
-//							// //
-//							// (m.getDateTime().isAfter(LocalDateTime.of(2015,
-//							// // 12, 17, 0, 0)))
-//							// // System.out.println();
-//							// LocalDateTime dtTo = m.getDateTime();
-//							// LocalDateTime dtFrom = dtTo.minusMonths(1);
-//							// long hours = ChronoUnit.HOURS.between(dtFrom,
-//							// dtTo);
-//							//
-//							// if (hourMeasuring.isEmpty() ||
-//							// hourMeasuring.size() != hours) {
-//							m.setValue((double) 0);
-//							measurings.add(m);
-//							// }
-//							break;
-//						}
-//
-//						default:
-//							float val = field.getFloat(mr);
-//							m.setValue(new Double(val + ""));
-//							measurings.add(m);
-//							break;
-//						}
-//					}
-//				}
-//				// if (hourMeasuring.isEmpty() || hourMeasuring.size() != hours)
-//				// saveMonthErrors(mr, device);
-//			}
-//			startArchiveDate = startArchiveDate.plusMonths(1);
-//		}
-//		saveMeasurings(measurings);
-//		LocalDateTime to = LocalDateTime.now();
-//		LOG.debug("Метод insertMonthArchive() время " + ChronoUnit.MILLIS.between(from, to));
-
+	public void insertMonthArchive(ArchiveConverter archive) throws Exception {		
+		LocalDateTime from = LocalDateTime.now();
+		List<Measuring> measurings = archive.getMonthData();
+		saveMeasurings(measurings);
+		LocalDateTime to = LocalDateTime.now();
+		LOG.debug("Метод insertMonthArchive() время " + ChronoUnit.MILLIS.between(from, to));
 	}
 
 	private void saveMonthErrors(IMonthRecord mr, Device device) {
@@ -432,73 +349,12 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public void insertHourArchive(IArchive archive, Device device) throws Exception {
-//		LocalDateTime from = LocalDateTime.now();
-//		HourArchive ha = archive.getHourArchive();
-//		DayArchive da = archive.getDayArchive();
-//		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime();
-//		LocalDateTime startArchiveDate = dateTime.minusDays(ha.getMaxDaysDeep()).withHour(1);
-//		List<Error> errors = er.findByDeviceAndArchiveTypeAndDateTimeBetween(device, ArchiveTypes.HOUR,
-//				startArchiveDate, dateTime);
-//		er.delete(errors);
-//		errors.clear();
-//		while (!startArchiveDate.isAfter(dateTime)) {
-//			List<Error> hourErrors;
-//			List<Measuring> measurings = new ArrayList<>();
-//			LocalDate localDate = startArchiveDate.toLocalDate();
-//			IDayRecord sumDay = ha.getDayConsumption(localDate, dateTime, archive.getSettings());
-//			IDayRecord dr2 = da.getDayRecord(localDate.plusDays(1));
-//			IDayRecord dr1 = da.getDayRecord(localDate);
-//			IDayRecord dayConsumption;
-//			if (!dr2.isValid() || !dr1.isValid())
-//				dayConsumption = sumDay;
-//			else
-//				dayConsumption = dr2.minus(dr1);
-//			for (int i = 1; i < 25; i++) {
-//				LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.of(0, 0)).plusHours(i);
-//				IHourRecord hr = ha.getHourRecord(localDateTime);
-//				// System.out.println(localDateTime);
-//				if (hr.isValid()) {
-//					List<Measuring> hourMeasurings = geHourMeasurings(hr, localDateTime, archive.getSettings());
-//					measurings.addAll(hourMeasurings);
-//					// List<Error> hourErrors = calculateErrors(hr,
-//					// archive.getSettings(), device);
-//					// errors.addAll(hourErrors);
-//					Measuring m = new Measuring();
-//					m.setArchiveType(ArchiveTypes.HOUR);
-//					m.setDateTime(localDateTime);
-//
-//					m.setTimestamp(LocalDateTime.now());
-//					m.setValue(new Double("0"));
-//					m.setParameter(Parameters.ERROR_TIME1);
-//					measurings.add(m);
-//
-//					m = new Measuring();
-//					m.setArchiveType(ArchiveTypes.HOUR);
-//					m.setDateTime(localDateTime);
-//					// m.setDevice(e1v1t1Errors.get(0).getDevice());
-//					m.setTimestamp(LocalDateTime.now());
-//					m.setValue(new Double("0"));
-//					m.setParameter(Parameters.ERROR_TIME2);
-//					measurings.add(m);
-//					// hourErrors = getHourErrors(hr, device);
-//					// errors.addAll(hourErrors);
-//				}
-//			}
-//			if (!measurings.isEmpty()) {
-//				smoothHourMeasurings(measurings, dayConsumption, sumDay);
-//				measurings.forEach(m -> m.setDevice(device));
-//				hourErrors = calculateHourErrors(measurings);
-//				errors.addAll(hourErrors);
-//				saveMeasurings(measurings);
-//			}
-//			startArchiveDate = startArchiveDate.plusDays(1);
-//		}
-//		errors.forEach(e -> e.setDevice(device));
-//		saveHourErrors(errors);
-//		insertHourErrorTimes(errors);
-//		LocalDateTime to = LocalDateTime.now();
-//		LOG.debug("Метод insertHourArchive() время " + ChronoUnit.MILLIS.between(from, to));
+	public void insertHourArchive(ArchiveConverter archive) throws Exception {		
+		LocalDateTime from = LocalDateTime.now();
+		List<Measuring> measurings = archive.getHourData();
+		saveMeasurings(measurings);
+		LocalDateTime to = LocalDateTime.now();
+		LOG.debug("Метод insertHourArchive() время " + ChronoUnit.MILLIS.between(from, to));
 	}
 
 	private List<Error> getHourErrors(IHourRecord hr, Device device) {
@@ -1573,87 +1429,12 @@ public class DBService implements IDBService {
 	// }
 
 	@Override
-	public void insertDayArchive(IArchive archive, Device device) throws Exception {
-//		LocalDateTime from = LocalDateTime.now();
-//		DayArchive da = archive.getDayArchive();
-//		List<Error> errors = new ArrayList<>();
-//		LocalDateTime dateTime = archive.getCurrentData().getCurrentDateTime().withHour(0);
-//		LocalDate startArchiveDate = dateTime.minusMonths(da.getMaxMonthDeep()).toLocalDate();
-//		List<Measuring> measurings = new ArrayList<>();
-//		while (!startArchiveDate.isAfter(dateTime.toLocalDate())) {
-//			IDayRecord dr = da.getDayRecord(startArchiveDate);
-//			if (dr.isValid()) {
-//				LocalDateTime atTime = dr.getDate().atTime(0, 0);
-//				List<Measuring> hourMeasuring = measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(device,
-//						ArchiveTypes.HOUR, atTime.minusDays(1).plusHours(1), atTime);
-//				Field[] fields = dr.getClass().getDeclaredFields();
-//				for (Field field : fields) {
-//					field.setAccessible(true);
-//					if (field.isAnnotationPresent(Parameter.class)) {
-//						Measuring m = new Measuring();
-//						m.setArchiveType(ArchiveTypes.DAY);
-//						m.setDevice(device);
-//						m.setDateTime(atTime);
-//						Parameters parameter = field.getAnnotation(Parameter.class).value();
-//						m.setParameter(parameter);
-//						switch (parameter) {
-//						case AVG_TEMP1:
-//						case AVG_TEMP2:
-//						case AVG_TEMP3:
-//						case AVG_TEMP4: {
-//							float val = field.getInt(dr);
-//							m.setValue((double) (val / 100));
-//							measurings.add(m);
-//						}
-//							break;
-//						case AVG_P1:
-//						case AVG_P2: {
-//							float val = field.getFloat(dr);
-//							val = val / 10;
-//							m.setValue(new Double(val + ""));
-//							measurings.add(m);
-//						}
-//							break;
-//						case ERROR_BYTE1:
-//						case ERROR_BYTE2:
-//							int val1 = field.getInt(dr);
-//							// if(val1!=129 && val1!=1)
-//							// System.out.println();
-//							m.setValue((double) field.getInt(dr));
-//							measurings.add(m);
-//							break;
-//						case ERROR_TIME1:
-//						case ERROR_TIME2: {
-//							int val2 = field.getInt(dr);
-//							// if (hourMeasuring.isEmpty()) {
-//							m.setValue(0.0);
-//							measurings.add(m);
-//							// }
-//							break;
-//						}
-//						default:
-//							float val = field.getFloat(dr);
-//							BigDecimal bdVal = new BigDecimal(val + "").setScale(2, BigDecimal.ROUND_HALF_UP);
-//							m.setValue(bdVal.doubleValue());
-//							measurings.add(m);
-//							break;
-//						}
-//
-//					}
-//				}
-//				// List<Error> dayErrors;
-//				// if (hourMeasuring.isEmpty()) {
-//				// dayErrors = getDayErrors(dr, device);
-//				// errors.addAll(dayErrors);
-//				// }
-//			}
-//
-//			startArchiveDate = startArchiveDate.plusDays(1);
-//		}
-//		// saveErrors(errors);
-//		saveMeasurings(measurings);
-//		LocalDateTime to = LocalDateTime.now();
-//		LOG.debug("Метод insertDayArchive() время " + ChronoUnit.MILLIS.between(from, to));
+	public void insertDayArchive(ArchiveConverter archive) throws Exception {		
+		LocalDateTime from = LocalDateTime.now();
+		List<Measuring> measurings = archive.getDayData();
+		saveMeasurings(measurings);
+		LocalDateTime to = LocalDateTime.now();
+		LOG.debug("Метод insertDayArchive() время " + ChronoUnit.MILLIS.between(from, to));
 	}
 
 	private List<Error> getDayErrors(IDayRecord dr, Device device) {

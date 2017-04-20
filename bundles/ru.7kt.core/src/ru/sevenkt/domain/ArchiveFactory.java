@@ -1,5 +1,6 @@
 package ru.sevenkt.domain;
 
+import ru.sevenkt.domain.version1.ArchiveV1;
 import ru.sevenkt.domain.version3.ArchiveV3;
 import ru.sevenkt.domain.version4.ArchiveV4;
 
@@ -12,6 +13,8 @@ public class ArchiveFactory {
 			return new ArchiveV3(data);
 		if (lengthArchive == 8 && versionArchive == 4)
 			return new ArchiveV4(data);
+		if (lengthArchive == 4 && versionArchive == 1)
+			return new ArchiveV1(data);
 		return null;
 	}
 	

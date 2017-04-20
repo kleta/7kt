@@ -11,125 +11,44 @@ import ru.sevenkt.domain.IMonthRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value=74)
+@Length(value=25)
 public class MonthRecordV1 implements IMonthRecord{
 	
 	private byte[] data;
-	
+		
 	@Address(value=0)
 	@Length(value=1)
-	private int formulaNum;
+	private int monthYear;
 	
 	@Address(value=1)
-	@Length(value=3)
-	private int tempColdWaterSetting;
-	
-	@Address(value=4)
-	@Length(value=3)
-	private float volumeByImpulsSetting1;
-
-	@Address(value=7)
-	@Length(value=3)
-	private float volumeByImpulsSetting2;
-	
-	@Address(value=10)
-	@Length(value=3)
-	private float volumeByImpulsSetting3;
-	
-	@Address(value=13)
-	@Length(value=3)
-	private float volumeByImpulsSetting4;
-
-	@Address(value=16)
-	@Length(value=1)
-	private int year;
-	
-	@Address(value=17)
-	@Length(value=1)
-	private int month;
-
-	@Address(value=18)
-	@Length(value=1)
-	private int day;
-
-	@Address(value=19)
-	@Length(value=1)
-	private int hour;
-
-	@Address(value=20)
-	@Length(value=4)
-	@Parameter(Parameters.WORK)
-	private int workHour;
-	
-	@Address(value=24)
 	@Length(value=4)
 	@Parameter(Parameters.V1)
 	private float volume1;
 
-	@Address(value=28)
+	@Address(value=5)
 	@Length(value=4)
 	@Parameter(Parameters.V2)
 	private float volume2;
 	
-	@Address(value=32)
+	@Address(value=9)
 	@Length(value=4)
 	@Parameter(Parameters.V3)
 	private float volume3;
 	
-	@Address(value=36)
+	@Address(value=13)
 	@Length(value=4)
 	@Parameter(Parameters.V4)
 	private float volume4;
 	
-	@Address(value=40)
+	@Address(value=17)
 	@Length(value=4)
 	@Parameter(Parameters.E1)
 	private float energy1;
 
-	@Address(value=44)
+	@Address(value=21)
 	@Length(value=4)
 	@Parameter(Parameters.E2)
 	private float energy2;
-	
-	@Address(value=48)
-	@Length(value=4)
-	@Parameter(Parameters.M1)
-	private float weight1;
-
-	@Address(value=52)
-	@Length(value=4)
-	@Parameter(Parameters.M2)
-	private float weight2;
-	
-	@Address(value=56)
-	@Length(value=4)
-	@Parameter(Parameters.M3)
-	private float weight3;
-	
-	@Address(value=60)
-	@Length(value=4)
-	@Parameter(Parameters.M4)
-	private float weight4;
-	
-	@Address(value=64)
-	@Length(value=1)
-	@Parameter(Parameters.ERROR_BYTE1)
-	private int errorChannel1;
-	
-	@Address(value=65)
-	@Length(value=1)
-	@Parameter(Parameters.ERROR_BYTE2)
-	private int errorChannel2;
-	
-	@Address(value=66)
-	@Length(value=2)
-	@Parameter(Parameters.ERROR_TIME1)
-	private int timeError1;
-	
-	@Address(value=68)
-	@Length(value=4)
-	@Parameter(Parameters.ERROR_TIME2)
-	private int timeError2;
 	
 	private boolean valid;
 	
@@ -169,12 +88,7 @@ public class MonthRecordV1 implements IMonthRecord{
 		}
 	}
 	
-	public LocalDate getDate(){
-		if(month<1 || month>12 || day<1 || day>31)
-			return null;
-		LocalDate date = LocalDate.of(year+2000, month, day);
-		return date;
-	}
+	
 
 	public byte[] getData() {
 		return data;
@@ -184,93 +98,6 @@ public class MonthRecordV1 implements IMonthRecord{
 		this.data = data;
 	}
 
-	public int getFormulaNum() {
-		return formulaNum;
-	}
-
-	public void setFormulaNum(int formulaNum) {
-		this.formulaNum = formulaNum;
-	}
-
-	public int getTempColdWaterSetting() {
-		return tempColdWaterSetting;
-	}
-
-	public void setTempColdWaterSetting(int tempColdWaterSetting) {
-		this.tempColdWaterSetting = tempColdWaterSetting;
-	}
-
-	public float getVolumeByImpulsSetting1() {
-		return volumeByImpulsSetting1;
-	}
-
-	public void setVolumeByImpulsSetting1(float volumeByImpulsSetting1) {
-		this.volumeByImpulsSetting1 = volumeByImpulsSetting1;
-	}
-
-	public float getVolumeByImpulsSetting2() {
-		return volumeByImpulsSetting2;
-	}
-
-	public void setVolumeByImpulsSetting2(float volumeByImpulsSetting2) {
-		this.volumeByImpulsSetting2 = volumeByImpulsSetting2;
-	}
-
-	public float getVolumeByImpulsSetting3() {
-		return volumeByImpulsSetting3;
-	}
-
-	public void setVolumeByImpulsSetting3(float volumeByImpulsSetting3) {
-		this.volumeByImpulsSetting3 = volumeByImpulsSetting3;
-	}
-
-	public float getVolumeByImpulsSetting4() {
-		return volumeByImpulsSetting4;
-	}
-
-	public void setVolumeByImpulsSetting4(float volumeByImpulsSetting4) {
-		this.volumeByImpulsSetting4 = volumeByImpulsSetting4;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public int getHour() {
-		return hour;
-	}
-
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
-
-	public int getWorkHour() {
-		return workHour;
-	}
-
-	public void setWorkHour(int workHour) {
-		this.workHour = workHour;
-	}
 
 	public float getVolume1() {
 		return volume1;
@@ -320,67 +147,21 @@ public class MonthRecordV1 implements IMonthRecord{
 		this.energy2 = energy2;
 	}
 
-	public float getWeight1() {
-		return weight1;
+	@Override
+	public LocalDate getDate() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setWeight1(float weight1) {
-		this.weight1 = weight1;
-	}
-
-	public float getWeight2() {
-		return weight2;
-	}
-
-	public void setWeight2(float weight2) {
-		this.weight2 = weight2;
-	}
-
-	public float getWeight3() {
-		return weight3;
-	}
-
-	public void setWeight3(float weight3) {
-		this.weight3 = weight3;
-	}
-
-	public float getWeight4() {
-		return weight4;
-	}
-
-	public void setWeight4(float weight4) {
-		this.weight4 = weight4;
-	}
-
+	@Override
 	public int getErrorChannel1() {
-		return errorChannel1;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
-	public void setErrorChannel1(int errorChannel1) {
-		this.errorChannel1 = errorChannel1;
-	}
-
+	@Override
 	public int getErrorChannel2() {
-		return errorChannel2;
-	}
-
-	public void setErrorChannel2(int errorChannel2) {
-		this.errorChannel2 = errorChannel2;
-	}
-
-	public int getTimeError1() {
-		return timeError1;
-	}
-
-	public void setTimeError1(int timeError1) {
-		this.timeError1 = timeError1;
-	}
-
-	public int getTimeError2() {
-		return timeError2;
-	}
-
-	public void setTimeError2(int timeError2) {
-		this.timeError2 = timeError2;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

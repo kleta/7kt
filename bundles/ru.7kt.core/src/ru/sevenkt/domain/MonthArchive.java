@@ -30,8 +30,9 @@ public abstract class MonthArchive {
 			IMonthRecord mr = cons.newInstance(monthRecordData);
 			LocalDate date = mr.getDate();
 			if (date != null) {
+				mr.setValid(true);
 				records.put(date, mr);
-				System.out.println("adr=" + (i + 300) + " " + date + "=" + mr);
+//				System.out.println("adr=" + (i + 300) + " " + date + "=" + mr);
 			}
 		}
 	}
