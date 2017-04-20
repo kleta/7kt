@@ -14,7 +14,7 @@ import ru.sevenkt.domain.IJournalSettings;
 import ru.sevenkt.domain.ISettings;
 import ru.sevenkt.exceptions.VersionNotSupportedException;
 
-@Length(58060)
+@Length(32144)
 public class ArchiveV1 implements IArchive{
 	private byte[] data;
 
@@ -24,17 +24,17 @@ public class ArchiveV1 implements IArchive{
 	@Address(value = 80)
 	private CurrentDataV1 currentData;
 
-	@Address(value = 300)
+	@Address(value = 144)
 	private MonthArchiveV1 monthArchive;
 
-	@Address(value = 3000)
+	@Address(value = 512)
 	private DayArchiveV1 dayArchive;
 
-	@Address(value = 13500)
+	@Address(value = 2816)
 	private HourArchiveV1 hourArchive;
 
-	@Address(value = 55500)
-	private JournalSettingsV1 journalSettings;
+//	@Address(value = 55500)
+//	private JournalSettingsV1 journalSettings;
 
 	public ArchiveV1(byte[] data) throws Exception {
 		this.data = data;
@@ -112,16 +112,14 @@ public class ArchiveV1 implements IArchive{
 	}
 
 	public IJournalSettings getJournalSettings() {
-		return journalSettings;
+		return null;
 	}
 
 	public void setJournalSettings(JournalSettingsV1 journalSettings) {
-		this.journalSettings = journalSettings;
+		
 	}
 
-	@Override
-	public File toFile() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+
+	
 }

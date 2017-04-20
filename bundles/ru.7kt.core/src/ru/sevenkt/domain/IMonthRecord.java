@@ -11,5 +11,7 @@ public interface IMonthRecord {
 	int getErrorChannel1();
 
 	int getErrorChannel2();
+	
+	void setValid(boolean valid);
 
 }

@@ -11,7 +11,7 @@ import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(28)
+@Length(26)
 public class HourRecordV1 implements IHourRecord{
 	
 	private byte[] data;
@@ -85,15 +85,15 @@ public class HourRecordV1 implements IHourRecord{
 	private float energy2;
 	
 	
-	@Address(value=26)
-	@Length(value=1)
-	@Parameter(Parameters.ERROR_BYTE1)
-	private int errorChannel1;
-	
-	@Address(value=27)
-	@Length(value=1)
-	@Parameter(Parameters.ERROR_BYTE2)
-	private int errorChannel2;
+//	@Address(value=26)
+//	@Length(value=1)
+//	@Parameter(Parameters.ERROR_BYTE1)
+//	private int errorChannel1;
+//	
+//	@Address(value=27)
+//	@Length(value=1)
+//	@Parameter(Parameters.ERROR_BYTE2)
+//	private int errorChannel2;
 
 	private int hour;
 
@@ -231,16 +231,16 @@ public class HourRecordV1 implements IHourRecord{
 		this.energy2 = energy2;
 	}
 	public int getErrorChannel1() {
-		return errorChannel1;
+		return 0;
 	}
 	public void setErrorChannel1(int errorChannel1) {
-		this.errorChannel1 = errorChannel1;
+		
 	}
 	public int getErrorChannel2() {
-		return errorChannel2;
+		return 0;
 	}
 	public void setErrorChannel2(int errorChannel2) {
-		this.errorChannel2 = errorChannel2;
+		
 	}
 	public int getHour() {
 		return hour;

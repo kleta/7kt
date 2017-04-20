@@ -1,13 +1,9 @@
 package ru.sevenkt.domain.version1;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.domain.DayArchive;
-import ru.sevenkt.domain.IDayRecord;
 
-@Length(value = 13416)
+@Length(value = 2232)
 public class DayArchiveV1 extends DayArchive{
 	public static int MAX_MONTH_COUNT=6;
 	

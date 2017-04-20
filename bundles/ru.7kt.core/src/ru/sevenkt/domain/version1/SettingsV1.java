@@ -10,7 +10,7 @@ import ru.sevenkt.utils.DataUtils;
 
 @Length(80)
 public class SettingsV1 implements ISettings{
-	public static Integer[] SUPPORTED_ARCHIVE_VERSION = { 3 };
+	public static Integer[] SUPPORTED_ARCHIVE_VERSION = { 1 };
 
 	private byte[] data;
 
@@ -29,22 +29,6 @@ public class SettingsV1 implements ISettings{
 	@Address(value = 4)
 	@Length(value = 1)
 	private int deviceVersion;
-
-	@Address(value = 40)
-	@Length(value = 2)
-	private int wMin0;
-
-	@Address(value = 42)
-	@Length(value = 2)
-	private int wMin1;
-
-	@Address(value = 44)
-	@Length(value = 2)
-	private int wMax12;
-
-	@Address(value = 46)
-	@Length(value = 2)
-	private int wMax34;
 
 	@Address(value = 63)
 	@Length(value = 1)
@@ -150,37 +134,37 @@ public class SettingsV1 implements ISettings{
 		this.deviceVersion = deviceVersion;
 	}
 
-	public int getwMin0() {
-		return wMin0;
-	}
-
-	public void setwMin0(int wMin0) {
-		this.wMin0 = wMin0;
-	}
-
-	public int getwMin1() {
-		return wMin1;
-	}
-
-	public void setwMin1(int wMin1) {
-		this.wMin1 = wMin1;
-	}
-
-	public int getwMax12() {
-		return wMax12;
-	}
-
-	public void setwMax12(int wMax12) {
-		this.wMax12 = wMax12;
-	}
-
-	public int getwMax34() {
-		return wMax34;
-	}
-
-	public void setwMax34(int wMax34) {
-		this.wMax34 = wMax34;
-	}
+//	public int getwMin0() {
+//		return 0;
+//	}
+//
+//	public void setwMin0(int wMin0) {
+//		this.wMin0 = wMin0;
+//	}
+//
+//	public int getwMin1() {
+//		return wMin1;
+//	}
+//
+//	public void setwMin1(int wMin1) {
+//		this.wMin1 = wMin1;
+//	}
+//
+//	public int getwMax12() {
+//		return wMax12;
+//	}
+//
+//	public void setwMax12(int wMax12) {
+//		this.wMax12 = wMax12;
+//	}
+//
+//	public int getwMax34() {
+//		return wMax34;
+//	}
+//
+//	public void setwMax34(int wMax34) {
+//		this.wMax34 = wMax34;
+//	}
 
 	public int getNetAddress() {
 		return netAddress;
@@ -236,6 +220,30 @@ public class SettingsV1 implements ISettings{
 
 	public void setVolumeByImpulsSetting4(float volumeByImpulsSetting4) {
 		this.volumeByImpulsSetting4 = volumeByImpulsSetting4;
+	}
+
+	@Override
+	public int getwMax12() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getwMax34() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getwMin0() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getwMin1() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

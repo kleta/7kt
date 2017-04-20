@@ -47,18 +47,6 @@ public interface IDBService {
 	List<Journal> findJournal(Device device);
 
 
-	void insertMonthArchive(IArchive archive, Device device) throws Exception;
-
-
-
-	void insertHourArchive(IArchive archive, Device device) throws Exception;
-
-
-
-	void insertDayArchive(IArchive archive, Device device) throws Exception;
-
-
-
 	void insertJournalSettings(IArchive archive, Device device) throws Exception;
 
 
@@ -69,5 +57,17 @@ public interface IDBService {
 
 
 	Report findReport(Integer reportId);
+
+
+
+	void insertMonthArchive(ArchiveConverter archive) throws Exception;
+
+
+
+	void insertHourArchive(ArchiveConverter archive) throws Exception;
+
+
+
+	void insertDayArchive(ArchiveConverter archive) throws Exception;
 	
 }

@@ -30,19 +30,19 @@ public class SettingsV3 implements ISettings{
 	@Length(value = 1)
 	private int deviceVersion;
 
-	@Address(value = 40)
+	@Address(value = 32)
 	@Length(value = 2)
 	private int wMin0;
 
-	@Address(value = 42)
+	@Address(value = 34)
 	@Length(value = 2)
 	private int wMin1;
 
-	@Address(value = 44)
+	@Address(value = 36)
 	@Length(value = 2)
 	private int wMax12;
 
-	@Address(value = 46)
+	@Address(value = 38)
 	@Length(value = 2)
 	private int wMax34;
 

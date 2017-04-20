@@ -7,7 +7,7 @@ import ru.sevenkt.annotations.Length;
 import ru.sevenkt.domain.DayArchive;
 import ru.sevenkt.domain.IDayRecord;
 
-@Length(value = 13488)
+@Length(value = 10788)
 public class DayArchiveV4 extends DayArchive{
 	public static int MAX_MONTH_COUNT=6;
 	

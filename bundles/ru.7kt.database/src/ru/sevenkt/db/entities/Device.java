@@ -75,6 +75,13 @@ public class Device implements Serializable{
 
 	@Prop(name = "Вес импульса V4(л/имп)")
 	private float volumeByImpulsSetting4;
+	
+	private int didgitE=3;
+
+	private int didgitV=2;
+	
+	private int didgitM=2;
+	
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "NodeToDevice", joinColumns = {
@@ -105,6 +112,36 @@ public class Device implements Serializable{
 		this.connection = connection;
 	}
 
+
+
+	public int getDidgitE() {
+		return didgitE;
+	}
+
+
+	public void setDidgitE(int didgitE) {
+		this.didgitE = didgitE;
+	}
+
+
+	public int getDidgitV() {
+		return didgitV;
+	}
+
+
+	public void setDidgitV(int didgitV) {
+		this.didgitV = didgitV;
+	}
+
+
+	public int getDidgitM() {
+		return didgitM;
+	}
+
+
+	public void setDidgitM(int didgitM) {
+		this.didgitM = didgitM;
+	}
 
 
 	public List<Report> getReports() {
@@ -301,6 +338,9 @@ public class Device implements Serializable{
 		this.wMin0=new Integer(device.getwMin0());
 		this.wMin1=new Integer(device.getwMin1());
 		this.controlPower=device.controlPower;
+		this.didgitE=device.didgitE;
+		this.didgitV=device.didgitV;
+		this.didgitM=device.didgitM;
 		
 		params=new ArrayList<>();
 		params.addAll(device.getParams());		

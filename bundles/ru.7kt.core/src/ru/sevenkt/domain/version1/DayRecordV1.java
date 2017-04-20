@@ -15,7 +15,7 @@ import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.version3.DayRecordV3;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value = 56)
+@Length(value = 36)
 public class DayRecordV1 implements Cloneable, IDayRecord {
 
 	private byte[] data;
@@ -88,45 +88,7 @@ public class DayRecordV1 implements Cloneable, IDayRecord {
 	@Parameter(Parameters.E2)
 	private float energy2;
 
-	@Address(value = 36)
-	@Length(value = 4)
-	@Parameter(Parameters.M1)
-	private float weight1;
-
-	@Address(value = 40)
-	@Length(value = 4)
-	@Parameter(Parameters.M2)
-	private float weight2;
-
-	@Address(value = 44)
-	@Length(value = 4)
-	@Parameter(Parameters.M3)
-	private float weight3;
-
-	@Address(value = 48)
-	@Length(value = 4)
-	@Parameter(Parameters.M4)
-	private float weight4;
-
-	@Address(value = 52)
-	@Length(value = 1)
-	@Parameter(Parameters.ERROR_BYTE1)
-	private int errorChannel1;
-
-	@Address(value = 53)
-	@Length(value = 1)
-	@Parameter(Parameters.ERROR_BYTE2)
-	private int errorChannel2;
-
-	@Address(value = 54)
-	@Length(value = 1)
-	@Parameter(Parameters.ERROR_TIME1)
-	private int timeError1;
-
-	@Address(value = 55)
-	@Length(value = 1)
-	@Parameter(Parameters.ERROR_TIME2)
-	private int timeError2;
+	
 
 	private boolean valid;
 
@@ -182,30 +144,7 @@ public class DayRecordV1 implements Cloneable, IDayRecord {
 		valid = val;
 	}
 
-	public DayRecordV1 minus(DayRecordV1 dr1) throws CloneNotSupportedException {
-		DayRecordV1 dr2 = (DayRecordV1) this.clone();
-		dr2.data = null;
-		dr2.setAvgPressure1(getAvgPressure1() - dr1.getAvgPressure1());
-		dr2.setAvgPressure2(getAvgPressure2() - dr1.getAvgPressure2());
-		dr2.setAvgTemp1(getAvgTemp1() - dr1.getAvgTemp1());
-		dr2.setAvgTemp2(getAvgTemp2() - dr1.getAvgTemp2());
-		dr2.setAvgTemp3(getAvgTemp3() - dr1.getAvgTemp3()); 
-		dr2.setAvgTemp4(getAvgTemp4() - dr1.getAvgTemp4());
-		dr2.setEnergy1(new BigDecimal(getEnergy1()+"").subtract(new BigDecimal(dr1.getEnergy1()+"")).floatValue());
-		dr2.setEnergy2(new BigDecimal(getEnergy2()+"").subtract(new BigDecimal(dr1.getEnergy2()+"")).floatValue());
-		
-		dr2.setVolume1(new BigDecimal(getVolume1()+"").subtract(new BigDecimal(dr1.getVolume1()+"")).floatValue());
-		
-		
-		dr2.setVolume2(new BigDecimal(getVolume2()+"").subtract(new BigDecimal(dr1.getVolume2()+"")).floatValue());
-		dr2.setVolume3(new BigDecimal(getVolume3()+"").subtract(new BigDecimal(dr1.getVolume3()+"")).floatValue());
-		dr2.setVolume4(new BigDecimal(getVolume4()+"").subtract(new BigDecimal(dr1.getVolume4()+"")).floatValue());
-		dr2.setWeight1(getWeight1() - dr1.getWeight1());
-		dr2.setWeight2(getWeight2() - dr1.getWeight2());
-		dr2.setWeight3(getWeight3() - dr1.getWeight3());
-		dr2.setWeight4(getWeight4() - dr1.getWeight4());
-		return dr2;
-	}
+	
 
 	public boolean equalsValues(DayRecordV1 other) {
 		if (Float.floatToIntBits(energy1) != Float.floatToIntBits(other.energy1))
@@ -343,75 +282,6 @@ public class DayRecordV1 implements Cloneable, IDayRecord {
 		this.energy2 = energy2;
 	}
 
-	public float getWeight1() {
-		return weight1;
-	}
-
-	public void setWeight1(float weight1) {
-		this.weight1 = weight1;
-	}
-
-	public float getWeight2() {
-		return weight2;
-	}
-
-	public void setWeight2(float weight2) {
-		this.weight2 = weight2;
-	}
-
-	public float getWeight3() {
-		return weight3;
-	}
-
-	public void setWeight3(float weight3) {
-		this.weight3 = weight3;
-	}
-
-	public float getWeight4() {
-		return weight4;
-	}
-
-	public void setWeight4(float weight4) {
-		this.weight4 = weight4;
-	}
-
-	public int getErrorChannel1() {
-		return errorChannel1;
-	}
-
-	public void setErrorChannel1(int errorChannel1) {
-		this.errorChannel1 = errorChannel1;
-	}
-
-	public int getErrorChannel2() {
-		return errorChannel2;
-	}
-
-	public void setErrorChannel2(int errorChannel2) {
-		this.errorChannel2 = errorChannel2;
-	}
-
-	public int getTimeError1() {
-		return timeError1;
-	}
-
-	public void setTimeError1(int timeError1) {
-		this.timeError1 = timeError1;
-	}
-
-	public int getTimeError2() {
-		return timeError2;
-	}
-
-	public void setTimeError2(int timeError2) {
-		this.timeError2 = timeError2;
-	}
-
-	@Override
-	public IDayRecord minus(IDayRecord dr1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 	@Override
@@ -429,14 +299,24 @@ public class DayRecordV1 implements Cloneable, IDayRecord {
 	@Override
 	public String toString() {
 		return "DayRecordV1 [avgTemp1=" + avgTemp1 + ", avgPressure1=" + avgPressure1 + ", volume1=" + volume1
-				+ ", energy1=" + energy1 + ", weight1=" + weight1 + ", errorChannel1=" + errorChannel1
-				+ ", errorChannel2=" + errorChannel2 + ", timeError1=" + timeError1 + ", timeError2=" + timeError2
-				+ "]";
+				+ ", energy1=" + energy1 + "]";
 	}
 	@Override
 	public void setPrevDayRecord(IDayRecord record) {
 		prevDayRecord=(DayRecordV1) record;
 		
+	}
+
+	@Override
+	public int getErrorChannel1() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getErrorChannel2() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

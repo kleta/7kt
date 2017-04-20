@@ -417,12 +417,6 @@ public class DayRecordV4 implements Cloneable, IDayRecord {
 		this.timeError2 = timeError2;
 	}
 
-	@Override
-	public IDayRecord minus(IDayRecord dr1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public int getErrorTime1() {

@@ -48,6 +48,7 @@
       <feature id="org.eclipse.ecf.core.ssl.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
       <feature id="ru.7kt.feature.reader" version="1.0.0.qualifier"/>
+      <feature id="org.eclipse.e4.ui.progress.feature" version="0.1.0.qualifier"/>
    </features>
 
    <configurations>

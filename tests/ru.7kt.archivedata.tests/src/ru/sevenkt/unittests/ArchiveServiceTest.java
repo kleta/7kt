@@ -56,8 +56,6 @@ public class ArchiveServiceTest {
 		IArchive archive = as.readArchiveFromFile(file);
 		ICurrentData cd = archive.getCurrentData();
 		DayArchive da = archive.getDayArchive();
-		// IHourArchive ha = archive.getHourArchive();
-		// IJournalSettings js = archive.getJournalSettings();
 		MonthArchive ma = archive.getMonthArchive();
 	}
 

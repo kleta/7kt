@@ -11,7 +11,7 @@ import ru.sevenkt.domain.HourArchive;
 import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.ISettings;
 
-@Length(value = 41664)
+@Length(value = 29328)
 public class HourArchiveV1 extends HourArchive{
 	public static int MAX_DAY_COUNT = 59;
 
