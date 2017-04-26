@@ -1,6 +1,9 @@
 package ru.sevenkt.app.ui.handlers;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -21,23 +24,35 @@ public class ImportArchiveJob extends Job {
 
 	private IArchive archive;
 
+	@Inject
 	private IDBService dbService;
 
+	@Inject
 	private IEventBroker broker;
 
-	public ImportArchiveJob(String name, IArchive archive, IDBService dbService, IEventBroker broker) {
-		super(name);
+	public ImportArchiveJob() {
+		super("Импорт архива");
+//		this.archive = archive;
+//		this.dbService = dbService;
+//		this.broker=broker;
+	}
+	
+	public IArchive getArchive() {
+		return archive;
+	}
+
+	public void setArchive(IArchive archive) {
 		this.archive = archive;
-		this.dbService = dbService;
-		this.broker=broker;
 	}
 
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		monitor.beginTask("Импорт архива " + archive.getName(), 4);
 		try {
-			Device device = insertOrUpdateDeviceSettings(archive.getSettings());
+		//	dbService.initEM();
 			ArchiveConverter ac=new ArchiveConverter(archive);
+			Device device = ac.getDevice();
+			insertOrUpdateDeviceSettings(device);
 			System.out.println("Start job "+archive.getName());
 			broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 
@@ -60,37 +75,26 @@ public class ImportArchiveJob extends Job {
 			
 
 		} catch (Exception e) {
-			MultiStatus result = new MultiStatus("ru.7kt.reader", IStatus.ERROR, e.getMessage(), e);
-			StackTraceElement[] elements = e.getStackTrace();
-			for (StackTraceElement stackTraceElement : elements) {
-				result.addAll(new Status(IStatus.ERROR, "ru.7kt.reader", stackTraceElement.toString()));
-
-			}
-			return result;
+			List<Status> childStatuses = new ArrayList<>();
+            StackTraceElement[] stackTraces = e.getStackTrace();
+             for (StackTraceElement stackTrace: stackTraces) {
+                    Status status = new Status(IStatus.ERROR,
+                                    "ru.7kt.app", stackTrace.toString());
+                    childStatuses.add(status);
+            }
+            MultiStatus ms = new MultiStatus("ru.7kt.app",
+                            IStatus.ERROR, childStatuses.toArray(new Status[] {}),
+                            "Произошла ошибка при импорте "+archive.getName(), e);
+            return ms;
 		} finally {
 			monitor.done();
 		}
 		return Status.OK_STATUS;
 	}
 
-	private Device insertOrUpdateDeviceSettings(ISettings settings) throws Exception {
-		Device device = dbService.findDeviceBySerialNum(settings.getSerialNumber());
-		if (device == null) {
-			device = new Device();
-			device.setDeviceName("Новое устройство");
-			device.setDeviceVersion(settings.getDeviceVersion());
-			device.setFormulaNum(settings.getFormulaNum());
-			device.setNetAddress(settings.getNetAddress());
-			device.setSerialNum(settings.getSerialNumber() + "");
-			device.setTempColdWaterSetting(settings.getTempColdWaterSetting());
-			device.setVolumeByImpulsSetting1(settings.getVolumeByImpulsSetting1() * 1000);
-			device.setVolumeByImpulsSetting2(settings.getVolumeByImpulsSetting2() * 1000);
-			device.setVolumeByImpulsSetting3(settings.getVolumeByImpulsSetting3() * 1000);
-			device.setVolumeByImpulsSetting4(settings.getVolumeByImpulsSetting4() * 1000);
-			device.setwMax12(settings.getwMax12());
-			device.setwMax34(settings.getwMax34());
-			device.setwMin0(settings.getwMin0());
-			device.setwMin1(settings.getwMin1());
+	private Device insertOrUpdateDeviceSettings(Device device) throws Exception {
+		Device d = dbService.findDeviceBySerialNum(Integer.parseInt(device.getSerialNum()));
+		if (d == null) {
 			ArrayList<Params> params = new ArrayList<>();
 			params.add(new Params(Parameters.AVG_TEMP1));
 			params.add(new Params(Parameters.AVG_TEMP2));
@@ -110,20 +114,19 @@ public class ImportArchiveJob extends Job {
 				params.add(new Params(Parameters.M3));
 				params.add(new Params(Parameters.M4));
 			}
+			device.setDeviceName("Тепловычислитель");
+			device.setParams(params);
 		} else {
-			device.setDeviceVersion(settings.getDeviceVersion());
-			device.setFormulaNum(settings.getFormulaNum());
-			device.setNetAddress(settings.getNetAddress());
-			//device.setSerialNum(settings.getSerialNumber() + "");
-			device.setTempColdWaterSetting(settings.getTempColdWaterSetting());
-			device.setVolumeByImpulsSetting1(settings.getVolumeByImpulsSetting1() * 1000);
-			device.setVolumeByImpulsSetting2(settings.getVolumeByImpulsSetting2() * 1000);
-			device.setVolumeByImpulsSetting3(settings.getVolumeByImpulsSetting3() * 1000);
-			device.setVolumeByImpulsSetting4(settings.getVolumeByImpulsSetting4() * 1000);
-			device.setwMax12(settings.getwMax12());
-			device.setwMax34(settings.getwMax34());
-			device.setwMin0(settings.getwMin0());
-			device.setwMin1(settings.getwMin1());
+			device.setId(d.getId());
+			device.setConnection(d.getConnection());
+			device.setDeviceName(d.getDeviceName());
+			device.setControlPower(d.isControlPower());
+			device.setDidgitE(d.getDidgitE());
+			device.setDidgitM(d.getDidgitM());
+			device.setDidgitV(d.getDidgitV());
+			device.setParams(d.getParams());
+			device.setReports(d.getReports());
+			device.setNodes(d.getNodes());
 		}
 		dbService.saveDevice(device);
 		return device;

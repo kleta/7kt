@@ -7,11 +7,10 @@ import ru.sevenkt.domain.DayArchive;
 public class DayArchiveV1 extends DayArchive{
 	public static int MAX_MONTH_COUNT=6;
 	
-	private byte[] data;
 
-	public DayArchiveV1(byte[] dayData) {
+	public DayArchiveV1(byte[] dayData) throws Exception {
 		super(dayData);
-		this.data = dayData;
+		parseData(DayRecordV1.class);
 	}
 
 //	public DayRecord getDayRecord(LocalDate requestDate, LocalDateTime archiveCurrentDateTime) throws Exception {

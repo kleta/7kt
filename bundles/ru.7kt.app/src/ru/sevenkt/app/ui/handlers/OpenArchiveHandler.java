@@ -134,8 +134,11 @@ public class OpenArchiveHandler implements EventHandler {
 				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
+				parameters=parameters.stream().filter(p->!p.getCategory().equals(ParametersConst.TEMP))
+						.filter(p->!p.getCategory().equals(ParametersConst.PRESSURE))
+						.filter(p->!p.equals(Parameters.T1_SUB_T2))
+						.filter(p->!p.equals(Parameters.T3_SUB_T4)).collect(Collectors.toList());
 				addMonthColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
-				// addMonthErrorsColumn()
 				break;
 			case DAY:
 				hoursInArchivePeriod = (int) ChronoUnit.HOURS.between(startDateTime, startDateTime.plusDays(1));
@@ -143,51 +146,55 @@ public class OpenArchiveHandler implements EventHandler {
 				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
-				addDayColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);
+				addDayColumns(startDateTime, groupByDateTimeMeasurings, parameters, tr, lm);				
 				break;
 			case HOUR:
 				startDateTime = startDateTime.plusHours(1);
 				tr.setFirstColumn(startDateTime.format(formatter));
 				lm = groupByDateTimeMeasurings.get(startDateTime);
 				le = groupByDateTimeErrors.get(startDateTime);
+				parameters=parameters.stream().filter(p->!p.getCategory().equals(ParametersConst.WEIGHT))
+						.filter(p->!p.equals(Parameters.M1_SUB_M2))
+						.filter(p->!p.equals(Parameters.M3_SUB_M4))
+						.collect(Collectors.toList());
 				addHourColumns(parameters, tr, lm);
 				break;
 			default:
 				break;
 			}
 			if (parameters.contains(Parameters.V1_SUB_V2)) {
-				Object v1 = tr.getValues().get(Parameters.V1);
-				Object v2 = tr.getValues().get(Parameters.V2);
+				BigDecimal v1 = (BigDecimal) tr.getValues().get(Parameters.V1);
+				BigDecimal v2 = (BigDecimal) tr.getValues().get(Parameters.V2);
 				if (v1 != null && v2 != null)
-					tr.getValues().put(Parameters.V1_SUB_V2, ((Double) v1) - ((Double) v2));
+					tr.getValues().put(Parameters.V1_SUB_V2, v1.subtract(v2));
 			}
 			if (parameters.contains(Parameters.V3_SUB_V4)) {
-				Object v3 = tr.getValues().get(Parameters.V3);
-				Object v4 = tr.getValues().get(Parameters.V4);
+				BigDecimal v3 = (BigDecimal) tr.getValues().get(Parameters.V3);
+				BigDecimal v4 = (BigDecimal) tr.getValues().get(Parameters.V4);
 				if (v3 != null && v4 != null)
-					tr.getValues().put(Parameters.V3_SUB_V4, ((Double) v3) - ((Double) v4));
+					tr.getValues().put(Parameters.V3_SUB_V4, v3.subtract(v4));
 			}
 			if (parameters.contains(Parameters.T1_SUB_T2)) {
-				Object t1 = tr.getValues().get(Parameters.AVG_TEMP1);
-				Object t2 = tr.getValues().get(Parameters.AVG_TEMP2);
+				BigDecimal t1 = (BigDecimal) tr.getValues().get(Parameters.AVG_TEMP1);
+				BigDecimal t2 = (BigDecimal) tr.getValues().get(Parameters.AVG_TEMP2);
 				if (t1 != null && t2 != null)
-					tr.getValues().put(Parameters.T1_SUB_T2, ((Double) t1) - ((Double) t2));
+					tr.getValues().put(Parameters.T1_SUB_T2, t1.subtract(t2));
 			}
 			if (parameters.contains(Parameters.T3_SUB_T4)) {
-				Object t1 = tr.getValues().get(Parameters.AVG_TEMP3);
-				Object t2 = tr.getValues().get(Parameters.AVG_TEMP4);
+				BigDecimal t1 = (BigDecimal) tr.getValues().get(Parameters.AVG_TEMP3);
+				BigDecimal t2 = (BigDecimal) tr.getValues().get(Parameters.AVG_TEMP4);
 				if (t1 != null && t2 != null)
-					tr.getValues().put(Parameters.T3_SUB_T4, ((Double) t1) - ((Double) t2));
+					tr.getValues().put(Parameters.T3_SUB_T4, t1.subtract(t2));
 			}
 			if (parameters.contains(Parameters.NO_ERROR_TIME1)) {
-				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME1);
+				BigDecimal t1 = (BigDecimal) tr.getValues().get(Parameters.ERROR_TIME1);
 				if (t1 != null)
-					tr.getValues().put(Parameters.NO_ERROR_TIME1, (hoursInArchivePeriod - t1.intValue()) + 0.0);
+					tr.getValues().put(Parameters.NO_ERROR_TIME1, new BigDecimal(hoursInArchivePeriod - t1.intValue()));
 			}
 			if (parameters.contains(Parameters.NO_ERROR_TIME2)) {
-				Double t1 = (Double) tr.getValues().get(Parameters.ERROR_TIME2);
+				BigDecimal t1 = (BigDecimal) tr.getValues().get(Parameters.ERROR_TIME1);
 				if (t1 != null)
-					tr.getValues().put(Parameters.NO_ERROR_TIME2, (hoursInArchivePeriod - t1.intValue()) + 0.0);
+					tr.getValues().put(Parameters.NO_ERROR_TIME2, new BigDecimal(hoursInArchivePeriod - t1.intValue()));
 			}	
 			if (tr.getFirstColumn() != null){
 				addErrorColumns(tr, le);
@@ -195,7 +202,8 @@ public class OpenArchiveHandler implements EventHandler {
 			}
 		}
 		addSumRow(listTableRow, parameters);
-		addAvgRow(listTableRow, parameters);
+		if(!archiveType.equals(ArchiveTypes.MONTH))
+			addAvgRow(listTableRow, parameters);
 		result.put(AppEventConstants.ARCHIVE_PARAMETERS, parameters);
 		result.put(AppEventConstants.TABLE_ROWS, listTableRow);
 		result.put(AppEventConstants.DEVICE, device);
@@ -211,17 +219,17 @@ public class OpenArchiveHandler implements EventHandler {
 					|| parameter.equals(Parameters.AVG_TEMP3) || parameter.equals(Parameters.AVG_TEMP4)
 					|| parameter.equals(Parameters.AVG_P1) || parameter.equals(Parameters.AVG_P2)
 					|| parameter.equals(Parameters.T1_SUB_T2) || parameter.equals(Parameters.T3_SUB_T4)) {
-				Double val = new Double(0);
+				BigDecimal val = new BigDecimal("0");
 				int count = 0;
 				for (TableRow tr : listTableRow) {
 					Object value = tr.getValues().get(parameter);
-					if (value != null && value instanceof Double && (Double)value>-60 && (Double)value<150) {
-						val = val + (double) value;
+					if (value != null && value instanceof BigDecimal) {		
+						val = val.add((BigDecimal) value);
 						count++;
 					}
 				}
 				if (count != 0)
-					val = new BigDecimal(val / count + "").setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+					val = val.divide(new BigDecimal(count+""),2, BigDecimal.ROUND_HALF_UP);
 				trAvg.getValues().put(parameter, val);
 			} else {
 				trAvg.getValues().put(parameter, "");
@@ -240,12 +248,16 @@ public class OpenArchiveHandler implements EventHandler {
 					&& !parameter.equals(Parameters.AVG_P1) && !parameter.equals(Parameters.AVG_P2)
 					&& !parameter.equals(Parameters.T1_SUB_T2) && !parameter.equals(Parameters.T3_SUB_T4)
 					&& !parameter.equals(Parameters.ERROR_CODE1) && !parameter.equals(Parameters.ERROR_CODE2)) {
-				Double val = new Double(0);
+				BigDecimal val = new BigDecimal(""+0);
 				for (TableRow tr : listTableRow) {
-					if (tr.getValues().get(parameter) != null)
-						val = val + (double) tr.getValues().get(parameter);
+					Map<Parameters, Object> values = tr.getValues();
+					if(values.get(parameter) instanceof Double)
+						System.out.println();
+					BigDecimal object = (BigDecimal) values.get(parameter);
+					if (object != null)
+						val = val.add(object);
 				}
-				val = new BigDecimal(val + "").setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
+				//val = new BigDecimal(val + "").setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();
 				trSum.getValues().put(parameter, val);
 			} else {
 				trSum.getValues().put(parameter, "");
@@ -279,22 +291,22 @@ public class OpenArchiveHandler implements EventHandler {
 					Measuring prevDayMeasuring = lmPrevDay.get(i);
 					if (parameter.equals(prevDayMeasuring.getParameter())
 							&& prevDayMeasuring.getValue().doubleValue() <= measuring.getValue().doubleValue())
-						tr.getValues().put(parameter, measuring.getValue().doubleValue() - prevDayMeasuring.getValue().doubleValue());
+						tr.getValues().put(parameter, measuring.getValue().subtract(prevDayMeasuring.getValue()));
 				} else if (!parameter.equals(Parameters.ERROR_BYTE1) && !parameter.equals(Parameters.ERROR_BYTE2))
 					tr.getValues().put(parameter, measuring.getValue());
 			}
 		}
 		if (parameters.contains(Parameters.M1_SUB_M2)) {
-			Object m1 = tr.getValues().get(Parameters.M1);
-			Object m2 = tr.getValues().get(Parameters.M2);
+			BigDecimal m1 = (BigDecimal) tr.getValues().get(Parameters.M1);
+			BigDecimal m2 = (BigDecimal) tr.getValues().get(Parameters.M2);
 			if (m1 != null && m2 != null)
-				tr.getValues().put(Parameters.M1_SUB_M2, ((Double) m1) - ((Double) m2));
+				tr.getValues().put(Parameters.M1_SUB_M2, m1.subtract(m2));
 		}
 		if (parameters.contains(Parameters.M3_SUB_M4)) {
-			Object m1 = tr.getValues().get(Parameters.M3);
-			Object m2 = tr.getValues().get(Parameters.M4);
+			BigDecimal m1 = (BigDecimal) tr.getValues().get(Parameters.M3);
+			BigDecimal m2 = (BigDecimal) tr.getValues().get(Parameters.M4);
 			if (m1 != null && m2 != null)
-				tr.getValues().put(Parameters.M3_SUB_M4, ((Double) m1) - ((Double) m2));
+				tr.getValues().put(Parameters.M3_SUB_M4, m1.subtract(m2));
 		}
 	}
 
@@ -313,7 +325,7 @@ public class OpenArchiveHandler implements EventHandler {
 					if (measuring.getParameter().equals(prevMonthMeasuring.getParameter())
 							&& prevMonthMeasuring.getValue().doubleValue() <= measuring.getValue().doubleValue())
 						tr.getValues().put(measuring.getParameter(),
-								measuring.getValue().doubleValue() - prevMonthMeasuring.getValue().doubleValue());
+								measuring.getValue().subtract(prevMonthMeasuring.getValue()));
 				} else if (!parameters.equals(Parameters.ERROR_BYTE1) && !parameters.equals(Parameters.ERROR_BYTE2))
 					tr.getValues().put(measuring.getParameter(), measuring.getValue());
 			}

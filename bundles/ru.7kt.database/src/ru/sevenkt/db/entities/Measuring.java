@@ -76,6 +76,7 @@ public class Measuring {
 	@Column(insertable = false, updatable = false)
 	private ArchiveTypes archiveType;
 
+	@Column(precision = 20, scale = 5)
 	private BigDecimal value;
 	
 	private LocalDateTime timestamp;

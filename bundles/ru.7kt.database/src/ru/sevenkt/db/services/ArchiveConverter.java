@@ -4,17 +4,25 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.h2.constant.ErrorCode;
 
 import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.DayArchive;
+import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.HourArchive;
 import ru.sevenkt.domain.IArchive;
 import ru.sevenkt.domain.IDayRecord;
@@ -37,7 +45,11 @@ public class ArchiveConverter {
 
 	private Map<LocalDateTime, Map<Parameters, BigDecimal>> hourData;
 
-	// private Map<LocalDateTime, Map<,BigDecimal>> monthError;
+	private Map<LocalDate, Set<ErrorCode>> monthErrors;
+
+	private Map<LocalDate, Set<ErrorCode>> dayErrors;
+
+	private Map<LocalDateTime, Set<ErrorCodes>> hourErrors;
 
 	private List<Journal> journalData;
 
@@ -58,6 +70,81 @@ public class ArchiveConverter {
 		device.setwMax34(settings.getwMax34());
 		device.setwMin0(settings.getwMin0());
 		device.setwMin1(settings.getwMin1());
+	}
+
+	public List<Parameters> getAccountParameters(int fNum) {
+		int firstInput = fNum % 10;
+		List<Parameters> params = new ArrayList<>(Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1 }));
+		switch (firstInput) {
+		case 1:
+			params.add(Parameters.AVG_TEMP2);
+			params.add(Parameters.V1);
+			params.add(Parameters.V2);
+			break;
+		case 2:
+			params.add(Parameters.AVG_TEMP2);
+			params.add(Parameters.V1);
+			break;
+		case 3:
+			params.add(Parameters.AVG_TEMP2);
+			params.add(Parameters.V2);
+			break;
+		case 5:
+			params.add(Parameters.V1);
+			params.add(Parameters.V2);
+			break;
+		case 6:
+			params.add(Parameters.V1);
+			break;
+		}
+		params.add(Parameters.AVG_P1);
+		params.add(Parameters.E1);
+		if (fNum > 10) {
+			params.add(Parameters.AVG_TEMP3);
+			int secondInput = fNum / 10;
+			switch (secondInput) {
+			case 1:
+				params.add(Parameters.AVG_TEMP4);
+				params.add(Parameters.V3);
+				params.add(Parameters.V4);
+				params.add(Parameters.AVG_P2);
+				params.add(Parameters.E2);
+				break;
+			case 2:
+				params.add(Parameters.AVG_TEMP4);
+				params.add(Parameters.V3);
+				params.add(Parameters.AVG_P2);
+				params.add(Parameters.E2);
+				break;
+			case 3:
+				params.add(Parameters.AVG_TEMP4);
+				params.add(Parameters.V4);
+				params.add(Parameters.AVG_P2);
+				params.add(Parameters.E2);
+				break;
+			case 5:
+				params.add(Parameters.V3);
+				params.add(Parameters.V4);
+				params.add(Parameters.AVG_P2);
+				params.add(Parameters.E2);
+				break;
+			case 6:
+				params.add(Parameters.V3);
+				params.add(Parameters.AVG_P2);
+				params.add(Parameters.E2);
+				break;
+			case 4:
+				params.add(Parameters.V3);
+				break;
+			}
+
+		}
+		if (archive.getSettings().getDeviceVersion() == 4) {
+			params.add(Parameters.AVG_P3);
+			params.add(Parameters.AVG_P4);
+		}
+
+		return params;
 	}
 
 	private void initMonthData() throws Exception {
@@ -103,9 +190,6 @@ public class ArchiveConverter {
 		LocalDate recordDate = archiveDateTime.minusMonths(monthDeep).toLocalDate();
 		dayData = new HashMap<>();
 		while (recordDate.isBefore(archiveDateTime.toLocalDate())) {
-
-			if (recordDate.isAfter(LocalDate.parse("2015-12-30")))
-				System.out.println();
 			IDayRecord dr = da.getDayRecord(recordDate);
 			if (dr != null && dr.isValid()) {
 				Field[] fields = dr.getClass().getDeclaredFields();
@@ -167,13 +251,13 @@ public class ArchiveConverter {
 			Map<Parameters, BigDecimal> valDay = dayData.get(recordDate.plusDays(1));
 			Map<Parameters, BigDecimal> valPrevDay = dayData.get(recordDate);
 			Map<Parameters, BigDecimal> multiplicands;
-			if(valDay==null)
-				multiplicands=new HashMap<>();
+			if (valDay == null || valPrevDay == null)
+				multiplicands = new HashMap<>();
 			else
-				multiplicands = calculateMultiplicands(sumDay, valPrevDay, valDay);		
+				multiplicands = calculateMultiplicands(sumDay, valPrevDay, valDay);
 			List<IHourRecord> hrs = ha.getRecordsByDay(recordDate);
 			for (IHourRecord hr : hrs) {
-				if (hr!=null && hr.isValid()) {
+				if (hr != null && hr.isValid()) {
 					Field[] fields = hr.getClass().getDeclaredFields();
 					for (Field field : fields) {
 						field.setAccessible(true);
@@ -282,6 +366,17 @@ public class ArchiveConverter {
 									pData.put(parameter, new BigDecimal(val + ""));
 								}
 								break;
+							case ERROR_BYTE1:
+							case ERROR_BYTE2:
+								if (pData == null) {
+									pData = new HashMap<>();
+									hourData.put(hr.getDateTime(), pData);
+								}
+								val = field.getInt(hr);
+								pData.put(parameter, new BigDecimal(val + ""));
+								break;
+							default:
+								break;
 							}
 
 						}
@@ -295,13 +390,11 @@ public class ArchiveConverter {
 	private Map<Parameters, BigDecimal> calculateMultiplicands(Map<Parameters, BigDecimal> sumDay,
 			Map<Parameters, BigDecimal> valPrevDay, Map<Parameters, BigDecimal> valDay) {
 		Map<Parameters, BigDecimal> map = new HashMap<>();
-		if(valDay==null)
-			System.out.println();
 		for (Parameters parameter : sumDay.keySet()) {
 			BigDecimal pSumVal = sumDay.get(parameter);
 			BigDecimal pPrevDayVal = valPrevDay.get(parameter);
 			BigDecimal pDayVal = valDay.get(parameter);
-			
+
 			if (pPrevDayVal != null) {
 				if (!(pSumVal.compareTo(BigDecimal.ZERO) == 0)) {
 					float impuls;
@@ -321,6 +414,8 @@ public class ArchiveConverter {
 					case V4:
 						impuls = archive.getSettings().getVolumeByImpulsSetting4();
 						pSumVal = pSumVal.multiply(new BigDecimal("" + impuls));
+						break;
+					default:
 						break;
 					}
 					BigDecimal sub = pDayVal.subtract(pPrevDayVal);
@@ -393,6 +488,286 @@ public class ArchiveConverter {
 			}
 		}
 		return mList;
+	}
+
+	public List<Error> getHourErrors() throws Exception {
+		List<Error> errors = new ArrayList<>();
+		if (hourData == null) {
+			initDayData();
+			initHourData();
+		}
+		if (hourErrors == null)
+			initHourErrors();
+		for (LocalDateTime dateTime : hourErrors.keySet()) {
+			Set<ErrorCodes> codes = hourErrors.get(dateTime);
+			for (ErrorCodes errorCodes : codes) {
+				Error error = new Error();
+				error.setArchiveType(ArchiveTypes.HOUR);
+				error.setDateTime(dateTime);
+				error.setDevice(device);
+				error.setErrorCode(errorCodes);
+				errors.add(error);
+			}
+		}
+		return errors;
+	}
+
+	private void initHourErrors() {
+		hourErrors = new HashMap<>();
+		float min11 = archive.getSettings().getwMin0() * archive.getSettings().getVolumeByImpulsSetting1();
+		float min21 = archive.getSettings().getwMin0() * archive.getSettings().getVolumeByImpulsSetting2();
+		
+		
+
+		float min32 = archive.getSettings().getwMin1() * archive.getSettings().getVolumeByImpulsSetting3();
+		float min42 = archive.getSettings().getwMin1() * archive.getSettings().getVolumeByImpulsSetting4();
+
+		min11=min21=min32=min42=0;
+		
+		float max11 = archive.getSettings().getwMax12() * archive.getSettings().getVolumeByImpulsSetting1();
+		float max21 = archive.getSettings().getwMax12() * archive.getSettings().getVolumeByImpulsSetting2();
+
+		float max32 = archive.getSettings().getwMax34() * archive.getSettings().getVolumeByImpulsSetting3();
+		float max42 = archive.getSettings().getwMax34() * archive.getSettings().getVolumeByImpulsSetting4();
+		Set<ErrorCodes> errorSet = null;
+		for (LocalDateTime dateTime : hourData.keySet()) {
+			int firstInput = archive.getSettings().getFormulaNum() % 10;
+			errorSet = hourErrors.get(dateTime);
+			if (errorSet == null) {
+				errorSet = new HashSet<>();
+			}
+			BigDecimal t1 = hourData.get(dateTime).get(Parameters.AVG_TEMP1);
+			BigDecimal t2 = hourData.get(dateTime).get(Parameters.AVG_TEMP2);
+			BigDecimal v1 = hourData.get(dateTime).get(Parameters.V1);
+			BigDecimal v2 = hourData.get(dateTime).get(Parameters.V2);
+			BigDecimal t3 = hourData.get(dateTime).get(Parameters.AVG_TEMP3);
+			BigDecimal t4 = hourData.get(dateTime).get(Parameters.AVG_TEMP4);
+			BigDecimal v3 = hourData.get(dateTime).get(Parameters.V3);
+			BigDecimal v4 = hourData.get(dateTime).get(Parameters.V4);
+			switch (firstInput) {
+			case 1: {
+
+				if (t1 == null || t2 == null) {
+
+					errorSet.add(ErrorCodes.T1);
+				} else {
+
+					if (t1.doubleValue() < t2.doubleValue())
+						errorSet.add(ErrorCodes.E1);
+				}
+				if (v1 != null && v2 != null) {
+
+					if (v1.doubleValue() == 0 || v1.doubleValue() < min11 || v1.doubleValue() > max11
+							|| v2.doubleValue() == 0 || v2.doubleValue() < min21 || v2.doubleValue() > max21)
+						errorSet.add(ErrorCodes.V1);
+					if (v1.doubleValue() * 1.2 < v2.doubleValue())
+						errorSet.add(ErrorCodes.E1);
+				}
+
+				break;
+			}
+			case 2: {
+
+				if (t1 == null || t2 == null) {
+
+					errorSet.add(ErrorCodes.T1);
+				} else {
+
+					if (t1.doubleValue() < t2.doubleValue())
+						errorSet.add(ErrorCodes.E1);
+				}
+				if (v1 != null) {
+					if (v1.doubleValue() == 0 || v1.doubleValue() < min11 || v1.doubleValue() > max11)
+						errorSet.add(ErrorCodes.V1);
+				}
+				break;
+			}
+			case 3: {
+
+				if (t1 == null || t2 == null) {
+
+					errorSet.add(ErrorCodes.T1);
+				} else {
+
+					if (t1.doubleValue() < t2.doubleValue())
+						errorSet.add(ErrorCodes.E1);
+				}
+				if (v2 != null) {
+
+					if (v2.doubleValue() == 0 || v2.doubleValue() < min21 || v2.doubleValue() > max21)
+						errorSet.add(ErrorCodes.V1);
+				}
+
+				break;
+			}
+			case 5: {
+
+				if (t1 == null) {
+
+					errorSet.add(ErrorCodes.T1);
+				}
+				if (v1 != null && v2 != null) {
+					if (v1.doubleValue() == 0 || v1.doubleValue() < min11 || v1.doubleValue() > max11
+							|| v2.doubleValue() == 0 || v2.doubleValue() < min21 || v2.doubleValue() > max21)
+						errorSet.add(ErrorCodes.V1);
+					if (v1.doubleValue() * 1.2 < v2.doubleValue())
+						errorSet.add(ErrorCodes.E1);
+				}
+
+				break;
+			}
+			case 6: {
+
+				if (t1 == null) {
+					errorSet.add(ErrorCodes.T1);
+				}
+				break;
+			}
+			}
+
+			if (archive.getSettings().getFormulaNum() > 10) {
+				int secondInput = archive.getSettings().getFormulaNum() / 10;
+				switch (secondInput) {
+				case 1: {
+
+					if (t3 == null || t4 == null) {
+
+						errorSet.add(ErrorCodes.T2);
+					} else {
+
+						if (t3.doubleValue() < t4.doubleValue())
+							errorSet.add(ErrorCodes.E2);
+					}
+					if (v3 != null && v4 != null) {
+
+						if (v3.doubleValue() == 0 || v3.doubleValue() < min32 || v3.doubleValue() > max32
+								|| v4.doubleValue() == 0 || v4.doubleValue() < min42 || v4.doubleValue() > max42)
+							errorSet.add(ErrorCodes.V2);
+						if (v3.doubleValue() * 1.2 < v4.doubleValue())
+							errorSet.add(ErrorCodes.E2);
+					}
+
+					break;
+				}
+				case 2: {
+
+					if (t3 == null || t4 == null) {
+
+						errorSet.add(ErrorCodes.T2);
+					} else {
+						errorSet = hourErrors.get(dateTime);
+						if (errorSet == null) {
+							errorSet = new HashSet<>();
+						}
+						if (t3.doubleValue() < t4.doubleValue())
+							errorSet.add(ErrorCodes.E2);
+					}
+					if (v3 != null) {
+
+						if (v3.doubleValue() == 0 || v3.doubleValue() < min32 || v3.doubleValue() > max32)
+							errorSet.add(ErrorCodes.V2);
+					}
+
+					break;
+				}
+				case 3: {
+
+					if (t3 == null || t4 == null) {
+
+						errorSet.add(ErrorCodes.T2);
+					} else {
+
+						if (t3.doubleValue() < t4.doubleValue())
+							errorSet.add(ErrorCodes.E2);
+					}
+					if (v4 != null) {
+
+						if (v4.doubleValue() == 0 || v4.doubleValue() < min42 || v4.doubleValue() > max42)
+							errorSet.add(ErrorCodes.V2);
+					}
+
+					break;
+				}
+				case 5: {
+
+					if (t3 == null) {
+
+						errorSet.add(ErrorCodes.T2);
+					}
+					if (v3 != null && v4 != null) {
+						if (v3.doubleValue() == 0 || v3.doubleValue() < min32 || v3.doubleValue() > max32
+								|| v4.doubleValue() == 0 || v4.doubleValue() < min42 || v4.doubleValue() > max42)
+							errorSet.add(ErrorCodes.V2);
+						if (v3.doubleValue() * 1.2 < v4.doubleValue())
+							errorSet.add(ErrorCodes.E2);
+					}
+
+					break;
+				}
+				case 6: {
+
+					if (t3 == null) {
+
+						errorSet.add(ErrorCodes.T2);
+					}
+
+					break;
+				}
+				case 4: {
+
+					if (t1 == null || t2 == null || t3 == null) {
+
+						if (t3 == null)
+							errorSet.add(ErrorCodes.T2);
+						errorSet.add(ErrorCodes.T1);
+					} else {
+
+						if (t1.doubleValue() < t2.doubleValue())
+							errorSet.add(ErrorCodes.E1);
+						if (t2.doubleValue() < t3.doubleValue())
+							errorSet.add(ErrorCodes.E2);
+					}
+					if (v1 != null && v2 != null) {
+
+						if (v1.doubleValue() == 0 || v1.doubleValue() < min11 || v1.doubleValue() > max11
+								|| v2.doubleValue() == 0 || v2.doubleValue() < min21 || v2.doubleValue() > max21)
+							errorSet.add(ErrorCodes.V1);
+						if (v1.doubleValue() * 1.2 < v2.doubleValue())
+							errorSet.add(ErrorCodes.E1);
+					}
+
+					break;
+				}
+				}
+
+			}
+			byte errorByte1 = hourData.get(dateTime).get(Parameters.ERROR_BYTE1).byteValue();
+			int errorUisExist = errorByte1 & 0x80;
+//			if (v1.doubleValue() > 0){
+//				System.out.println(dateTime+" "+t1 + " " + t2 + " " + t3 + " " + t4 + " " + v1 + " " + v2 + " " + v3 + " " + v4);
+//				System.out.println(errorSet);
+//			}
+			if (!errorSet.isEmpty()) {
+				if (errorUisExist != 0)
+					errorSet.add(ErrorCodes.U);
+				if (errorSet.contains(ErrorCodes.E1) || errorSet.contains(ErrorCodes.V1)
+						|| errorSet.contains(ErrorCodes.T1)) {
+					hourData.get(dateTime).put(Parameters.ERROR_TIME1, new BigDecimal("1"));
+				}
+				if (errorSet.contains(ErrorCodes.E2) || errorSet.contains(ErrorCodes.V2)
+						|| errorSet.contains(ErrorCodes.T2)) {
+					hourData.get(dateTime).put(Parameters.ERROR_TIME2, new BigDecimal("1"));
+				}
+				hourErrors.put(dateTime, errorSet);
+			} else if (errorUisExist != 0) {
+				errorSet.add(ErrorCodes.U);
+				hourErrors.put(dateTime, errorSet);
+			}
+		}
+	}
+
+	public Device getDevice() {
+		return device;
 	}
 
 }

@@ -1,6 +1,7 @@
 
 package ru.sevenkt.reader.ui.handlers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.inject.Inject;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
+import org.eclipse.e4.core.contexts.ContextInjectionFactory;
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -21,6 +24,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 
 import ru.sevenkt.app.ui.handlers.ImportArchiveJob;
+import ru.sevenkt.app.ui.handlers.ImportJobRule;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.IArchive;
 import ru.sevenkt.reader.services.Archive7KTC;
@@ -37,6 +41,9 @@ public class Read7ktcHandler {
 
 	@Inject
 	private IEventBroker broker;
+
+	@Inject
+	private IEclipseContext context;
 
 	@Execute
 	public void execute(Shell shell, EPartService partService,
@@ -79,8 +86,10 @@ public class Read7ktcHandler {
 	}
 
 	private void persistArhiveToDatabase(IArchive archive, int i) {
-		ImportArchiveJob job = new ImportArchiveJob("Импорт архива", archive, dbService, broker);
-		job.schedule(i);
+		ImportArchiveJob job = ContextInjectionFactory.make(ImportArchiveJob.class, context);
+		job.setArchive(archive);
+		job.setRule(new ImportJobRule(i));
+		job.schedule();
 		job.addJobChangeListener(new JobChangeAdapter() {
 			public void done(IJobChangeEvent event) {
 				if (event.getResult().isOK()){

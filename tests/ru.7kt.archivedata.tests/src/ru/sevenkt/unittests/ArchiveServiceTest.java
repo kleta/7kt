@@ -3,6 +3,7 @@ package ru.sevenkt.unittests;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 import org.junit.Test;
 
@@ -46,6 +47,19 @@ public class ArchiveServiceTest {
 			}
 		}
 	}
+	@Test
+	public void testArchiveV1() throws Exception {
+		System.out.println("Архив V1-----------------------------------------------------------------");
+		File folder = new File("resources/V1");
+		File[] listOfFiles = folder.listFiles();
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				System.out.println("File " + listOfFiles[i].getName()+"==============================================");
+				parseArchive(listOfFiles[i]);
+				System.out.println();
+			}
+		}
+	}
 	
 	public void testSpreadHourData() throws Exception{
 		File file = new File("resources/V3/02016_2016-02-04_13-00.bin");
@@ -56,6 +70,8 @@ public class ArchiveServiceTest {
 		IArchive archive = as.readArchiveFromFile(file);
 		ICurrentData cd = archive.getCurrentData();
 		DayArchive da = archive.getDayArchive();
+		LocalDateTime dt = cd.getCurrentDateTime();
+		da.getDayRecord(dt.toLocalDate().minusDays(1));
 		MonthArchive ma = archive.getMonthArchive();
 	}
 

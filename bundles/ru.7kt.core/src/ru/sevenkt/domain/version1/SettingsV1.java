@@ -224,25 +224,21 @@ public class SettingsV1 implements ISettings{
 
 	@Override
 	public int getwMax12() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getwMax34() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getwMin0() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getwMin1() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

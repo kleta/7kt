@@ -17,6 +17,7 @@ import java.util.stream.StreamSupport;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import org.slf4j.Logger;
@@ -80,6 +81,8 @@ public class DBService implements IDBService {
 
 	@Autowired
 	private EntityManager em;
+	@Autowired
+	EntityManagerFactory emf;
 
 	@Autowired
 	private ReportRepo rr;
@@ -141,6 +144,7 @@ public class DBService implements IDBService {
 	public void saveMeasuring(Measuring measuring) {
 		LocalDateTime from = LocalDateTime.now();
 		measuring.setTimestamp(LocalDateTime.now());
+		em=emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
@@ -270,7 +274,7 @@ public class DBService implements IDBService {
 				tx.commit();
 			} catch (Exception e) {
 				e.printStackTrace();
-				tx.rollback();
+				throw e;
 			}
 		}
 		LocalDateTime to = LocalDateTime.now();
@@ -351,6 +355,8 @@ public class DBService implements IDBService {
 	@Override
 	public void insertHourArchive(ArchiveConverter archive) throws Exception {		
 		LocalDateTime from = LocalDateTime.now();
+		List<Error> errors = archive.getHourErrors();
+		saveErrors(errors);
 		List<Measuring> measurings = archive.getHourData();
 		saveMeasurings(measurings);
 		LocalDateTime to = LocalDateTime.now();
@@ -1506,18 +1512,18 @@ public class DBService implements IDBService {
 	@Override
 	public void insertJournalSettings(IArchive archive, Device device) throws Exception {
 		LocalDateTime from = LocalDateTime.now();
-		IJournalSettings js = archive.getJournalSettings();
-		List<IJournalSettingsRecord> records = js.getRecords();
-		List<Journal> list = new ArrayList<>();
-		for (IJournalSettingsRecord journalSettingsRecord : records) {
-			Journal record = new Journal();
-			record.setDevice(device);
-			record.setDateTime(journalSettingsRecord.getDateTime());
-			record.setWorkHour(journalSettingsRecord.getWorkHour());
-			record.setEvent(journalSettingsRecord.getEvent());
-			list.add(record);
-		}
-		saveJournal(list);
+//		IJournalSettings js = archive.getJournalSettings();
+//		List<IJournalSettingsRecord> records = js.getRecords();
+//		List<Journal> list = new ArrayList<>();
+//		for (IJournalSettingsRecord journalSettingsRecord : records) {
+//			Journal record = new Journal();
+//			record.setDevice(device);
+//			record.setDateTime(journalSettingsRecord.getDateTime());
+//			record.setWorkHour(journalSettingsRecord.getWorkHour());
+//			record.setEvent(journalSettingsRecord.getEvent());
+//			list.add(record);
+//		}
+//		saveJournal(list);
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод insertJournalSettings() время " + ChronoUnit.MILLIS.between(from, to));
 	}
@@ -1686,6 +1692,11 @@ public class DBService implements IDBService {
 	@Override
 	public Report findReport(Integer reportId) {
 		return rr.findOne(reportId);
+	}
+
+	@Override
+	public void initEM() {
+		em=emf.createEntityManager();	
 	}
 
 }

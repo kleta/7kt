@@ -1,6 +1,7 @@
 
 package ru.sevenkt.app.ui;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -20,6 +21,8 @@ import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.di.PersistState;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -78,7 +81,7 @@ public class ArchiveView implements EventHandler {
 	private IEventBroker broker;
 
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-	
+
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 
 	private Table table;
@@ -99,6 +102,8 @@ public class ArchiveView implements EventHandler {
 	private IAction exportToExcelAction;
 
 	private List<Parameters> parameters;
+	private CDateTime startPeriodDateTime;
+	private CDateTime endPeriodDateTime;
 
 	@Inject
 	public ArchiveView() {
@@ -106,7 +111,8 @@ public class ArchiveView implements EventHandler {
 	}
 
 	@PostConstruct
-	public void postConstruct(Composite parent, @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Device device) {
+	public void postConstruct(Composite parent, @Optional @Named(IServiceConstants.ACTIVE_SELECTION) Device device,
+			MPart part) {
 		this.device = device;
 		createActions();
 		broker.subscribe(AppEventConstants.TOPIC_RESPONSE_ARCHIVE, this);
@@ -156,7 +162,7 @@ public class ArchiveView implements EventHandler {
 		fd_label.left = new FormAttachment(0);
 		label.setLayoutData(fd_label);
 
-		CDateTime startPeriodDateTime = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN | CDT.DATE_MEDIUM);
+		startPeriodDateTime = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN | CDT.DATE_MEDIUM);
 		startPeriodDateTime.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -181,8 +187,7 @@ public class ArchiveView implements EventHandler {
 		fd_label_1.top = new FormAttachment(label, 0, SWT.TOP);
 		label_1.setLayoutData(fd_label_1);
 
-		CDateTime endPeriodDateTime = new CDateTime(composite,
-				CDT.BORDER | CDT.SPINNER | CDT.DROP_DOWN | CDT.DATE_MEDIUM);
+		endPeriodDateTime = new CDateTime(composite, CDT.BORDER | CDT.SPINNER | CDT.DROP_DOWN | CDT.DATE_MEDIUM);
 		endPeriodDateTime.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -285,6 +290,42 @@ public class ArchiveView implements EventHandler {
 		сhartsScrolledform.setText("Графики");
 		сhartsScrolledform.getBody().setLayout(new FillLayout(SWT.VERTICAL));
 
+		iniitState(part);
+
+	}
+
+	private void iniitState(MPart part) {
+		Map<String, String> state = part.getPersistedState();
+
+		String start = state.get(device.getSerialNum() + "start");
+		String end = state.get(device.getSerialNum() + "end");
+		LocalDate stDate;
+		LocalDate endDate;
+		if (start != null && end != null) {
+			stDate = LocalDate.parse(start);
+			endDate = LocalDate.parse(end);
+		} else {
+			stDate = LocalDate.now().minusMonths(1);
+			endDate = LocalDate.now();
+		}
+		startPeriodDateTime.setSelection(Date.from(stDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		endPeriodDateTime.setSelection(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+	}
+
+	@PersistState
+	public void persistState(MPart part) {
+		Date endSelection = endPeriodDateTime.getSelection();
+		Date startSelection = startPeriodDateTime.getSelection();
+		if (endSelection != null && startSelection != null) {
+			LocalDate stDate = Instant.ofEpochMilli(startSelection.getTime()).atZone(ZoneId.systemDefault())
+					.toLocalDate();
+			LocalDate endDate = Instant.ofEpochMilli(endSelection.getTime()).atZone(ZoneId.systemDefault())
+					.toLocalDate();
+			Map<String, String> state = part.getPersistedState();
+			state.put(device.getSerialNum() + "start", stDate.toString());
+			state.put(device.getSerialNum() + "end", endDate.toString());
+		}
+
 	}
 
 	@Override
@@ -313,7 +354,8 @@ public class ArchiveView implements EventHandler {
 				parameters.sort((p1, p2) -> new Integer(p1.getOrderIndex()).compareTo(new Integer(p2.getOrderIndex())));
 				for (Parameters parameter : parameters) {
 					TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-					tableViewerColumn.setLabelProvider(new ArchiveColumnLabelProvider(parameter, selectedArchiveType));
+					tableViewerColumn
+							.setLabelProvider(new ArchiveColumnLabelProvider(parameter, selectedArchiveType, device));
 					TableColumn column = tableViewerColumn.getColumn();
 					// column.setWidth(100);
 					column.setText(parameter.getName());
@@ -395,21 +437,20 @@ public class ArchiveView implements EventHandler {
 	}
 
 	private void createSeries(Parameters parameter, List<?> input, Chart chart, Color c) {
-		Date[] xSeries = new Date[input.size()-2];
-		double[] ySeries = new double[input.size()-2];
+		Date[] xSeries = new Date[input.size() - 2];
+		double[] ySeries = new double[input.size() - 2];
 		int i = 0;
 		for (Object object : input) {
 			TableRow tr = (TableRow) object;
 			if (tr instanceof DateTimeTableRow) {
 				LocalDateTime ldt = LocalDateTime.parse(tr.getFirstColumn(), formatter);
 				Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
-
-				Double val = (Double) tr.getValues().get(parameter);
-				xSeries[i] = Date.from(instant);
-				if (val == null) {
-					ySeries[i++] = -0.1;
-				} else
+				Object pVal = tr.getValues().get(parameter);
+				if (pVal != null) {
+					Double val = ((BigDecimal) pVal).doubleValue();
+					xSeries[i] = Date.from(instant);
 					ySeries[i++] = val;
+				}
 			}
 		}
 		ILineSeries series = (ILineSeries) chart.getSeriesSet().createSeries(SeriesType.LINE, parameter.getName());

@@ -34,7 +34,6 @@ public abstract class DayArchive {
 		records = new HashMap<>();
 		for (int i = 0; i < data.length; i += size) {
 			byte[] dayRecordData = Arrays.copyOfRange(data, i, i + size);
-			// DayRecordV3 dr = new DayRecordV3(dayRecordData);
 			Constructor<? extends IDayRecord> cons = class1.getConstructor(byte[].class);
 			IDayRecord dr = cons.newInstance(dayRecordData);
 			LocalDate date = dr.getDate();

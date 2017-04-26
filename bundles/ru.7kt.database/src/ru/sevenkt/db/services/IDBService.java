@@ -69,5 +69,9 @@ public interface IDBService {
 
 
 	void insertDayArchive(ArchiveConverter archive) throws Exception;
+
+
+
+	void initEM();
 	
 }
