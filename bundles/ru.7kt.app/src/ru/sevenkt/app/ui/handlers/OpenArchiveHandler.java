@@ -279,21 +279,23 @@ public class OpenArchiveHandler implements EventHandler {
 	private void addDayColumns(LocalDateTime startDateTime,
 			Map<LocalDateTime, List<Measuring>> groupByDateTimeMeasurings, List<Parameters> parameters, TableRow tr,
 			List<Measuring> lm) {
+		
 		List<Measuring> lmPrevDay = groupByDateTimeMeasurings.get(startDateTime.minusDays(1));
 		if (lmPrevDay != null && lm != null) {
-			for (int i = 0; i < lm.size(); i++) {
-
-				Measuring measuring = lm.get(i);
-				Parameters parameter = measuring.getParameter();
+			Map<Parameters, BigDecimal> lmMap = lm.stream().collect(Collectors.toMap(Measuring::getParameter, Measuring::getValue));
+			for (Parameters parameter:lmMap.keySet()) {
+				Map<Parameters, BigDecimal> lmPrevMap = lmPrevDay.stream().collect(Collectors.toMap(Measuring::getParameter, Measuring::getValue));
+				BigDecimal val = lmMap.get(parameter);
+				BigDecimal prevVal = lmPrevMap.get(parameter);
+				if(prevVal==null)
+					System.out.println();
 				String category = parameter.getCategory();
 				if (!category.equals(ParametersConst.TEMP) && !category.equals(ParametersConst.PRESSURE)
-						&& !category.equals(ParametersConst.TIME)) {
-					Measuring prevDayMeasuring = lmPrevDay.get(i);
-					if (parameter.equals(prevDayMeasuring.getParameter())
-							&& prevDayMeasuring.getValue().doubleValue() <= measuring.getValue().doubleValue())
-						tr.getValues().put(parameter, measuring.getValue().subtract(prevDayMeasuring.getValue()));
+						&& !category.equals(ParametersConst.TIME)) {				
+					if (prevVal.doubleValue() <= val.doubleValue())
+						tr.getValues().put(parameter, val.subtract(prevVal));
 				} else if (!parameter.equals(Parameters.ERROR_BYTE1) && !parameter.equals(Parameters.ERROR_BYTE2))
-					tr.getValues().put(parameter, measuring.getValue());
+					tr.getValues().put(parameter,val);
 			}
 		}
 		if (parameters.contains(Parameters.M1_SUB_M2)) {

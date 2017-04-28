@@ -23,6 +23,7 @@ import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Measuring;
 import ru.sevenkt.db.services.ArchiveConverter;
 import ru.sevenkt.domain.ArchiveFactory;
+import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.IArchive;
 import ru.sevenkt.domain.Parameters;
 
@@ -30,12 +31,12 @@ public class ArchiveConverterTest {
 
 	@Test
 	public void testGetMonthData() throws Exception {
-		File file = new File("resources/V3/01932_2016-10-24_09-00.bin");
+		File file = new File("resources/V3/07042_2016-05-20_09-00.bin");
 		byte[] data = FileUtils.readFileToByteArray(file);
 		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
 		ArchiveConverter ac = new ArchiveConverter(arc);
 		List<Measuring> md = ac.getMonthData();
-		assertTrue(md.size() == 50);
+		assertTrue(md.size() > 50);
 	}
 
 	@Test
@@ -45,7 +46,7 @@ public class ArchiveConverterTest {
 		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
 		ArchiveConverter ac = new ArchiveConverter(arc);
 		List<Measuring> md = ac.getDayData();
-		assertTrue(md.size() > 1000);
+		assertTrue(md.size() > 500);
 	}
 
 	@Test
@@ -138,15 +139,14 @@ public class ArchiveConverterTest {
 				Parameters.AVG_TEMP3, Parameters.V3, Parameters.AVG_P2, Parameters.E2 });
 		assertEquals(params, p);
 		params = ac.getAccountParameters(41);
-		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1,
-				Parameters.AVG_TEMP2, Parameters.V1, Parameters.V2, Parameters.AVG_P1, Parameters.E1 ,
-				Parameters.AVG_TEMP3,  Parameters.V3});
+		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.AVG_TEMP2, Parameters.V1, Parameters.V2,
+				Parameters.AVG_P1, Parameters.E1, Parameters.AVG_TEMP3, Parameters.V3 });
 		assertEquals(params, p);
 	}
-	
+
 	@Test
-	public void testGetHourErrors() throws Exception{
-		File file = new File("resources/V3/02016_2016-02-04_13-00.bin");
+	public void testGetHourErrors() throws Exception {
+		File file = new File("resources/V3/07042_2016-05-20_09-00.bin");
 		byte[] data = FileUtils.readFileToByteArray(file);
 		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
 		ArchiveConverter ac = new ArchiveConverter(arc);
@@ -154,4 +154,69 @@ public class ArchiveConverterTest {
 		assertFalse(errors.isEmpty());
 	}
 
+	@Test
+	public void testGetDayErrors() throws Exception {
+		File file = new File("resources/V3/07042_2016-05-20_09-00.bin");
+		byte[] data = FileUtils.readFileToByteArray(file);
+		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
+		ArchiveConverter ac = new ArchiveConverter(arc);
+		List<Error> errors = ac.getDayErrors();
+		for (Error error : errors) {
+			if (!error.getErrorCode().equals(ErrorCodes.U))
+				System.out.println(error);
+		}
+		assertFalse(errors.isEmpty());
+	}
+
+	@Test
+	public void testGeMonthErrors() throws Exception {
+		File file = new File("resources/V3/07042_2016-05-20_09-00.bin");
+		byte[] data = FileUtils.readFileToByteArray(file);
+		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
+		ArchiveConverter ac = new ArchiveConverter(arc);
+		List<Error> errors = ac.getMonthErrors();
+		assertFalse(errors.isEmpty());
+	}
+
+	@Test
+	public void testErrorTime() throws Exception {
+		File file = new File("resources/V3/07042_2016-05-20_09-00.bin");
+		byte[] data = FileUtils.readFileToByteArray(file);
+		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
+		ArchiveConverter ac = new ArchiveConverter(arc);
+		ac.getMonthErrors();
+		List<Measuring> hourErrorTime = ac.getHourData().stream()
+				.filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)).collect(Collectors.toList());
+		List<Measuring> dayErrorTime = ac.getDayData().stream()
+				.filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)).collect(Collectors.toList());
+
+		Map<LocalDateTime, BigDecimal> dayErTimeMap = dayErrorTime.stream()
+				.collect(Collectors.toMap(Measuring::getDateTime, Measuring::getValue));
+		for (LocalDateTime dt : dayErTimeMap.keySet()) {
+			List<Measuring> l = hourErrorTime.stream().filter(
+					m -> m.getDateTime().isBefore(dt.plusHours(1)) && m.getDateTime().isAfter(dt))
+					.collect(Collectors.toList());
+			if (!l.isEmpty()) {
+				int hourSum = l.stream().map(Measuring::getValue).mapToInt(BigDecimal::intValue).sum();
+				int d = dayErTimeMap.get(dt).intValue();
+				assertEquals("dt="+dt+" d="+d+" sum="+hourSum,d, hourSum);
+			}
+		}
+
+		List<Measuring> monthErrorTime = ac.getMonthData().stream()
+				.filter(m -> m.getParameter().equals(Parameters.ERROR_TIME1)).collect(Collectors.toList());
+
+		Map<LocalDateTime, BigDecimal> monthErTimeMap = monthErrorTime.stream()
+				.collect(Collectors.toMap(Measuring::getDateTime, Measuring::getValue));
+		for (LocalDateTime dt : monthErTimeMap.keySet()) {
+			List<Measuring> l = dayErrorTime.stream().filter(
+					m -> m.getDateTime().isAfter(dt.minusMonths(1)) && m.getDateTime().isBefore(dt.plusHours(1)))
+					.collect(Collectors.toList());
+			if (!l.isEmpty()) {
+				int daySum = l.stream().map(Measuring::getValue).mapToInt(BigDecimal::intValue).sum();
+				int m = monthErTimeMap.get(dt).intValue();
+				assertEquals(m, daySum);
+			}
+		}
+	}
 }

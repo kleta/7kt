@@ -72,6 +72,6 @@ public interface IDBService {
 
 
 
-	void initEM();
+	
 	
 }

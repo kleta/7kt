@@ -89,6 +89,12 @@ public class DayRecordV1 implements Cloneable, IDayRecord {
 	private float energy2;
 
 	
+	@Parameter(Parameters.ERROR_TIME1)
+	private int timeError1;
+
+	
+	@Parameter(Parameters.ERROR_TIME2)
+	private int timeError2;
 
 	private boolean valid;
 

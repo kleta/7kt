@@ -382,8 +382,6 @@ public class ArchiveView implements EventHandler {
 			if (key.equals(ParametersConst.ENERGY) || key.equals(ParametersConst.VOLUME)
 					|| key.equals(ParametersConst.WEIGHT) || key.equals(ParametersConst.TEMP)
 					|| key.equals(ParametersConst.PRESSURE)) {
-				// // Label l=new Label(сhartsScrolledform.getBody(), SWT.NONE);
-				// // l.setText(key);
 				Section section = formToolkit.createSection(сhartsScrolledform.getBody(),
 						Section.EXPANDED | Section.TWISTIE | Section.TITLE_BAR);
 				formToolkit.paintBordersFor(section);
@@ -446,16 +444,20 @@ public class ArchiveView implements EventHandler {
 				LocalDateTime ldt = LocalDateTime.parse(tr.getFirstColumn(), formatter);
 				Instant instant = ldt.atZone(ZoneId.systemDefault()).toInstant();
 				Object pVal = tr.getValues().get(parameter);
+				xSeries[i] = Date.from(instant);
 				if (pVal != null) {
-					Double val = ((BigDecimal) pVal).doubleValue();
-					xSeries[i] = Date.from(instant);
+					Double val = ((BigDecimal) pVal).doubleValue();	
 					ySeries[i++] = val;
+				}
+				else{
+					ySeries[i++] = 0;
 				}
 			}
 		}
 		ILineSeries series = (ILineSeries) chart.getSeriesSet().createSeries(SeriesType.LINE, parameter.getName());
 		series.setXDateSeries(xSeries);
 		series.setLineColor(c);
+		
 		series.setYSeries(ySeries);
 		series.setSymbolType(PlotSymbolType.NONE);
 	}

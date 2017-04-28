@@ -105,6 +105,12 @@ public class HourRecordV4 implements IHourRecord{
 	@Parameter(Parameters.ERROR_BYTE2)
 	private int errorChannel2;
 
+	@Parameter(Parameters.ERROR_TIME1)
+	private int timeError1;
+
+	@Parameter(Parameters.ERROR_TIME2)
+	private int timeError2;
+	
 	private int hour;
 
 	private boolean valid;

@@ -52,7 +52,8 @@ public class ImportArchiveJob extends Job {
 		//	dbService.initEM();
 			ArchiveConverter ac=new ArchiveConverter(archive);
 			Device device = ac.getDevice();
-			insertOrUpdateDeviceSettings(device);
+			List<Parameters> parameters = ac.getAccountParameters(device.getFormulaNum());
+			insertOrUpdateDeviceSettings(device, parameters);
 			System.out.println("Start job "+archive.getName());
 			broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 
@@ -92,27 +93,12 @@ public class ImportArchiveJob extends Job {
 		return Status.OK_STATUS;
 	}
 
-	private Device insertOrUpdateDeviceSettings(Device device) throws Exception {
+	private Device insertOrUpdateDeviceSettings(Device device, List<Parameters> parameters) throws Exception {
 		Device d = dbService.findDeviceBySerialNum(Integer.parseInt(device.getSerialNum()));
 		if (d == null) {
 			ArrayList<Params> params = new ArrayList<>();
-			params.add(new Params(Parameters.AVG_TEMP1));
-			params.add(new Params(Parameters.AVG_TEMP2));
-			params.add(new Params(Parameters.V1));
-			params.add(new Params(Parameters.V2));
-			params.add(new Params(Parameters.M1));
-			params.add(new Params(Parameters.M2));
-			params.add(new Params(Parameters.AVG_P1));
-			params.add(new Params(Parameters.AVG_P2));
-			params.add(new Params(Parameters.E1));
-			params.add(new Params(Parameters.E2));
-			if ((device.getFormulaNum() + "").length() > 1) {
-				params.add(new Params(Parameters.AVG_TEMP3));
-				params.add(new Params(Parameters.AVG_TEMP4));
-				params.add(new Params(Parameters.V3));
-				params.add(new Params(Parameters.V4));
-				params.add(new Params(Parameters.M3));
-				params.add(new Params(Parameters.M4));
+			for(Parameters par:parameters){
+				params.add(new Params(par));
 			}
 			device.setDeviceName("Тепловычислитель");
 			device.setParams(params);

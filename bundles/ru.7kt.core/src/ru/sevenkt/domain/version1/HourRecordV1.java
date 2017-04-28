@@ -85,6 +85,13 @@ public class HourRecordV1 implements IHourRecord{
 	private float energy2;
 	
 	
+	@Parameter(Parameters.ERROR_TIME1)
+	private int timeError1;
+
+	
+	@Parameter(Parameters.ERROR_TIME2)
+	private int timeError2;
+	
 //	@Address(value=26)
 //	@Length(value=1)
 //	@Parameter(Parameters.ERROR_BYTE1)

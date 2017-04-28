@@ -31,6 +31,8 @@ import org.eclipse.wb.swt.ResourceManager;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Params;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class DeviceDialog extends TitleAreaDialog {
 	private DataBindingContext m_bindingContext;
@@ -728,6 +730,18 @@ public class DeviceDialog extends TitleAreaDialog {
 		IObservableValue observeSelectionSpinner_2ObserveWidget = WidgetProperties.selection().observe(spinner_2);
 		IObservableValue didgitMDeviceObserveValue = PojoProperties.value("didgitM").observe(device);
 		bindingContext.bindValue(observeSelectionSpinner_2ObserveWidget, didgitMDeviceObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_1ObserveWidget = WidgetProperties.selection().observe(button_1);
+		IObservableValue errorCodeParamModelObserveValue = PojoProperties.value("errorCode").observe(paramModel);
+		bindingContext.bindValue(observeSelectionButton_1ObserveWidget, errorCodeParamModelObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_24ObserveWidget = WidgetProperties.selection().observe(button_24);
+		IObservableValue errorTimeParamModelObserveValue = PojoProperties.value("errorTime").observe(paramModel);
+		bindingContext.bindValue(observeSelectionButton_24ObserveWidget, errorTimeParamModelObserveValue, null, null);
+		//
+		IObservableValue observeSelectionButton_23ObserveWidget_1 = WidgetProperties.selection().observe(button_23);
+		IObservableValue controlPowerDeviceObserveValue = PojoProperties.value("controlPower").observe(device);
+		bindingContext.bindValue(observeSelectionButton_23ObserveWidget_1, controlPowerDeviceObserveValue, null, null);
 		//
 		return bindingContext;
 	}
