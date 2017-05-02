@@ -401,18 +401,18 @@ public class DBService implements IDBService {
 	@Override
 	public void insertJournalSettings(IArchive archive, Device device) throws Exception {
 		LocalDateTime from = LocalDateTime.now();
-//		IJournalSettings js = archive.getJournalSettings();
-//		List<IJournalSettingsRecord> records = js.getRecords();
-//		List<Journal> list = new ArrayList<>();
-//		for (IJournalSettingsRecord journalSettingsRecord : records) {
-//			Journal record = new Journal();
-//			record.setDevice(device);
-//			record.setDateTime(journalSettingsRecord.getDateTime());
-//			record.setWorkHour(journalSettingsRecord.getWorkHour());
-//			record.setEvent(journalSettingsRecord.getEvent());
-//			list.add(record);
-//		}
-//		saveJournal(list);
+		IJournalSettings js = archive.getJournalSettings();
+		List<IJournalSettingsRecord> records = js.getRecords();
+		List<Journal> list = new ArrayList<>();
+		for (IJournalSettingsRecord journalSettingsRecord : records) {
+			Journal record = new Journal();
+			record.setDevice(device);
+			record.setDateTime(journalSettingsRecord.getDateTime());
+			record.setWorkHour(journalSettingsRecord.getWorkHour());
+			record.setEvent(journalSettingsRecord.getEvent());
+			list.add(record);
+		}
+		saveJournal(list);
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод insertJournalSettings() время " + ChronoUnit.MILLIS.between(from, to));
 	}
