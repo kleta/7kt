@@ -33,8 +33,6 @@ public class ArchiveV1 implements IArchive{
 	@Address(value = 2816)
 	private HourArchiveV1 hourArchive;
 
-//	@Address(value = 55500)
-//	private JournalSettingsV1 journalSettings;
 
 	public ArchiveV1(byte[] data) throws Exception {
 		this.data = data;
@@ -55,10 +53,7 @@ public class ArchiveV1 implements IArchive{
 				Constructor<?> cons = fieldType.getConstructor(byte[].class);
 				Object obj = cons.newInstance(fieldData);
 				field.set(this, obj);
-				if(field.getName().equals("settings")){
-					if(!settings.isVersionSupport())
-							throw new VersionNotSupportedException("Версия архива "+settings.getArchiveVersion()+" не поддерживается");
-				}
+				
 			}
 		}
 	}

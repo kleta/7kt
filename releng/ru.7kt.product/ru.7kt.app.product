@@ -32,7 +32,6 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.e4.rcp" version="1.4.1.v20160212-1350"/>
       <feature id="org.eclipse.emf.ecore"/>
       <feature id="org.eclipse.emf.common"/>
       <feature id="ru.7kt.gemini.blueprint" version="1.0.0.qualifier"/>
@@ -49,6 +48,7 @@
       <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
       <feature id="ru.7kt.feature.reader" version="1.0.0.qualifier"/>
       <feature id="org.eclipse.e4.ui.progress.feature" version="0.1.0.qualifier"/>
+      <feature id="org.eclipse.e4.rcp" version="1.4.1.v20160212-1350"/>
    </features>
 
    <configurations>

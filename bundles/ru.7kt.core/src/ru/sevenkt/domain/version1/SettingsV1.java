@@ -224,12 +224,12 @@ public class SettingsV1 implements ISettings{
 
 	@Override
 	public int getwMax12() {
-		return 0;
+		return 65000;
 	}
 
 	@Override
 	public int getwMax34() {
-		return 0;
+		return 65000;
 	}
 
 	@Override

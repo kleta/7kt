@@ -41,6 +41,7 @@
 								</artifact>
 								<artifact>
 									<id>com.neuronrobotics:nrjavaserial:3.12.1</id>
+									<source>true</source>
 								</artifact>
 <!-- 								<artifact> -->
 <!-- 									<id>org.slf4j:slf4j-simple:1.7.21</id> -->

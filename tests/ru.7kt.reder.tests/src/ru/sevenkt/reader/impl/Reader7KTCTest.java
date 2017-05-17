@@ -16,6 +16,14 @@ public class Reader7KTCTest {
 
 	@Test
 	public void readAttributes() {
+		for (String s : NRSerialPort.getAvailableSerialPorts()) {
+			System.out.println("Availible port: " + s);
+		}
+		String port = "COM3";
+		int baudRate = 115200;
+		NRSerialPort serial = new NRSerialPort(port, baudRate);
+		serial.connect();
+
 		reader.connect();
 		try {
 			byte[] bytes = reader.readAttributes();
@@ -73,8 +81,7 @@ public class Reader7KTCTest {
 		} finally {
 			reader.disconnect();
 		}
-		
+
 	}
-	
-	
+
 }

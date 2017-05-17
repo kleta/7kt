@@ -37,7 +37,7 @@ public class Commands {
 		cmd[6]=crcL;
 		cmd[7]=crcH;
 	}
-	public static byte[] getReadEEPROMCommand(int devAddr, long addr, int blockSize) {
+	public static byte[] getReadEEPROMCommand1(int devAddr, long addr, int blockSize) {
 		commandDevice[1]=(byte) devAddr;
 		commandDevice[2]=1;
 		commandDevice[3]=(byte) (addr&0xFF);
@@ -46,6 +46,16 @@ public class Commands {
 		addCrcToDeviceCommand(commandDevice);
 		return commandDevice;
 	}
+	public static byte[] getReadEEPROMCommand16(int devAddr, long addr, int blockSize) {
+		commandDevice[1]=(byte) devAddr;
+		commandDevice[2]=16;
+		commandDevice[3]=(byte) (addr&0xFF);
+		commandDevice[4]=(byte) (addr>>8);
+		commandDevice[5]=(byte) blockSize;
+		addCrcToDeviceCommand(commandDevice);
+		return commandDevice;
+	}
+	
 	public static byte[] getReadAttributesCommand() {
 		command7KTC[1]=4;
 		addCrcTo7KTCCommand(command7KTC);

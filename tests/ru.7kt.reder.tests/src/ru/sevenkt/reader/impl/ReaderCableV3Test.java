@@ -8,11 +8,11 @@ import org.junit.Test;
 
 import ru.sevenkt.reader.services.impl.BaudRates;
 import ru.sevenkt.reader.services.impl.Reader;
-import ru.sevenkt.reader.services.impl.ReaderCable;
+import ru.sevenkt.reader.services.impl.ReaderCOM;
 
 public class ReaderCableV3Test {
 	
-	ReaderCable reader=new ReaderCable("COM3", 2400);
+	ReaderCOM reader=new ReaderCOM("COM3", 2400, 300);
 
 
 

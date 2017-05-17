@@ -92,15 +92,7 @@ public class HourRecordV1 implements IHourRecord{
 	@Parameter(Parameters.ERROR_TIME2)
 	private int timeError2;
 	
-//	@Address(value=26)
-//	@Length(value=1)
-//	@Parameter(Parameters.ERROR_BYTE1)
-//	private int errorChannel1;
-//	
-//	@Address(value=27)
-//	@Length(value=1)
-//	@Parameter(Parameters.ERROR_BYTE2)
-//	private int errorChannel2;
+
 
 	private int hour;
 
@@ -136,9 +128,10 @@ public class HourRecordV1 implements IHourRecord{
 		int year = (monthYear & 0xF0)/16 + 2000;	
 		year=year<2015 ?year+16:year;	
 		int month = monthYear & 0xF;
-		if(month<1 || month>12 || day<1 || day>31 || hour<0 || hour>24)
+		int d = day&0x1F;
+		if(month<1 || month>12 || d<1 || d>31 || hour<0 || hour>24)
 			return null;
-		LocalDateTime date = LocalDateTime.of(year, month, day, hour, 0);
+		LocalDateTime date = LocalDateTime.of(year, month, d, hour, 0);
 		return date;
 	}
 	public void setValid(boolean b) {

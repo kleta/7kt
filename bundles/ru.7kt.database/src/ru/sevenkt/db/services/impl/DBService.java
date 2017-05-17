@@ -57,7 +57,6 @@ import ru.sevenkt.domain.ISettings;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.ParametersConst;
 
-
 @Service
 public class DBService implements IDBService {
 
@@ -144,7 +143,7 @@ public class DBService implements IDBService {
 	public void saveMeasuring(Measuring measuring) {
 		LocalDateTime from = LocalDateTime.now();
 		measuring.setTimestamp(LocalDateTime.now());
-		em=emf.createEntityManager();
+		em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
@@ -330,7 +329,7 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public void insertMonthArchive(ArchiveConverter archive) throws Exception {		
+	public void insertMonthArchive(ArchiveConverter archive) throws Exception {
 		LocalDateTime from = LocalDateTime.now();
 		List<Error> errors = archive.getMonthErrors();
 		saveErrors(errors);
@@ -340,10 +339,8 @@ public class DBService implements IDBService {
 		LOG.debug("Метод insertMonthArchive() время " + ChronoUnit.MILLIS.between(from, to));
 	}
 
-
-
 	@Override
-	public void insertHourArchive(ArchiveConverter archive) throws Exception {		
+	public void insertHourArchive(ArchiveConverter archive) throws Exception {
 		LocalDateTime from = LocalDateTime.now();
 		List<Error> errors = archive.getHourErrors();
 		saveErrors(errors);
@@ -352,12 +349,6 @@ public class DBService implements IDBService {
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод insertHourArchive() время " + ChronoUnit.MILLIS.between(from, to));
 	}
-
-
-
-	
-
-
 
 	private void saveErrors(List<Error> errors) {
 		LocalDateTime from = LocalDateTime.now();
@@ -381,10 +372,8 @@ public class DBService implements IDBService {
 
 	}
 
-
-
 	@Override
-	public void insertDayArchive(ArchiveConverter archive) throws Exception {		
+	public void insertDayArchive(ArchiveConverter archive) throws Exception {
 		LocalDateTime from = LocalDateTime.now();
 		List<Error> errors = archive.getDayErrors();
 		saveErrors(errors);
@@ -394,31 +383,26 @@ public class DBService implements IDBService {
 		LOG.debug("Метод insertDayArchive() время " + ChronoUnit.MILLIS.between(from, to));
 	}
 
-	
-
-	
-
 	@Override
 	public void insertJournalSettings(IArchive archive, Device device) throws Exception {
 		LocalDateTime from = LocalDateTime.now();
 		IJournalSettings js = archive.getJournalSettings();
-		List<IJournalSettingsRecord> records = js.getRecords();
-		List<Journal> list = new ArrayList<>();
-		for (IJournalSettingsRecord journalSettingsRecord : records) {
-			Journal record = new Journal();
-			record.setDevice(device);
-			record.setDateTime(journalSettingsRecord.getDateTime());
-			record.setWorkHour(journalSettingsRecord.getWorkHour());
-			record.setEvent(journalSettingsRecord.getEvent());
-			list.add(record);
+		if (js != null) {
+			List<IJournalSettingsRecord> records = js.getRecords();
+			List<Journal> list = new ArrayList<>();
+			for (IJournalSettingsRecord journalSettingsRecord : records) {
+				Journal record = new Journal();
+				record.setDevice(device);
+				record.setDateTime(journalSettingsRecord.getDateTime());
+				record.setWorkHour(journalSettingsRecord.getWorkHour());
+				record.setEvent(journalSettingsRecord.getEvent());
+				list.add(record);
+			}
+			saveJournal(list);
 		}
-		saveJournal(list);
 		LocalDateTime to = LocalDateTime.now();
 		LOG.debug("Метод insertJournalSettings() время " + ChronoUnit.MILLIS.between(from, to));
 	}
-
-	
-
 
 	@Override
 	public List<Error> findErrors(Device device, LocalDateTime startDate, LocalDateTime endDate,

@@ -27,10 +27,11 @@ public class ReaderImpl implements IReaderService {
 
 	@Override
 	public IArchive readFullArchive(Connection con) throws Exception {
-		ReaderCable readerCable = new ReaderCable(con.getPort(), 2400);
-		if (readerCable.connect()) {
-			byte[] data = readerCable.readEEPROM(0, 256);
-			readerCable.disconnect();
+		ReaderCOM reader = ReaderFactory.createReader(con);
+
+		if (reader.connect()) {
+			byte[] data = reader.readEEPROM(0, 256);
+			reader.disconnect();
 			return ArchiveFactory.createArhive(data);
 		}
 		return null;

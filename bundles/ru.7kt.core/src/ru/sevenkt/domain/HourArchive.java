@@ -46,12 +46,10 @@ public abstract class HourArchive {
 						Parameters param = field.getAnnotation(Parameter.class).value();
 						if (Stream.of(categories).anyMatch(c -> c.equals(param.getCategory()))) {
 							field.setAccessible(true);
-							// Class<?> type = field.getType();
+							
 							Object val = field.get(r);
 							BigDecimal bdVal = new BigDecimal(val + "");
-//							if(param.equals(Parameters.V2))
-//								System.out.println(//dateTime+"="+
-							//bdVal.floatValue()*0.01);
+
 							BigDecimal bd = map.get(param);
 							if (bd == null)
 								map.put(param, bdVal);
@@ -79,8 +77,6 @@ public abstract class HourArchive {
 			if (date != null) {
 				hr.setValid(true);
 				records.put(date, hr);
-				// System.out.println("adr=" + (i + 13500) + " " + date + "=" +
-				// hr);
 			}
 			hour++;
 			if (hour == 24)

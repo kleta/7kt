@@ -251,7 +251,7 @@ public class ArchiveConverter {
 								pData = new HashMap<>();
 								dayData.put(recordDate, pData);
 							}
-							float val = field.getInt(dr) / 10;
+							float val = (float) (field.getInt(dr) / 10.0);
 							pData.put(parameter, new BigDecimal(val + ""));
 							break;
 						}
@@ -260,7 +260,7 @@ public class ArchiveConverter {
 								pData = new HashMap<>();
 								dayData.put(recordDate, pData);
 							}
-							float val = field.getInt(dr) / 100;
+							float val = (float) (field.getInt(dr) / 100.00);
 							if (val > -60 && val < 150) {
 								pData.put(parameter, new BigDecimal(val + ""));
 							}
@@ -400,7 +400,7 @@ public class ArchiveConverter {
 									pData = new HashMap<>();
 									hourData.put(hr.getDateTime(), pData);
 								}
-								val = field.getInt(hr) / 10;
+								val = (float) (field.getInt(hr) / 10.0);
 								pData.put(parameter, new BigDecimal(val + ""));
 								break;
 							}
@@ -412,7 +412,7 @@ public class ArchiveConverter {
 									pData = new HashMap<>();
 									hourData.put(hr.getDateTime(), pData);
 								}
-								val = field.getInt(hr) / 100;
+								val = (float) (field.getInt(hr) / 100.0);
 								if (val > -60 && val < 150) {
 									pData.put(parameter, new BigDecimal(val + ""));
 								}

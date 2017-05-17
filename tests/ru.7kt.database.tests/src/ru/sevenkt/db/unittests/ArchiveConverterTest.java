@@ -2,6 +2,7 @@ package ru.sevenkt.db.unittests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -25,6 +26,7 @@ import ru.sevenkt.db.services.ArchiveConverter;
 import ru.sevenkt.domain.ArchiveFactory;
 import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.IArchive;
+import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.Parameters;
 
 public class ArchiveConverterTest {
@@ -54,6 +56,13 @@ public class ArchiveConverterTest {
 		File file = new File("resources/V3/01932_2016-10-24_09-00.bin");
 		byte[] data = FileUtils.readFileToByteArray(file);
 		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
+		
+		List<IHourRecord> recs = arc.getHourArchive().getRecordsByDay(LocalDate.parse("2016-09-15"));
+		for (IHourRecord iHourRecord : recs) {
+			assertNotNull(iHourRecord);
+			LocalDateTime dateTime = iHourRecord.getDateTime();
+			System.out.println(dateTime);
+		}
 		ArchiveConverter ac = new ArchiveConverter(arc);
 		List<Measuring> hd = ac.getHourData();
 		List<Measuring> dd = ac.getDayData();
