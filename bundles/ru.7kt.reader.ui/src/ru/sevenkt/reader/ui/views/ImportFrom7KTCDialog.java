@@ -59,6 +59,7 @@ public class ImportFrom7KTCDialog extends TitleAreaDialog {
 	private ComboViewer comboViewer;
 	private String comPort;
 	private Button buttonRefresh;
+	private Button buttonClear;
 
 	public ImportFrom7KTCDialog(Shell parentShell, Read7ktcHandler handler) {
 		super(parentShell);
@@ -96,8 +97,10 @@ public class ImportFrom7KTCDialog extends TitleAreaDialog {
 		comboViewer.addSelectionChangedListener(l -> {
 			IStructuredSelection selection = comboViewer.getStructuredSelection();
 			comPort = (String) selection.getFirstElement();
-			if(comPort!=null)
+			if(comPort!=null){
 				buttonRefresh.setEnabled(true);
+				buttonClear.setEnabled(true);
+			}
 			readArchiveList(comPort);
 		});
 
@@ -196,6 +199,24 @@ public class ImportFrom7KTCDialog extends TitleAreaDialog {
 		fd_table.top = new FormAttachment(label, 6);
 		fd_table.left = new FormAttachment(label, 0, SWT.LEFT);
 		table.setLayoutData(fd_table);
+		
+		buttonClear = new Button(composite, SWT.NONE);
+		buttonClear.setEnabled(false);
+		buttonClear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection = comboViewer.getStructuredSelection();
+				comPort = (String) selection.getFirstElement();
+				clear7KTC(comPort);
+				readArchiveList(comPort);
+			}
+		});
+		FormData fd_buttonClear = new FormData();
+		fd_buttonClear.right = new FormAttachment(button, 0, SWT.RIGHT);
+		fd_buttonClear.top = new FormAttachment(buttonRefresh, 7);
+		fd_buttonClear.left = new FormAttachment(button, 0, SWT.LEFT);
+		buttonClear.setLayoutData(fd_buttonClear);
+		buttonClear.setText("Очистить");
 		checkboxTableViewer.setContentProvider(new ArrayContentProvider());
 		composite_2.setLayoutData(fd_composite_2);
 
@@ -308,6 +329,10 @@ public class ImportFrom7KTCDialog extends TitleAreaDialog {
 		List<Archive7KTC> list = readHandler.readArchives(port, this, showDeletedButton.getSelection());
 		checkboxTableViewer.setInput(list);
 	}
+	
+	private void clear7KTC(String port){
+		readHandler.clear(port, this);
+	}
 
 	public void setProgressBarMaximum(int max) {
 		progressBar.setSelection(0);
@@ -397,5 +422,4 @@ public class ImportFrom7KTCDialog extends TitleAreaDialog {
 	public void setComPort(String comPort) {
 		this.comPort = comPort;
 	}
-
 }

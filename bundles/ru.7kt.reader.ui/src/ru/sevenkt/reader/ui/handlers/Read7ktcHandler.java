@@ -28,13 +28,14 @@ import ru.sevenkt.app.ui.handlers.ImportJobRule;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.IArchive;
 import ru.sevenkt.reader.services.Archive7KTC;
-import ru.sevenkt.reader.services.IReaderService;
+import ru.sevenkt.reader.services.IReader7KTCService;
+import ru.sevenkt.reader.services.IDeviceReaderService;
 import ru.sevenkt.reader.ui.views.ImportFrom7KTCDialog;
 
 public class Read7ktcHandler {
 
 	@Inject
-	private IReaderService reader;
+	private IReader7KTCService reader;
 
 	@Inject
 	private IDBService dbService;
@@ -60,7 +61,7 @@ public class Read7ktcHandler {
 			partService.showPart(part, PartState.ACTIVATE);
 			String port = dialog.getComPort();
 			List<Object> archives = dialog.getSelectedElements();
-			ReadArchivesJob job=new ReadArchivesJob(archives, reader, port);
+			Read7KTCArchivesJob job=new Read7KTCArchivesJob(archives, reader, port);
 			job.schedule();
 			job.addJobChangeListener(new JobChangeAdapter() {
 				public void done(IJobChangeEvent event) {
@@ -134,6 +135,15 @@ public class Read7ktcHandler {
 			dialog.setErrorMessage(e.getMessage());
 		}
 		return null;
+	}
+	
+	public void clear(String port, ImportFrom7KTCDialog dialog){
+		try {
+			reader.clear(port);
+		} catch (Exception e) {
+			dialog.setErrorMessage(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }

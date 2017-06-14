@@ -73,7 +73,7 @@ public class ConnectionSettingsDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		setTitleImage(ResourceManager.getPluginImage("ru.7kt.reader.ui", "resources/COM64.png"));
+		setTitleImage(ResourceManager.getPluginImage("ru.7kt.reader.ui", "resources/connection-established_48.png"));
 		setMessage("Введите параметры соединения  с устройством");
 		setTitle("Соединение с устройством");
 		Composite area = (Composite) super.createDialogArea(parent);
@@ -167,6 +167,21 @@ public class ConnectionSettingsDialog extends TitleAreaDialog {
 		return area;
 	}
 
+	private void initState() {
+		if (combo.getText().equals("Прямое")) {
+			labelPhone.setVisible(false);
+			textPhone.setVisible(false);
+			labelInitString.setVisible(false);
+			textInitString.setVisible(false);
+		} else {
+			labelPhone.setVisible(true);
+			textPhone.setVisible(true);
+			labelInitString.setVisible(true);
+			textInitString.setVisible(true);
+		}
+		
+	}
+
 	/**
 	 * Create contents of the button bar.
 	 * 
@@ -177,6 +192,7 @@ public class ConnectionSettingsDialog extends TitleAreaDialog {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
 		createButton(parent, IDialogConstants.CANCEL_ID, "Отмена", false);
 		m_bindingContext = initDataBindings();
+		initState();
 	}
 
 	/**
@@ -194,7 +210,8 @@ public class ConnectionSettingsDialog extends TitleAreaDialog {
 		List<String> ports = new ArrayList<>();
 		ports.add("COM1");
 		ports.add("COM3");
-		ConnectionSettingsDialog dialog = new ConnectionSettingsDialog(shell, ports, new Connection("Прямое", "COM1", "",""));
+		ConnectionSettingsDialog dialog = new ConnectionSettingsDialog(shell, ports,
+				new Connection("Прямое", "COM1", "", ""));
 		if (dialog.open() == Window.OK) {
 			Connection c = dialog.getConnection();
 			System.out.println();
@@ -208,6 +225,12 @@ public class ConnectionSettingsDialog extends TitleAreaDialog {
 
 	public void setConnection(Connection connection) {
 		this.connection = connection;
+	}
+
+	@Override
+	protected void configureShell(Shell newShell) {
+		super.configureShell(newShell);
+		newShell.setText("Настройка соединения");
 	}
 
 	protected DataBindingContext initDataBindings() {

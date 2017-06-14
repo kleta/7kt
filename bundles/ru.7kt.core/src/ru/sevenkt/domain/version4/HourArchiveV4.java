@@ -1,95 +1,18 @@
 package ru.sevenkt.domain.version4;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 import ru.sevenkt.annotations.Length;
-import ru.sevenkt.domain.IDayRecord;
+import ru.sevenkt.annotations.RecordLength;
 import ru.sevenkt.domain.HourArchive;
-import ru.sevenkt.domain.IHourRecord;
-import ru.sevenkt.domain.ISettings;
 
 @Length(value = 44640)
-public class HourArchiveV4 extends HourArchive{
+@RecordLength(30)
+public class HourArchiveV4 extends HourArchive {
 	public static int MAX_DAY_COUNT = 59;
-
-	
 
 	public HourArchiveV4(byte[] data) throws Exception {
 		super(data);
 		parseData(HourRecordV4.class);
 	}
-
-	
-
-	private int convertToMonthYearFormat(LocalDate recDateTime) {
-		int year = recDateTime.getYear() - 2000;
-		year = year == 15 ? year : year - 16;
-		int monthYear = (year << 4) + recDateTime.getMonthValue();
-		return monthYear;
-	}
-
-//	public DayRecordV4 getDayConsumption(LocalDate requestDate, LocalDateTime archiveCurrenDatetime, SettingsV4 settings)
-//			throws Exception {
-//		LocalDateTime startDateTime = LocalDateTime.of(requestDate, LocalTime.of(0, 0)).plusHours(1);
-//
-//		DayRecordV4 dayRecord = new DayRecordV4();
-//		dayRecord.setDay(requestDate.getDayOfMonth());
-//		dayRecord.setMonthYear(convertToMonthYearFormat(requestDate));
-//
-//		while (startDateTime.isBefore(LocalDateTime.of(requestDate.plusDays(1), LocalTime.of(0, 1)))) {
-//			HourRecordV4 hr = (HourRecordV4) getHourRecord(startDateTime);
-//			if (hr.isValid()) {
-//				dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() + hr.getAvgPressure1());
-//				dayRecord.setAvgPressure2(dayRecord.getAvgPressure2() + hr.getAvgPressure2());
-//				dayRecord.setAvgTemp1(dayRecord.getAvgTemp1() + hr.getAvgTemp1());
-//				dayRecord.setAvgTemp2(dayRecord.getAvgTemp2() + hr.getAvgTemp2());
-//				dayRecord.setAvgTemp3(dayRecord.getAvgTemp3() + hr.getAvgTemp3());
-//				dayRecord.setAvgTemp4(dayRecord.getAvgTemp4() + hr.getAvgTemp4());
-//
-//				dayRecord.setEnergy1(new BigDecimal(dayRecord.getEnergy1() + "")
-//						.add(new BigDecimal(hr.getEnergy1()+"").setScale(32, BigDecimal.ROUND_HALF_UP)).floatValue());
-//				dayRecord.setEnergy2(new BigDecimal(dayRecord.getEnergy2() + "")
-//						.add(new BigDecimal(hr.getEnergy2()+"").setScale(32, BigDecimal.ROUND_HALF_UP)).floatValue());
-//
-//				float hrV1 = hr.getVolume1() * settings.getVolumeByImpulsSetting1();
-//				dayRecord.setVolume1(new BigDecimal(dayRecord.getVolume1() + "")
-//						.add(new BigDecimal(hrV1+"").setScale(32, BigDecimal.ROUND_HALF_UP)).floatValue());
-//
-//				float hrV2 = hr.getVolume2() * settings.getVolumeByImpulsSetting2();
-//				dayRecord.setVolume2(new BigDecimal(dayRecord.getVolume2() + "")
-//						.add(new BigDecimal(hrV2+"").setScale(32, BigDecimal.ROUND_HALF_UP)).floatValue());
-//
-//				float hrV3 = hr.getVolume3() * settings.getVolumeByImpulsSetting3();
-//				dayRecord.setVolume3(new BigDecimal(dayRecord.getVolume3() + "")
-//						.add(new BigDecimal(hrV3+"").setScale(32, BigDecimal.ROUND_HALF_UP)).floatValue());
-//
-//				float hrV4 = hr.getVolume4() * settings.getVolumeByImpulsSetting4();
-//				dayRecord.setVolume4(new BigDecimal(dayRecord.getVolume4() + "")
-//						.add(new BigDecimal(hrV4+"").setScale(32, BigDecimal.ROUND_HALF_UP)).floatValue());
-//			}
-////			System.out.println(startDateTime);
-//			startDateTime = startDateTime.plusHours(1);
-//		}
-//		dayRecord.setAvgPressure1(dayRecord.getAvgPressure1() / 24);
-//		dayRecord.setAvgPressure2(dayRecord.getAvgPressure2() / 24);
-//		dayRecord.setAvgTemp1(dayRecord.getAvgTemp1() / 24);
-//		dayRecord.setAvgTemp2(dayRecord.getAvgTemp2() / 24);
-//		dayRecord.setAvgTemp3(dayRecord.getAvgTemp3() / 24);
-//		dayRecord.setAvgTemp4(dayRecord.getAvgTemp4() / 24);
-//		return dayRecord;
-//	}
-//
-//	public static int getMAX_DAY_COUNT() {
-//		return MAX_DAY_COUNT;
-//	}
-//
-//	public static void setMAX_DAY_COUNT(int mAX_DAY_COUNT) {
-//		MAX_DAY_COUNT = mAX_DAY_COUNT;
-//	}
-
 
 	@Override
 	public long getMaxDaysDeep() {

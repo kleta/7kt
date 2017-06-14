@@ -11,7 +11,7 @@ import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(28)
+
 public class HourRecordV3 implements IHourRecord{
 	
 	private byte[] data;
@@ -256,7 +256,7 @@ public class HourRecordV3 implements IHourRecord{
 	}
 	@Override
 	public String toString() {
-		return "HourRecordV3 [avgTemp1=" + avgTemp1 + ", avgPressure1=" + avgPressure1 + ", volume1=" + volume1
+		return getDateTime()+" "+"HourRecordV3 [avgTemp1=" + avgTemp1 + ", avgPressure1=" + avgPressure1 + ", volume1=" + volume1
 				+ ", energy1=" + energy1 + ", errorChannel1=" + errorChannel1 + ", errorChannel2=" + errorChannel2
 				+ ", hour=" + hour + "]";
 	}

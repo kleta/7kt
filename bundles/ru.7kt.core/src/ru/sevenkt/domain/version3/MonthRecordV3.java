@@ -11,7 +11,7 @@ import ru.sevenkt.domain.IMonthRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value=74)
+
 public class MonthRecordV3 implements IMonthRecord{
 	
 	private byte[] data;
@@ -386,7 +386,7 @@ public class MonthRecordV3 implements IMonthRecord{
 
 	@Override
 	public String toString() {
-		return "MonthRecordV3 [workHour=" + workHour + ", volume1=" + volume1 + ", energy1=" + energy1 + ", weight1="
+		return getDate()+" "+"MonthRecordV3 [workHour=" + workHour + ", volume1=" + volume1 + ", energy1=" + energy1 + ", weight1="
 				+ weight1 + ", errorChannel1=" + errorChannel1 + ", errorChannel2=" + errorChannel2 + ", timeError1="
 				+ timeError1 + ", timeError2=" + timeError2 + "]";
 	}

@@ -31,7 +31,7 @@ public enum Parameters {
 	V8(28,"V8", ParametersConst.VOLUME, "м3", 36),
 	ERROR_TIME1(29, "ВОС1",ParametersConst.TIME,"час", 40),
 	ERROR_CODE2(30, "ОШ2",ParametersConst.ERROR,"код", 28),
-	NO_ERROR_TIME2(31, "ВНР1", ParametersConst.TIME, "час", 41), 
+	NO_ERROR_TIME2(31, "ВНР2", ParametersConst.TIME, "час", 41), 
 	ERROR_TIME2(32, "ВОС2",ParametersConst.TIME,"час", 42),
 	WORK(33,"Время работы",ParametersConst.TIME, "час", 43),
 	ERROR_BYTE1(34,"Байт ошибки1",ParametersConst.ERROR, "час", 44),

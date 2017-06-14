@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import gnu.io.NRSerialPort;
 
-public class Reader {
+public abstract class Reader {
 
 	protected String portName;
 	protected CRC16 crc = new CRC16();
@@ -66,5 +66,11 @@ public class Reader {
 		this.serial = serial;
 	}
 	
+	public abstract byte[] readMonhData(int devAdr, int blokSize) throws Exception;
+	public abstract byte[] readDayData(int devAdr, int blokSize) throws Exception;
+	public abstract byte[] readHourData(int devAdr, int blokSize)  throws Exception;
+	public abstract byte[] readJournalData(int devAdr, int blokSize)  throws Exception;
+	public abstract byte[] readCurrentData(int devAdr, int blokSize)  throws Exception;
+	public abstract byte[] readEEPROM(int devAdr, int blokSize) throws Exception;
 	
 }

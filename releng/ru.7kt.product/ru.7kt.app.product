@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ru.7kt.app" uid="7kt" id="ru.7kt.app.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.2.0" useFeatures="true" includeLaunchers="true">
+<product name="ru.7kt.app" uid="7kt" id="ru.7kt.app.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.3.0" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -47,8 +47,8 @@
       <feature id="org.eclipse.ecf.core.ssl.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
       <feature id="ru.7kt.feature.reader" version="1.0.0.qualifier"/>
-      <feature id="org.eclipse.e4.ui.progress.feature" version="0.1.0.qualifier"/>
       <feature id="org.eclipse.e4.rcp" version="1.4.1.v20160212-1350"/>
+      <feature id="org.eclipse.e4.ui.progress.feature" version="0.1.0.qualifier"/>
    </features>
 
    <configurations>

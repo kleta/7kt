@@ -16,13 +16,13 @@ import org.eclipse.swt.widgets.Shell;
 import ru.sevenkt.db.entities.Connection;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.services.IDBService;
-import ru.sevenkt.reader.services.IReaderService;
+import ru.sevenkt.reader.services.IDeviceReaderService;
 import ru.sevenkt.reader.ui.views.ConnectionSettingsDialog;
 
 public class ConnectionSettingHandler {
 	
 	@Inject
-	private IReaderService reader;
+	private IDeviceReaderService reader;
 	
 	@Inject
 	private IDBService dbService;

@@ -11,7 +11,6 @@ import ru.sevenkt.domain.IMonthRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value=74)
 public class MonthRecordV4 implements IMonthRecord{
 	
 	private byte[] data;

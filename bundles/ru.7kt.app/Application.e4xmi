@@ -13,7 +13,7 @@
             <children xsi:type="menu:HandledMenuItem" xmi:id="_TSSIIPexEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledmenuitem." label="Просмотр архивов" iconURI="platform:/plugin/ru.7kt.app/icons/table.png" command="_qzLmsMr7EeW_Qf64bg1C_g">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_UUwRwPexEeWF7bPwIfmPpw" coreExpressionId="ru.7kt.app.deviceselection"/>
             </children>
-            <children xsi:type="menu:HandledMenuItem" xmi:id="_15aKwPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.handledmenuitem." label="Журнал настроек" iconURI="platform:/plugin/ru.7kt.app/icons/calendar-list.png" command="_TnxGgPr_EeWTE_9cDLU1ZQ">
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_15aKwPr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.handledmenuitem.journal" label="Журнал настроек" iconURI="platform:/plugin/ru.7kt.app/icons/calendar-list.png" command="_TnxGgPr_EeWTE_9cDLU1ZQ">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_9EPZwPr_EeWTE_9cDLU1ZQ" coreExpressionId="ru.7kt.app.deviceselection"/>
             </children>
             <children xsi:type="menu:MenuSeparator" xmi:id="_v1FQ0Pr_EeWTE_9cDLU1ZQ" elementId="ru.7kt.app.menuseparator.2"/>
@@ -37,6 +37,7 @@
             <children xsi:type="menu:HandledToolItem" xmi:id="_JnlSgPezEeWF7bPwIfmPpw" elementId="ru.7kt.app.handledtoolitem.2" iconURI="platform:/plugin/ru.7kt.app/icons/property.png" tooltip="Настройки устройства" command="_Kb450Mr8EeW_Qf64bg1C_g"/>
           </toolbar>
         </children>
+        <children xsi:type="basic:Part" xmi:id="_EJxcoFAJEeeIuPyhw3wX6A" elementId="ru.7kt.app.part.scheduler" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.SchedulerView" label="Расписание" iconURI="platform:/plugin/ru.7kt.app/icons/schedule_file_16.png"/>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_-mtAADGNEeSuG80xnFR2ZQ" elementId="power-quality-ui.partsashcontainer.1" containerData="83">
         <children xsi:type="basic:PartSashContainer" xmi:id="_xN4OgE35EeSRPKdhyBjzXA" elementId="powerquality-ui.partsashcontainer.0" containerData="80" horizontal="true">
@@ -89,6 +90,7 @@
   <handlers xmi:id="_Yqm74Ch-EeanwviKTomwkA" elementId="ru.7kt.app.handler.4" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.ShowReport" command="_R4S6kCh-EeanwviKTomwkA"/>
   <handlers xmi:id="_xggesDj2EeaqTrRJaOcMZw" elementId="ru.7kt.app.handler.5" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.AssignTemplateHandler" command="_k1BqkDj2EeaqTrRJaOcMZw"/>
   <handlers xmi:id="_Yov4IBnYEeeBZYcjPqpjGw" elementId="ru.7kt.app.handler.openprogressview" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.OpenProgressViewHandler" command="_r4sJsBnWEeeBZYcjPqpjGw"/>
+  <handlers xmi:id="_uQRXoEzEEeeitqyYPR5N4w" elementId="ru.7kt.app.handler.adddevice" contributionURI="bundleclass://ru.7kt.app/ru.sevenkt.app.ui.handlers.AddDeviceHandler" command="_QQytIMr7EeW_Qf64bg1C_g"/>
   <rootContext xmi:id="_DrjJCTGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
     <children xmi:id="_DrjJCjGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
     <children xmi:id="_DrjJCzGFEeSeO8huCdGv8Q" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
@@ -119,5 +121,5 @@
   <addons xmi:id="_DrjJBjGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_DrjJBzGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_DrjJCDGFEeSeO8huCdGv8Q" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
-  <addons xmi:id="_r6up0BXgEeerTZwe0IPWzA" elementId="ru.7kt.app.addon.0" contributionURI="bundleclass://org.eclipse.e4.ui.progress/org.eclipse.e4.ui.progress.ProgressViewAddon"/>
+  <addons xmi:id="_7D-RQDt5EeegCKnUBHcXDA" elementId="ru.7kt.app.addon.0" contributionURI="bundleclass://org.eclipse.e4.ui.progress/org.eclipse.e4.ui.progress.ProgressViewAddon"/>
 </application:Application>

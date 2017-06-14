@@ -9,14 +9,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import gnu.io.NRSerialPort;
 import ru.sevenkt.utils.HexUtils;
 
-public class Reader7KTC extends Reader {
+public class Reader7KTC {
+
+	protected CRC16 crc = new CRC16();
+	protected Logger logWrite = LoggerFactory.getLogger("TX");
+	protected Logger logRead = LoggerFactory.getLogger("RX");
+	protected Logger log = LoggerFactory.getLogger("Reader");
+	protected NRSerialPort serial;
 
 	public Reader7KTC(String port) {
-		super(port);
-		serial = new NRSerialPort(portName, 38400);
+		serial = new NRSerialPort(port, 38400);
 	}
 
 	public byte[] readPage(int address) throws Exception {
@@ -124,15 +132,36 @@ public class Reader7KTC extends Reader {
 	}
 
 	public int getArchiveCount(boolean whithDeleted, byte[] pic, byte[] attr) throws Exception {
-		int count=0;
+		int count = 0;
 		for (byte b : attr) {
-			if(b==1 || b==2)
+			if (b == 1 || b == 2)
 				count++;
-			if(!whithDeleted && count>=pic[0] && count>0){
+			if (!whithDeleted && count >= pic[0] && count > 0) {
 				count--;
 				break;
 			}
 		}
 		return count;
+	}
+
+	public void clear() throws Exception {
+		DataInputStream ins = new DataInputStream(serial.getInputStream());
+		DataOutputStream outs = new DataOutputStream(serial.getOutputStream());
+		byte[] readPicCommands = Commands.getClearPicCommand();
+		int i = 0;
+		while (i < 10) {
+			outs.write(readPicCommands);
+			logWrite.info("Length: " + readPicCommands.length + ", Data: " + HexUtils.bytesToHex(readPicCommands));
+			byte[] bytes = new byte[4];
+			Thread.sleep(100);
+			int b = ins.read(bytes);
+			logRead.info("Length: " + b + ", Data: " + HexUtils.bytesToHex(bytes));
+			if (bytes[0] != 0x6) {
+				logRead.info("Ошибка");
+				i++;
+			}
+			else
+				break;
+		}
 	}
 }

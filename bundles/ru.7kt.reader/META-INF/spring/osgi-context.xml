@@ -9,6 +9,8 @@
 		                http://www.springframework.org/schema/context/spring-context.xsd
 		                http://www.eclipse.org/gemini/blueprint/schema/blueprint 
                         http://www.eclipse.org/gemini/blueprint/schema/blueprint/gemini-blueprint.xsd">
-	<bean id="readerService" class="ru.sevenkt.reader.services.impl.ReaderImpl"/>
-	<osgi:service  id="readerServiceOsgi" ref="readerService" interface="ru.sevenkt.reader.services.IReaderService"/>
+	<bean id="deviceReaderService" class="ru.sevenkt.reader.services.impl.DeviceReaderImpl"/>
+	<osgi:service  id="deviceReaderServiceOsgi" ref="deviceReaderService" interface="ru.sevenkt.reader.services.IDeviceReaderService"/>
+	<bean id="reader7KTCService" class="ru.sevenkt.reader.services.impl.Reader7KTCImpl"/>
+	<osgi:service  id="reader7KTCServiceOsgi" ref="reader7KTCService" interface="ru.sevenkt.reader.services.IReader7KTCService"/>
 </beans>

@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
 import ru.sevenkt.annotations.Parameter;
+import ru.sevenkt.annotations.RecordLength;
 
 public abstract class HourArchive {
 
@@ -48,6 +49,7 @@ public abstract class HourArchive {
 							field.setAccessible(true);
 							
 							Object val = field.get(r);
+						//	System.out.println(val);
 							BigDecimal bdVal = new BigDecimal(val + "");
 
 							BigDecimal bd = map.get(param);
@@ -65,8 +67,8 @@ public abstract class HourArchive {
 	}
 
 	protected void parseData(Class<? extends IHourRecord> class1) throws Exception {
-		Length annotationLength = class1.getAnnotation(Length.class);
-		int size = annotationLength.value();
+		RecordLength annotationRecordLength = getClass().getAnnotation(RecordLength.class);
+		int size = annotationRecordLength.value();
 		records = new HashMap<>();
 		int hour = 0;
 		for (int i = 0; i < data.length; i += size) {
@@ -77,6 +79,7 @@ public abstract class HourArchive {
 			if (date != null) {
 				hr.setValid(true);
 				records.put(date, hr);
+				System.out.println("addr="+i+" "+hr);
 			}
 			hour++;
 			if (hour == 24)

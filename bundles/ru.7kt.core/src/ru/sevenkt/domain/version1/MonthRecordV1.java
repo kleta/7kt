@@ -11,7 +11,7 @@ import ru.sevenkt.domain.IMonthRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value=25)
+
 public class MonthRecordV1 implements IMonthRecord{
 	
 	private byte[] data;
@@ -149,8 +149,14 @@ public class MonthRecordV1 implements IMonthRecord{
 
 	@Override
 	public LocalDate getDate() {
-		// TODO Auto-generated method stub
+		int year = (monthYear>>4)+2016;
+		int month = monthYear&0xF;
+		if(month<1 || month>12)
 		return null;
+		LocalDate date = LocalDate.of(year, month, 1);
+		if(date.isAfter(LocalDate.now()))
+			return null;
+		return date;
 	}
 
 	@Override
@@ -163,5 +169,10 @@ public class MonthRecordV1 implements IMonthRecord{
 	public int getErrorChannel2() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public String toString() {
+		return "MonthRecordV1 [volume1=" + volume1 + ", energy1=" + energy1 + ", getDate()=" + getDate() + "]";
 	}
 }

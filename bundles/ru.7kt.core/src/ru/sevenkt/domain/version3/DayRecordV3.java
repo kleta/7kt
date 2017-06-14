@@ -14,7 +14,7 @@ import ru.sevenkt.domain.IDayRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value = 56)
+
 public class DayRecordV3 implements Cloneable, IDayRecord {
 
 	private byte[] data;
@@ -409,7 +409,7 @@ public class DayRecordV3 implements Cloneable, IDayRecord {
 
 	@Override
 	public String toString() {
-		return "DayRecordV3 [day=" + day + ", monthYear=" + monthYear + ", avgTemp1=" + avgTemp1 + ", avgPressure1="
+		return getDate()+" "+"DayRecordV3 [day=" + day + ", monthYear=" + monthYear + ", avgTemp1=" + avgTemp1 + ", avgPressure1="
 				+ avgPressure1 + ", volume1=" + volume1 + ", energy1=" + energy1 + ", weight1=" + weight1
 				+ ", errorChannel1=" + errorChannel1 + ", errorChannel2=" + errorChannel2 + ", timeError1=" + timeError1
 				+ ", timeError2=" + timeError2 + "]";

@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.sevenkt.annotations.Length;
+import ru.sevenkt.annotations.RecordLength;
 import ru.sevenkt.domain.IJournalSettings;
 import ru.sevenkt.domain.IJournalSettingsRecord;
 
 @Length(value = 2560)
+@RecordLength(10)
 public class JournalSettingsV4 implements IJournalSettings{
 	//private byte[] data;
 	

@@ -1,9 +1,11 @@
 package ru.sevenkt.domain.version4;
 
 import ru.sevenkt.annotations.Length;
+import ru.sevenkt.annotations.RecordLength;
 import ru.sevenkt.domain.MonthArchive;
 
 @Length(value = 2964)
+@RecordLength(value=74)
 public class MonthArchiveV4 extends MonthArchive{
 	
 	

@@ -5,15 +5,23 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TooManyListenersException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import gnu.io.CommPort;
 import gnu.io.NRSerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
@@ -22,20 +30,22 @@ import ru.sevenkt.domain.IArchive;
 import ru.sevenkt.utils.HexUtils;
 
 public class ReaderCOM extends Reader {
-
+	CRC16 crc = new CRC16();
 	private int baudRate;
 	private int timeOut;
+	private byte[] currentData;
+	boolean CRCError = false;
 
 	public ReaderCOM(String port, int rate, int i) {
 		super(port);
 		baudRate = rate;
-		timeOut=i;
+		timeOut = i;
 	}
 
 	public boolean connect() throws IOException, InterruptedException, UnsupportedCommOperationException {
 		boolean b = false;
 		int i = 0;
-		log.info("Установка соединения с устройством");
+		log.info("Установка соединения с устройством по " + portName);
 		while (!b && i < 5) {
 			if (serial == null)
 				serial = new NRSerialPort(portName, baudRate);
@@ -57,87 +67,217 @@ public class ReaderCOM extends Reader {
 		return false;
 	}
 
+	@Override
 	public byte[] readEEPROM(int devAddr, int blockSize) throws Exception {
+		currentData = readCurrentData();
 
-		byte[] currentData = readCurrentData();
+		Map<Integer, byte[]> monthMapData = readMonthArchive(devAddr, blockSize);
+		Map<Integer, byte[]> dayMapData = readDayArchive(devAddr, blockSize);
+		Map<Integer, byte[]> hourMapData = readHourArchive(devAddr, blockSize);
+		Map<Integer, byte[]> journalData = readJournal(devAddr, blockSize);
+		if (currentData == null)
+			return new byte[0];
 		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
 		int arhiveSize = clazz.getAnnotation(Length.class).value();
-		byte[] arhiveData = new byte[arhiveSize];
-		for (int i = 0; i < currentData.length; i++)
-			arhiveData[i] = currentData[i];
-
-		// Читаем месячный архив
-		log.info("Чтение месячного архива");
-		long monthAddr = clazz.getDeclaredField("monthArchive").getAnnotation(Address.class).value();
-		int monthLength = clazz.getDeclaredField("monthArchive").getType().getAnnotation(Length.class).value();
-		byte[] monthData = readArchive(devAddr, monthAddr, monthLength, blockSize);
-		for (int i = 0; i < monthData.length; i++)
-			arhiveData[(int) (i + monthAddr)] = monthData[i];
-		// Читаем дневной архив
-		log.info("Чтение суточноного архива");
-		long dayAddr = clazz.getDeclaredField("dayArchive").getAnnotation(Address.class).value();
-		int dayLength = clazz.getDeclaredField("dayArchive").getType().getAnnotation(Length.class).value();
-		byte[] dayData = readArchive(devAddr, dayAddr, dayLength, blockSize);
-		for (int i = 0; i < dayData.length; i++)
-			arhiveData[(int) (i + dayAddr)] = dayData[i];
-
-		// Читаем часовой архив
-		log.info("Чтение часового архива");
-		long hourAddr = clazz.getDeclaredField("hourArchive").getAnnotation(Address.class).value();
-		int hourLength = clazz.getDeclaredField("hourArchive").getType().getAnnotation(Length.class).value();
-		byte[] hourData = readArchive(devAddr, hourAddr, hourLength, blockSize);
-		for (int i = 0; i < hourData.length; i++)
-			arhiveData[(int) (i + hourAddr)] = hourData[i];
-
-		// Читаем журнал установок
-		log.info("Чтение журнала установок");
-		long jAddr = clazz.getDeclaredField("journalSettings").getAnnotation(Address.class).value();
-		int jLength = clazz.getDeclaredField("journalSettings").getType().getAnnotation(Length.class).value();
-		byte[] jData = readArchive(devAddr, jAddr, jLength, blockSize);
-		for (int i = 0; i < jData.length; i++)
-			arhiveData[(int) (i + jAddr)] = jData[i];
-		log.info("Архив считан. Получено " + arhiveData.length + " байт");
-		return arhiveData;
+		byte[] arсhiveData = new byte[arhiveSize];
+		Arrays.fill(arсhiveData, (byte) -1);
+		if (currentData != null)
+			System.arraycopy(currentData, 0, arсhiveData, 0, currentData.length);
+		if (monthMapData != null)
+			copyMapToArray(monthMapData, arсhiveData, 0);
+		if (dayMapData != null)
+			copyMapToArray(dayMapData, arсhiveData, 0);
+		if (hourMapData != null)
+			copyMapToArray(hourMapData, arсhiveData, 0);
+		if (journalData != null)
+			copyMapToArray(journalData, arсhiveData, 0);
+		return arсhiveData;
 	}
 
-	public byte[] readArchive(int devAddr, long beginAddr, int archiveLength, int blockSize) throws Exception {
-		byte[] archiveData = new byte[archiveLength];
-		for (long addr = beginAddr; addr < beginAddr + archiveLength; addr += blockSize) {
-			byte[] bytes = readData(devAddr, addr, blockSize);
-			if (bytes != null) {
-				for (int i = 0; i < bytes.length; i++) {
-					if (addr - beginAddr + i < archiveData.length)
-						archiveData[(int) (addr - beginAddr) + i] = bytes[i];
+	void copyMapToArray(Map<Integer, byte[]> map, byte[] arсhiveData, int shift) {
+		for (int adr : map.keySet()) {
+			byte[] src = map.get(adr);
+			System.arraycopy(src, 0, arсhiveData, adr - shift, src.length);
+		}
+
+	}
+
+	Map<Integer, byte[]> readJournal(int devAddr, int blockSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+
+		log.info("Чтение журнала установок. Размер блока " + blockSize);
+		Field journalField;
+		try {
+			journalField = clazz.getDeclaredField("journalSettings");
+		} catch (NoSuchFieldException | SecurityException e) {
+			return null;
+		}
+		long journalAddr = journalField.getAnnotation(Address.class).value();
+		int journalLength = journalField.getType().getAnnotation(Length.class).value();
+		Set<Integer> adresses = new HashSet<>();
+		for (long adr = journalAddr; adr < journalAddr + journalLength; adr += blockSize) {
+			adresses.add((int) adr);
+		}
+		Map<Integer, byte[]> journalData = readData(devAddr, blockSize, adresses);
+		if (journalData == null) {
+			log.info("Не удалось прочитать журнал установок");
+		}
+		return journalData;
+	}
+
+	public Map<Integer, byte[]> readMonthArchive(int devAddr, int blockSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+
+		log.info("Чтение месячного архива. Размер блока " + blockSize);
+		Field monthArhiveField = clazz.getDeclaredField("monthArchive");
+		long monthAddr = monthArhiveField.getAnnotation(Address.class).value();
+		int monthLength = monthArhiveField.getType().getAnnotation(Length.class).value();
+		Set<Integer> adresses = new HashSet<>();
+		for (long adr = monthAddr; adr < monthAddr + monthLength; adr += blockSize) {
+			adresses.add((int) adr);
+		}
+		Map<Integer, byte[]> monthMapData = readData(devAddr, blockSize, adresses);
+		if (monthMapData == null) {
+			log.info("Не удалось прочитать месячный архив");
+		}
+		return monthMapData;
+	}
+
+	public Map<Integer, byte[]> readDayArchive(int devAddr, int blockSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+
+		log.info("Чтение дневного архива. Размер блока " + blockSize);
+		Field dayArhiveField = clazz.getDeclaredField("dayArchive");
+		long dayAddr = dayArhiveField.getAnnotation(Address.class).value();
+		int dayLength = dayArhiveField.getType().getAnnotation(Length.class).value();
+		Set<Integer> adresses = new HashSet<>();
+		for (long adr = dayAddr; adr < dayAddr + dayLength; adr += blockSize) {
+			adresses.add((int) adr);
+		}
+		Map<Integer, byte[]> dayMapData = readData(devAddr, blockSize, adresses);
+		if (dayMapData == null) {
+			log.info("Не удалось прочитать дневной архив");
+		}
+		return dayMapData;
+	}
+
+	public Map<Integer, byte[]> readHourArchive(int devAddr, int blockSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+
+		log.info("Чтение часового архива. Размер блока " + blockSize);
+		Field hourArhiveField = clazz.getDeclaredField("hourArchive");
+		long hourAddr = hourArhiveField.getAnnotation(Address.class).value();
+		int hourLength = hourArhiveField.getType().getAnnotation(Length.class).value();
+		Set<Integer> adresses = new HashSet<>();
+		for (long adr = hourAddr; adr < hourAddr + hourLength; adr += blockSize) {
+			adresses.add((int) adr);
+		}
+		Map<Integer, byte[]> hourMapData = readData(devAddr, blockSize, adresses);
+		if (hourMapData == null) {
+			log.info("Не удалось прочитать дневной архив");
+		}
+		return hourMapData;
+	}
+
+	public Map<Integer, byte[]> readData(int devAddr, int blockSize, Set<Integer> addresses)
+			throws TooManyListenersException, IOException, InterruptedException {
+		HashMap<Integer, byte[]> map = new HashMap<>();
+
+		serial.addEventListener(new SerialPortEventListener() {
+			private byte[] readBuffer = new byte[blockSize + 4];
+
+			@Override
+			public void serialEvent(SerialPortEvent ev) {
+				if (!CRCError)
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				switch (ev.getEventType()) {
+				case SerialPortEvent.DATA_AVAILABLE:
+					try {
+						readSerial();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
 				}
-			} else
-				throw new Exception("Невозможно прочитать архив");
+
+			}
+
+			private void readSerial() throws Exception {
+				InputStream inStream = serial.getInputStream();
+
+				inStream.read(readBuffer, 0, blockSize + 4);
+				boolean vCRC = crc.validateCRC(readBuffer);
+				if (vCRC) {
+					int adrL = readBuffer[0];
+					int adrH = readBuffer[1];
+					int l8 = (adrH & 0xff) << 8;
+					int adr = l8 | (adrL & 0xff);
+					byte[] data = Arrays.copyOfRange(readBuffer, 2, blockSize + 2);
+					map.put(adr, data);
+					System.out.println("Вставлен адрес " + adr);
+					logRead.info("Length: " + readBuffer.length + ", Data: " + HexUtils.bytesToHex(readBuffer));
+
+				} else {
+					logRead.info("Ошибка CRC: " + readBuffer.length + "-" + HexUtils.bytesToHex(readBuffer));
+					CRCError = true;
+				}
+
+			}
+		});
+		serial.notifyOnDataAvailable(true);
+
+		OutputStream outStream = serial.getOutputStream();
+
+		for (int i = 0; i < 20; i++) {
+			int countCommands = addresses.size() - map.keySet().size();
+			for (int adr : addresses) {
+				if (map.get(adr) == null) {
+					byte[] command = Commands.getReadEEPROMCommand16(devAddr, adr, blockSize);
+					if (CRCError) {
+						log.info("Sleep CRC");
+						Thread.sleep(2000);
+						CRCError = false;
+					}
+					logWrite.info("Length: " + command.length + ", Data: " + HexUtils.bytesToHex(command));
+					outStream.write(command);
+					int millis = (int) (3 * countCommands);
+					if (millis < 300)
+						millis = 300;
+					Thread.sleep(millis);
+				}
+
+			}
+			if (validateMap(map, addresses)) {
+				serial.removeEventListener();
+				return map;
+			}
+			log.info(
+					"Цикл чтения " + (i + 1) + ": Прочитано " + map.keySet().size() + " блоков из " + addresses.size());
 		}
-		return archiveData;
+		serial.removeEventListener();
+		return null;
 	}
 
-	private byte[] readData(int devAddr, long addr, int blockSize) throws Exception {
-		CRC16 crc = new CRC16();
-		DataInputStream ins = new DataInputStream(serial.getInputStream());
-		DataOutputStream outs = new DataOutputStream(serial.getOutputStream());
-		byte[] readEEPROMCommand = Commands.getReadEEPROMCommand1(devAddr, addr, blockSize);
-		boolean vCRC;
-		int i = 0;
-		while (i < 10) {
-			outs.write(readEEPROMCommand);
-			logWrite.info("Length: " + readEEPROMCommand.length + ", Data: " + HexUtils.bytesToHex(readEEPROMCommand));
-			Thread.sleep(timeOut);
-			byte[] bytes = new byte[blockSize + 2];
-			int b = ins.read(bytes);
-			logRead.info("Length: " + b + ", Data: " + HexUtils.bytesToHex(bytes));
-			vCRC = crc.validateCRC(bytes);
-			if (vCRC)
-				return Arrays.copyOfRange(bytes, 0, blockSize);
-			else {
-				logRead.info("Ошибка CRC");
-			}
-			i++;
+	private boolean validateMap(HashMap<Integer, byte[]> mapData, Set<Integer> adresses) {
+		for (int adr : adresses) {
+			if (mapData.get(adr) == null)
+				return false;
 		}
-		return null;
+		return true;
 	}
 
 	public byte[] readCurrentData() throws Exception {
@@ -152,12 +292,12 @@ public class ReaderCOM extends Reader {
 			logWrite.info("Length: " + readCurrentDataCommand.length + ", Data: "
 					+ HexUtils.bytesToHex(readCurrentDataCommand));
 			Thread.sleep(timeOut);
-			byte[] bytes = new byte[194];
+			byte[] bytes = new byte[130];
 			int b = ins.read(bytes);
 			logRead.info("Length: " + b + ", Data: " + HexUtils.bytesToHex(bytes));
 			vCRC = crc.validateCRC(bytes);
 			if (vCRC)
-				return Arrays.copyOfRange(bytes, 0, 194 - 2);
+				return Arrays.copyOfRange(bytes, 0, 130 - 2);
 			else {
 				logRead.info("Ошибка CRC");
 			}
@@ -186,6 +326,60 @@ public class ReaderCOM extends Reader {
 	public void disconnect() throws IOException, InterruptedException {
 		log.info("Закрытие соединения");
 		serial.disconnect();
+	}
+
+	@Override
+	public byte[] readMonhData(int devAdr, int blokSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+		Field monthArhiveField = clazz.getDeclaredField("monthArchive");
+		int monthLength = monthArhiveField.getType().getAnnotation(Length.class).value();
+		long monthAddr = monthArhiveField.getAnnotation(Address.class).value();
+		Map<Integer, byte[]> data = readMonthArchive(devAdr, blokSize);
+		byte[] bytes = new byte[monthLength + blokSize];
+		copyMapToArray(data, bytes, (int) monthAddr);
+		return bytes;
+	}
+
+	@Override
+	public byte[] readDayData(int devAdr, int blokSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+		Field dayArhiveField = clazz.getDeclaredField("dayArchive");
+		int dayLength = dayArhiveField.getType().getAnnotation(Length.class).value();
+		long dayAddr = dayArhiveField.getAnnotation(Address.class).value();
+		Map<Integer, byte[]> data = readDayArchive(devAdr, blokSize);
+		byte[] bytes = new byte[dayLength + blokSize];
+		copyMapToArray(data, bytes, (int) dayAddr);
+		return bytes;
+	}
+
+	@Override
+	public byte[] readHourData(int devAdr, int blokSize) throws Exception {
+		if (currentData == null)
+			currentData = readCurrentData();
+		Class<? extends IArchive> clazz = ArchiveFactory.getArchiveClass(currentData);
+		Field hourArhiveField = clazz.getDeclaredField("hourArchive");
+		int hourLength = hourArhiveField.getType().getAnnotation(Length.class).value();
+		long hourAddr = hourArhiveField.getAnnotation(Address.class).value();
+		Map<Integer, byte[]> data = readHourArchive(devAdr, blokSize);
+		byte[] bytes = new byte[hourLength + blokSize];
+		copyMapToArray(data, bytes, (int) hourAddr);
+		return bytes;
+	}
+
+	@Override
+	public byte[] readJournalData(int devAdr, int blokSize) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public byte[] readCurrentData(int devAdr, int blokSize) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

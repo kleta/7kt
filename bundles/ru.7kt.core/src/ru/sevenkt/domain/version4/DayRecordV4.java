@@ -15,7 +15,7 @@ import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.version3.DayRecordV3;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(value = 58)
+
 public class DayRecordV4 implements Cloneable, IDayRecord {
 
 	private byte[] data;

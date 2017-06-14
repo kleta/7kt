@@ -11,7 +11,7 @@ import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.utils.DataUtils;
 
-@Length(30)
+
 public class HourRecordV4 implements IHourRecord{
 	
 	private byte[] data;

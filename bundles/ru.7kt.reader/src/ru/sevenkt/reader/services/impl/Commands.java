@@ -22,7 +22,7 @@ public class Commands {
 		commandDevice[2]=1;
 		commandDevice[3]=0;
 		commandDevice[4]=0;
-		commandDevice[5]=(byte) 192;
+		commandDevice[5]=(byte) 128;
 		addCrcToDeviceCommand(commandDevice);
 		return commandDevice;
 	}
@@ -63,6 +63,13 @@ public class Commands {
 	}
 	public static byte[] getReadPicCommand() {
 		command7KTC[1]=2;
+		addCrcTo7KTCCommand(command7KTC);
+		return command7KTC;
+	}
+	public static byte[] getClearPicCommand() {
+		command7KTC[1]=3;
+		command7KTC[2]=0;
+		command7KTC[3]=0;
 		addCrcTo7KTCCommand(command7KTC);
 		return command7KTC;
 	}

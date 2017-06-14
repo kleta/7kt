@@ -3,6 +3,7 @@ package ru.sevenkt.unittests;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.Test;
@@ -10,10 +11,13 @@ import org.junit.Test;
 import ru.sevenkt.archive.services.impl.ArchiveServiceImpl;
 import ru.sevenkt.domain.IArchive;
 import ru.sevenkt.domain.ICurrentData;
+import ru.sevenkt.domain.ArchiveFactory;
+import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.DayArchive;
 import ru.sevenkt.domain.HourArchive;
 import ru.sevenkt.domain.IJournalSettings;
 import ru.sevenkt.domain.MonthArchive;
+import ru.sevenkt.domain.version3.ArchiveV3;
 
 public class ArchiveServiceTest {
 	ArchiveServiceImpl as = new ArchiveServiceImpl();
@@ -64,6 +68,36 @@ public class ArchiveServiceTest {
 	public void testSpreadHourData() throws Exception{
 		File file = new File("resources/V3/02016_2016-02-04_13-00.bin");
 		IArchive archive = as.readArchiveFromFile(file);
+	}
+	
+	@Test
+	public void testConvertDateToAddress() throws Exception{
+		int adr = ArchiveFactory.convertDateToAddress(LocalDate.parse("2015-02-01"), ArchiveV3.class, ArchiveTypes.MONTH);
+		assertEquals(adr, 374);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2016-02-01"), ArchiveV3.class, ArchiveTypes.MONTH);
+		assertEquals(adr, 1262);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2017-12-01"), ArchiveV3.class, ArchiveTypes.MONTH);
+		assertEquals(adr, 2890);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2020-01-01"), ArchiveV3.class, ArchiveTypes.MONTH);
+		assertEquals(adr, 2076);
+
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2016-01-01"), ArchiveV3.class, ArchiveTypes.DAY);
+		assertEquals(adr, 3000);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2017-06-01"), ArchiveV3.class, ArchiveTypes.DAY);
+		assertEquals(adr, 11680);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2020-07-01"), ArchiveV3.class, ArchiveTypes.DAY);
+		assertEquals(adr, 3000);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2020-12-31"), ArchiveV3.class, ArchiveTypes.DAY);
+		assertEquals(adr, 13360);
+
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2016-01-01"), ArchiveV3.class, ArchiveTypes.HOUR);
+		assertEquals(adr, 13500);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2017-06-01"), ArchiveV3.class, ArchiveTypes.HOUR);
+		assertEquals(adr, 34332);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2020-07-01"), ArchiveV3.class, ArchiveTypes.HOUR);
+		assertEquals(adr, 13500);
+		adr=ArchiveFactory.convertDateToAddress(LocalDate.parse("2020-12-31"), ArchiveV3.class, ArchiveTypes.HOUR);
+		assertEquals(adr, 54492);
 	}
 	
 	void parseArchive(File file) throws Exception{

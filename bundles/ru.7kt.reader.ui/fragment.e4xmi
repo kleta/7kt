@@ -19,17 +19,22 @@
     <elements xsi:type="commands:Handler" xmi:id="_Q5th4AR5EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handler.readdata" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.handlers.ReadData" command="_cA2HAAR8EeeTJNz3A2iYag"/>
     <elements xsi:type="commands:Handler" xmi:id="_1z8mQA0PEee6g7NidkztMA" elementId="ru.7kt.reader.ui.handler.read7ktc" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.handlers.Read7ktcHandler" command="_B4e-YAR5EeeTJNz3A2iYag"/>
     <elements xsi:type="commands:Handler" xmi:id="_8lX4EB8pEee2ANt8_N9aCg" elementId="ru.7kt.app.handler.openportview" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.handlers.OpenPortViewHandler" command="_3gcloB8pEee2ANt8_N9aCg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_JFvFAEAeEeeYXqwWU_7_BA" elementId="ru.7kt.reader.ui.handler.clear7ktc" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.handlers.Clear7KTCHandler" command="__BweoEAdEeeYXqwWU_7_BA"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_v_hYwAR4EeeTJNz3A2iYag" featurename="commands" parentElementId="org.eclipse.e4.ide.application">
     <elements xsi:type="commands:Command" xmi:id="_2nNecAR4EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.command.connectionsettings" commandName="&#x41d;&#x430;&#x441;&#x442;&#x440;&#x43e;&#x438;&#x442;&#x44c; &#x441;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x435;"/>
     <elements xsi:type="commands:Command" xmi:id="_B4e-YAR5EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.command.read7ktc" commandName="&#x418;&#x43c;&#x43f;&#x43e;&#x440;&#x442; &#x438;&#x437; 7&#x41a;&#x422;&#x421;"/>
     <elements xsi:type="commands:Command" xmi:id="_cA2HAAR8EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.command.readarchive" commandName="&#x421;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c; &#x430;&#x440;&#x445;&#x438;&#x432;"/>
     <elements xsi:type="commands:Command" xmi:id="_3gcloB8pEee2ANt8_N9aCg" elementId="ru.7kt.app.command.openportview" commandName="&#x41e;&#x442;&#x43a;&#x440;&#x44b;&#x442;&#x44c; &#x43e;&#x43a;&#x43d;&#x43e; &#x440;&#x430;&#x431;&#x43e;&#x442;&#x44b; &#x43f;&#x43e;&#x440;&#x442;&#x430;"/>
+    <elements xsi:type="commands:Command" xmi:id="__BweoEAdEeeYXqwWU_7_BA" elementId="ru.7kt.reader.ui.command.clear7ktc" commandName="&#x41e;&#x447;&#x438;&#x441;&#x442;&#x438;&#x442;&#x44c; 7&#x41a;&#x422;&#x421;"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_G0mWQAR9EeeTJNz3A2iYag" featurename="descriptors" parentElementId="org.eclipse.e4.ide.application">
     <elements xsi:type="basic:PartDescriptor" xmi:id="_KeOvYAR9EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.partdescriptor.comlog" label="&#x416;&#x443;&#x440;&#x43d;&#x430;&#x43b; &#x440;&#x430;&#x431;&#x43e;&#x442;&#x44b; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" closeable="true" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.views.ComPortLogView"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_OMgG0B8qEee2ANt8_N9aCg" featurename="children" parentElementId="ru.7kt.app.menu.windows">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_ogA24B8qEee2ANt8_N9aCg" elementId="ru.7kt.app.handledmenuitem.openportview" label="&#x41c;&#x43e;&#x43d;&#x438;&#x442;&#x43e;&#x440; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" command="_3gcloB8pEee2ANt8_N9aCg"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DYjRIEENEeexqLBzQTLwVA" featurename="children" parentElementId="ru.7kt.app.popupmenu.device" positionInList="after:ru.7kt.app.handledmenuitem.journal">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_MOKm8EENEeexqLBzQTLwVA" elementId="ru.7kt.reader.ui.handledmenuitem." label="&#x421;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c; &#x430;&#x440;&#x445;&#x438;&#x432;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" command="_cA2HAAR8EeeTJNz3A2iYag"/>
   </fragments>
 </fragment:ModelFragments>

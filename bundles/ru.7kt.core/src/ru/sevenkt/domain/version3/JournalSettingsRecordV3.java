@@ -99,11 +99,19 @@ public class JournalSettingsRecordV3 implements IJournalSettingsRecord{
 	public LocalDateTime getDateTime() {
 		String b = Integer.toBinaryString((monthYear & 0xF0));
 		int year = ((monthYear & 0xF0) / 16)  + 2000;
-		//year = year < 2015 ? year + 16 : year;
+		year = year < 2015 ? year + 16 : year;
 		String a = Integer.toBinaryString(year);
 		int month = monthYear & 0xF;
 		if(month<1 || month>12 || day<1 || day>31)
 			return null;
 		return LocalDateTime.of(year, month, getDay(), getHour(), 0);
 	}
+
+	@Override
+	public String toString() {
+		return getDateTime()+"-"+"JournalSettingsRecordV3 [hour=" + hour + ", day=" + day + ", monthYear=" + monthYear + ", workHour="
+				+ workHour + ", event=" + event + "]";
+	}
+	
 }
+

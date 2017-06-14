@@ -24,8 +24,18 @@ import org.osgi.service.event.EventHandler;
 import ru.sevenkt.app.ui.handlers.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.services.IDBService;
+import org.eclipse.jface.viewers.ViewerSorter;
 
 public class DevicesView implements EventHandler{
+	private static class Sorter extends ViewerSorter {
+		public int compare(Viewer viewer, Object e1, Object e2) {
+			Device item1 = (Device) e1;
+			Device item2 = (Device)e2;
+			String s1 = item1.getDeviceName()+item1.getSerialNum();
+			String s2 = item2.getDeviceName()+item2.getSerialNum();
+			return s1.compareTo(s2);
+		}
+	}
 
 	@Inject
 	private IDBService dbService;
@@ -108,6 +118,7 @@ public class DevicesView implements EventHandler{
 	public void postConstruct(Composite parent, ESelectionService s, EMenuService ms) {
 		broker.subscribe(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, this);
 		treeViewer = new TreeViewer(parent, SWT.BORDER);
+		treeViewer.setSorter(new Sorter());
 		treeViewer.setLabelProvider(new ViewerLabelProvider());
 		treeViewer.setContentProvider(new TreeContentProvider(dbService));
 		ms.registerContextMenu(treeViewer.getControl(), 

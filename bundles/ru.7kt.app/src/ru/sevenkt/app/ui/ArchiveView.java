@@ -225,7 +225,6 @@ public class ArchiveView implements EventHandler {
 		formToolkit.paintBordersFor(combo);
 
 		requestButton = formToolkit.createButton(composite, "Запросить", SWT.NONE);
-		requestButton.setEnabled(false);
 		requestButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -310,6 +309,8 @@ public class ArchiveView implements EventHandler {
 		}
 		startPeriodDateTime.setSelection(Date.from(stDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		endPeriodDateTime.setSelection(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+		startPeriodSelectedDate=startPeriodDateTime.getSelection();
+		endPeriodSelectedDate=endPeriodDateTime.getSelection();
 	}
 
 	@PersistState

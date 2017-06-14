@@ -1,12 +1,11 @@
 package ru.sevenkt.domain.version3;
 
-import java.time.LocalDate;
-
 import ru.sevenkt.annotations.Length;
+import ru.sevenkt.annotations.RecordLength;
 import ru.sevenkt.domain.MonthArchive;
-import ru.sevenkt.domain.IMonthRecord;
 
 @Length(value = 2664)
+@RecordLength(value=74)
 public class MonthArchiveV3 extends MonthArchive{
 	
 	public static int MAX_YEAR_COUNT=3;
@@ -18,7 +17,6 @@ public class MonthArchiveV3 extends MonthArchive{
 		super(data);
 		parseData(MonthRecordV3.class);
 	}
-
 
 
 	@Override

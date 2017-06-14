@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: ru.7kt.reader.ui;singleton:=true
+Bundle-Name: Ui
+Bundle-Version: 1.0.0.201706090324
+Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="1.1.
+ 100.v20150407-1430",org.eclipse.e4.core.di,org.eclipse.swt;bundle-ver
+ sion="3.104.2",ch.qos.logback.core;bundle-version="1.1.4",ch.qos.logb
+ ack.classic,slf4j.api,org.eclipse.e4.ui.workbench,org.eclipse.e4.ui.s
+ ervices,ru.7kt.database,ru.7kt.reader;bundle-version="1.0.0",ru.7kt.c
+ ore,org.eclipse.e4.ui.di,org.eclipse.ui.forms;bundle-version="3.6.200
+ ",org.eclipse.jface;bundle-version="3.11.1",org.eclipse.core.runtime,
+ org.eclipse.core.databinding,org.eclipse.core.databinding.beans,org.e
+ clipse.core.databinding.observable,org.eclipse.core.databinding.prope
+ rty,org.eclipse.jface.databinding,com.ibm.icu,org.eclipse.e4.core.ser
+ vices,ru.7kt.app,org.eclipse.e4.core.contexts,org.eclipse.nebula.widg
+ ets.cdatetime;bundle-version="1.0.0"
+Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
+ javax.inject;version="1.0.0"
+

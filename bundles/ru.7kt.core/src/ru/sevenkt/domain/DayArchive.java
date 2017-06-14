@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import ru.sevenkt.annotations.Length;
+import ru.sevenkt.annotations.RecordLength;
 import ru.sevenkt.domain.version3.DayRecordV3;
 
 public abstract class DayArchive {
@@ -29,8 +30,7 @@ public abstract class DayArchive {
 	public abstract long getMaxMonthDeep();
 
 	protected void parseData(Class<? extends IDayRecord> class1) throws Exception {
-		Length annotationLength = class1.getAnnotation(Length.class);
-		int size = annotationLength.value();
+		int size= getClass().getAnnotation(RecordLength.class).value();
 		records = new HashMap<>();
 		for (int i = 0; i < data.length; i += size) {
 			byte[] dayRecordData = Arrays.copyOfRange(data, i, i + size);
@@ -41,7 +41,7 @@ public abstract class DayArchive {
 				dr.setPrevDayRecord(records.get(date.minusDays(1)));
 				dr.setValid(true);
 				records.put(date, dr);
-				
+				System.out.println(dr.getDate()+" "+dr);
 //				System.out.println("adr=" + (i + 3000) + " " + date + "=" + dr);
 			}
 		}

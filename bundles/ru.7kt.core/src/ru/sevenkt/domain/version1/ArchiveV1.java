@@ -1,20 +1,18 @@
 package ru.sevenkt.domain.version1;
 
-import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import ru.sevenkt.annotations.Address;
 import ru.sevenkt.annotations.Length;
-import ru.sevenkt.domain.IArchive;
-import ru.sevenkt.domain.ICurrentData;
 import ru.sevenkt.domain.DayArchive;
 import ru.sevenkt.domain.HourArchive;
+import ru.sevenkt.domain.IArchive;
+import ru.sevenkt.domain.ICurrentData;
 import ru.sevenkt.domain.IJournalSettings;
 import ru.sevenkt.domain.ISettings;
-import ru.sevenkt.exceptions.VersionNotSupportedException;
 
-@Length(32144)
+@Length(32768)
 public class ArchiveV1 implements IArchive{
 	private byte[] data;
 
@@ -106,15 +104,9 @@ public class ArchiveV1 implements IArchive{
 		this.hourArchive = hourArchive;
 	}
 
+	@Override
 	public IJournalSettings getJournalSettings() {
 		return null;
-	}
-
-	public void setJournalSettings(JournalSettingsV1 journalSettings) {
-		
-	}
-
-	
-
+	}	
 	
 }

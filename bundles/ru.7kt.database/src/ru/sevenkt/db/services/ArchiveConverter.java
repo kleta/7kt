@@ -190,7 +190,7 @@ public class ArchiveConverter {
 								incData.put(parameter, new BigDecimal(val + "").subtract(new BigDecimal(valPrev + "")));
 							}
 							break;
-						case ParametersConst.TIME:	
+						case ParametersConst.TIME:
 							if (pData == null) {
 								pData = new HashMap<>();
 								monthData.put(recordDate, pData);
@@ -198,6 +198,16 @@ public class ArchiveConverter {
 							pData.put(parameter, new BigDecimal("0"));
 							break;
 
+						case ParametersConst.ERROR: {
+							if (pData == null) {
+								pData = new HashMap<>();
+								dayData.put(recordDate, pData);
+							}
+							val = field.getInt(mr);
+							pData.put(parameter, new BigDecimal(val + ""));
+
+						}
+							break;
 						}
 
 					}
@@ -622,6 +632,8 @@ public class ArchiveConverter {
 
 		float max32 = archive.getSettings().getwMax34() * archive.getSettings().getVolumeByImpulsSetting3();
 		float max42 = archive.getSettings().getwMax34() * archive.getSettings().getVolumeByImpulsSetting4();
+		
+		max11=max21=max32=max42=655000;
 		switch (firstInput) {
 		case 1: {
 
@@ -905,7 +917,7 @@ public class ArchiveConverter {
 				}
 				if (errorSet.contains(ErrorCodes.E2) || errorSet.contains(ErrorCodes.V2)
 						|| errorSet.contains(ErrorCodes.T2)) {
-					dayData.get(date).put(Parameters.ERROR_TIME1, new BigDecimal("24"));
+					dayData.get(date).put(Parameters.ERROR_TIME2, new BigDecimal("24"));
 				}
 				if (!errorSet.isEmpty())
 					dayErrors.put(date, errorSet);
@@ -968,7 +980,7 @@ public class ArchiveConverter {
 						|| errorSet.contains(ErrorCodes.T2)) {
 					BigDecimal eTimes2 = monthMap.get(Parameters.ERROR_TIME2);
 					if (eTimes2 == null)
-						monthMap.put(Parameters.ERROR_TIME2, new BigDecimal("0"));
+						monthMap.put(Parameters.ERROR_TIME2, dayData.get(date).get(Parameters.ERROR_TIME2));
 					else
 						monthMap.put(Parameters.ERROR_TIME2,
 								eTimes2.add(dayData.get(date).get(Parameters.ERROR_TIME2)));
@@ -986,20 +998,20 @@ public class ArchiveConverter {
 				BigDecimal t4 = monthData.get(date).get(Parameters.AVG_TEMP4);
 				BigDecimal v3 = monthIncrement.get(date).get(Parameters.V3);
 				BigDecimal v4 = monthIncrement.get(date).get(Parameters.V4);
-				BigDecimal error = dayData.get(date).get(Parameters.ERROR_BYTE1);
+				BigDecimal error = monthData.get(date).get(Parameters.ERROR_BYTE1);
 
 				Set<ErrorCodes> errorSet = calcErrors(t1, t2, v1, v2, t3, t4, v3, v4, error);
-				long h = ChronoUnit.HOURS.between(date.minusMonths(1), date);
+				long h = ChronoUnit.HOURS.between(date.minusMonths(1).atStartOfDay(), date.atStartOfDay());
 				if (errorSet.contains(ErrorCodes.E1) || errorSet.contains(ErrorCodes.V1)
 						|| errorSet.contains(ErrorCodes.T1)) {
 					monthData.get(date).put(Parameters.ERROR_TIME1, new BigDecimal(h + ""));
 				}
 				if (errorSet.contains(ErrorCodes.E2) || errorSet.contains(ErrorCodes.V2)
 						|| errorSet.contains(ErrorCodes.T2)) {
-					monthData.get(date).put(Parameters.ERROR_TIME1, new BigDecimal(h + ""));
+					monthData.get(date).put(Parameters.ERROR_TIME2, new BigDecimal(h + ""));
 				}
 				if (!errorSet.isEmpty())
-					dayErrors.put(date, errorSet);
+					monthErrors.put(date, errorSet);
 			}
 
 		}
