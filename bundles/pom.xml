@@ -20,7 +20,6 @@
 		<module>ru.7kt.log</module>
 		<module>ru.7kt.reader</module>
 		<module>ru.7kt.reader.ui</module>
-		<module>org.eclipse.e4.ui.progress</module>
 	</modules>
 </project>
 

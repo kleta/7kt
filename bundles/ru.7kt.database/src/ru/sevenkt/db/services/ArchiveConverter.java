@@ -632,8 +632,8 @@ public class ArchiveConverter {
 
 		float max32 = archive.getSettings().getwMax34() * archive.getSettings().getVolumeByImpulsSetting3();
 		float max42 = archive.getSettings().getwMax34() * archive.getSettings().getVolumeByImpulsSetting4();
-		
-		max11=max21=max32=max42=655000;
+
+		max11 = max21 = max32 = max42 = 655000;
 		switch (firstInput) {
 		case 1: {
 
@@ -967,23 +967,27 @@ public class ArchiveConverter {
 			monthSet.addAll(errorSet);
 			Map<Parameters, BigDecimal> monthMap = monthData.get(monthDate);
 			if (monthMap != null) {
+				Map<Parameters, BigDecimal> dayMap = dayData.get(date);
+
 				if (errorSet.contains(ErrorCodes.E1) || errorSet.contains(ErrorCodes.V1)
 						|| errorSet.contains(ErrorCodes.T1)) {
 					BigDecimal eTimes1 = monthMap.get(Parameters.ERROR_TIME1);
-					if (eTimes1 == null)
-						monthMap.put(Parameters.ERROR_TIME1, dayData.get(date).get(Parameters.ERROR_TIME1));
-					else
-						monthMap.put(Parameters.ERROR_TIME1,
-								eTimes1.add(dayData.get(date).get(Parameters.ERROR_TIME1)));
+					if (dayMap != null) {
+						BigDecimal dayErrorTime1 = dayMap.get(Parameters.ERROR_TIME1);
+						if (eTimes1 == null)
+							monthMap.put(Parameters.ERROR_TIME1, dayErrorTime1);
+						else
+							monthMap.put(Parameters.ERROR_TIME1, eTimes1.add(dayErrorTime1));
+					}
 				}
 				if (errorSet.contains(ErrorCodes.E2) || errorSet.contains(ErrorCodes.V2)
 						|| errorSet.contains(ErrorCodes.T2)) {
 					BigDecimal eTimes2 = monthMap.get(Parameters.ERROR_TIME2);
-					if (eTimes2 == null)
-						monthMap.put(Parameters.ERROR_TIME2, dayData.get(date).get(Parameters.ERROR_TIME2));
-					else
-						monthMap.put(Parameters.ERROR_TIME2,
-								eTimes2.add(dayData.get(date).get(Parameters.ERROR_TIME2)));
+					if (dayMap != null)
+						if (eTimes2 == null)
+							monthMap.put(Parameters.ERROR_TIME2, dayMap.get(Parameters.ERROR_TIME2));
+						else
+							monthMap.put(Parameters.ERROR_TIME2, eTimes2.add(dayMap.get(Parameters.ERROR_TIME2)));
 				}
 			}
 		}

@@ -6,7 +6,7 @@
       <children xsi:type="menu:HandledMenuItem" xmi:id="_w0Le8ARvEeeGnqSqNy8EQw" elementId="ru.7kt.reader.ui.handledmenuitem.connection" label="&#x41d;&#x430;&#x441;&#x442;&#x440;&#x43e;&#x438;&#x442;&#x44c; &#x441;&#x43e;&#x435;&#x434;&#x438;&#x43d;&#x435;&#x43d;&#x438;&#x435;" iconURI="platform:/plugin/ru.7kt.reader.ui/resources/connection-established_16.png" command="_2nNecAR4EeeTJNz3A2iYag">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_gOlsEAR3EeeTJNz3A2iYag" coreExpressionId="ru.7kt.app.deviceselection"/>
       </children>
-      <children xsi:type="menu:HandledMenuItem" xmi:id="_5CeDIAR8EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handledmenuitem.0" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/read_16.png" command="_cA2HAAR8EeeTJNz3A2iYag">
+      <children xsi:type="menu:HandledMenuItem" xmi:id="_5CeDIAR8EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.handledmenuitem.0" iconURI="platform:/plugin/ru.7kt.reader.ui/resources/read_16.png" command="_cA2HAAR8EeeTJNz3A2iYag">
         <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_5lZxEAR8EeeTJNz3A2iYag" coreExpressionId="ru.7kt.app.deviceselection"/>
       </children>
     </elements>
@@ -32,9 +32,9 @@
     <elements xsi:type="basic:PartDescriptor" xmi:id="_KeOvYAR9EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.partdescriptor.comlog" label="&#x416;&#x443;&#x440;&#x43d;&#x430;&#x43b; &#x440;&#x430;&#x431;&#x43e;&#x442;&#x44b; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" closeable="true" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.views.ComPortLogView"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_OMgG0B8qEee2ANt8_N9aCg" featurename="children" parentElementId="ru.7kt.app.menu.windows">
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_ogA24B8qEee2ANt8_N9aCg" elementId="ru.7kt.app.handledmenuitem.openportview" label="&#x41c;&#x43e;&#x43d;&#x438;&#x442;&#x43e;&#x440; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" command="_3gcloB8pEee2ANt8_N9aCg"/>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_ogA24B8qEee2ANt8_N9aCg" elementId="ru.7kt.app.handledmenuitem.openportview" label="&#x41c;&#x43e;&#x43d;&#x438;&#x442;&#x43e;&#x440; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/resources/binary_16.png" command="_3gcloB8pEee2ANt8_N9aCg"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_DYjRIEENEeexqLBzQTLwVA" featurename="children" parentElementId="ru.7kt.app.popupmenu.device" positionInList="after:ru.7kt.app.handledmenuitem.journal">
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_MOKm8EENEeexqLBzQTLwVA" elementId="ru.7kt.reader.ui.handledmenuitem." label="&#x421;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c; &#x430;&#x440;&#x445;&#x438;&#x432;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" command="_cA2HAAR8EeeTJNz3A2iYag"/>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_MOKm8EENEeexqLBzQTLwVA" elementId="ru.7kt.reader.ui.handledmenuitem." label="&#x421;&#x447;&#x438;&#x442;&#x430;&#x442;&#x44c; &#x430;&#x440;&#x445;&#x438;&#x432;" iconURI="platform:/plugin/ru.7kt.reader.ui/resources/read_16.png" command="_cA2HAAR8EeeTJNz3A2iYag"/>
   </fragments>
 </fragment:ModelFragments>
