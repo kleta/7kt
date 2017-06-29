@@ -16,6 +16,7 @@
         <module>ru.7kt.gemini.blueprint</module>
         <module>ru.7kt.feature.reports</module>
         <module>ru.7kt.feature.reader</module>
+        <module>ru.7kt.feature.scheduler</module>
     </modules>
 </project>
 

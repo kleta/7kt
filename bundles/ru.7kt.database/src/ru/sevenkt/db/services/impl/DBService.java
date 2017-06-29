@@ -26,18 +26,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ru.sevenkt.annotations.Parameter;
+import ru.sevenkt.db.entities.ArchiveType;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
-import ru.sevenkt.db.entities.Node;
+import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.entities.Report;
 import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.ErrorRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
-import ru.sevenkt.db.repositories.NodeRepo;
+import ru.sevenkt.db.repositories.SchedulerGroupRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.repositories.ReportRepo;
 import ru.sevenkt.db.services.ArchiveConverter;
@@ -70,7 +71,7 @@ public class DBService implements IDBService {
 	private MeasuringRepo measuringRepo;
 
 	@Autowired
-	private NodeRepo nr;
+	private SchedulerGroupRepo sgr;
 
 	@Autowired
 	private JournalRepo jr;
@@ -94,11 +95,17 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public void saveNode(Node node) {
+	public void saveSchedulerGroup(SchedulerGroup gr) {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
-			nr.save(node);
+			List<ArchiveType> types = gr.getArchiveTypes();
+			if(gr.getId()==null){
+				gr.setArchiveTypes(null);
+				sgr.save(gr);
+				gr.setArchiveTypes(types);
+			}
+			sgr.save(gr);
 		} catch (Exception ex) {
 			tx.rollback();
 			throw ex;
@@ -164,11 +171,11 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public void deleteNode(Node node) {
+	public void deleteSchedulerGroup(SchedulerGroup node) {
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		try {
-			nr.delete(node);
+			sgr.delete(node);
 		} catch (Exception ex) {
 			tx.rollback();
 			throw ex;
@@ -239,13 +246,12 @@ public class DBService implements IDBService {
 	}
 
 	@Override
-	public List<Node> findAllNodes() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SchedulerGroup> findAllShedulerGroup() {
+		return StreamSupport.stream(sgr.findAll().spliterator(), false).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Device> findDeviceByNode(Node node) {
+	public List<Device> findDeviceByNode(SchedulerGroup node) {
 		// TODO Auto-generated method stub
 		return null;
 	}

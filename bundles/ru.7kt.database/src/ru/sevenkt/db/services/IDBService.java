@@ -7,14 +7,14 @@ import java.util.List;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
-import ru.sevenkt.db.entities.Node;
+import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.entities.Report;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.IArchive;
 
 public interface IDBService {
 	
-	void saveNode(Node node);
+	void saveSchedulerGroup(SchedulerGroup node);
 	
 
 	
@@ -22,15 +22,15 @@ public interface IDBService {
 	
 	void saveMeasuring(Measuring measuring);
 	
-	void deleteNode(Node node);
+	void deleteSchedulerGroup(SchedulerGroup node);
 
 	void deleteDevice(Device device);
 	
 	void deleteMeasuring(Measuring measuring);
 	
-	List<Node> findAllNodes();
+	List<SchedulerGroup> findAllShedulerGroup();
 	
-	List<Device> findDeviceByNode(Node node);
+	List<Device> findDeviceByNode(SchedulerGroup node);
 	
 	Device findDeviceBySerialNum(int serialNumber);
 

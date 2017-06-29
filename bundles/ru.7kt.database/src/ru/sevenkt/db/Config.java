@@ -25,7 +25,7 @@ import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.ErrorRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
-import ru.sevenkt.db.repositories.NodeRepo;
+import ru.sevenkt.db.repositories.SchedulerGroupRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.repositories.ReportRepo;
 import ru.sevenkt.db.services.IDBService;
@@ -139,9 +139,9 @@ public class Config {
 		return jpaRepositoryFactory.getRepository(MeasuringRepo.class);
 	}
 	@Bean
-	public  NodeRepo nodeRepo(EntityManager em){
+	public  SchedulerGroupRepo nodeRepo(EntityManager em){
 		JpaRepositoryFactory jpaRepositoryFactory=new JpaRepositoryFactory(em);
-		return jpaRepositoryFactory.getRepository(NodeRepo.class);
+		return jpaRepositoryFactory.getRepository(SchedulerGroupRepo.class);
 	}
 	@Bean
 	public  JournalRepo journalRepo(EntityManager em){

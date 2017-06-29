@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.TableViewerColumnSorter;
 
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.domain.PropertiesExist;
 
 public class PropertiesView {
 
@@ -104,8 +105,8 @@ public class PropertiesView {
 	public void setInput(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)
 			throws IllegalArgumentException, IllegalAccessException {
 		if (object != null) {
-			if (object instanceof Device) {
-				tableViewer.setInput(((Device) object).getProperies());
+			if (object instanceof PropertiesExist) {
+				tableViewer.setInput(((PropertiesExist) object).getProperies());
 				valueTableColumn.pack();
 				nameTableColumn.pack();
 			}

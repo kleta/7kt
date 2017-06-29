@@ -30,6 +30,7 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.app.ui.DateTimeTableRow;
 import ru.sevenkt.app.ui.SumTableRow;
 import ru.sevenkt.app.ui.TableRow;

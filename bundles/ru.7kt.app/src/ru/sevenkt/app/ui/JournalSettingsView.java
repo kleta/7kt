@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-import ru.sevenkt.app.ui.handlers.AppEventConstants;
+import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.db.entities.Journal;
 
 public class JournalSettingsView implements EventHandler {

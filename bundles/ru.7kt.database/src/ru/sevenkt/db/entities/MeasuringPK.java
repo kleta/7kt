@@ -18,7 +18,6 @@ public class MeasuringPK implements Serializable{
 	private Parameters parameter;
 
 	private ArchiveTypes archiveType;
-
 	private Integer idDevice;	
 	
 	public LocalDateTime getDateTime() {

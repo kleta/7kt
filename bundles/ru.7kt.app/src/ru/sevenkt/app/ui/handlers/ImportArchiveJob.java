@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.services.events.IEventBroker;
 
+import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.services.ArchiveConverter;

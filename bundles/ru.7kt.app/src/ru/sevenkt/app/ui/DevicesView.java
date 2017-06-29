@@ -21,9 +21,10 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
-import ru.sevenkt.app.ui.handlers.AppEventConstants;
+import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.services.IDBService;
+
 import org.eclipse.jface.viewers.ViewerSorter;
 
 public class DevicesView implements EventHandler{
@@ -129,8 +130,7 @@ public class DevicesView implements EventHandler{
 		});
 		treeViewer.setInput("");
 		treeViewer.expandToLevel(2);
-		treeViewer.addDoubleClickListener(new IDoubleClickListener() {
-			
+		treeViewer.addDoubleClickListener(new IDoubleClickListener() {			
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				broker.post(AppEventConstants.TOPIC_EDIT_DEVICE, "");

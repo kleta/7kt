@@ -70,7 +70,7 @@ import org.swtchart.ILineSeries;
 import org.swtchart.ILineSeries.PlotSymbolType;
 import org.swtchart.ISeries.SeriesType;
 
-import ru.sevenkt.app.ui.handlers.AppEventConstants;
+import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.domain.ArchiveTypes;
 import ru.sevenkt.domain.Parameters;

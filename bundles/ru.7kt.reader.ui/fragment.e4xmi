@@ -29,7 +29,7 @@
     <elements xsi:type="commands:Command" xmi:id="__BweoEAdEeeYXqwWU_7_BA" elementId="ru.7kt.reader.ui.command.clear7ktc" commandName="&#x41e;&#x447;&#x438;&#x441;&#x442;&#x438;&#x442;&#x44c; 7&#x41a;&#x422;&#x421;"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_G0mWQAR9EeeTJNz3A2iYag" featurename="descriptors" parentElementId="org.eclipse.e4.ide.application">
-    <elements xsi:type="basic:PartDescriptor" xmi:id="_KeOvYAR9EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.partdescriptor.comlog" label="&#x416;&#x443;&#x440;&#x43d;&#x430;&#x43b; &#x440;&#x430;&#x431;&#x43e;&#x442;&#x44b; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/bin/binary_16.png" closeable="true" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.views.ComPortLogView"/>
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KeOvYAR9EeeTJNz3A2iYag" elementId="ru.7kt.reader.ui.partdescriptor.comlog" label="&#x416;&#x443;&#x440;&#x43d;&#x430;&#x43b; &#x440;&#x430;&#x431;&#x43e;&#x442;&#x44b; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/resources/binary_16.png" closeable="true" contributionURI="bundleclass://ru.7kt.reader.ui/ru.sevenkt.reader.ui.views.ComPortLogView"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_OMgG0B8qEee2ANt8_N9aCg" featurename="children" parentElementId="ru.7kt.app.menu.windows">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_ogA24B8qEee2ANt8_N9aCg" elementId="ru.7kt.app.handledmenuitem.openportview" label="&#x41c;&#x43e;&#x43d;&#x438;&#x442;&#x43e;&#x440; &#x43f;&#x43e;&#x440;&#x442;&#x430;" iconURI="platform:/plugin/ru.7kt.reader.ui/resources/binary_16.png" command="_3gcloB8pEee2ANt8_N9aCg"/>

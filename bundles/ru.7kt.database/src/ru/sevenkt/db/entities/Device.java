@@ -22,10 +22,11 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.PrivateOwned;
 
 import ru.sevenkt.annotations.Prop;
+import ru.sevenkt.domain.PropertiesExist;
 
 @Entity
 @Table(name="Devices")
-public class Device implements Serializable{
+public class Device implements Serializable, PropertiesExist{
 	/**
 	 * 
 	 */
@@ -83,11 +84,9 @@ public class Device implements Serializable{
 	private int didgitM=2;
 	
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "NodeToDevice", joinColumns = {
-			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "idNode", referencedColumnName = "id") })
-	private List<Node> nodes;
+	
+	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "devices")
+	private List<SchedulerGroup> groups;
 	
 	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name = "DeviceToParams", joinColumns = {
@@ -282,12 +281,12 @@ public class Device implements Serializable{
 		this.volumeByImpulsSetting4 = volumeByImpulsSetting4;
 	}
 
-	public List<Node> getNodes() {
-		return nodes;
+	public List<SchedulerGroup> getNodes() {
+		return groups;
 	}
 
-	public void setNodes(List<Node> nodes) {
-		this.nodes = nodes;
+	public void setNodes(List<SchedulerGroup> nodes) {
+		this.groups = nodes;
 	}
 
 	public List<Params> getParams() {
@@ -325,8 +324,8 @@ public class Device implements Serializable{
 		this.formulaNum=new Integer(device.getFormulaNum());
 		this.id=new Integer(device.getId());
 		this.netAddress=device.getNetAddress();
-		nodes=new ArrayList<>();
-		nodes.addAll(device.getNodes());
+		groups=new ArrayList<>();
+		groups.addAll(device.getNodes());
 		this.serialNum=device.getSerialNum()+"";
 		this.tempColdWaterSetting=new Float(device.getTempColdWaterSetting());
 		this.volumeByImpulsSetting1=new Float(device.getVolumeByImpulsSetting1());

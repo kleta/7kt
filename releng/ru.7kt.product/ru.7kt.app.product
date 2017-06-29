@@ -8,6 +8,7 @@
 
    <launcherArgs>
       <programArgs>-clearPersistedState
+-consoleLog
       </programArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -49,6 +50,7 @@
       <feature id="ru.7kt.feature.reader" version="1.0.0.qualifier"/>
       <feature id="org.eclipse.e4.rcp" version="1.4.1.v20160212-1350"/>
       <feature id="org.eclipse.e4.ui.progress.feature" version="0.1.0.v20150731-0425"/>
+      <feature id="ru.7kt.feature.scheduler" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
@@ -61,6 +63,7 @@
       <plugin id="org.eclipse.gemini.blueprint.extender" autoStart="true" startLevel="4" />
       <plugin id="ru.7kt.archivedata" autoStart="true" startLevel="0" />
       <plugin id="ru.7kt.reader" autoStart="true" startLevel="0" />
+      <plugin id="ru.7kt.scheduler" autoStart="false" startLevel="0" />
       <property name="osgi.instance.area.default" value="@user.home/7ktwork" />
    </configurations>
 

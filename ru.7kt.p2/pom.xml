@@ -18,9 +18,9 @@
 							<artifacts>
 								<!-- specify your depencies here -->
 								<!-- groupId:artifactId:version -->
-<!-- 								<artifact> -->
-<!-- 									<id>org.projectlombok:lombok:1.16.8</id> -->
-<!-- 								</artifact> -->
+								<!-- <artifact> -->
+								<!-- <id>org.projectlombok:lombok:1.16.8</id> -->
+								<!-- </artifact> -->
 								<artifact>
 									<id>org.springframework.data:spring-data-jpa:1.9.4.RELEASE</id>
 								</artifact>
@@ -43,12 +43,19 @@
 									<id>com.neuronrobotics:nrjavaserial:3.12.1</id>
 									<source>true</source>
 								</artifact>
-<!-- 								<artifact> -->
-<!-- 									<id>org.slf4j:slf4j-simple:1.7.21</id> -->
-<!-- 								</artifact> -->
-<!-- 								<artifact> -->
-<!-- 									<id>commons-dbcp:commons-dbcp:1.4</id> -->
-<!-- 								</artifact> -->
+								<artifact>
+									<id>org.quartz-scheduler:quartz:2.2.1</id>
+									<source>true</source>
+								</artifact>
+								<artifact>
+									<id>org.quartz-scheduler:quartz-jobs:2.2.1</id>
+									<source>true</source>
+								</artifact>
+								<artifact>
+									<id>com.cronutils:cron-utils:5.0.5</id>
+									<source>true</source>
+								</artifact>
+
 							</artifacts>
 						</configuration>
 					</execution>

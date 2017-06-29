@@ -35,6 +35,7 @@ import org.osgi.service.event.EventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.app.ui.DateTimeTableRow;
 import ru.sevenkt.app.ui.TableRow;
 import ru.sevenkt.db.entities.Device;

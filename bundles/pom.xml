@@ -19,6 +19,7 @@
 		<module>ru.7kt.reports.templates</module>
 		<module>ru.7kt.log</module>
 		<module>ru.7kt.reader</module>
+		<module>ru.7kt.scheduler</module>
 		<module>ru.7kt.reader.ui</module>
 	</modules>
 </project>
