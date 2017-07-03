@@ -70,6 +70,8 @@ public class SchedulerView implements EventHandler{
 				broker.post(SchedulerEventConstants.TOPIC_EDIT_SCHEDULER, "");
 			}
 		});
+		ms.registerContextMenu(tableViewer.getControl(), 
+		        "ru.7kt.scheduler.popupmenu.group");
 		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		tableViewerColumn.setLabelProvider(new ColumnLabelProvider() {
 			public Image getImage(Object element) {

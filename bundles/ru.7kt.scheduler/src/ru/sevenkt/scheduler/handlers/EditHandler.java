@@ -1,73 +1,94 @@
- 
+
 package ru.sevenkt.scheduler.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventHandler;
 
 import ru.sevenkt.db.entities.ArchiveType;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
+import ru.sevenkt.scheduler.Group;
 import ru.sevenkt.scheduler.SchedulerEventConstants;
 import ru.sevenkt.scheduler.dialogs.SchedulerData;
 import ru.sevenkt.scheduler.dialogs.SchedulerGroupDialog;
 import ru.sevenkt.scheduler.services.ISchedulerSevice;
 
-public class AddGroupHandler {
-	
-	@Inject
-	private IDBService dbService;
-	
+public class EditHandler implements EventHandler {
 	@Inject
 	private IEventBroker broker;
+
+	@Inject
+	private IDBService dbService;
+
+	private SchedulerGroup currentSelection;
+
+	private Shell shell;
 	
 	@Inject 
 	@Optional
 	ISchedulerSevice schService;
-	
-	public AddGroupHandler() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
+	@PostConstruct
+	public void init() {
+		broker.subscribe(SchedulerEventConstants.TOPIC_EDIT_SCHEDULER, this);
+	}
 	@Execute
-	public void execute(Shell shell)  {
+	public void execute()  {
 		List<Device> devices = dbService.findAllDevices();
-		SchedulerData data=new SchedulerData("0", "0", "*", "*", "?");
+		SchedulerData data = new SchedulerData(currentSelection);
 		SchedulerGroupDialog dialog = new SchedulerGroupDialog(shell, data, devices);
 		if (dialog.open() == Window.OK) {
-			data=dialog.getSchedulerData();
-			SchedulerGroup sg=mapToSchedulerGroup(data);
+			data = dialog.getSchedulerData();
+			SchedulerGroup sg = mapToSchedulerGroup(data);
 			dbService.saveSchedulerGroup(sg);
 			broker.post(SchedulerEventConstants.TOPIC_REFRESH_SCHEDULER_VIEW, sg);
 			//schService.restart();
 		}
+	}
 
+	@Override
+	public void handleEvent(Event event) {
+	
+			execute();
+		
+	}
+
+	@Inject
+	public void select(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Group gr,
+			@Named(IServiceConstants.ACTIVE_SHELL) Shell parentShell) {
+		if (gr != null)
+			currentSelection = gr.getSchedulerGroup();
+		shell = parentShell;
 	}
 
 	private SchedulerGroup mapToSchedulerGroup(SchedulerData data) {
-		SchedulerGroup sg = new SchedulerGroup();
+		SchedulerGroup sg = currentSelection;
 		sg.setCronString(data.generateCronExpression());
 		sg.setDeepDay(data.getDayShift());
 		sg.setName(data.getName());
 		sg.setArchiveTypes(new ArrayList<>());
-		if(data.isDayCheck())
+		if (data.isDayCheck())
 			sg.getArchiveTypes().add(new ArchiveType(ArchiveTypes.DAY));
-		if(data.isHourCheck())
+		if (data.isHourCheck())
 			sg.getArchiveTypes().add(new ArchiveType(ArchiveTypes.HOUR));
-		if(data.isMonthCheck())
+		if (data.isMonthCheck())
 			sg.getArchiveTypes().add(new ArchiveType(ArchiveTypes.MONTH));
 		sg.setDevices(data.getSelectedDevice());
 		return sg;
 	}
-		
 }

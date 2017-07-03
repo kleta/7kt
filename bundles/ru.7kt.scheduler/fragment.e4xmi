@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="ASCII"?>
-<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_CXvlQFViEeeO9ps35ENA7A">
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_CXvlQFViEeeO9ps35ENA7A">
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_V1L1YFViEeeO9ps35ENA7A" featurename="children" parentElementId="7kt.partstack.left">
     <elements xsi:type="basic:Part" xmi:id="_I7hl4FVjEeeO9ps35ENA7A" elementId="ru.7kt.scheduler.part.schedulerview" contributionURI="bundleclass://ru.7kt.scheduler/ru.sevenkt.scheduler.parts.SchedulerView" label="&#x420;&#x430;&#x441;&#x43f;&#x438;&#x441;&#x430;&#x43d;&#x438;&#x435;" iconURI="platform:/plugin/ru.7kt.scheduler/icons/schedule_file_16.png">
+      <menus xsi:type="menu:PopupMenu" xmi:id="_MtinIFyDEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.popupmenu.group">
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_PFhyMFyDEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.handledmenuitem.0" iconURI="platform:/plugin/ru.7kt.scheduler/icons/date_delete.png" command="_0yHjcFVpEeeysM2juBfPRQ"/>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_o0GCIFyDEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.menuseparator.0"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_p4NxkFyDEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.handledmenuitem.1" iconURI="platform:/plugin/ru.7kt.scheduler/icons/run-build-file_16.png" command="_WvkFsFyDEeemn6NlDFTRkg"/>
+        <children xsi:type="menu:MenuSeparator" xmi:id="_mUMbwFyEEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.menuseparator.1"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_nYgYcFyEEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.handledmenuitem.2" iconURI="platform:/plugin/ru.7kt.scheduler/icons/schedule_file_16.png" command="_adCAgFyEEeemn6NlDFTRkg"/>
+      </menus>
       <toolbar xmi:id="_YkldEFVxEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.toolbar.0">
         <children xsi:type="menu:HandledToolItem" xmi:id="_a3kMUFVxEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.handledtoolitem." label="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x433;&#x440;&#x443;&#x43f;&#x43f;&#x443;" iconURI="platform:/plugin/ru.7kt.scheduler/icons/date_add.png" command="_tZS7wFVpEeeysM2juBfPRQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_qzUeYFVxEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.handledtoolitem." label="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c; &#x433;&#x440;&#x443;&#x43f;&#x43f;&#x443;" iconURI="platform:/plugin/ru.7kt.scheduler/icons/date_delete.png" command="_0yHjcFVpEeeysM2juBfPRQ"/>
@@ -11,9 +18,16 @@
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_eNancFVpEeeysM2juBfPRQ" featurename="handlers" parentElementId="org.eclipse.e4.ide.application">
     <elements xsi:type="commands:Handler" xmi:id="_jBT0QFVpEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.handler.0" contributionURI="bundleclass://ru.7kt.scheduler/ru.sevenkt.scheduler.handlers.AddGroupHandler" command="_tZS7wFVpEeeysM2juBfPRQ"/>
     <elements xsi:type="commands:Handler" xmi:id="_IEXQMFVqEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.handler.1" contributionURI="bundleclass://ru.7kt.scheduler/ru.sevenkt.scheduler.handlers.DeleteGroupHandler" command="_0yHjcFVpEeeysM2juBfPRQ"/>
+    <elements xsi:type="commands:Handler" xmi:id="_wI3a0FyEEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.handler.runGroup" contributionURI="bundleclass://ru.7kt.scheduler/ru.sevenkt.scheduler.handlers.RunHandler" command="_WvkFsFyDEeemn6NlDFTRkg"/>
+    <elements xsi:type="commands:Handler" xmi:id="_6GCOkFyEEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.handler.editGroup" contributionURI="bundleclass://ru.7kt.scheduler/ru.sevenkt.scheduler.handlers.EditHandler" command="_adCAgFyEEeemn6NlDFTRkg"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_o7U7oFVpEeeysM2juBfPRQ" featurename="commands" parentElementId="org.eclipse.e4.ide.application">
     <elements xsi:type="commands:Command" xmi:id="_tZS7wFVpEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.command.addgroup" commandName="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c; &#x433;&#x440;&#x443;&#x43f;&#x43f;&#x443;"/>
     <elements xsi:type="commands:Command" xmi:id="_0yHjcFVpEeeysM2juBfPRQ" elementId="ru.7kt.scheduler.command.deletegroup" commandName="&#x423;&#x434;&#x430;&#x43b;&#x438;&#x442;&#x44c; &#x433;&#x440;&#x443;&#x43f;&#x43f;&#x443;"/>
+    <elements xsi:type="commands:Command" xmi:id="_WvkFsFyDEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.command.runGroup" commandName="&#x417;&#x430;&#x43f;&#x443;&#x441;&#x442;&#x438;&#x442;&#x44c; "/>
+    <elements xsi:type="commands:Command" xmi:id="_adCAgFyEEeemn6NlDFTRkg" elementId="ru.7kt.scheduler.command.editGroup" commandName="&#x421;&#x432;&#x43e;&#x439;&#x441;&#x442;&#x432;&#x430;"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_PwDE4F0-EeefTIuamT1R3g" featurename="addons" parentElementId="org.eclipse.e4.ide.application">
+    <elements xsi:type="application:Addon" xmi:id="_krmRwF0-EeefTIuamT1R3g" elementId="ru.7kt.scheduler.addon.schedulerAddon" contributionURI="bundleclass://ru.7kt.scheduler/ru.sevenkt.scheduler.SchedulerAddon"/>
   </fragments>
 </fragment:ModelFragments>

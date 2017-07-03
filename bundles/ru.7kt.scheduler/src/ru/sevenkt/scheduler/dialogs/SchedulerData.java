@@ -3,8 +3,20 @@ package ru.sevenkt.scheduler.dialogs;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
+import java.util.Locale;
 
+import com.cronutils.descriptor.CronDescriptor;
+import com.cronutils.model.Cron;
+import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronDefinition;
+import com.cronutils.model.definition.CronDefinitionBuilder;
+import com.cronutils.model.field.CronFieldName;
+import com.cronutils.parser.CronParser;
+
+import ru.sevenkt.db.entities.ArchiveType;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.SchedulerGroup;
+import ru.sevenkt.domain.ArchiveTypes;
 
 public class SchedulerData {
 	private String name;
@@ -39,6 +51,30 @@ public class SchedulerData {
 		this.dayOfMonth = dayOfMonth;
 		this.month = month;
 		this.dayOfWeek = dayOfWeek;
+	}
+
+	public SchedulerData(SchedulerGroup gr) {
+		CronDefinition cronDefinition = CronDefinitionBuilder.instanceDefinitionFor(CronType.QUARTZ);
+		CronParser parser = new CronParser(cronDefinition);
+		Cron cron = parser.parse(gr.getCronString());
+		minutes=cron.retrieve(CronFieldName.MINUTE).getExpression().asString();
+		hours=cron.retrieve(CronFieldName.HOUR).getExpression().asString();
+		dayOfMonth=cron.retrieve(CronFieldName.DAY_OF_MONTH).getExpression().asString();
+		month=cron.retrieve(CronFieldName.MONTH).getExpression().asString();
+		dayOfWeek=cron.retrieve(CronFieldName.DAY_OF_WEEK).getExpression().asString();
+		List<ArchiveType> ats = gr.getArchiveTypes();
+		for (ArchiveType archiveType : ats) {
+			ArchiveTypes at = archiveType.getId();
+			if(at.equals(ArchiveTypes.MONTH))
+				monthCheck=true;
+			if(at.equals(ArchiveTypes.DAY))
+				dayCheck=true;
+			if(at.equals(ArchiveTypes.HOUR))
+				hourCheck=true;
+		}
+		name=gr.getName();
+		dayShift=gr.getDeepDay();
+		devices=gr.getDevices();
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {

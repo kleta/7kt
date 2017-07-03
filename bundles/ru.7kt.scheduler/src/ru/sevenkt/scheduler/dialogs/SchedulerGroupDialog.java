@@ -228,7 +228,10 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 				Object[] elements = checkboxTableViewer.getCheckedElements();
 				List<Device> selected = Arrays.asList(Arrays.asList(elements).toArray(new Device[elements.length]));
 				schedulerData.setSelectedDevice(selected);
-				
+				if(validateFields())
+					okButton.setEnabled(true);
+				else
+					okButton.setEnabled(false);
 			}
 		});
 
@@ -596,6 +599,12 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 	private void initState() {
 		checkboxTableViewer.setInput(devices);
 		labelPreview.setText(getCronDescription());
+		List<Device> sds = schedulerData.getSelectedDevice();
+		if(sds!=null){
+			for (Device device : sds) {
+				checkboxTableViewer.setChecked(device, true);
+			}
+		}
 	}
 
 	/**

@@ -14,6 +14,7 @@ import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.scheduler.Group;
 import ru.sevenkt.scheduler.SchedulerEventConstants;
+import ru.sevenkt.scheduler.services.ISchedulerSevice;
 
 public class DeleteGroupHandler {
 	@Inject
@@ -22,12 +23,17 @@ public class DeleteGroupHandler {
 	@Inject
 	private IEventBroker broker;
 	
+	@Inject 
+	@Optional
+	ISchedulerSevice schService;
+	
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) Object object) {
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) Object object)  {
 		SchedulerGroup schedulerGroup = ((Group) object).getSchedulerGroup();
 		schedulerGroup.setArchiveTypes(null);
 		dbService.deleteSchedulerGroup(schedulerGroup);
 		broker.post(SchedulerEventConstants.TOPIC_REFRESH_SCHEDULER_VIEW, object);
+		//schService.restart();
 	}
 	@CanExecute
 	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)
