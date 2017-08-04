@@ -2,7 +2,7 @@
 <feature
       id="ru.7kt.feature.scheduler"
       label="Scheduler"
-      version="1.0.0.201706290353">
+      version="1.0.0.201707050921">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -18,9 +18,9 @@
 
    <plugin
          id="ru.7kt.scheduler"
-         download-size="87"
-         install-size="130"
-         version="1.0.0.201706290353"
+         download-size="112"
+         install-size="172"
+         version="1.0.0.201707050921"
          unpack="false"/>
 
    <plugin
@@ -42,6 +42,13 @@
          download-size="34"
          install-size="59"
          version="2.2.1"
+         unpack="false"/>
+
+   <plugin
+         id="c3p0"
+         download-size="601"
+         install-size="1335"
+         version="0.9.1.1"
          unpack="false"/>
 
 </feature>

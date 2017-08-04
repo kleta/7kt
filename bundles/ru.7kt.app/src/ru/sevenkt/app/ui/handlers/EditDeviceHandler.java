@@ -28,6 +28,7 @@ import ru.sevenkt.app.AppEventConstants;
 import ru.sevenkt.app.ui.forms.DeviceDialog;
 import ru.sevenkt.app.ui.forms.ParametersModel;
 import ru.sevenkt.db.entities.Device;
+import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.services.IDBService;
 
 public class EditDeviceHandler implements EventHandler {
@@ -59,10 +60,12 @@ public class EditDeviceHandler implements EventHandler {
 			dialog.create();
 			if (dialog.open() == Window.OK) {
 				device=dialog.getDevice();
-				device.setParams(dialog.getParams());
+				Device d = dbService.findDeviceBySerialNum(Integer.parseInt(device.getSerialNum()));
+				d.setDeviceName(device.getDeviceName());
+				d.setParams(dialog.getParams());
 				try {
-					dbService.saveDevice(device);
-					broker.post(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
+					dbService.saveDevice(d);
+					broker.post(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, d);
 				} catch (Exception e) {
 					MultiStatus status = createMultiStatus(e.getLocalizedMessage(), e);
 

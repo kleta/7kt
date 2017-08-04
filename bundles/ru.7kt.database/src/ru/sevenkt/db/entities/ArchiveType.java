@@ -1,7 +1,11 @@
 package ru.sevenkt.db.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import ru.sevenkt.domain.ArchiveTypes;
 
@@ -15,6 +19,9 @@ public class ArchiveType {
 	public ArchiveTypes getId() {
 		return id;
 	}
+	
+//	@ManyToMany(mappedBy="archiveTypes")
+//	private List<SchedulerGroup> groups;
 
 	public void setId(ArchiveTypes id) {
 		this.id = id;
@@ -57,6 +64,14 @@ public class ArchiveType {
 			return false;
 		return true;
 	}
+
+//	public List<SchedulerGroup> getGroups() {
+//		return groups;
+//	}
+//
+//	public void setGroups(List<SchedulerGroup> groups) {
+//		this.groups = groups;
+//	}
 	
 	
 	

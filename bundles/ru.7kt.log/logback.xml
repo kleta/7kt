@@ -28,6 +28,24 @@
 			</pattern>
 		</encoder>
 	</appender>
+	<appender name="SCHEDULER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <file>D:\logs\aiis-integration.log</file> -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>log\7kt-scheduler-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 1MB -->
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
+			</pattern>
+		</encoder>
+	</appender>
 
 	<!-- <logger name="ru.khakensb.loaders" level="INFO"> -->
 	<!-- <appender-ref ref="FILE" /> -->

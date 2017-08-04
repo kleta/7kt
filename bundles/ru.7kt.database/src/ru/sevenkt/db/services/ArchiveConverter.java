@@ -78,7 +78,7 @@ public class ArchiveConverter {
 		device.setwMin1(settings.getwMin1());
 	}
 
-	public List<Parameters> getAccountParameters(int fNum) {
+	public List<Parameters> getDeviceParameters(int fNum) {
 		int firstInput = fNum % 10;
 		List<Parameters> params = new ArrayList<>(Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1 }));
 		switch (firstInput) {
@@ -577,6 +577,7 @@ public class ArchiveConverter {
 				error.setDateTime(dateTime);
 				error.setDevice(device);
 				error.setErrorCode(errorCodes);
+				error.setTimestamp(LocalDateTime.now());
 				errors.add(error);
 			}
 		}
@@ -849,6 +850,7 @@ public class ArchiveConverter {
 				error.setDateTime(date.atStartOfDay());
 				error.setDevice(device);
 				error.setErrorCode(errorCodes);
+				error.setTimestamp(LocalDateTime.now());
 				errors.add(error);
 			}
 
@@ -943,6 +945,7 @@ public class ArchiveConverter {
 				error.setDateTime(date.atStartOfDay());
 				error.setDevice(device);
 				error.setErrorCode(errorCodes);
+				error.setTimestamp(LocalDateTime.now());
 				errors.add(error);
 			}
 
@@ -1020,6 +1023,10 @@ public class ArchiveConverter {
 
 		}
 
+	}
+
+	public void setDevice(Device device2) {
+		device=device2;		
 	}
 
 }

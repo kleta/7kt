@@ -44,7 +44,8 @@ public class DeleteDevice {
 					MessageDialog.QUESTION, new String[] { "Да", "Нет" }, 1);
 			int result = dialog.open();
 			if (result == 0) {
-				db.deleteDevice(device);
+				Device d = db.findDeviceBySerialNum(Integer.parseInt(device.getSerialNum()));
+				db.deleteDevice(d);
 				LOG.info("Удалено устройство {} №{}", device.getDeviceName(), device.getSerialNum());
 				broker.send(AppEventConstants.TOPIC_REFRESH_DEVICE_VIEW, device);
 				closeArchiveView(device, partService, modelService, application);

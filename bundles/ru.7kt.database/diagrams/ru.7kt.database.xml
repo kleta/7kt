@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Params</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>1050</entity-X-Coordinate>
+		<entity-Y-Coordinate>249</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Report</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>913</entity-X-Coordinate>
+		<entity-Y-Coordinate>28</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Connection</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>254</entity-X-Coordinate>
+		<entity-Y-Coordinate>34</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.ArchiveType</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>73</entity-X-Coordinate>
+		<entity-Y-Coordinate>568</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Journal</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>913</entity-X-Coordinate>
+		<entity-Y-Coordinate>534</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.SchedulerGroup</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>73</entity-X-Coordinate>
+		<entity-Y-Coordinate>256</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Measuring</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>423</entity-X-Coordinate>
+		<entity-Y-Coordinate>409</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Error</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>30</entity-height>
+		<entity-X-Coordinate>613</entity-X-Coordinate>
+		<entity-Y-Coordinate>658</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ru.sevenkt.db.entities.Device</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>546</entity-height>
+		<entity-X-Coordinate>613</entity-X-Coordinate>
+		<entity-Y-Coordinate>20</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+</entities>

@@ -25,6 +25,9 @@
 									<id>org.springframework.data:spring-data-jpa:1.9.4.RELEASE</id>
 								</artifact>
 								<artifact>
+									<id>org.springframework:spring-context-support:4.1.9.RELEASE</id>
+								</artifact>
+								<artifact>
 									<id>org.eclipse.gemini.blueprint:gemini-blueprint-io:2.0.0.RELEASE</id>
 								</artifact>
 								<artifact>
@@ -40,7 +43,7 @@
 									<id>ch.qos.logback:logback-classic:1.1.4</id>
 								</artifact>
 								<artifact>
-									<id>com.neuronrobotics:nrjavaserial:3.12.1</id>
+									<id>com.neuronrobotics:nrjavaserial:3.13.0</id>
 									<source>true</source>
 								</artifact>
 								<artifact>

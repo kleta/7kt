@@ -1,17 +1,10 @@
 package ru.sevenkt.db.services.impl;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,38 +18,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ru.sevenkt.annotations.Parameter;
 import ru.sevenkt.db.entities.ArchiveType;
 import ru.sevenkt.db.entities.Device;
 import ru.sevenkt.db.entities.Error;
 import ru.sevenkt.db.entities.Journal;
 import ru.sevenkt.db.entities.Measuring;
-import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.entities.Params;
 import ru.sevenkt.db.entities.Report;
+import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.repositories.DeviceRepo;
 import ru.sevenkt.db.repositories.ErrorRepo;
 import ru.sevenkt.db.repositories.JournalRepo;
 import ru.sevenkt.db.repositories.MeasuringRepo;
-import ru.sevenkt.db.repositories.SchedulerGroupRepo;
 import ru.sevenkt.db.repositories.ParamsRepo;
 import ru.sevenkt.db.repositories.ReportRepo;
+import ru.sevenkt.db.repositories.SchedulerGroupRepo;
 import ru.sevenkt.db.services.ArchiveConverter;
 import ru.sevenkt.db.services.IDBService;
 import ru.sevenkt.domain.ArchiveTypes;
-import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.IArchive;
-import ru.sevenkt.domain.DayArchive;
-import ru.sevenkt.domain.IDayRecord;
-import ru.sevenkt.domain.HourArchive;
-import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.IJournalSettings;
 import ru.sevenkt.domain.IJournalSettingsRecord;
-import ru.sevenkt.domain.MonthArchive;
-import ru.sevenkt.domain.IMonthRecord;
-import ru.sevenkt.domain.ISettings;
-import ru.sevenkt.domain.Parameters;
-import ru.sevenkt.domain.ParametersConst;
 
 @Service
 public class DBService implements IDBService {
@@ -288,7 +270,8 @@ public class DBService implements IDBService {
 
 	@Override
 	public List<Device> findAllDevices() {
-		return StreamSupport.stream(dr.findAll().spliterator(), false).collect(Collectors.toList());
+		List<Device> devices = StreamSupport.stream(dr.findAll().spliterator(), false).collect(Collectors.toList());
+		return devices;
 	}
 
 	@Override
@@ -424,6 +407,12 @@ public class DBService implements IDBService {
 	@Override
 	public Report findReport(Integer reportId) {
 		return rr.findOne(reportId);
+	}
+
+	@Override
+	public List<SchedulerGroup> findSchedulerGroup(Device device) {
+		sgr.findByDevices(device);
+		return null;
 	}
 
 }

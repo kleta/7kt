@@ -23,4 +23,9 @@ public interface IDeviceReaderService  {
 	Set<String> getAvailableSerialPorts();
 
 	IJournalSettings readJournal(Connection con) throws Exception;
+	
+	void initPorts();
+
+
+	void closeAllPorts();
 }

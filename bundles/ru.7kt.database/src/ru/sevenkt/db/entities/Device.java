@@ -3,8 +3,10 @@ package ru.sevenkt.db.entities;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -83,10 +85,8 @@ public class Device implements Serializable, PropertiesExist{
 	
 	private int didgitM=2;
 	
-
-	
-	@ManyToMany(cascade=CascadeType.ALL,mappedBy = "devices")
-	private List<SchedulerGroup> groups;
+	@ManyToMany(cascade = {CascadeType.MERGE})
+	private Set<SchedulerGroup> groups;
 	
 	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name = "DeviceToParams", joinColumns = {
@@ -97,6 +97,10 @@ public class Device implements Serializable, PropertiesExist{
 	@OneToMany(mappedBy="device", cascade=CascadeType.ALL)
 	@PrivateOwned
 	private List<Report> reports;
+	
+//	@OneToMany(mappedBy="device", cascade=CascadeType.ALL)
+//	@PrivateOwned
+//	private List<Measuring> measurings;
 
 	@OneToOne(cascade=CascadeType.ALL)
 	@PrivateOwned
@@ -281,13 +285,13 @@ public class Device implements Serializable, PropertiesExist{
 		this.volumeByImpulsSetting4 = volumeByImpulsSetting4;
 	}
 
-	public List<SchedulerGroup> getNodes() {
-		return groups;
-	}
-
-	public void setNodes(List<SchedulerGroup> nodes) {
-		this.groups = nodes;
-	}
+//	public List<SchedulerGroup> getNodes() {
+//		return groups;
+//	}
+//
+//	public void setGroups(List<SchedulerGroup> nodes) {
+//		this.groups = nodes;
+//	}
 
 	public List<Params> getParams() {
 		return params;
@@ -324,8 +328,8 @@ public class Device implements Serializable, PropertiesExist{
 		this.formulaNum=new Integer(device.getFormulaNum());
 		this.id=new Integer(device.getId());
 		this.netAddress=device.getNetAddress();
-		groups=new ArrayList<>();
-		groups.addAll(device.getNodes());
+		groups=new HashSet<>();
+		groups.addAll(device.getGroups());
 		this.serialNum=device.getSerialNum()+"";
 		this.tempColdWaterSetting=new Float(device.getTempColdWaterSetting());
 		this.volumeByImpulsSetting1=new Float(device.getVolumeByImpulsSetting1());
@@ -349,4 +353,24 @@ public class Device implements Serializable, PropertiesExist{
 	public Device() {
 		
 	}
+
+
+	public Set<SchedulerGroup> getGroups() {
+		return groups;
+	}
+
+
+	public void setGroups(Set<SchedulerGroup> groups) {
+		this.groups = groups;
+	}
+
+
+//	public List<Measuring> getMeasurings() {
+//		return measurings;
+//	}
+//
+//
+//	public void setMeasurings(List<Measuring> measurings) {
+//		this.measurings = measurings;
+//	}
 }

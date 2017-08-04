@@ -72,6 +72,10 @@ public interface IDBService {
 
 
 
+	List<SchedulerGroup> findSchedulerGroup(Device device);
+
+
+
 	
 	
 }

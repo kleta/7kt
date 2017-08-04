@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='org.eclipse.update.feature' id='ru.7kt.feature.scheduler' version='1.0.0.201706290353'>
+  <artifact classifier='org.eclipse.update.feature' id='ru.7kt.feature.scheduler' version='1.0.0.201707050921'>
     <properties size='6'>
-      <property name='artifact.size' value='831'/>
-      <property name='download.size' value='831'/>
+      <property name='artifact.size' value='850'/>
+      <property name='download.size' value='850'/>
       <property name='maven-groupId' value='ru.7kt'/>
       <property name='maven-artifactId' value='ru.7kt.feature.scheduler'/>
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>

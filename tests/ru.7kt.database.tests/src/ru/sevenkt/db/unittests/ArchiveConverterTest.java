@@ -106,48 +106,48 @@ public class ArchiveConverterTest {
 		byte[] data = FileUtils.readFileToByteArray(file);
 		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
 		ArchiveConverter ac = new ArchiveConverter(arc);
-		List<Parameters> params = ac.getAccountParameters(1);
+		List<Parameters> params = ac.getDeviceParameters(1);
 		List<Parameters> p = new ArrayList<>(Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1,
 				Parameters.AVG_TEMP2, Parameters.V1, Parameters.V2, Parameters.AVG_P1, Parameters.E1 }));
 		assertEquals(params, p);
-		params = ac.getAccountParameters(2);
+		params = ac.getDeviceParameters(2);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.AVG_TEMP2, Parameters.V1,
 				Parameters.AVG_P1, Parameters.E1 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(3);
+		params = ac.getDeviceParameters(3);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.AVG_TEMP2, Parameters.V2,
 				Parameters.AVG_P1, Parameters.E1 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(5);
+		params = ac.getDeviceParameters(5);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.V2, Parameters.AVG_P1,
 				Parameters.E1 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(6);
+		params = ac.getDeviceParameters(6);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.AVG_P1, Parameters.E1 });
 		assertEquals(params, p);
 
-		params = ac.getAccountParameters(16);
+		params = ac.getDeviceParameters(16);
 		p = new ArrayList<>(Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.AVG_P1,
 				Parameters.E1, Parameters.AVG_TEMP3, Parameters.AVG_TEMP4, Parameters.V3, Parameters.V4,
 				Parameters.AVG_P2, Parameters.E2 }));
 		assertEquals(params, p);
-		params = ac.getAccountParameters(26);
+		params = ac.getDeviceParameters(26);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.AVG_P1, Parameters.E1,
 				Parameters.AVG_TEMP3, Parameters.AVG_TEMP4, Parameters.V3, Parameters.AVG_P2, Parameters.E2 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(36);
+		params = ac.getDeviceParameters(36);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.AVG_P1, Parameters.E1,
 				Parameters.AVG_TEMP3, Parameters.AVG_TEMP4, Parameters.V4, Parameters.AVG_P2, Parameters.E2 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(56);
+		params = ac.getDeviceParameters(56);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.AVG_P1, Parameters.E1,
 				Parameters.AVG_TEMP3, Parameters.V3, Parameters.V4, Parameters.AVG_P2, Parameters.E2 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(66);
+		params = ac.getDeviceParameters(66);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.V1, Parameters.AVG_P1, Parameters.E1,
 				Parameters.AVG_TEMP3, Parameters.V3, Parameters.AVG_P2, Parameters.E2 });
 		assertEquals(params, p);
-		params = ac.getAccountParameters(41);
+		params = ac.getDeviceParameters(41);
 		p = Arrays.asList(new Parameters[] { Parameters.AVG_TEMP1, Parameters.AVG_TEMP2, Parameters.V1, Parameters.V2,
 				Parameters.AVG_P1, Parameters.E1, Parameters.AVG_TEMP3, Parameters.V3 });
 		assertEquals(params, p);

@@ -25,15 +25,17 @@ public class SchedulerGroup {
 	private Integer deepDay;
 	
 	private String cronString;
+	
+	private boolean enabled;
 		
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-	@JoinTable(name = "SchedulerToDevice", joinColumns = {
-			@JoinColumn(name = "idSchedulerGroup", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "idDevice", referencedColumnName = "id") })
+	@ManyToMany(mappedBy="groups", cascade={CascadeType.MERGE})
+//	@JoinTable(name = "SchedulerToDevice", joinColumns = {
+//			@JoinColumn(name = "idSchedulerGroup", referencedColumnName = "id") }, inverseJoinColumns = {
+//					@JoinColumn(name = "idDevice", referencedColumnName = "id") })
 	private List<Device> devices;
 	
-	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(name = "SchedulerToArchiveType", joinColumns = {
 			@JoinColumn(name = "idSchedulerGroup", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "idArhiveType", referencedColumnName = "id") })
@@ -87,6 +89,14 @@ public class SchedulerGroup {
 
 	public void setArchiveTypes(List<ArchiveType> archiveTypes) {
 		this.archiveTypes = archiveTypes;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 	
 }

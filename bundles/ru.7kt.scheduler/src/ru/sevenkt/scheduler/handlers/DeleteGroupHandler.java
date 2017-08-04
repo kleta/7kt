@@ -9,6 +9,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.services.IServiceConstants;
+import org.quartz.SchedulerException;
 
 import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.db.services.IDBService;
@@ -28,12 +29,12 @@ public class DeleteGroupHandler {
 	ISchedulerSevice schService;
 	
 	@Execute
-	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) Object object)  {
+	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) Object object) throws SchedulerException  {
 		SchedulerGroup schedulerGroup = ((Group) object).getSchedulerGroup();
 		schedulerGroup.setArchiveTypes(null);
 		dbService.deleteSchedulerGroup(schedulerGroup);
 		broker.post(SchedulerEventConstants.TOPIC_REFRESH_SCHEDULER_VIEW, object);
-		//schService.restart();
+		schService.restart();
 	}
 	@CanExecute
 	public boolean canExecute(@Optional @Named(IServiceConstants.ACTIVE_SELECTION) Object object)

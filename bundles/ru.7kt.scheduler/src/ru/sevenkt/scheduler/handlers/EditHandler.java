@@ -2,7 +2,9 @@
 package ru.sevenkt.scheduler.handlers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -16,6 +18,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
+import org.quartz.SchedulerException;
 
 import ru.sevenkt.db.entities.ArchiveType;
 import ru.sevenkt.db.entities.Device;
@@ -48,23 +51,28 @@ public class EditHandler implements EventHandler {
 		broker.subscribe(SchedulerEventConstants.TOPIC_EDIT_SCHEDULER, this);
 	}
 	@Execute
-	public void execute()  {
+	public void execute() throws SchedulerException  {
 		List<Device> devices = dbService.findAllDevices();
-		SchedulerData data = new SchedulerData(currentSelection);
-		SchedulerGroupDialog dialog = new SchedulerGroupDialog(shell, data, devices);
+		SchedulerData dataOld = new SchedulerData(currentSelection);
+		SchedulerGroupDialog dialog = new SchedulerGroupDialog(shell, dataOld, devices);
 		if (dialog.open() == Window.OK) {
-			data = dialog.getSchedulerData();
+			SchedulerData data = dialog.getSchedulerData();
 			SchedulerGroup sg = mapToSchedulerGroup(data);
 			dbService.saveSchedulerGroup(sg);
 			broker.post(SchedulerEventConstants.TOPIC_REFRESH_SCHEDULER_VIEW, sg);
-			//schService.restart();
+			schService.restart();
 		}
 	}
 
 	@Override
 	public void handleEvent(Event event) {
 	
-			execute();
+			try {
+				execute();
+			} catch (SchedulerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 	}
 
@@ -88,7 +96,16 @@ public class EditHandler implements EventHandler {
 			sg.getArchiveTypes().add(new ArchiveType(ArchiveTypes.HOUR));
 		if (data.isMonthCheck())
 			sg.getArchiveTypes().add(new ArchiveType(ArchiveTypes.MONTH));
-		sg.setDevices(data.getSelectedDevice());
+		List<Device> selectedDevice = data.getSelectedDevice();
+		sg.setDevices(selectedDevice);
+		for (Device device : selectedDevice) {
+			Set<SchedulerGroup> groups = device.getGroups();
+			if(groups==null){
+				groups=new HashSet<>();
+				device.setGroups(groups);
+			}
+			device.getGroups().add(sg);
+		}
 		return sg;
 	}
 }

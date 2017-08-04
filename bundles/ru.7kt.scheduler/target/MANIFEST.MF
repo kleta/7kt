@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-SymbolicName: ru.7kt.scheduler;singleton:=true
 Bundle-Name: Scheduler
-Bundle-Version: 1.0.0.201706290353
+Bundle-Version: 1.0.0.201707050921
 Require-Bundle: org.eclipse.osgi,org.eclipse.jface,org.eclipse.core.da
  tabinding,org.eclipse.core.databinding.beans,org.eclipse.core.databin
  ding.observable,org.eclipse.core.databinding.property,org.eclipse.jfa
@@ -10,7 +10,9 @@ Require-Bundle: org.eclipse.osgi,org.eclipse.jface,org.eclipse.core.da
  dle-version="1.1.100.v20150407-1430",org.eclipse.core.runtime,ru.7kt.
  core,ru.7kt.database,org.eclipse.e4.core.services,org.eclipse.e4.core
  .di.annotations,org.eclipse.e4.ui.services,org.eclipse.e4.ui.workbenc
- h 
+ h,org.eclipse.e4.core.di,org.eclipse.e4.core.contexts,org.quartz-sche
+ duler.quartz;bundle-version="2.2.1",ru.7kt.reader,org.eclipse.swt,ru.
+ 7kt.app
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation;version="1.0.0";resolution:=optional,

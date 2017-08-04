@@ -166,5 +166,9 @@ public class Group implements PropertiesExist{
 			return false;
 		return true;
 	}
+
+	public void setEnabled(boolean val) {
+		schedulerGroup.setEnabled(val);		
+	}
 	
 }

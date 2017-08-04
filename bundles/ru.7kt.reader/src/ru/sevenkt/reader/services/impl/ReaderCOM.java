@@ -229,10 +229,10 @@ public class ReaderCOM extends Reader {
 					byte[] data = Arrays.copyOfRange(readBuffer, 2, blockSize + 2);
 					map.put(adr, data);
 					System.out.println("Вставлен адрес " + adr);
-					logRead.info("Length: " + readBuffer.length + ", Data: " + HexUtils.bytesToHex(readBuffer));
+					logRead.info(portName+" Length: " + readBuffer.length + ", Data: " + HexUtils.bytesToHex(readBuffer));
 
 				} else {
-					logRead.info("Ошибка CRC: " + readBuffer.length + "-" + HexUtils.bytesToHex(readBuffer));
+					logRead.info(portName+" Ошибка CRC: " + readBuffer.length + "-" + HexUtils.bytesToHex(readBuffer));
 					CRCError = true;
 				}
 
@@ -252,7 +252,7 @@ public class ReaderCOM extends Reader {
 						Thread.sleep(2000);
 						CRCError = false;
 					}
-					logWrite.info("Length: " + command.length + ", Data: " + HexUtils.bytesToHex(command));
+					logWrite.info(portName+" Length: " + command.length + ", Data: " + HexUtils.bytesToHex(command));
 					outStream.write(command);
 					int millis = (int) (3 * countCommands);
 					if (millis < 300)
@@ -289,17 +289,17 @@ public class ReaderCOM extends Reader {
 		int i = 0;
 		while (i < 10) {
 			outs.write(readCurrentDataCommand);
-			logWrite.info("Length: " + readCurrentDataCommand.length + ", Data: "
+			logWrite.info(portName+" Length: " + readCurrentDataCommand.length + ", Data: "
 					+ HexUtils.bytesToHex(readCurrentDataCommand));
 			Thread.sleep(timeOut);
 			byte[] bytes = new byte[130];
 			int b = ins.read(bytes);
-			logRead.info("Length: " + b + ", Data: " + HexUtils.bytesToHex(bytes));
+			logRead.info(portName+" Length: " + b + ", Data: " + HexUtils.bytesToHex(bytes));
 			vCRC = crc.validateCRC(bytes);
 			if (vCRC)
 				return Arrays.copyOfRange(bytes, 0, 130 - 2);
 			else {
-				logRead.info("Ошибка CRC");
+				logRead.info(portName+" Ошибка CRC");
 			}
 			i++;
 		}
@@ -311,10 +311,10 @@ public class ReaderCOM extends Reader {
 		DataOutputStream outs = new DataOutputStream(serial.getOutputStream());
 		byte[] setBaudRateCommand = Commands.getSetBaudRateCommand(rate, 0);
 		outs.write(setBaudRateCommand);
-		logWrite.info("Length: " + setBaudRateCommand.length + ", Data: " + HexUtils.bytesToHex(setBaudRateCommand));
+		logWrite.info(portName+" Length: " + setBaudRateCommand.length + ", Data: " + HexUtils.bytesToHex(setBaudRateCommand));
 		Thread.sleep(300);
 		int b = ins.read();
-		logRead.info("Length: " + 1 + ", Data: " + b);
+		logRead.info(portName+" Length: " + 1 + ", Data: " + b);
 		if (b == 6)
 			return true;
 		else {

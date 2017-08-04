@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.Realm;
@@ -31,6 +33,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.HelpEvent;
+import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -76,7 +80,7 @@ import ru.sevenkt.db.entities.SchedulerGroup;
 import ru.sevenkt.domain.ArchiveTypes;
 import org.eclipse.core.databinding.beans.BeanProperties;
 
-public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyChangeListener{
+public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyChangeListener {
 	private class TableLabelProvider extends LabelProvider implements ITableLabelProvider {
 		public Image getColumnImage(Object element, int columnIndex) {
 			return ResourceManager.getPluginImage("ru.7kt.app", "icons/pda.png");
@@ -106,6 +110,9 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 	private Button hourButton;
 	private Label labelPreview;
 	private Cron cron;
+	private Combo combo;
+	private Button extendRadioButton;
+	private Button baseRadioButton;
 
 	/**
 	 * Create the dialog.
@@ -118,7 +125,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		cron = CronBuilder.cron(CronDefinitionBuilder.instanceDefinitionFor(QUARTZ)).withYear(always())
 				.withDoM(between(1, 3)).withMonth(always()).withDoW(questionMark()).withHour(always())
 				.withMinute(every(5)).withSecond(on(0)).instance();
-		schedulerData=data;
+		schedulerData = data;
 		schedulerData.addPropertyChangeListener(this);
 	}
 
@@ -151,13 +158,13 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		label.setText("Наименование:");
 
 		nameText = new Text(composite, SWT.BORDER);
-		
+
 		FormData fd_nameText = new FormData();
 		fd_nameText.left = new FormAttachment(label, 6);
 		nameText.setLayoutData(fd_nameText);
 
 		spinner = new Spinner(composite, SWT.BORDER);
-		
+
 		fd_nameText.bottom = new FormAttachment(spinner, -6);
 		FormData fd_spinner = new FormData();
 		fd_spinner.top = new FormAttachment(0, 35);
@@ -184,7 +191,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		group.setLayoutData(fd_group);
 
 		monthButton = new Button(group, SWT.CHECK);
-		
+
 		monthButton.setText("Месячный архив");
 		monthButton.setBounds(10, 22, 100, 16);
 
@@ -192,14 +199,11 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		dayButton.setText("Суточный архив");
 		dayButton.setSelection(true);
 		dayButton.setBounds(10, 44, 96, 16);
-		
 
 		hourButton = new Button(group, SWT.CHECK);
 		hourButton.setText("Часовой архив");
 		hourButton.setSelection(true);
 		hourButton.setBounds(10, 66, 91, 16);
-		
-		
 
 		TabFolder tabFolder = new TabFolder(container, SWT.BORDER);
 		fd_composite.right = new FormAttachment(tabFolder, 0, SWT.RIGHT);
@@ -218,17 +222,17 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		checkboxTableViewer = CheckboxTableViewer.newCheckList(composite_1, SWT.BORDER | SWT.FULL_SELECTION);
-		//table = checkboxTableViewer.getTable();
+		// table = checkboxTableViewer.getTable();
 		checkboxTableViewer.setLabelProvider(new TableLabelProvider());
 		checkboxTableViewer.setContentProvider(new ArrayContentProvider());
 		checkboxTableViewer.addCheckStateListener(new ICheckStateListener() {
-			
+
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				Object[] elements = checkboxTableViewer.getCheckedElements();
 				List<Device> selected = Arrays.asList(Arrays.asList(elements).toArray(new Device[elements.length]));
 				schedulerData.setSelectedDevice(selected);
-				if(validateFields())
+				if (validateFields())
 					okButton.setEnabled(true);
 				else
 					okButton.setEnabled(false);
@@ -242,7 +246,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		tabItem_1.setControl(composite_2);
 		composite_2.setLayout(new FormLayout());
 
-		Combo combo = new Combo(composite_2, SWT.READ_ONLY);
+		combo = new Combo(composite_2, SWT.READ_ONLY);
 		combo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -281,55 +285,57 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		fd_combo.right = new FormAttachment(0, 240);
 		combo.setLayoutData(fd_combo);
 
-		Button button_3 = new Button(composite_2, SWT.RADIO);
-		button_3.addSelectionListener(new SelectionAdapter() {
+		baseRadioButton = new Button(composite_2, SWT.RADIO);
+		baseRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				combo.setEnabled(true);
-				minuteText.setEnabled(false);
-				hourText.setEnabled(false);
-				dayText.setEnabled(false);
-				monthText.setEnabled(false);
-				dayOfWeekText.setEnabled(false);
+				if (e.getSource().equals(baseRadioButton)) {
+					combo.setVisible(true);
+					minuteText.setEnabled(false);
+					hourText.setEnabled(false);
+					dayText.setEnabled(false);
+					monthText.setEnabled(false);
+					dayOfWeekText.setEnabled(false);
+					combo.select(0);
+					minuteText.setText("0");
+					hourText.setText("0");
+					dayText.setText("*");
+					monthText.setText("*");
+					dayOfWeekText.setText("?");
+				}
 			}
 		});
-		fd_combo.left = new FormAttachment(button_3, 26);
-		button_3.setSelection(true);
-		FormData fd_button_3 = new FormData();
-		fd_button_3.right = new FormAttachment(0, 91);
-		fd_button_3.top = new FormAttachment(0, 10);
-		fd_button_3.left = new FormAttachment(0, 10);
-		button_3.setLayoutData(fd_button_3);
-		button_3.setText("Основные");
+		fd_combo.left = new FormAttachment(baseRadioButton, 26);
+		baseRadioButton.setSelection(true);
+		FormData fd_baseRadioButton = new FormData();
+		fd_baseRadioButton.right = new FormAttachment(0, 91);
+		fd_baseRadioButton.top = new FormAttachment(0, 10);
+		fd_baseRadioButton.left = new FormAttachment(0, 10);
+		baseRadioButton.setLayoutData(fd_baseRadioButton);
+		baseRadioButton.setText("Основные");
 
-		Button btnRadioButton = new Button(composite_2, SWT.RADIO);
-		btnRadioButton.addSelectionListener(new SelectionAdapter() {
+		extendRadioButton = new Button(composite_2, SWT.RADIO);
+		extendRadioButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				combo.setEnabled(false);
-				minuteText.setEnabled(true);
-				hourText.setEnabled(true);
-				dayText.setEnabled(true);
-				monthText.setEnabled(true);
-				dayOfWeekText.setEnabled(true);
+				if (e.getSource().equals(extendRadioButton)) {
+					combo.setVisible(false);
+					minuteText.setEnabled(true);
+					hourText.setEnabled(true);
+					dayText.setEnabled(true);
+					monthText.setEnabled(true);
+					dayOfWeekText.setEnabled(true);
+				}
 			}
 		});
-		FormData fd_btnRadioButton = new FormData();
-		fd_btnRadioButton.top = new FormAttachment(0, 34);
-		fd_btnRadioButton.left = new FormAttachment(0, 10);
-		btnRadioButton.setLayoutData(fd_btnRadioButton);
-		btnRadioButton.setText("Дополнительные");
+		FormData fd_extendRadioButton = new FormData();
+		fd_extendRadioButton.top = new FormAttachment(0, 34);
+		fd_extendRadioButton.left = new FormAttachment(0, 10);
+		extendRadioButton.setLayoutData(fd_extendRadioButton);
+		extendRadioButton.setText("Дополнительные");
 
 		minuteText = new Text(composite_2, SWT.BORDER);
-//		minuteText.addModifyListener(new ModifyListener() {
-//			public void modifyText(ModifyEvent e) {
-//				if (validateFields())
-//					okButton.setEnabled(true);
-//				else {
-//					okButton.setEnabled(false);
-//				}
-//			}
-//		});
+
 		minuteText.setEnabled(false);
 		FormData fd_minuteText = new FormData();
 		fd_minuteText.right = new FormAttachment(100, -245);
@@ -343,15 +349,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		label_2.setText("Минуты:");
 
 		hourText = new Text(composite_2, SWT.BORDER);
-//		hourText.addModifyListener(new ModifyListener() {
-//			public void modifyText(ModifyEvent e) {
-//				if (validateFields())
-//					okButton.setEnabled(true);
-//				else {
-//					okButton.setEnabled(false);
-//				}
-//			}
-//		});
+
 		hourText.setEnabled(false);
 		FormData fd_hourText = new FormData();
 		fd_hourText.top = new FormAttachment(minuteText, 6);
@@ -368,15 +366,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		label_3.setText("Час:");
 
 		dayText = new Text(composite_2, SWT.BORDER);
-//		dayText.addModifyListener(new ModifyListener() {
-//			public void modifyText(ModifyEvent e) {
-//				if (validateFields())
-//					okButton.setEnabled(true);
-//				else {
-//					okButton.setEnabled(false);
-//				}
-//			}
-//		});
+
 		dayText.setEnabled(false);
 		FormData fd_dayText = new FormData();
 		fd_dayText.left = new FormAttachment(combo, 0, SWT.LEFT);
@@ -392,15 +382,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		label_4.setText("День:");
 
 		monthText = new Text(composite_2, SWT.BORDER);
-//		monthText.addModifyListener(new ModifyListener() {
-//			public void modifyText(ModifyEvent e) {
-//				if (validateFields())
-//					okButton.setEnabled(true);
-//				else {
-//					okButton.setEnabled(false);
-//				}
-//			}
-//		});
+
 		monthText.setEnabled(false);
 		FormData fd_monthText = new FormData();
 		fd_monthText.left = new FormAttachment(combo, 0, SWT.LEFT);
@@ -416,15 +398,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		label_5.setText("Месяц:");
 
 		dayOfWeekText = new Text(composite_2, SWT.BORDER);
-//		dayOfWeekText.addModifyListener(new ModifyListener() {
-//			public void modifyText(ModifyEvent e) {
-//				if (validateFields())
-//					okButton.setEnabled(true);
-//				else {
-//					okButton.setEnabled(false);
-//				}
-//			}
-//		});
+
 		dayOfWeekText.setEnabled(false);
 		FormData fd_dayOfWeekText = new FormData();
 		fd_dayOfWeekText.right = new FormAttachment(minuteText, 0, SWT.RIGHT);
@@ -444,7 +418,7 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		Label label_7 = new Label(composite_2, SWT.NONE);
 		FormData fd_label_7 = new FormData();
 		fd_label_7.top = new FormAttachment(0, 198);
-		fd_label_7.left = new FormAttachment(button_3, 0, SWT.LEFT);
+		fd_label_7.left = new FormAttachment(baseRadioButton, 0, SWT.LEFT);
 		label_7.setLayoutData(fd_label_7);
 		label_7.setText("Просмотр");
 
@@ -459,17 +433,18 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		return area;
 	}
 
+
 	protected boolean validateFields() {
 		boolean name = validateName();
 		boolean daysCount = validateDaysCount();
 		boolean va = validateArchive();
 		boolean min = validateMinutes();
-		boolean dayOfWeek=validateDayOfWeek();
-		boolean month=validateMonth();
-		boolean day=validateDay();
-		boolean hour=validateHour();
-		
-		boolean cronEx=validateCron();
+		boolean dayOfWeek = validateDayOfWeek();
+		boolean month = validateMonth();
+		boolean day = validateDay();
+		boolean hour = validateHour();
+
+		boolean cronEx = validateCron();
 		if (name && daysCount && va && min && hour && day && month && dayOfWeek && cronEx) {
 			setErrorMessage(null);
 			return true;
@@ -478,12 +453,12 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 	}
 
 	private boolean validateCron() {
-		CronParser quartzCronParser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(QUARTZ));	
-		
-		try{
+		CronParser quartzCronParser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(QUARTZ));
+
+		try {
 			quartzCronParser.parse(schedulerData.generateCronExpression());
 			labelPreview.setText(getCronDescription());
-		}catch(Exception e){
+		} catch (Exception e) {
 			setErrorMessage(e.getMessage());
 			labelPreview.setText("Ошибка");
 			return false;
@@ -497,64 +472,68 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		try {
 			validateCronField(fc, CronFieldName.MINUTE, minuteText.getText());
 		} catch (Exception e) {
-			setErrorMessage("Поле минуты: "+ e.getMessage());
+			setErrorMessage("Поле минуты: " + e.getMessage());
 			return false;
 		}
 		return true;
 	}
+
 	private boolean validateHour() {
 		CronField minuteField = cron.retrieve(CronFieldName.HOUR);
 		FieldConstraints fc = minuteField.getConstraints();
 		try {
 			validateCronField(fc, CronFieldName.HOUR, hourText.getText());
 		} catch (Exception e) {
-			setErrorMessage("Поле часы: "+ e.getMessage());
+			setErrorMessage("Поле часы: " + e.getMessage());
 			return false;
 		}
 		return true;
 	}
+
 	private boolean validateDay() {
 		CronField minuteField = cron.retrieve(CronFieldName.DAY_OF_MONTH);
 		FieldConstraints fc = minuteField.getConstraints();
 		try {
 			validateCronField(fc, CronFieldName.DAY_OF_MONTH, dayText.getText());
 		} catch (Exception e) {
-			setErrorMessage("Поле день: "+ e.getMessage());
+			setErrorMessage("Поле день: " + e.getMessage());
 			return false;
 		}
 		return true;
 	}
+
 	private boolean validateMonth() {
 		CronField minuteField = cron.retrieve(CronFieldName.MONTH);
 		FieldConstraints fc = minuteField.getConstraints();
 		try {
 			validateCronField(fc, CronFieldName.MONTH, monthText.getText());
 		} catch (Exception e) {
-			setErrorMessage("Поле месяц: "+ e.getMessage());
+			setErrorMessage("Поле месяц: " + e.getMessage());
 			return false;
 		}
 		return true;
 	}
+
 	private boolean validateDayOfWeek() {
 		CronField minuteField = cron.retrieve(CronFieldName.DAY_OF_WEEK);
 		FieldConstraints fc = minuteField.getConstraints();
 		try {
 			validateCronField(fc, CronFieldName.DAY_OF_WEEK, dayOfWeekText.getText());
 		} catch (Exception e) {
-			setErrorMessage("Поле день недели: "+ e.getMessage());
+			setErrorMessage("Поле день недели: " + e.getMessage());
 			return false;
 		}
 		return true;
 	}
 
-	private void validateCronField(FieldConstraints fc, CronFieldName fn, String text) throws Exception{
-		try{
-		FieldParser fp = new FieldParser(fc);
-		FieldExpression fe = fp.parse(text);
-		fe.accept(new ValidationFieldExpressionVisitor(cron.getCronDefinition().getFieldDefinition(fn).getConstraints(),
-				cron.getCronDefinition().isStrictRanges()));
-		}
-		catch(Exception e){
+	private void validateCronField(FieldConstraints fc, CronFieldName fn, String text) throws Exception {
+		try {
+			FieldParser fp = new FieldParser(fc);
+			FieldExpression fe = fp.parse(text);
+			fe.accept(new ValidationFieldExpressionVisitor(
+					cron.getCronDefinition().getFieldDefinition(fn).getConstraints(),
+					cron.getCronDefinition().isStrictRanges()));
+		} catch (Exception e) {
 			throw e;
 		}
 	}
@@ -600,10 +579,49 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		checkboxTableViewer.setInput(devices);
 		labelPreview.setText(getCronDescription());
 		List<Device> sds = schedulerData.getSelectedDevice();
-		if(sds!=null){
+		if (sds != null) {
 			for (Device device : sds) {
 				checkboxTableViewer.setChecked(device, true);
 			}
+		}
+		String cronStr = schedulerData.generateCronExpression();
+		switch (cronStr) {
+		case "0 0 0 * * ? *":
+			combo.setEnabled(true);
+			minuteText.setEnabled(false);
+			hourText.setEnabled(false);
+			dayText.setEnabled(false);
+			monthText.setEnabled(false);
+			dayOfWeekText.setEnabled(false);
+			combo.select(0);
+			break;
+		case "0 0 0 ? * 1 *":
+			combo.setEnabled(true);
+			minuteText.setEnabled(false);
+			hourText.setEnabled(false);
+			dayText.setEnabled(false);
+			monthText.setEnabled(false);
+			dayOfWeekText.setEnabled(false);
+			combo.select(1);
+			break;
+		case "0 0 0 1 * ? *":
+			combo.setEnabled(true);
+			minuteText.setEnabled(false);
+			hourText.setEnabled(false);
+			dayText.setEnabled(false);
+			monthText.setEnabled(false);
+			dayOfWeekText.setEnabled(false);
+			combo.select(2);
+			break;
+		default:
+			combo.setVisible(false);
+			minuteText.setEnabled(true);
+			hourText.setEnabled(true);
+			dayText.setEnabled(true);
+			monthText.setEnabled(true);
+			dayOfWeekText.setEnabled(true);
+			extendRadioButton.setSelection(true);
+			baseRadioButton.setSelection(false);
 		}
 	}
 
@@ -641,9 +659,9 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		super.okPressed();
 	}
 
-	private void collectInfo() {		
+	private void collectInfo() {
 		Object[] elements = checkboxTableViewer.getCheckedElements();
-		List<Device> selectedDevices = Arrays.asList(Arrays.asList(elements).toArray(new Device[elements.length]));	
+		List<Device> selectedDevices = Arrays.asList(Arrays.asList(elements).toArray(new Device[elements.length]));
 	}
 
 	public static void main(String... args) {
@@ -660,10 +678,10 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 				d = new Device();
 				d.setDeviceName("qwdfqw;");
 				devices.add(d);
-				SchedulerData data=new SchedulerData("0", "0", "*", "*", "?");
+				SchedulerData data = new SchedulerData("0", "0", "*", "*", "?");
 				SchedulerGroupDialog dialog = new SchedulerGroupDialog(shell, data, devices);
 				if (dialog.open() == Window.OK) {
-					data=dialog.getSchedulerData();
+					data = dialog.getSchedulerData();
 					String ex = data.generateCronExpression();
 					System.out.println(ex);
 				}
@@ -672,18 +690,19 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		});
 
 	}
-	
+
 	public SchedulerData getSchedulerData() {
 		return schedulerData;
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if(validateFields())
+		if (validateFields())
 			okButton.setEnabled(true);
 		else
 			okButton.setEnabled(false);
 	}
+
 	protected DataBindingContext initDataBindings() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
@@ -696,7 +715,8 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		bindingContext.bindValue(observeTextText_2ObserveWidget, hoursSchedulerDataObserveValue, null, null);
 		//
 		IObservableValue observeTextText_3ObserveWidget = WidgetProperties.text(SWT.Modify).observe(dayText);
-		IObservableValue dayOfMonthSchedulerDataObserveValue = BeanProperties.value("dayOfMonth").observe(schedulerData);
+		IObservableValue dayOfMonthSchedulerDataObserveValue = BeanProperties.value("dayOfMonth")
+				.observe(schedulerData);
 		bindingContext.bindValue(observeTextText_3ObserveWidget, dayOfMonthSchedulerDataObserveValue, null, null);
 		//
 		IObservableValue observeTextText_4ObserveWidget = WidgetProperties.text(SWT.Modify).observe(monthText);
@@ -716,8 +736,10 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		bindingContext.bindValue(observeSelectionSpinnerObserveWidget, dayShiftSchedulerDataObserveValue, null, null);
 		//
 		IObservableValue observeSelectionMonthButtonObserveWidget = WidgetProperties.selection().observe(monthButton);
-		IObservableValue monthCheckSchedulerDataObserveValue = BeanProperties.value("monthCheck").observe(schedulerData);
-		bindingContext.bindValue(observeSelectionMonthButtonObserveWidget, monthCheckSchedulerDataObserveValue, null, null);
+		IObservableValue monthCheckSchedulerDataObserveValue = BeanProperties.value("monthCheck")
+				.observe(schedulerData);
+		bindingContext.bindValue(observeSelectionMonthButtonObserveWidget, monthCheckSchedulerDataObserveValue, null,
+				null);
 		//
 		IObservableValue observeSelectionDayButtonObserveWidget = WidgetProperties.selection().observe(dayButton);
 		IObservableValue dayCheckSchedulerDataObserveValue = BeanProperties.value("dayCheck").observe(schedulerData);
@@ -725,7 +747,8 @@ public class SchedulerGroupDialog extends TitleAreaDialog implements PropertyCha
 		//
 		IObservableValue observeSelectionHourButtonObserveWidget = WidgetProperties.selection().observe(hourButton);
 		IObservableValue hourCheckSchedulerDataObserveValue = BeanProperties.value("hourCheck").observe(schedulerData);
-		bindingContext.bindValue(observeSelectionHourButtonObserveWidget, hourCheckSchedulerDataObserveValue, null, null);
+		bindingContext.bindValue(observeSelectionHourButtonObserveWidget, hourCheckSchedulerDataObserveValue, null,
+				null);
 		//
 		return bindingContext;
 	}

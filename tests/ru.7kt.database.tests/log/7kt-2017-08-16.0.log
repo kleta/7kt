@@ -1,0 +1,240 @@
+2017-08-16 09:42:16,173 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findBySerialNum
+2017-08-16 09:42:16,194 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Device.findBySerialNum
+2017-08-16 09:42:16,211 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Device.findBySerialNum
+2017-08-16 09:42:16,271 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 09:42:16,272 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 09:42:16,273 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 09:42:16,287 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDevice
+2017-08-16 09:42:16,289 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDevice
+2017-08-16 09:42:16,290 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDevice
+2017-08-16 09:42:16,299 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeDesc
+2017-08-16 09:42:16,300 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 09:42:16,300 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 09:42:16,315 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,316 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,316 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,326 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 09:42:16,327 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 09:42:16,328 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 09:42:16,335 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method getSumHoursValue
+2017-08-16 09:42:16,502 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeAsc
+2017-08-16 09:42:16,503 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 09:42:16,504 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 09:42:16,535 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevices
+2017-08-16 09:42:16,536 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query SchedulerGroup.findByDevices
+2017-08-16 09:42:16,537 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query SchedulerGroup.findByDevices
+2017-08-16 09:42:16,563 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 09:42:16,565 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDevice
+2017-08-16 09:42:16,566 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDevice
+2017-08-16 09:42:16,577 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,578 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,579 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,597 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,598 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,599 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 09:42:16,610 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 09:42:16,611 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 09:42:16,612 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 09:42:16,632 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 09:42:16,633 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Report.findByDevice
+2017-08-16 09:42:16,634 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Report.findByDevice
+2017-08-16 10:11:08,748 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findBySerialNum
+2017-08-16 10:11:08,756 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Device.findBySerialNum
+2017-08-16 10:11:08,769 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Device.findBySerialNum
+2017-08-16 10:11:08,919 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:11:08,920 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:11:08,921 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:11:08,939 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDevice
+2017-08-16 10:11:08,941 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDevice
+2017-08-16 10:11:08,942 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDevice
+2017-08-16 10:11:08,949 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:11:08,950 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:11:08,951 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:11:08,961 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:11:08,963 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:11:08,964 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:11:08,972 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:11:08,973 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:11:08,973 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:11:08,986 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:11:08,987 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:11:08,989 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:11:09,003 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method getSumHoursValue
+2017-08-16 10:11:09,191 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevices
+2017-08-16 10:11:09,192 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query SchedulerGroup.findByDevices
+2017-08-16 10:11:09,193 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query SchedulerGroup.findByDevices
+2017-08-16 10:11:09,217 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:11:09,218 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDevice
+2017-08-16 10:11:09,218 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDevice
+2017-08-16 10:11:09,224 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndDateTimeBetween
+2017-08-16 10:11:09,225 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:11:09,226 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:11:09,264 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:11:09,273 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:11:09,275 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:11:09,290 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:11:09,292 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:11:09,294 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:11:09,326 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:11:09,329 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Report.findByDevice
+2017-08-16 10:11:09,331 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Report.findByDevice
+2017-08-16 10:27:43,049 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findBySerialNum
+2017-08-16 10:27:43,056 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Device.findBySerialNum
+2017-08-16 10:27:43,062 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Device.findBySerialNum
+2017-08-16 10:27:43,179 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:27:43,181 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:27:43,183 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:27:43,216 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDevice
+2017-08-16 10:27:43,221 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDevice
+2017-08-16 10:27:43,222 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDevice
+2017-08-16 10:27:43,230 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:27:43,232 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:27:43,233 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:27:43,251 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,252 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,253 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,269 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:27:43,270 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:27:43,271 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:27:43,281 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method getSumHoursValue
+2017-08-16 10:27:43,436 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:27:43,437 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:27:43,437 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:27:43,458 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevices
+2017-08-16 10:27:43,459 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query SchedulerGroup.findByDevices
+2017-08-16 10:27:43,460 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query SchedulerGroup.findByDevices
+2017-08-16 10:27:43,482 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:27:43,483 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDevice
+2017-08-16 10:27:43,484 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDevice
+2017-08-16 10:27:43,491 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,492 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,492 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,510 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,512 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,512 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:27:43,520 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:27:43,521 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:27:43,521 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:27:43,537 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:27:43,538 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Report.findByDevice
+2017-08-16 10:27:43,539 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Report.findByDevice
+2017-08-16 10:33:42,838 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findBySerialNum
+2017-08-16 10:33:42,849 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Device.findBySerialNum
+2017-08-16 10:33:42,858 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Device.findBySerialNum
+2017-08-16 10:33:42,974 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:33:42,976 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:33:42,977 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:33:42,994 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:33:42,996 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:33:42,997 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:33:43,008 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDevice
+2017-08-16 10:33:43,009 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDevice
+2017-08-16 10:33:43,010 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDevice
+2017-08-16 10:33:43,021 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,023 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,024 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,033 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:33:43,034 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:33:43,035 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:33:43,049 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:33:43,050 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:33:43,051 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:33:43,061 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method getSumHoursValue
+2017-08-16 10:33:43,212 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevices
+2017-08-16 10:33:43,213 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query SchedulerGroup.findByDevices
+2017-08-16 10:33:43,215 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query SchedulerGroup.findByDevices
+2017-08-16 10:33:43,232 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:33:43,233 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDevice
+2017-08-16 10:33:43,234 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDevice
+2017-08-16 10:33:43,241 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,242 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,243 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,268 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,269 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,270 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:33:43,285 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:33:43,286 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:33:43,288 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:33:43,314 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:33:43,317 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Report.findByDevice
+2017-08-16 10:33:43,318 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Report.findByDevice
+2017-08-16 10:46:31,659 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findBySerialNum
+2017-08-16 10:46:31,667 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Device.findBySerialNum
+2017-08-16 10:46:31,670 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Device.findBySerialNum
+2017-08-16 10:46:31,730 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:46:31,731 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:46:31,732 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:46:31,744 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:46:31,745 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:46:31,746 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 10:46:31,754 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDevice
+2017-08-16 10:46:31,756 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDevice
+2017-08-16 10:46:31,761 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDevice
+2017-08-16 10:46:31,766 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:46:31,767 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:46:31,768 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:46:31,775 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:46:31,776 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:46:31,777 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 10:46:31,782 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:46:31,782 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:46:31,783 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 10:46:31,817 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method getSumHoursValue
+2017-08-16 10:46:32,104 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevices
+2017-08-16 10:46:32,105 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query SchedulerGroup.findByDevices
+2017-08-16 10:46:32,108 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query SchedulerGroup.findByDevices
+2017-08-16 10:46:32,133 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:46:32,134 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDevice
+2017-08-16 10:46:32,135 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDevice
+2017-08-16 10:46:32,139 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndDateTimeBetween
+2017-08-16 10:46:32,140 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:46:32,141 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 10:46:32,176 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 10:46:32,177 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:46:32,178 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 10:46:32,184 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:46:32,185 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:46:32,185 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 10:46:32,199 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 10:46:32,200 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Report.findByDevice
+2017-08-16 10:46:32,200 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Report.findByDevice
+2017-08-16 11:08:20,163 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findBySerialNum
+2017-08-16 11:08:20,173 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Device.findBySerialNum
+2017-08-16 11:08:20,189 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Device.findBySerialNum
+2017-08-16 11:08:20,308 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 11:08:20,310 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 11:08:20,310 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 11:08:20,347 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeDesc
+2017-08-16 11:08:20,363 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 11:08:20,364 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeDesc
+2017-08-16 11:08:20,417 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDevice
+2017-08-16 11:08:20,418 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDevice
+2017-08-16 11:08:20,420 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDevice
+2017-08-16 11:08:20,486 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,487 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,488 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.deleteByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,522 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 11:08:20,524 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 11:08:20,525 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findByParameterAndDeviceAndArchiveTypeAndDateTime
+2017-08-16 11:08:20,586 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findTopByDeviceOrderByDateTimeAsc
+2017-08-16 11:08:20,587 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 11:08:20,588 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Measuring.findTopByDeviceOrderByDateTimeAsc
+2017-08-16 11:08:20,601 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method getSumHoursValue
+2017-08-16 11:08:20,819 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevices
+2017-08-16 11:08:20,820 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query SchedulerGroup.findByDevices
+2017-08-16 11:08:20,822 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query SchedulerGroup.findByDevices
+2017-08-16 11:08:20,848 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 11:08:20,851 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDevice
+2017-08-16 11:08:20,852 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDevice
+2017-08-16 11:08:20,859 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,859 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,860 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Journal.findByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,887 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method deleteByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,889 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,890 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.deleteByDeviceAndDateTimeBetween
+2017-08-16 11:08:20,905 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 11:08:20,906 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 11:08:20,907 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Error.findByDeviceAndArchiveTypeAndDateTimeBetween
+2017-08-16 11:08:20,924 DEBUG [main] o.s.d.j.r.q.JpaQueryFactory [JpaQueryFactory.java:52] Looking up query for method findByDevice
+2017-08-16 11:08:20,926 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:119] Looking up named query Report.findByDevice
+2017-08-16 11:08:20,927 DEBUG [main] o.s.d.j.r.q.NamedQuery [NamedQuery.java:102] Did not find named query Report.findByDevice

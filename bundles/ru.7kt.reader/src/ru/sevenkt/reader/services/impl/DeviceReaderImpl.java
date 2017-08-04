@@ -126,8 +126,37 @@ public class DeviceReaderImpl implements IDeviceReaderService {
 
 	@Override
 	public IJournalSettings readJournal(Connection con) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void initPorts() {
+		Set<String> ports = getAvailableSerialPorts();
+		for (String string : ports) {
+			NRSerialPort port = new NRSerialPort(string, 9600);
+			port.connect();
+			if(port.isConnected()){
+				System.out.println("Port "+string+" is connected");
+				port.disconnect();
+			}
+			
+				
+		}
+		
+	}
+
+	@Override
+	public void closeAllPorts() {Set<String> ports = getAvailableSerialPorts();
+	for (String string : ports) {
+		NRSerialPort port = new NRSerialPort(string, 9600);
+		if(port.isConnected()){
+			System.out.println("Port "+string+" is disconnected");
+			port.disconnect();
+		}
+		
+			
+	}
+		
 	}
 
 }
