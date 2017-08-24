@@ -139,7 +139,7 @@ public class Reader {
 									IArchive arch = rs.readArchive(dw.getFromDate(), LocalDate.now(),
 											dw.getDevice().getConnection(), new HashSet<>(dw.getTypes()), false);
 									if (arch != null) {
-										// saveArchive(arch);
+										saveArchive(arch);
 									} else {
 										dw.setTryCount(dw.getTryCount() - 1);
 										if (dw.getTryCount() > 0) {
