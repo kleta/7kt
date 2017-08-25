@@ -85,7 +85,7 @@ public class Device implements Serializable, PropertiesExist{
 	
 	private int didgitM=2;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private Set<SchedulerGroup> groups;
 	
 	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
