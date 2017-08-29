@@ -1,6 +1,7 @@
 
 package ru.sevenkt.app.ui;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -89,7 +90,8 @@ public class PropertiesView {
 				Object key = e.keys().nextElement();
 				Object object = e.get(key);
 				if(object instanceof Float){
-					return Math.round((Float)object)+"";
+					String val = new BigDecimal(object+"").setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+					return val;
 				}
 				return object.toString();
 			}
