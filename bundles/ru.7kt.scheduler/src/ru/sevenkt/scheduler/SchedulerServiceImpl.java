@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -37,6 +38,9 @@ public class SchedulerServiceImpl implements ISchedulerSevice {
 
 	@Inject
 	private Reader reader;
+	
+	@Inject
+	private IEclipseContext context;
 
 	private Scheduler scheduler;
 
@@ -60,6 +64,7 @@ public class SchedulerServiceImpl implements ISchedulerSevice {
 				JobDataMap data = new JobDataMap();
 				data.put("group", group);
 				data.put("reader", reader);
+				data.put("eclipseContext", context);
 				JobDetail job = newJob(ReadDataJob.class).withIdentity("job" + group.getSchedulerGroup().getId(),
 						"group" + group.getSchedulerGroup().getId()).setJobData(data).build();
 				String cronString = group.getSchedulerGroup().getCronString();
@@ -89,6 +94,7 @@ public class SchedulerServiceImpl implements ISchedulerSevice {
 		JobDataMap data = new JobDataMap();
 		data.put("group", group);
 		data.put("reader", reader);
+		data.put("eclipseContext", context);
 		JobDetail job = newJob(ReadDataJob.class).withIdentity("jobRunOnce" + group.getSchedulerGroup().getId(),
 				"groupRunOnce" + group.getSchedulerGroup().getId()).setJobData(data).build();
 		Trigger runOnceTrigger = newTrigger().build();
