@@ -27,6 +27,7 @@ import ru.sevenkt.domain.DayArchive;
 import ru.sevenkt.domain.ErrorCodes;
 import ru.sevenkt.domain.HourArchive;
 import ru.sevenkt.domain.IArchive;
+import ru.sevenkt.domain.ICurrentData;
 import ru.sevenkt.domain.IDayRecord;
 import ru.sevenkt.domain.IHourRecord;
 import ru.sevenkt.domain.IMonthRecord;
@@ -36,7 +37,9 @@ import ru.sevenkt.domain.Parameters;
 import ru.sevenkt.domain.ParametersConst;
 
 public class ArchiveConverter {
-
+	private static final BigDecimal Ad = new BigDecimal("-2.865764E-06");
+	private static final BigDecimal Bd = new BigDecimal("-1.428473E-04");
+	private static final BigDecimal Cd = new BigDecimal("1.002032");
 	private Device device;
 
 	private IArchive archive;
@@ -59,9 +62,14 @@ public class ArchiveConverter {
 
 	private List<Journal> journalData;
 
+	private ISettings settings;
+
+	private ICurrentData currentData;
+
 	public ArchiveConverter(IArchive archive) {
 		this.archive = archive;
-		ISettings settings = archive.getSettings();
+		settings = archive.getSettings();
+		currentData = archive.getCurrentData();
 		device = new Device();
 		device.setDeviceVersion(settings.getDeviceVersion());
 		device.setFormulaNum(settings.getFormulaNum());
@@ -301,7 +309,64 @@ public class ArchiveConverter {
 			}
 			recordDate = recordDate.plusDays(1);
 		}
+		if (settings.getArchiveVersion() == 1)
+			calculateDayMass();
+	}
 
+	private void calculateDayMass() throws Exception {
+
+		initHourData();
+		BigDecimal curentM1 = new BigDecimal(currentData.getWeight1() + "");
+		BigDecimal curentM2 = new BigDecimal(currentData.getWeight1() + "");
+		BigDecimal curentM3 = new BigDecimal(currentData.getWeight1() + "");
+		BigDecimal curentM4 = new BigDecimal(currentData.getWeight1() + "");
+		LocalDateTime currentDateTime = currentData.getCurrentDateTime();
+		LocalDate currentDate = currentDateTime.toLocalDate().plusDays(1);
+		Map<Parameters, BigDecimal> dayMass = getSumHoursMass(currentDate);
+		if (dayMass != null) {
+			curentM1 = curentM1.subtract(dayMass.get(Parameters.M1));
+			curentM2 = curentM2.subtract(dayMass.get(Parameters.M2));
+			curentM3 = curentM3.subtract(dayMass.get(Parameters.M3));
+			curentM4 = curentM4.subtract(dayMass.get(Parameters.M4));
+		}
+	}
+
+	private Map<Parameters, BigDecimal> getSumHoursMass(LocalDate date) {
+		LocalDateTime toDateTime = date.atStartOfDay();
+		LocalDateTime fromDateTime = toDateTime.minusDays(1);
+		Map<Parameters, BigDecimal> retVal = null;
+		BigDecimal summ1 = null;
+		BigDecimal summ2 = null;
+		BigDecimal summ3 = null;
+		BigDecimal summ4 = null;
+		while (toDateTime.isAfter(fromDateTime)) {
+			Map<Parameters, BigDecimal> rec = hourData.get(toDateTime);
+			if (rec != null) {
+				if (summ1 == null) {
+					summ1 = new BigDecimal("0");
+					summ2 = new BigDecimal("0");
+					summ3 = new BigDecimal("0");
+					summ4 = new BigDecimal("0");
+					;
+				}
+				BigDecimal m1 = rec.get(Parameters.M1);
+				BigDecimal m2 = rec.get(Parameters.M2);
+				BigDecimal m3 = rec.get(Parameters.M3);
+				BigDecimal m4 = rec.get(Parameters.M4);
+				summ1 = summ1.add(m1);
+				summ2 = summ1.add(m2);
+				summ3 = summ1.add(m3);
+				summ4 = summ1.add(m4);
+			}
+		}
+		if (summ1 != null) {
+			retVal = new HashMap<>();
+			retVal.put(Parameters.M1, summ1);
+			retVal.put(Parameters.M2, summ2);
+			retVal.put(Parameters.M3, summ3);
+			retVal.put(Parameters.M4, summ4);
+		}
+		return retVal;
 	}
 
 	private void initHourData() throws Exception {
@@ -454,10 +519,56 @@ public class ArchiveConverter {
 			}
 			recordDate = recordDate.plusDays(1);
 		}
+		calculateHourMass();
 	}
 
-	private void addDayIncrement(Map<Parameters, BigDecimal> valDay, Map<Parameters, BigDecimal> valPrevDay) {
-		// TODO Auto-generated method stub
+	private void calculateHourMass() {
+		Map<LocalDateTime, Map<Parameters, BigDecimal>> massData = new HashMap<>();
+		for (LocalDateTime dt : hourData.keySet()) {
+			Map<Parameters, BigDecimal> rec = hourData.get(dt);
+			Map<Parameters, BigDecimal> massRec = new HashMap<>();
+
+			for (Parameters p : rec.keySet()) {
+				BigDecimal v = null;
+				BigDecimal t = null;
+				Parameters massParam = null;
+				switch (p) {
+				case V1:
+					v = rec.get(p);
+					t = rec.get(Parameters.AVG_TEMP1);
+					massParam = Parameters.M1;
+					break;
+				case V2:
+					v = rec.get(p);
+					t = rec.get(Parameters.AVG_TEMP2);
+					massParam = Parameters.M2;
+					break;
+				case V3:
+					v = rec.get(p);
+					t = rec.get(Parameters.AVG_TEMP3);
+					massParam = Parameters.M3;
+					break;
+				case V4:
+					v = rec.get(p);
+					t = rec.get(Parameters.AVG_TEMP4);
+					massParam = Parameters.M4;
+					break;
+				default:
+					break;
+				}
+				if (v != null && t != null) {
+					BigDecimal mass = t.multiply(t).multiply(Ad);
+					mass = mass.add(Bd.multiply(t)).add(Cd);
+					mass = v.multiply(mass);
+					massRec.put(massParam, mass);
+				}
+			}
+			massData.put(dt, massRec);
+		}
+		for (LocalDateTime dt : massData.keySet()) {
+			Map<Parameters, BigDecimal> massRec = massData.get(dt);
+			hourData.put(dt, massRec);
+		}
 
 	}
 
@@ -1026,7 +1137,7 @@ public class ArchiveConverter {
 	}
 
 	public void setDevice(Device device2) {
-		device=device2;		
+		device = device2;
 	}
 
 }
