@@ -27,8 +27,8 @@ import ru.sevenkt.annotations.Prop;
 import ru.sevenkt.domain.PropertiesExist;
 
 @Entity
-@Table(name="Devices")
-public class Device implements Serializable, PropertiesExist{
+@Table(name = "Devices")
+public class Device implements Serializable, PropertiesExist {
 	/**
 	 * 
 	 */
@@ -55,7 +55,7 @@ public class Device implements Serializable, PropertiesExist{
 	private int wMax12;
 
 	private int wMax34;
-	
+
 	private boolean controlPower;
 
 	@Prop(name = "Сетевой адрес")
@@ -78,78 +78,69 @@ public class Device implements Serializable, PropertiesExist{
 
 	@Prop(name = "Вес импульса V4(л/имп)")
 	private float volumeByImpulsSetting4;
-	
-	private int didgitE=3;
 
-	private int didgitV=2;
-	
-	private int didgitM=2;
-	
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	private int didgitE = 3;
+
+	private int didgitV = 2;
+
+	private int didgitM = 2;
+
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	private Set<SchedulerGroup> groups;
-	
-	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "DeviceToParams", joinColumns = {
 			@JoinColumn(name = "idDevice", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "idParam", referencedColumnName = "id") })
 	private List<Params> params;
-	
-	@OneToMany(mappedBy="device", cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "device", cascade = CascadeType.ALL)
 	@PrivateOwned
 	private List<Report> reports;
-	
-//	@OneToMany(mappedBy="device", cascade=CascadeType.ALL)
-//	@PrivateOwned
-//	private List<Measuring> measurings;
 
-	@OneToOne(cascade=CascadeType.ALL)
+	// @OneToMany(mappedBy="device", cascade=CascadeType.ALL)
+	// @PrivateOwned
+	// private List<Measuring> measurings;
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@PrivateOwned
 	private Connection connection;
-	
-	public Connection getConnection(){
-		return connection;	
+
+	public Connection getConnection() {
+		return connection;
 	}
-	
-	
+
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 	}
-
-
 
 	public int getDidgitE() {
 		return didgitE;
 	}
 
-
 	public void setDidgitE(int didgitE) {
 		this.didgitE = didgitE;
 	}
-
 
 	public int getDidgitV() {
 		return didgitV;
 	}
 
-
 	public void setDidgitV(int didgitV) {
 		this.didgitV = didgitV;
 	}
-
 
 	public int getDidgitM() {
 		return didgitM;
 	}
 
-
 	public void setDidgitM(int didgitM) {
 		this.didgitM = didgitM;
 	}
 
-
 	public List<Report> getReports() {
-		if(reports==null)
-			reports=new ArrayList<>();
+		if (reports == null)
+			reports = new ArrayList<>();
 		return reports;
 	}
 
@@ -285,13 +276,13 @@ public class Device implements Serializable, PropertiesExist{
 		this.volumeByImpulsSetting4 = volumeByImpulsSetting4;
 	}
 
-//	public List<SchedulerGroup> getNodes() {
-//		return groups;
-//	}
-//
-//	public void setGroups(List<SchedulerGroup> nodes) {
-//		this.groups = nodes;
-//	}
+	// public List<SchedulerGroup> getNodes() {
+	// return groups;
+	// }
+	//
+	// public void setGroups(List<SchedulerGroup> nodes) {
+	// this.groups = nodes;
+	// }
 
 	public List<Params> getParams() {
 		return params;
@@ -305,14 +296,12 @@ public class Device implements Serializable, PropertiesExist{
 		return serialVersionUID;
 	}
 
-	
-
 	public List<Properties> getProperies() throws IllegalArgumentException, IllegalAccessException {
-		List<Properties> list=new ArrayList<>();
+		List<Properties> list = new ArrayList<>();
 		Field[] filds = getClass().getDeclaredFields();
 		for (Field field : filds) {
 			if (field.isAnnotationPresent(Prop.class)) {
-				Properties prop=new Properties();
+				Properties prop = new Properties();
 				String key = field.getAnnotation(Prop.class).name();
 				Object value = field.get(this);
 				prop.put(key, value);
@@ -323,54 +312,54 @@ public class Device implements Serializable, PropertiesExist{
 	}
 
 	public Device(Device device) {
-		this.deviceName=device.getDeviceName()+"";
-		this.deviceVersion=new Integer(device.getDeviceVersion());
-		this.formulaNum=new Integer(device.getFormulaNum());
-		this.id=new Integer(device.getId());
-		this.netAddress=device.getNetAddress();
-		groups=new HashSet<>();
-		groups.addAll(device.getGroups());
-		this.serialNum=device.getSerialNum()+"";
-		this.tempColdWaterSetting=new Float(device.getTempColdWaterSetting());
-		this.volumeByImpulsSetting1=new Float(device.getVolumeByImpulsSetting1());
-		this.volumeByImpulsSetting2=new Float(device.getVolumeByImpulsSetting2());
-		this.volumeByImpulsSetting3=new Float(device.getVolumeByImpulsSetting3());
-		this.volumeByImpulsSetting4=new Float(device.getVolumeByImpulsSetting4());
-		this.wMax12=new Integer(device.getwMax12());
-		this.wMax34=new Integer(device.getwMax34());
-		this.wMin0=new Integer(device.getwMin0());
-		this.wMin1=new Integer(device.getwMin1());
-		this.controlPower=device.controlPower;
-		this.didgitE=device.didgitE;
-		this.didgitV=device.didgitV;
-		this.didgitM=device.didgitM;
-		
-		params=new ArrayList<>();
-		params.addAll(device.getParams());		
+		this.deviceName = device.getDeviceName() + "";
+		this.deviceVersion = device.getDeviceVersion();
+		this.formulaNum = device.getFormulaNum();
+		this.id = device.getId();
+		this.netAddress = device.getNetAddress();
+		if (device.getGroups() != null) {
+			groups = new HashSet<>();
+			groups.addAll(device.getGroups());
+		}
+		this.serialNum = device.getSerialNum() + "";
+		this.tempColdWaterSetting = device.getTempColdWaterSetting();
+		this.volumeByImpulsSetting1 = device.getVolumeByImpulsSetting1();
+		this.volumeByImpulsSetting2 = device.getVolumeByImpulsSetting2();
+		this.volumeByImpulsSetting3 = device.getVolumeByImpulsSetting3();
+		this.volumeByImpulsSetting4 = device.getVolumeByImpulsSetting4();
+		this.wMax12 = device.getwMax12();
+		this.wMax34 = device.getwMax34();
+		this.wMin0 = device.getwMin0();
+		this.wMin1 = device.getwMin1();
+		this.controlPower = device.controlPower;
+		this.didgitE = device.didgitE;
+		this.didgitV = device.didgitV;
+		this.didgitM = device.didgitM;
+		if (device.getParams() != null) {
+			params = new ArrayList<>();
+			params.addAll(device.getParams());
+		}
 		this.setReports(device.getReports());
 	}
 
 	public Device() {
-		
-	}
 
+	}
 
 	public Set<SchedulerGroup> getGroups() {
 		return groups;
 	}
 
-
 	public void setGroups(Set<SchedulerGroup> groups) {
 		this.groups = groups;
 	}
 
-
-//	public List<Measuring> getMeasurings() {
-//		return measurings;
-//	}
-//
-//
-//	public void setMeasurings(List<Measuring> measurings) {
-//		this.measurings = measurings;
-//	}
+	// public List<Measuring> getMeasurings() {
+	// return measurings;
+	// }
+	//
+	//
+	// public void setMeasurings(List<Measuring> measurings) {
+	// this.measurings = measurings;
+	// }
 }
