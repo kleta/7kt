@@ -64,6 +64,19 @@ public class ArchiveServiceTest {
 			}
 		}
 	}
+	@Test
+	public void testArchive() throws Exception {
+		System.out.println("Архив с ошибками от 15.10.2017-----------------------------------------------------------------");
+		File folder = new File("resources/07622_2017-10-02_17-00");
+		File[] listOfFiles = folder.listFiles();
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				System.out.println("File " + listOfFiles[i].getName()+"==============================================");
+				parseArchive(listOfFiles[i]);
+				System.out.println();
+			}
+		}
+	}
 	
 	public void testSpreadHourData() throws Exception{
 		File file = new File("resources/V3/02016_2016-02-04_13-00.bin");
