@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Archivedata
 Bundle-SymbolicName: ru.7kt.archivedata
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.3.3
 Export-Package: ru.sevenkt.archive.services
 Spring-Context: META-INF/spring/osgi-context.xml;wait-for-dependencies:=true;create-asynchronously:=false
 Require-Bundle: ru.7kt.core;bundle-version="1.0.0",

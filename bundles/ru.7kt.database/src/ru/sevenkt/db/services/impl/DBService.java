@@ -277,7 +277,8 @@ public class DBService implements IDBService {
 	@Override
 	public List<Measuring> findArchive(Device device, LocalDateTime startDate, LocalDateTime endDate,
 			ArchiveTypes archiveType) {
-		return measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate, endDate);
+		List<Measuring> retVal = measuringRepo.findByDeviceAndArchiveTypeAndDateTimeBetween(device, archiveType, startDate, endDate);
+		return retVal;
 	}
 
 	@Override
