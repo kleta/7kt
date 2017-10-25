@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>ru.7kt</groupId>
 		<artifactId>ru.7kt.releng</artifactId>
-		<version>1.3.3</version>
+		<version>1.3.4</version>
 	</parent>
 	<artifactId>ru.7kt.product</artifactId>
 	<packaging>eclipse-repository</packaging>

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Reader
 Bundle-SymbolicName: ru.7kt.reader
-Bundle-Version: 1.3.3
+Bundle-Version: 1.3.4
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: slf4j.api;bundle-version="1.7.16",
  ch.qos.logback.classic;bundle-version="1.1.4",
