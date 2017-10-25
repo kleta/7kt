@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.7kt</groupId>
 	<artifactId>ru.7kt.p2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.reficio</groupId>
-				<artifactId>p2-maven-plugin</artifactId>
-				<version>1.2.0</version>
+                <artifactId>p2-maven-plugin</artifactId>
+                <version>1.3.0</version>
 				<executions>
 					<execution>
 						<id>default-cli</id>
@@ -56,6 +56,14 @@
 								</artifact>
 								<artifact>
 									<id>com.cronutils:cron-utils:5.0.5</id>
+									<source>true</source>
+								</artifact>
+								<artifact>
+									<id>org.junit.platform:junit-platform-engine:1.0.1</id>
+									<source>true</source>
+								</artifact>
+								<artifact>
+									<id>org.junit.jupiter:junit-jupiter-api:5.0.1</id>
 									<source>true</source>
 								</artifact>
 
