@@ -64,7 +64,7 @@ public class Reader7KTCImpl implements IReader7KTCService {
 			byte[] pic = reader.readPic();
 			byte[] attr = reader.readAttributes();
 			if (pic == null || attr == null)
-				throw new Exception("Не возможно считать данные. Проверьте правильность подсоединения устройства");
+				throw new Exception("Невозможно считать данные. Проверьте правильность подсоединения устройства");
 			for (byte b : attr) {
 				if (b == 1 || b == 2)
 					count++;

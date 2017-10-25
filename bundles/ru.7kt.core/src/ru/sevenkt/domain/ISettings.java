@@ -27,5 +27,7 @@ public interface ISettings {
 	int getwMin0();
 
 	int getwMin1();
+	
+	int getArchiveVersion();
 
 }

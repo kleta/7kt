@@ -162,6 +162,20 @@ public class ArchiveConverterTest {
 		List<Error> errors = ac.getHourErrors();
 		assertFalse(errors.isEmpty());
 	}
+	@Test
+	public void testCalculateMass() throws Exception {
+		File file = new File("resources/V1/01932_2016-10-24_09-00.bin");
+		byte[] data = FileUtils.readFileToByteArray(file);
+		IArchive arc = ArchiveFactory.createArhive(Arrays.copyOfRange(data, 64, data.length));
+		ArchiveConverter ac = new ArchiveConverter(arc);
+		List<Measuring> hData = ac.getHourData();
+		List<Measuring> mass = hData.stream().filter(m->m.getParameter().equals(Parameters.M1)).collect(Collectors.toList());
+		assertFalse(mass.isEmpty());
+		List<Measuring> dData = ac.getDayData();
+		mass = dData.stream().filter(m->m.getParameter().equals(Parameters.M1)).collect(Collectors.toList());
+		assertFalse(mass.isEmpty());
+		
+	}
 
 	@Test
 	public void testGetDayErrors() throws Exception {
@@ -186,7 +200,7 @@ public class ArchiveConverterTest {
 		List<Error> errors = ac.getMonthErrors();
 		assertFalse(errors.isEmpty());
 	}
-
+	
 	@Test
 	public void testErrorTime() throws Exception {
 		File file = new File("resources/V3/07042_2016-05-20_09-00.bin");
@@ -228,4 +242,5 @@ public class ArchiveConverterTest {
 			}
 		}
 	}
+	
 }
