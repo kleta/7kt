@@ -2,13 +2,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.7kt</groupId>
     <artifactId>ru.7kt.features</artifactId>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
     <packaging>pom</packaging>
 
     <parent>
         <groupId>ru.7kt</groupId>
         <artifactId>ru.7kt.root</artifactId>
-        <version>1.3.3</version>
+        <version>1.3.4</version>
     </parent>
 
     <modules>

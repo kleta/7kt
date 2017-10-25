@@ -15,5 +15,6 @@
 		<module>features</module>
 		<module>tests</module>
 	</modules>
+<version>1.3.4</version>
 </project>
 
