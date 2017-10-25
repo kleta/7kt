@@ -36,6 +36,14 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<products>
+						<product>
+							<id>7kt</id>
+							<archiveFileName>7kt-${project.version}</archiveFileName>
+						</product>
+					</products>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
